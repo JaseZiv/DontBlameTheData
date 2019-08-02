@@ -1,16 +1,21 @@
 ---
 title: "Using Data To Determine Which AFL Fans Jump On The Bandwagon"
-output:
-  html_document:
-    code_folding: hide
-    theme: journal
-    highlight: tango
-    df_print: paged
-    fig_height: 8
-    fig_width: 11
-    number_sections: no
-    toc: yes
-date: '2019-07-13'
+date: '2019-07-15'
+slug: using-data-to-determine-which-afl-fans-jump-on=the-bandwagon
+categories:
+  - R
+  - sport
+  - afl
+  - analytics
+  - tidyverse
+tags: []
+description: ''
+featured: ''
+featuredalt: ''
+featuredpath: ''
+linktitle: ''
+type: post
+
 ---
 
 ```{r setup, include=FALSE}
