@@ -1,3 +1,6 @@
 [submodule "themes/cayman-hugo-theme"]
 	path = themes/cayman-hugo-theme
 	url = https://github.com/zwbetz-gh/cayman-hugo-theme.git
+[submodule "hugo-future-imperfect-slim"]
+	path = hugo-future-imperfect-slim
+	url = https://github.com/pacollins/hugo-future-imperfect-slim.git
