@@ -1,0 +1,1075 @@
+---
+title: "Building an Linear Regression Model in R to Predict AFL Crowds"
+author: "Jason Zivkovic"
+date: "27/07/2019"
+output: html_document
+---
+
+<script src="/rmarkdown-libs/kePrint/kePrint.js"></script>
+
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>There is a lot of talk about crowd behaviour and crowd issues with the modern day AFL. I personally feel the crowd issues are a case of <em>business-as-usual</em>; I’ve been going to AFL games on-and-off for close to three decades and the crowd behaviour is no different today as it was 20 years ago… just now everyone with a phone and Twitter account is a journo.</p>
+<p>Anyway, that’s my two cents worth. This analysis is not on crowd behaviour. This post is primarily concerned with building a model to predict AFL crowds during the season proper. While data was collected since the beginning of the 2000 season, the model will be bult on training data from the beginning of the 2013 season to the end of the 2018 season (Finals series excluded), with the trained model then used to predict the attendance figures of AFL games during the 2019 season up until round 18 which concluded on Sunday 21st July, 2019. The linear model will be built using R (version 3.5.3) in <a href="http://www.rstudio.com/">RStudio</a>.</p>
+<p>This post is a follow up to my introductory analysis done on bandwagon fans. It can be found <a href="https://medium.com/@jaseziv83/using-data-to-determine-which-afl-fans-jump-on-the-bandwagon-8adbcc4160b0?sk=b4c0788b1f54aca1cfd50e2766eadd5c">here</a>.</p>
+<p>The article was inspired by the amazing work Tony Corke does, specifically his post on <a href="http://www.matterofstats.com/mafl-stats-journal/2016/3/16/the-predic">The Predictability of AFL Crowds</a>.</p>
+<p>All code for this project can be found on GitHub <a href="https://github.com/JaseZiv/AFL-Crowd-Analytics">here</a></p>
+<div id="the-data" class="section level2">
+<h2>The Data</h2>
+<p>Three sources of data were used in the project:</p>
+<ol style="list-style-type: decimal">
+<li><a href="https://afltables.com">AFL Tables</a> was used as the primary source of information. This is no doubt the go to for anyone looking at doing AFL analysis</li>
+<li><a href="http://www.aussportsbetting.com">Australian Sports Betting</a> was used to get betting data for matches from the 2013 season</li>
+<li><a href="http://www.bom.gov.au/climate/data/">Australian Bureau of Meteorology</a> was used for climat data (rain and temperature). Part of the scraper for BOM data was taken from James Day’s <a href="https://github.com/jimmyday12/fitzRoy">fitzRoy</a> R package. Big thanks to him. The rain and temperature data had some missing observations. Missing rain data was filled by averaging out the next taken reading over the missed data points before it. Missing temperature was filled taking the average temperature for that month.</li>
+</ol>
+<hr />
+</div>
+</div>
+<div id="feature-engineering" class="section level1">
+<h1>Feature Engineering</h1>
+<p>The data contained at AFL Tables is a rich source of information, but some steps were needed to glean some additional information from the data.</p>
+<p>The original three data sources combined contained approximately 35 variables for potential use. Feature engineering (the process of creating additional explanatory variables to use in a predictive model) was then conducted and resulted in ~95 features in total to see if they would ultimately be added to the final model to be used.</p>
+<div id="features-created" class="section level2">
+<h2>Features Created</h2>
+<p>Based on some feedback from the Banwagon article and other things that I wanted to explore, some new features were created to see if they had any predictive power.</p>
+<p>Take the game start time as an example - having the time is great, but a regression model may find it better to categorise the time to a period of the day to reduce some of the noise. So, with that in mind, a feature (<code>time_period</code>) was created - if the game started by 5pm, I have classified it as an afternoon game. Games started between 5pm-7pm were classified as evening games, while games later than this were night games.</p>
+<p>Additionally, the day of the week and the <code>time_period</code> were joined into one variable <code>game_time</code> to use in the model. For example, if it was a Saturday game starting at 5:30pm, it was classified as “Sat-Evening”.</p>
+<p>Venues that were used infrequently, or more accurately, weren’t the teams primary “home” stadium were labelled as “Other”. There were 94 games played at these venues, and this includes at stadiums like <em>Eureka Stadium</em>, <em>Cazaly’s Stadium</em>, <em>Traeger Park</em>, and international venues <em>Wellington</em> in NZ and <em>Jiangwan Stadium</em> in China.</p>
+<p>Another feature was created to determine rivalry games - the thinking being that when two fierce rivals face off against each other, the crowds will come. To be a rivalry game, a few different options existed. The first contains the four oldest traditional rivals, all from Melbourne - Collingwood, Richmond, Essendon and Carlton (hold your Carlton opinions, I know they’ve been horrible but their fans still turn up to these rivalry games). The Derby in SA (<em>The Showdown</em> between Adelaide and Port Adelaide) and in WA (<em>Western Derby</em> between West Coast and Fremantle) are also classed as rivalry games.</p>
+<p>After hearing a key AFL staffer talk a few years back talk about betting markets being a strong predictor of attendances, I collected betting data to test this assumption. A number of features were created in addition to the raw odds and line data scraped. These included calculating the differences between the odds of the home and away team and also calculating the change in betting throughout the week.</p>
+<p>Features were also created of the average experience of both the home and away teams, as were milestone games (where players of either team are playing in their 100, 200, 250 or 300th games).</p>
+<p>Each team’s last game result was calculated, as was the number of wins each team had in their previous three games. Additionally, whether the team played finals the previous season was identified.</p>
+<p>A ladder at each round was created and ladder position, percentage and score for and against was explored as possible features for the end model.</p>
+<p>A feature was also created to identify games played by teams from the same state or not.</p>
+</div>
+</div>
+<div id="exploratory-data-analysis" class="section level1">
+<h1>Exploratory Data Analysis</h1>
+<p>Before we start building the model, we need to understand both the response and predictor variables. The most effective way to do this is through visualisations, and what package is better to use than <code>ggplot2</code>!</p>
+<p>This section will contain some Exploratory Data Analysis (more commonly known as ‘EDA’), which is a natural first step in any data analysis project. It is an extrememly important step and allows the analyst to inspect the data - what shape does the target and predictor variables have, are there any correlations between the variables that may be included in a predictive model, are there any outliers in the data, or any missing data… you get the point, EDA is very important!</p>
+<p>Well there is no missing data in the dataset being used… that has all been cleaned in the pre-processing stage that can be found in <a href="https://github.com/JaseZiv/AFL-Crowd-Analytics/blob/master/src/preprocessing.R">this</a> R code.</p>
+<div id="the-response-variable---attendance" class="section level2">
+<h2>The Response Variable - <code>Attendance</code></h2>
+<p>Let’s look at our response variable - or the thing we’re trying to predict - <code>attendance</code> at AFL premiership season games.</p>
+<p>We can see that the attendance figures are somewhat positively skewed. We’ll see if the few higher attendance games cause any issues later on. This variable may need to undergo some form of transformation, but more on that later.</p>
+<p>The median attendance to AFL games during the regular season is just under 32,500 for the 1,340 games played since 2013.</p>
+<p><img src="/post/predicting_crowds_files/figure-html/attendance-1.png" width="672" /></p>
+</div>
+<div id="some-key-predictors" class="section level2">
+<h2>Some Key Predictors</h2>
+<pre class="r"><code>data_for_model &lt;- afl_premiership_season %&gt;%
+  select(season, attendance, team1, team2, round, venue, game_time, home_median_experience, home_mean_experience, away_median_experience, away_mean_experience, home_300, home_milestone, away_300, away_milestone, count_milestones, rainfall_clean, min_temp, max_temp, last_five_days_rain, temperature_diff, HomeOddsOpen, AwayOddsOpen, HomeLineOpen, AwayLineOpen, odds_diff, rivalry_game, HomeTeamFav, team1_last_result, team2_last_result, split_round, home_team_finals_last_season, away_team_finals_last_season, season_stage, temperature, IsHomeMilestone, IsAwayMilestone, count_milestones, last_results, home_team_state, away_team_state, is_same_state, temperature_diff, home_odds_change, away_odds_change, home_line_change, away_line_change, second_home_game, home_season_points, home_score_for, home_percentage, home_ladder_pos, away_wins_last_three, away_season_points, away_score_for, away_percentage, away_ladder_pos, teams_in_eight, finals_last_season, home_wins_last_three, away_wins_last_three) %&gt;% na.omit()</code></pre>
+<p>As was evident in the first post of this series, there was noticeable variation in attendances between the teams, and also whether teams won or lost their previous game. Finally, the first post showed that the home team’s favouritism status also seemed to have a relationship with attendance.</p>
+<p><strong>Categorical Features:</strong></p>
+<p>Some of the key categorical variables created that we would expect to have an impact on crowd figures are displayed below.</p>
+<p><img src="/post/predicting_crowds_files/figure-html/multi_plots-1.png" width="1344" /><img src="/post/predicting_crowds_files/figure-html/multi_plots-2.png" width="1344" /></p>
+<p><strong>Some observations:</strong></p>
+<ul>
+<li><p>There appears to be a relationship between the venue the game is played at and the attendance. Stadiums classified as <code>Other</code> include secondary home grounds and some of the ovals not used in 2019. There were 238 of the 1,340 games at these stadiums</p></li>
+<li><p>Whether either the home or away team played finals last year seems to have a weak relationship with attendance. It may be useful to include in our model</p></li>
+<li><p>When the game is played and attendance appear to be related. <code>Weekday Afternoon</code> and <code>Friday Afternoon</code> are high because of ANZAC day clashes between Essendon and Collingwood no doubt. Friday and Sunday night games seem to draw better crowds. Could be a useful predictor</p></li>
+<li><p>There appears to be some variance in attendance figures between the different rounds during a season. Could be a useful predictor</p></li>
+<li><p>Games classed as “Rivalry Games” clearly draw larger attendances than non-rivalry games. Could be a useful predictor</p></li>
+<li><p>Whether the round was a split round (where some teams have a bye, or week off) or not doesn’t appear to be related to attendances. Might not be a useful predictor</p></li>
+<li><p>There appears to be slightly higher crowds when the home team has a player playing a milestone (either a 100, 200, 250 or 300th game), but the relationship certainly doesn’t appear strong. Might not be a useful predictor</p></li>
+<li><p>When the two competing teams are from the same state, crowds appear to be higher. Could be a useful predictor</p></li>
+<li><p>To be expected, games where the home team is playing the game at their second home ground (Hawthorn and North in Tasmania, Melbourne, Western Bulldogs in Darwin, etc) draw lower crowds. This is probably more to do with lower statium capacities, but may still be a useful feature</p></li>
+</ul>
+<p><strong>Numerical Features:</strong></p>
+<p>To explore the relationship between the numerical features and <code>attendance</code>, Pearson’s correlation will be employed.</p>
+<p>Using dplyr to select just the numerical features and then calculate the correlations on the converted matrix yields the below correlations with <code>attendance</code>.</p>
+<pre class="r"><code>numeric_features &lt;- data_for_model %&gt;% select_if(is.numeric)
+
+numeric_features %&gt;% 
+  as.matrix() %&gt;% 
+  cor() %&gt;% .[,&quot;attendance&quot;] %&gt;% sort(decreasing = T)</code></pre>
+<pre><code>##             attendance   home_mean_experience home_median_experience 
+##             1.00000000             0.26365921             0.23643803 
+##        home_percentage   home_wins_last_three   away_mean_experience 
+##             0.23614705             0.17478214             0.15897681 
+## away_median_experience        away_percentage     home_season_points 
+##             0.12043282             0.10525891             0.09791105 
+##   away_wins_last_three                 season           AwayLineOpen 
+##             0.08216375             0.06810321             0.06494188 
+##       count_milestones       temperature_diff         away_milestone 
+##             0.05377796             0.04861347             0.03461216 
+##       home_line_change         home_milestone               home_300 
+##             0.03344074             0.03227033             0.02975353 
+##               away_300       home_odds_change     away_season_points 
+##             0.01977948             0.01048990             0.00711589 
+##       away_odds_change       away_line_change         home_score_for 
+##            -0.01814564            -0.03344074            -0.03627296 
+##           AwayOddsOpen           HomeLineOpen         rainfall_clean 
+##            -0.05551962            -0.06494188            -0.06509548 
+##         away_score_for    last_five_days_rain               max_temp 
+##            -0.07211752            -0.08077140            -0.09065891 
+##                  round               min_temp        away_ladder_pos 
+##            -0.09659057            -0.13761256            -0.15018539 
+##           HomeOddsOpen              odds_diff            temperature 
+##            -0.15824510            -0.16753709            -0.20290382 
+##        home_ladder_pos 
+##            -0.27264679</code></pre>
+<p>While all correlations appear to be fairly weak, the following observations can be made:</p>
+<ul>
+<li><p>The average experience (<code>home_mean_experience</code>) for the home team, calculated as the average games played by each player at each game they play in, yields the highest Pearson correlation with attendance of 0.264</p></li>
+<li><p>The Home team’s percentage (scores for / scores against) also have a correlation above 0.2 at 0.236</p></li>
+<li><p>The number of wins the home team had in their last three games had a Pearson correlation of 0.175, while the correlation of away team’s average playing experience was 0.159</p></li>
+<li><p>Strangely, the home team’s ladder position had a negative correlation, with a Pearson correlation of -0.273. The away team’s ladder position also had a negative correlation of -0.150</p></li>
+<li><p>Betting data shows some relationships; as the <code>HomeOddsOpen</code> increase, the <code>attendance</code> tends to decrease, which is somewhat expected. The <code>odds_diff</code> variable (the difference between the home teams opening odds and the away teams) also has a weak negative relationship (correlation -0.168)</p></li>
+<li><p>Weather data shows some relationships. As expected, the maximum temperation and rainfall, both on the day and the accumulation of last five day’s rainfall has a negative relationship with attendance (-0.091, -0.081 and -0.65 respectively)</p></li>
+</ul>
+<hr />
+</div>
+</div>
+<div id="building-the-model" class="section level1">
+<h1>Building the model</h1>
+<p>In any project that aims to build a machine learning model to predict the outcome of some response variable, it’s important to hold out a subset of your data when training the model. These two sets are generally referred to as training and test sets. The training set is what you pass to the model to build, and then the resulting predictions are made on the data the model hasn’t “seen”, to best mimic real life examples.</p>
+<p>In this case, the model will be trained on data from the 2013 to 2018 seasons inclusive (<code>afl_pre_2019</code>), with the predictions then made on 2019 data that the model hasn’t seen, <code>afl_2019</code>. This is done to ensure the model doesn’t “overfit” the data. Models that overfit the data generally perform worse on unseen accurrences.</p>
+<div id="things-that-were-attempted-but-not-included-in-the-model" class="section level2">
+<h2>Things that were attempted but not included in the model</h2>
+<p>The following features were thought to have some validity but when run through the model were found to have no predictive power:</p>
+<ul>
+<li>The number of wins the teams had in their last three games didn’t contribute</li>
+<li>The rainfall on the day had no predictive power (however the total rainfall for the five days leading up to game day did)</li>
+<li>Milestone games made the model perform worse</li>
+</ul>
+</div>
+<div id="whats-missing-would-be-good-to-have" class="section level2">
+<h2>What’s missing / would be good to have</h2>
+<p>There is some information that wasn’t available publicly (or I didn’t try to get) which may prove handy in any future modelling work. These include:</p>
+<ul>
+<li>Ticket pricing for games during each season to explore the effect ticket pricing has on attendance</li>
+<li>Whether tickets were given away to fans for games and whether that had an impact on attendances</li>
+<li>Any social media posts / newspaper text analysis regarding teams / topical matters involving players playing in games, etc</li>
+</ul>
+<pre class="r"><code>afl_pre_2019 &lt;- data_for_model %&gt;% filter(season &lt; 2019, season &gt;= 2013)
+
+afl_2019 &lt;- data_for_model %&gt;% filter(season == 2019)</code></pre>
+</div>
+<div id="baseline-model" class="section level2">
+<h2>Baseline Model</h2>
+<p>Before building a model to predict games, we want a baseline model to be able to compare to. The temptation would be there to use the average crowd for each game as a baseline, but the different venue capacities make this less than relevant. As a result, to calculate the baseline model, I will use the median attendance for each vanue (taking the average of the venues labelled “Other” as a whole), for each home-away team combo. For example, Collingwood(H) vs Essendon(A) is different to Essendon(H) vs Collingwood(A). The median is used because of the slightly skewed nature of AFL crowds.</p>
+<pre class="r"><code>median_attendances &lt;- afl_pre_2019 %&gt;% 
+  group_by(team1, team2, venue) %&gt;% 
+  summarise(baseline_attendance = median(attendance)) %&gt;% ungroup()
+
+baseline &lt;- afl_2019 %&gt;% select(team1, team2, venue, attendance) %&gt;% 
+  left_join(median_attendances, by = c(&quot;team1&quot;, &quot;team2&quot;, &quot;venue&quot;)) %&gt;% 
+  filter(!is.na(baseline_attendance))</code></pre>
+<p>Using the average attendances per ground as our baseline, an RMSE of 6,816 and a mean absolute error of 4,958 is achieved. Any model that is built from here needs to be better than this.</p>
+</div>
+<div id="transforming-response-variable" class="section level2">
+<h2>Transforming Response Variable</h2>
+<p>Because of the somewhat skewed nature of our response variable, it might be wise to undergo some sort of transformation to normalise it more. A log transformation is routinely used to “unskew” data. Below is the result of log transforming the attendance variable.</p>
+<p>It looks less skewed than the non-transformed variable, however (<em>spoiler alert</em>), the models performed worse with attendance being log transformed.</p>
+<p><img src="/post/predicting_crowds_files/figure-html/attendance_transformed-1.png" width="672" /></p>
+</div>
+</div>
+<div id="feature-selection-using-stepwise-method" class="section level1">
+<h1>Feature Selection Using Stepwise Method</h1>
+<p>A popular method to select which features go into a model is using stepwise regression. This can either be performed:</p>
+<ul>
+<li><em>forward</em>, where variables are added one by one, with only those that improve the model’s explainability (R-squared) retained,</li>
+<li><em>backward</em>, which starts with all variables, then removes them if they don’t add value to the model’s explainability, or</li>
+<li><em>both</em>, which is an ensemble of both <em>forward</em> and <em>backward</em> feature selection.</li>
+</ul>
+<p>Using stepwise in <em>both</em> directions maximised the model’s Adjusted R-squared measure at 0.87.</p>
+<p>When performing linear regression, we want to ensure there is no collinearity between the variables. One way to asses this is to calculate the Variable Inflation Factor (VIF). This is made easy with the <code>vif</code> function in the <code>car</code> package. A VIF above 5 is considered to be too high.</p>
+<p>While the round the game is played is just over 5 (5.7), we will keep this in, however <code>odds_diff</code> and <code>home_score_for</code> will be removed from the full model selected using stepwise and re-run.</p>
+<pre class="r"><code>full_model &lt;- lm(attendance ~ ., data = afl_pre_2019)
+
+
+# Set seed for reproducibility
+set.seed(123)
+
+step.model &lt;- MASS::stepAIC(full_model, direction = &quot;both&quot;, 
+                      trace = FALSE)</code></pre>
+<pre class="r"><code>car::vif(step.model)</code></pre>
+<pre><code>##                                      GVIF Df GVIF^(1/(2*Df))
+## team1                        3.760325e+07 17        1.670324
+## team2                        8.911787e+00 17        1.066449
+## round                        3.249472e+01  1        5.700414
+## venue                        1.490291e+07  9        2.503312
+## game_time                    3.502667e+00 11        1.058633
+## home_milestone               1.077704e+00  1        1.038125
+## rainfall_clean               1.600109e+00  1        1.264954
+## min_temp                     2.442144e+00  1        1.562736
+## max_temp                     2.943632e+00  1        1.715702
+## last_five_days_rain          1.624607e+00  1        1.274601
+## HomeOddsOpen                 7.850335e+01  1        8.860212
+## AwayOddsOpen                 1.469414e+02  1       12.121938
+## HomeLineOpen                 1.017707e+01  1        3.190152
+## odds_diff                    1.645084e+02  1       12.826085
+## rivalry_game                 1.682047e+00  1        1.296937
+## split_round                  1.097575e+00  1        1.047652
+## last_results                 1.901405e+00  3        1.113044
+## is_same_state                2.561134e+00  1        1.600354
+## home_season_points           1.171072e+01  1        3.422093
+## home_score_for               4.401100e+01  1        6.634079
+## away_season_points           1.013471e+01  1        3.183506
+## away_ladder_pos              8.299211e+00  1        2.880835
+## teams_in_eight               1.384744e+01  3        1.549631
+## home_team_finals_last_season 1.855485e+00  1        1.362162</code></pre>
+<pre class="r"><code># the backward selection model include a variable with hi collinearity (VIF = 12). Will recreate model without odds_diff
+full_model_clean &lt;- lm(attendance ~ team1 + team2 + round + venue + game_time + 
+    home_milestone + rainfall_clean + min_temp + max_temp + last_five_days_rain + 
+    HomeOddsOpen + AwayOddsOpen + HomeLineOpen + 
+    rivalry_game + split_round + last_results + is_same_state + 
+    home_season_points + away_season_points + 
+    away_ladder_pos + teams_in_eight + home_team_finals_last_season, 
+    data = afl_pre_2019)
+
+# summary(full_model_clean)
+
+car::vif(full_model_clean)</code></pre>
+<pre><code>##                                      GVIF Df GVIF^(1/(2*Df))
+## team1                        3.221921e+07 17        1.662750
+## team2                        8.429548e+00 17        1.064706
+## round                        1.151616e+01  1        3.393547
+## venue                        1.470969e+07  9        2.501498
+## game_time                    3.423992e+00 11        1.057540
+## home_milestone               1.074063e+00  1        1.036370
+## rainfall_clean               1.588738e+00  1        1.260451
+## min_temp                     2.440252e+00  1        1.562131
+## max_temp                     2.939080e+00  1        1.714374
+## last_five_days_rain          1.623319e+00  1        1.274095
+## HomeOddsOpen                 2.900135e+00  1        1.702978
+## AwayOddsOpen                 3.400223e+00  1        1.843969
+## HomeLineOpen                 9.825720e+00  1        3.134600
+## rivalry_game                 1.680106e+00  1        1.296189
+## split_round                  1.096713e+00  1        1.047241
+## last_results                 1.885393e+00  3        1.111477
+## is_same_state                2.559836e+00  1        1.599949
+## home_season_points           7.899789e+00  1        2.810656
+## away_season_points           9.963380e+00  1        3.156482
+## away_ladder_pos              8.290049e+00  1        2.879245
+## teams_in_eight               1.339704e+01  3        1.541114
+## home_team_finals_last_season 1.848796e+00  1        1.359704</code></pre>
+<p>The cleaned model’s Adjusted R-squared is 0.8652, while the RMSE was 6,474 and MAE 4,855. These results better the baseline model, but only just.</p>
+</div>
+<div id="best-model" class="section level1">
+<h1>Best model:</h1>
+<p>Determining the “best” model is an interesting exercise. If the explainability powers of the model is what we’re after, then we want to maximise the Adjusted R-squared metric. This analysis is aimed at maximising the success of predicting crowds, and as such, the Root Mean Squared Error (RMSE) or Mean Absolute Error (MAE) are the metrics we’re going to focus on. Both measures can be related back to the response variable - attendance - the difference being that MAE is the average absolute error of the model (difference between prediction and actual), while the RMSE penalises the model the larger the error.</p>
+<p>For both RMSE and MAE, the below model results in the lowest RMSE and MAE when applied to the 2019 season games.</p>
+<pre class="r"><code>set.seed(123)
+
+fit_lm &lt;- lm(attendance ~ team1 + team2 + round + venue + game_time + I(HomeLineOpen * home_ladder_pos) + rivalry_game + last_results + last_five_days_rain + max_temp + min_temp + home_mean_experience + away_mean_experience + is_same_state + home_score_for + I(home_percentage * home_ladder_pos) + I(home_wins_last_three * round) + round * finals_last_season, data = afl_pre_2019)
+
+summary(fit_lm)$adj.r.squared</code></pre>
+<pre><code>## [1] 0.8582593</code></pre>
+<p>The Adjusted R-Squared of the model is 0.858, indicating that almost 86% of the variablility in AFL attendances in the training set (2013-2018) is explained by the model.</p>
+<p><strong>Interaction Terms</strong></p>
+<p>Features were not only used on their own in this model. Interaction terms wera also employed. The following features were combined to form a feature and gave the model a boost in predictive power:</p>
+<ul>
+<li><code>I(HomeLineOpen * home_ladder_pos)</code></li>
+<li><code>I(home_percentage * home_ladder_pos)</code></li>
+<li><code>I(home_wins_last_three * round)</code></li>
+<li><code>round * finals_last_season</code></li>
+</ul>
+<div id="analysing-the-best-model" class="section level2">
+<h2>Analysing the best model</h2>
+<p>The first thing we want to do is ensure the residuals are normally distributed to satisfy the condition of normality for linear models.</p>
+<p>The below histogram suggests that the errors are fairly normally distributed and centred around zero. A good sign.</p>
+<pre class="r"><code>ggplot(data = data.frame(fit_lm$residuals), aes(x= fit_lm.residuals)) + 
+  geom_histogram() +
+  ggtitle(&quot;ERRORS ARE CENTRED AROUND ZERO&quot;) +
+  scale_x_continuous(labels = comma, name = &quot;Model Residuals&quot;)</code></pre>
+<p><img src="/post/predicting_crowds_files/figure-html/residuals_plot-1.png" width="672" /></p>
+<pre class="r"><code># ggsave(&quot;plots/prediction_plots/errors_hist.png&quot;, width = 30, height = 22, units = &quot;cm&quot;)</code></pre>
+<p>Then we can look at the coefficients of each of the predictor variables.</p>
+<p>To make inspecting these easier, the <code>broom</code> package was used. Using the <code>tidy()</code> function, the results of the summary lm output are nicely displayed in a DF.</p>
+<p>The coefficients for each of the predictor variables (other than home and away teams) are displayed below.</p>
+<pre class="r"><code>a &lt;- broom::tidy(fit_lm) %&gt;% mutate(p.value = round(p.value, 5))
+
+a %&gt;% filter(!str_detect(term, &quot;team1&quot;), !str_detect(term, &quot;team2&quot;)) %&gt;%  
+  kableExtra::kable(format = &quot;html&quot;, escape = F) %&gt;%
+  kableExtra::kable_styling(&quot;striped&quot;, full_width = F) </code></pre>
+<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+std.error
+</th>
+<th style="text-align:right;">
+statistic
+</th>
+<th style="text-align:right;">
+p.value
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:right;">
+61007.772536
+</td>
+<td style="text-align:right;">
+7066.622895
+</td>
+<td style="text-align:right;">
+8.6332288
+</td>
+<td style="text-align:right;">
+0.00000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+round
+</td>
+<td style="text-align:right;">
+-628.797448
+</td>
+<td style="text-align:right;">
+147.199874
+</td>
+<td style="text-align:right;">
+-4.2717255
+</td>
+<td style="text-align:right;">
+0.00002
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+venueCarrara
+</td>
+<td style="text-align:right;">
+-9384.433835
+</td>
+<td style="text-align:right;">
+4893.988254
+</td>
+<td style="text-align:right;">
+-1.9175432
+</td>
+<td style="text-align:right;">
+0.05543
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+venueDocklands
+</td>
+<td style="text-align:right;">
+2025.790428
+</td>
+<td style="text-align:right;">
+1843.347042
+</td>
+<td style="text-align:right;">
+1.0989740
+</td>
+<td style="text-align:right;">
+0.27202
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+venueGabba
+</td>
+<td style="text-align:right;">
+-12078.813180
+</td>
+<td style="text-align:right;">
+7915.867406
+</td>
+<td style="text-align:right;">
+-1.5258989
+</td>
+<td style="text-align:right;">
+0.12732
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+venueKardinia Park
+</td>
+<td style="text-align:right;">
+-790.290125
+</td>
+<td style="text-align:right;">
+2477.093571
+</td>
+<td style="text-align:right;">
+-0.3190393
+</td>
+<td style="text-align:right;">
+0.74976
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+venueM.C.G.
+</td>
+<td style="text-align:right;">
+14604.069479
+</td>
+<td style="text-align:right;">
+1859.992224
+</td>
+<td style="text-align:right;">
+7.8516831
+</td>
+<td style="text-align:right;">
+0.00000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+venueOther
+</td>
+<td style="text-align:right;">
+-11316.633901
+</td>
+<td style="text-align:right;">
+1521.161777
+</td>
+<td style="text-align:right;">
+-7.4394677
+</td>
+<td style="text-align:right;">
+0.00000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+venuePerth Stadium
+</td>
+<td style="text-align:right;">
+2344.181828
+</td>
+<td style="text-align:right;">
+2119.734512
+</td>
+<td style="text-align:right;">
+1.1058846
+</td>
+<td style="text-align:right;">
+0.26902
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+venueS.C.G.
+</td>
+<td style="text-align:right;">
+-6985.844583
+</td>
+<td style="text-align:right;">
+2854.176355
+</td>
+<td style="text-align:right;">
+-2.4475869
+</td>
+<td style="text-align:right;">
+0.01454
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+venueSydney Showground
+</td>
+<td style="text-align:right;">
+-13915.330942
+</td>
+<td style="text-align:right;">
+2344.860834
+</td>
+<td style="text-align:right;">
+-5.9343952
+</td>
+<td style="text-align:right;">
+0.00000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+game_timeFri Evening
+</td>
+<td style="text-align:right;">
+-14669.992661
+</td>
+<td style="text-align:right;">
+7858.171556
+</td>
+<td style="text-align:right;">
+-1.8668456
+</td>
+<td style="text-align:right;">
+0.06219
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+game_timeFri Night
+</td>
+<td style="text-align:right;">
+-26232.422896
+</td>
+<td style="text-align:right;">
+6419.398624
+</td>
+<td style="text-align:right;">
+-4.0864300
+</td>
+<td style="text-align:right;">
+0.00005
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+game_timeSat Afternoon
+</td>
+<td style="text-align:right;">
+-27517.789656
+</td>
+<td style="text-align:right;">
+6413.609760
+</td>
+<td style="text-align:right;">
+-4.2905307
+</td>
+<td style="text-align:right;">
+0.00002
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+game_timeSat Evening
+</td>
+<td style="text-align:right;">
+-28587.419367
+</td>
+<td style="text-align:right;">
+6425.144735
+</td>
+<td style="text-align:right;">
+-4.4493036
+</td>
+<td style="text-align:right;">
+0.00001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+game_timeSat Night
+</td>
+<td style="text-align:right;">
+-27304.481145
+</td>
+<td style="text-align:right;">
+6416.346545
+</td>
+<td style="text-align:right;">
+-4.2554561
+</td>
+<td style="text-align:right;">
+0.00002
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+game_timeSun Afternoon
+</td>
+<td style="text-align:right;">
+-28302.693645
+</td>
+<td style="text-align:right;">
+6410.217064
+</td>
+<td style="text-align:right;">
+-4.4152473
+</td>
+<td style="text-align:right;">
+0.00001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+game_timeSun Evening
+</td>
+<td style="text-align:right;">
+-30499.992506
+</td>
+<td style="text-align:right;">
+6441.388865
+</td>
+<td style="text-align:right;">
+-4.7350025
+</td>
+<td style="text-align:right;">
+0.00000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+game_timeSun Night
+</td>
+<td style="text-align:right;">
+-29709.469650
+</td>
+<td style="text-align:right;">
+6969.788830
+</td>
+<td style="text-align:right;">
+-4.2626069
+</td>
+<td style="text-align:right;">
+0.00002
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+game_timeWeekday Afternoon
+</td>
+<td style="text-align:right;">
+-6264.436854
+</td>
+<td style="text-align:right;">
+6587.953778
+</td>
+<td style="text-align:right;">
+-0.9508927
+</td>
+<td style="text-align:right;">
+0.34187
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+game_timeWeekday Evening
+</td>
+<td style="text-align:right;">
+-32666.780662
+</td>
+<td style="text-align:right;">
+8987.962304
+</td>
+<td style="text-align:right;">
+-3.6345035
+</td>
+<td style="text-align:right;">
+0.00029
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+game_timeWeekday Night
+</td>
+<td style="text-align:right;">
+-24296.860101
+</td>
+<td style="text-align:right;">
+6490.825702
+</td>
+<td style="text-align:right;">
+-3.7432618
+</td>
+<td style="text-align:right;">
+0.00019
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+I(HomeLineOpen * home_ladder_pos)
+</td>
+<td style="text-align:right;">
+-3.929212
+</td>
+<td style="text-align:right;">
+0.897336
+</td>
+<td style="text-align:right;">
+-4.3787523
+</td>
+<td style="text-align:right;">
+0.00001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+rivalry_gameRivalry
+</td>
+<td style="text-align:right;">
+4243.471176
+</td>
+<td style="text-align:right;">
+1103.664170
+</td>
+<td style="text-align:right;">
+3.8448935
+</td>
+<td style="text-align:right;">
+0.00013
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+last_resultsboth_won
+</td>
+<td style="text-align:right;">
+3278.290173
+</td>
+<td style="text-align:right;">
+599.102681
+</td>
+<td style="text-align:right;">
+5.4720005
+</td>
+<td style="text-align:right;">
+0.00000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+last_resultsonly_away_team_won
+</td>
+<td style="text-align:right;">
+1354.077316
+</td>
+<td style="text-align:right;">
+536.942587
+</td>
+<td style="text-align:right;">
+2.5218289
+</td>
+<td style="text-align:right;">
+0.01181
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+last_resultsonly_home_team_won
+</td>
+<td style="text-align:right;">
+1381.030990
+</td>
+<td style="text-align:right;">
+594.706552
+</td>
+<td style="text-align:right;">
+2.3222058
+</td>
+<td style="text-align:right;">
+0.02040
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+last_five_days_rain
+</td>
+<td style="text-align:right;">
+-44.287937
+</td>
+<td style="text-align:right;">
+12.297250
+</td>
+<td style="text-align:right;">
+-3.6014505
+</td>
+<td style="text-align:right;">
+0.00033
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+max_temp
+</td>
+<td style="text-align:right;">
+310.452321
+</td>
+<td style="text-align:right;">
+61.108889
+</td>
+<td style="text-align:right;">
+5.0803137
+</td>
+<td style="text-align:right;">
+0.00000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+min_temp
+</td>
+<td style="text-align:right;">
+-125.802409
+</td>
+<td style="text-align:right;">
+59.279520
+</td>
+<td style="text-align:right;">
+-2.1221901
+</td>
+<td style="text-align:right;">
+0.03404
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+home_mean_experience
+</td>
+<td style="text-align:right;">
+25.443372
+</td>
+<td style="text-align:right;">
+14.678437
+</td>
+<td style="text-align:right;">
+1.7333843
+</td>
+<td style="text-align:right;">
+0.08331
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+away_mean_experience
+</td>
+<td style="text-align:right;">
+45.390519
+</td>
+<td style="text-align:right;">
+14.339468
+</td>
+<td style="text-align:right;">
+3.1654256
+</td>
+<td style="text-align:right;">
+0.00159
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+is_same_stateyes
+</td>
+<td style="text-align:right;">
+8151.587887
+</td>
+<td style="text-align:right;">
+601.638591
+</td>
+<td style="text-align:right;">
+13.5489778
+</td>
+<td style="text-align:right;">
+0.00000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+home_score_for
+</td>
+<td style="text-align:right;">
+7.394136
+</td>
+<td style="text-align:right;">
+1.692602
+</td>
+<td style="text-align:right;">
+4.3685025
+</td>
+<td style="text-align:right;">
+0.00001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+I(home_percentage * home_ladder_pos)
+</td>
+<td style="text-align:right;">
+-294.795766
+</td>
+<td style="text-align:right;">
+66.179029
+</td>
+<td style="text-align:right;">
+-4.4545193
+</td>
+<td style="text-align:right;">
+0.00001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+I(home_wins_last_three * round)
+</td>
+<td style="text-align:right;">
+3.645874
+</td>
+<td style="text-align:right;">
+19.738164
+</td>
+<td style="text-align:right;">
+0.1847119
+</td>
+<td style="text-align:right;">
+0.85349
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+finals_last_seasonboth_played
+</td>
+<td style="text-align:right;">
+1691.406848
+</td>
+<td style="text-align:right;">
+1188.541482
+</td>
+<td style="text-align:right;">
+1.4230945
+</td>
+<td style="text-align:right;">
+0.15499
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+finals_last_seasonhome_only_played
+</td>
+<td style="text-align:right;">
+953.657176
+</td>
+<td style="text-align:right;">
+1235.936253
+</td>
+<td style="text-align:right;">
+0.7716071
+</td>
+<td style="text-align:right;">
+0.44051
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+finals_last_seasonneither_played
+</td>
+<td style="text-align:right;">
+482.072356
+</td>
+<td style="text-align:right;">
+1101.460684
+</td>
+<td style="text-align:right;">
+0.4376664
+</td>
+<td style="text-align:right;">
+0.66171
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+round:finals_last_seasonboth_played
+</td>
+<td style="text-align:right;">
+17.403974
+</td>
+<td style="text-align:right;">
+83.889701
+</td>
+<td style="text-align:right;">
+0.2074626
+</td>
+<td style="text-align:right;">
+0.83569
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+round:finals_last_seasonhome_only_played
+</td>
+<td style="text-align:right;">
+-13.710531
+</td>
+<td style="text-align:right;">
+82.253765
+</td>
+<td style="text-align:right;">
+-0.1666858
+</td>
+<td style="text-align:right;">
+0.86765
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+round:finals_last_seasonneither_played
+</td>
+<td style="text-align:right;">
+21.455146
+</td>
+<td style="text-align:right;">
+76.032301
+</td>
+<td style="text-align:right;">
+0.2821846
+</td>
+<td style="text-align:right;">
+0.77785
+</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>actual_2019crowds &lt;- afl_2019$attendance
+
+# fit linear model 
+afl_2019$predicted_attendance &lt;- predict(fit_lm, afl_2019)
+
+# put a floor on AFL attendances - surely the AFL doesn&#39;t let the crowd fall below 6,000
+afl_2019$predicted_attendance &lt;- ifelse(afl_2019$predicted_attendance &lt; 6000, 6000, afl_2019$predicted_attendance)
+
+# calculate the errors
+error &lt;- afl_2019$predicted_attendance - afl_2019$attendance</code></pre>
+<p>Then we want to annalyse how well the model fit the relationship. This can be achieved by plotting the actual vs predicted values on a scatterplot.</p>
+<p>I can be seen that the linear model does a fairly good job on average. There model did under-predict some of the larger drawing games, while also predicting an attendance of over 30,000 to the Hawthorn vs GWS game at the MCG in round 8, which only drew 14,636 fans.</p>
+<pre class="r"><code>afl_2019 %&gt;% 
+  ggplot(aes(x=attendance, y= predicted_attendance)) +
+  geom_point() +
+  geom_abline(slope = 1, intercept=0) +
+  ggtitle(&quot;MODEL UNDER-PREDICTED SOME\nLARGE DRAWING GAMES&quot;) +
+  scale_x_continuous(labels = comma, name = &quot;Actual Attendance&quot;) +
+  scale_y_continuous(labels = comma, name = &quot;Predicted Attendance&quot;) +
+  annotate(geom = &quot;text&quot;, x=83000, y= 55000, label = &quot;Model under-predicted\non these games&quot;)</code></pre>
+<p><img src="/post/predicting_crowds_files/figure-html/pred_v_actual-1.png" width="960" /></p>
+<pre class="r"><code># ggsave(&quot;plots/prediction_plots/actual_v_pred.png&quot;, width = 30, height = 22, units = &quot;cm&quot;)</code></pre>
+<p>We can also look at how the model performed predicting crowds at each of the venues.</p>
+<pre class="r"><code>afl_2019 %&gt;% 
+  mutate(error = predicted_attendance - attendance) %&gt;% 
+  ggplot(aes(x= error)) +
+  geom_density() +
+  geom_vline(xintercept = 0, linetype = 2) +
+  facet_wrap(~ venue, scales = &quot;free_y&quot;, ncol = 2) +
+  scale_x_continuous(labels = comma, name = &quot;Error&quot;) +
+  ggtitle(&quot;Exploring Errors by Venue&quot;) +
+  theme(axis.text.y = element_blank(), axis.title.y = element_blank())</code></pre>
+<p><img src="/post/predicting_crowds_files/figure-html/venue_errors-1.png" width="672" /></p>
+<pre class="r"><code># ggsave(&quot;plots/prediction_plots/venue_errors.png&quot;, width = 30, height = 22, units = &quot;cm&quot;)</code></pre>
+<p>The model tended to over-predict attendances at the Gabba, Perth Stadium, Sydney Showgrounds and even the MCG, while it under-predicted at Carrara and “Other”.</p>
+<pre class="r"><code>print(paste0(&quot;RMSE: &quot;, sqrt(mean(error^2, na.rm = T))))</code></pre>
+<pre><code>## [1] &quot;RMSE: 5952.89951744075&quot;</code></pre>
+<pre class="r"><code>print(paste0(&quot;MAE: &quot;, mean(abs(error), na.rm = T)))</code></pre>
+<pre><code>## [1] &quot;MAE: 4466.03075809839&quot;</code></pre>
+</div>
+</div>
+<div id="overall-performance-of-the-model" class="section level1">
+<h1>Overall Performance of the Model</h1>
+<p>The final model selected achieved an RMSE of 5,953 and MAE of 4,466, meaning that on average, the model is off by just under 4,500 fans when predicting attendances. When compared to the baseline model (RMSE of 6,816 and a MAE of 4,958), this model betters the baseline by over 500 people on average, but also doesn’t have as many extreme errors.</p>
+</div>
+<div id="conclusion" class="section level1">
+<h1>Conclusion</h1>
+<p>Hopefully you’ve made it to here!</p>
+<p>I’d love to hear from you with any feedback / corrections / etc in the comments or get in <a href="https://www.linkedin.com/in/jason-zivkovic-4a0a1926/">touch</a>.</p>
+<p>Thanks!</p>
+</div>

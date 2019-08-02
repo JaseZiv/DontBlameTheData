@@ -23,6 +23,10 @@
   </url>
   
   <url>
+    <loc>/post/predicting_crowds/</loc>
+  </url>
+  
+  <url>
     <loc>/categories/</loc>
     <priority>0</priority>
     <xhtml:link
@@ -115,6 +119,10 @@
                 hreflang="en"
                 href="/tags/"
                 />
+  </url>
+  
+  <url>
+    <loc>/post/afl_bandwagon_analysis/</loc>
   </url>
   
   <url>
