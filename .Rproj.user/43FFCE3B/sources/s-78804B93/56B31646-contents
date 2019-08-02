@@ -1,4 +1,4 @@
-baseURL = "https://www.dontblamethedata.com"
+baseURL = "https://example.com"
 languageCode = "en-us"
 defaultContentLanguage = "en"
 title = "Cayman"

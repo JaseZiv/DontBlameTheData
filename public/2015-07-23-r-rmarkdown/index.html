@@ -21,7 +21,7 @@
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.js" integrity="sha384-9Nhn55MVVN0/4OFx7EE5kpFBPsEMZxKTCnA+4fqDmg12eCTqGi6+BB2LjY8brQxJ" crossorigin="anonymous"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
 
-  <title>About | Cayman</title>
+  <title>Hello R Markdown | Cayman</title>
 </head>
 
 <body>
@@ -64,16 +64,78 @@
 
   <section class="main-content">
     
-  <h1>About</h1>
-  <p>This is a test website created by Jason Zivkovic.</p>
+  <h1>Hello R Markdown</h1>
+  <div>
+    
+    <strong>Publish date: </strong>2015-07-23
+  </div>
+  
+  
+    <div>
+      <strong>Tags: </strong>
+      
+        
+        
+        
+      
+        
+        
+        
+      
+        
+        
+        
+      
+      <a href="/tags/r-markdown/">R Markdown</a>, <a href="/tags/plot/">plot</a>, <a href="/tags/regression/">regression</a>
+    </div>
+  
+  
 
-<p>Growing up as a sports-mad child and teen, statistics were always in my world. But with the love of sport blinding me, I didn&rsquo;t even realise it was a love of statistics and data. Then, after meandering (much to my moter&rsquo;s chagrin) through my early work life, and dabbling with things, I discovered edX and the data analysis short courses they had available. I started taking them and my love of the data was rekindled!</p>
 
-<p>This blog will be mainly about sport, but will touch on other parts of life also. What I can promise through is it will be filled with my own selfish pleasures. I hope they align with my readers&rsquo; interests. The one constant is that the data will tell the story. If you don&rsquo;t agree with it, please, please don&rsquo;t blame the data.</p>
+<div id="r-markdown" class="section level1">
+<h1>R Markdown</h1>
+<p>This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <a href="http://rmarkdown.rstudio.com" class="uri">http://rmarkdown.rstudio.com</a>.</p>
+<p>You can embed an R code chunk like this:</p>
+<pre class="r"><code>summary(cars)
+##      speed           dist       
+##  Min.   : 4.0   Min.   :  2.00  
+##  1st Qu.:12.0   1st Qu.: 26.00  
+##  Median :15.0   Median : 36.00  
+##  Mean   :15.4   Mean   : 42.98  
+##  3rd Qu.:19.0   3rd Qu.: 56.00  
+##  Max.   :25.0   Max.   :120.00
+fit &lt;- lm(dist ~ speed, data = cars)
+fit
+## 
+## Call:
+## lm(formula = dist ~ speed, data = cars)
+## 
+## Coefficients:
+## (Intercept)        speed  
+##     -17.579        3.932</code></pre>
+</div>
+<div id="including-plots" class="section level1">
+<h1>Including Plots</h1>
+<p>You can also embed plots. See Figure <a href="#fig:pie">1</a> for example:</p>
+<pre class="r"><code>par(mar = c(0, 1, 0, 1))
+pie(
+  c(280, 60, 20),
+  c(&#39;Sky&#39;, &#39;Sunny side of pyramid&#39;, &#39;Shady side of pyramid&#39;),
+  col = c(&#39;#0292D8&#39;, &#39;#F7EA39&#39;, &#39;#C4B632&#39;),
+  init.angle = -50, border = NA
+)</code></pre>
+<div class="figure"><span id="fig:pie"></span>
+<img src="/post/2015-07-23-r-rmarkdown_files/figure-html/pie-1.png" alt="A fancy pie chart." width="672" />
+<p class="caption">
+Figure 1: A fancy pie chart.
+</p>
+</div>
+</div>
 
-<p>The aim of this is to hold some of my works and to share them with the public.</p>
+  
 
-<p>This is powered by the <a href="https://github.com/rstudio/blogdown"><strong>blogdown</strong></a> package. The theme was forked from <a href="https://themes.gohugo.io/future-imperfect/">@jrutheiser/hugo-future-imperfect-theme</a>.</p>
+  
+
 
 
     <footer class="site-footer">
