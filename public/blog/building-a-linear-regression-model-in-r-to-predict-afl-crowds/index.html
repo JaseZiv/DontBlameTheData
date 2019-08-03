@@ -3,7 +3,7 @@
   <head>
   <meta charset="utf-8">
 <title>Building a Linear Regression Model in R to Predict AFL Crowds - Don&#39;t Blame The Data</title>
-<meta name="description" content="A theme by HTML5 UP, ported by Julio Pescador. Slimmed and enhanced by Patrick Collins. Multilingual by StatnMap. Powered by Hugo.">
+<meta name="description" content="A blog for sports and data analytics and machine learning using R programming.">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
@@ -27,7 +27,7 @@ Anyway, that’s my two cents worth.">
 <meta property="og:description" content="Introduction There is a lot of talk about crowd behaviour and crowd issues with the modern day AFL. I personally feel the crowd issues are a case of business-as-usual; I’ve been going to AFL games on-and-off for close to three decades and the crowd behaviour is no different today as it was 20 years ago… just now everyone with a phone and Twitter account is a journo.
 Anyway, that’s my two cents worth." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/post/building-a-linear-regression-model-in-r-to-predict-afl-crowds/" />
+<meta property="og:url" content="/blog/building-a-linear-regression-model-in-r-to-predict-afl-crowds/" />
 <meta property="article:published_time" content="2019-07-27T00:00:00&#43;00:00"/>
 <meta property="article:modified_time" content="2019-07-27T00:00:00&#43;00:00"/>
 
@@ -67,14 +67,14 @@ Anyway, that’s my two cents worth."/>
       <a href="/">
         
           
-            post
+            Blog
           
         
       </a>
     </h1>
     <menu id="site-nav-menu" class="flyout-menu">
       
-        <a href="/" class="link"><i class="fas fa-home">&nbsp;</i>Home</a>
+        <a href="/about/" class="link"><i class="fas fa-home">&nbsp;</i>Home</a>
       
         <a href="/about/" class="link"><i class="far fa-id-card">&nbsp;</i>About</a>
       
@@ -105,37 +105,37 @@ Anyway, that’s my two cents worth."/>
 
   
     
-    <a href="//twitter.com/share?text=Building%20a%20Linear%20Regression%20Model%20in%20R%20to%20Predict%20AFL%20Crowds&amp;url=%2fpost%2fbuilding-a-linear-regression-model-in-r-to-predict-afl-crowds%2f" target="_blank" rel="noopener" class="share-btn twitter">
+    <a href="//twitter.com/share?text=Building%20a%20Linear%20Regression%20Model%20in%20R%20to%20Predict%20AFL%20Crowds&amp;url=%2fblog%2fbuilding-a-linear-regression-model-in-r-to-predict-afl-crowds%2f" target="_blank" rel="noopener" class="share-btn twitter">
         <i class="fab fa-twitter"></i><p>&nbsp;Twitter</p>
       </a>
   
 
   
-      <a href="//www.facebook.com/sharer/sharer.php?u=%2fpost%2fbuilding-a-linear-regression-model-in-r-to-predict-afl-crowds%2f" target="_blank" rel="noopener" class="share-btn facebook">
+      <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2fbuilding-a-linear-regression-model-in-r-to-predict-afl-crowds%2f" target="_blank" rel="noopener" class="share-btn facebook">
         <i class="fab fa-facebook"></i><p>&nbsp;Facebook</p>
         </a>
   
 
   
-    <a href="//www.reddit.com/submit?url=%2fpost%2fbuilding-a-linear-regression-model-in-r-to-predict-afl-crowds%2f&amp;title=Building%20a%20Linear%20Regression%20Model%20in%20R%20to%20Predict%20AFL%20Crowds" target="_blank" rel="noopener" class="share-btn reddit">
+    <a href="//www.reddit.com/submit?url=%2fblog%2fbuilding-a-linear-regression-model-in-r-to-predict-afl-crowds%2f&amp;title=Building%20a%20Linear%20Regression%20Model%20in%20R%20to%20Predict%20AFL%20Crowds" target="_blank" rel="noopener" class="share-btn reddit">
           <i class="fab fa-reddit-alien"></i><p>&nbsp;Reddit</p>
         </a>
   
 
   
-        <a href="//www.linkedin.com/shareArticle?url=%2fpost%2fbuilding-a-linear-regression-model-in-r-to-predict-afl-crowds%2f&amp;title=Building%20a%20Linear%20Regression%20Model%20in%20R%20to%20Predict%20AFL%20Crowds" target="_blank" rel="noopener" class="share-btn linkedin">
+        <a href="//www.linkedin.com/shareArticle?url=%2fblog%2fbuilding-a-linear-regression-model-in-r-to-predict-afl-crowds%2f&amp;title=Building%20a%20Linear%20Regression%20Model%20in%20R%20to%20Predict%20AFL%20Crowds" target="_blank" rel="noopener" class="share-btn linkedin">
             <i class="fab fa-linkedin"></i><p>&nbsp;LinkedIn</p>
           </a>
   
 
   
-        <a href="//www.pinterest.com/pin/create/button/?url=%2fpost%2fbuilding-a-linear-regression-model-in-r-to-predict-afl-crowds%2f&amp;description=Building%20a%20Linear%20Regression%20Model%20in%20R%20to%20Predict%20AFL%20Crowds" target="_blank" rel="noopener" class="share-btn pinterest">
+        <a href="//www.pinterest.com/pin/create/button/?url=%2fblog%2fbuilding-a-linear-regression-model-in-r-to-predict-afl-crowds%2f&amp;description=Building%20a%20Linear%20Regression%20Model%20in%20R%20to%20Predict%20AFL%20Crowds" target="_blank" rel="noopener" class="share-btn pinterest">
           <i class="fab fa-pinterest-p"></i><p>&nbsp;Pinterest</p>
         </a>
   
 
   
-        <a href="mailto:?subject=Check out this post by %7b%20%20%20%20%20%20%20%20map%5b%5d%7d&amp;body=%2fpost%2fbuilding-a-linear-regression-model-in-r-to-predict-afl-crowds%2f" target="_blank" class="share-btn email" data-proofer-ignore>
+        <a href="mailto:?subject=Check out this post by %7b%20%20%20%20%20%20%20%20map%5b%5d%7d&amp;body=%2fblog%2fbuilding-a-linear-regression-model-in-r-to-predict-afl-crowds%2f" target="_blank" class="share-btn email" data-proofer-ignore>
           <i class="fas fa-envelope"></i><p>&nbsp;Email</p>
         </a>
   
@@ -210,7 +210,7 @@ Anyway, that’s my two cents worth."/>
   <header>
   <div class="title">
     
-        <h2><a href="/post/building-a-linear-regression-model-in-r-to-predict-afl-crowds/">Building a Linear Regression Model in R to Predict AFL Crowds</a></h2>
+        <h2><a href="/blog/building-a-linear-regression-model-in-r-to-predict-afl-crowds/">Building a Linear Regression Model in R to Predict AFL Crowds</a></h2>
     
     
 </div>
@@ -233,37 +233,37 @@ Anyway, that’s my two cents worth."/>
 
   
     
-    <a href="//twitter.com/share?text=Building%20a%20Linear%20Regression%20Model%20in%20R%20to%20Predict%20AFL%20Crowds&amp;url=%2fpost%2fbuilding-a-linear-regression-model-in-r-to-predict-afl-crowds%2f" target="_blank" rel="noopener" class="share-btn twitter">
+    <a href="//twitter.com/share?text=Building%20a%20Linear%20Regression%20Model%20in%20R%20to%20Predict%20AFL%20Crowds&amp;url=%2fblog%2fbuilding-a-linear-regression-model-in-r-to-predict-afl-crowds%2f" target="_blank" rel="noopener" class="share-btn twitter">
         <i class="fab fa-twitter"></i><p>&nbsp;Twitter</p>
       </a>
   
 
   
-      <a href="//www.facebook.com/sharer/sharer.php?u=%2fpost%2fbuilding-a-linear-regression-model-in-r-to-predict-afl-crowds%2f" target="_blank" rel="noopener" class="share-btn facebook">
+      <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2fbuilding-a-linear-regression-model-in-r-to-predict-afl-crowds%2f" target="_blank" rel="noopener" class="share-btn facebook">
         <i class="fab fa-facebook"></i><p>&nbsp;Facebook</p>
         </a>
   
 
   
-    <a href="//www.reddit.com/submit?url=%2fpost%2fbuilding-a-linear-regression-model-in-r-to-predict-afl-crowds%2f&amp;title=Building%20a%20Linear%20Regression%20Model%20in%20R%20to%20Predict%20AFL%20Crowds" target="_blank" rel="noopener" class="share-btn reddit">
+    <a href="//www.reddit.com/submit?url=%2fblog%2fbuilding-a-linear-regression-model-in-r-to-predict-afl-crowds%2f&amp;title=Building%20a%20Linear%20Regression%20Model%20in%20R%20to%20Predict%20AFL%20Crowds" target="_blank" rel="noopener" class="share-btn reddit">
           <i class="fab fa-reddit-alien"></i><p>&nbsp;Reddit</p>
         </a>
   
 
   
-        <a href="//www.linkedin.com/shareArticle?url=%2fpost%2fbuilding-a-linear-regression-model-in-r-to-predict-afl-crowds%2f&amp;title=Building%20a%20Linear%20Regression%20Model%20in%20R%20to%20Predict%20AFL%20Crowds" target="_blank" rel="noopener" class="share-btn linkedin">
+        <a href="//www.linkedin.com/shareArticle?url=%2fblog%2fbuilding-a-linear-regression-model-in-r-to-predict-afl-crowds%2f&amp;title=Building%20a%20Linear%20Regression%20Model%20in%20R%20to%20Predict%20AFL%20Crowds" target="_blank" rel="noopener" class="share-btn linkedin">
             <i class="fab fa-linkedin"></i><p>&nbsp;LinkedIn</p>
           </a>
   
 
   
-        <a href="//www.pinterest.com/pin/create/button/?url=%2fpost%2fbuilding-a-linear-regression-model-in-r-to-predict-afl-crowds%2f&amp;description=Building%20a%20Linear%20Regression%20Model%20in%20R%20to%20Predict%20AFL%20Crowds" target="_blank" rel="noopener" class="share-btn pinterest">
+        <a href="//www.pinterest.com/pin/create/button/?url=%2fblog%2fbuilding-a-linear-regression-model-in-r-to-predict-afl-crowds%2f&amp;description=Building%20a%20Linear%20Regression%20Model%20in%20R%20to%20Predict%20AFL%20Crowds" target="_blank" rel="noopener" class="share-btn pinterest">
           <i class="fab fa-pinterest-p"></i><p>&nbsp;Pinterest</p>
         </a>
   
 
   
-        <a href="mailto:?subject=Check out this post by %7b%20%20%20%20%20%20%20%20map%5b%5d%7d&amp;body=%2fpost%2fbuilding-a-linear-regression-model-in-r-to-predict-afl-crowds%2f" target="_blank" class="share-btn email" data-proofer-ignore>
+        <a href="mailto:?subject=Check out this post by %7b%20%20%20%20%20%20%20%20map%5b%5d%7d&amp;body=%2fblog%2fbuilding-a-linear-regression-model-in-r-to-predict-afl-crowds%2f" target="_blank" class="share-btn email" data-proofer-ignore>
           <i class="fas fa-envelope"></i><p>&nbsp;Email</p>
         </a>
   
@@ -1387,11 +1387,34 @@ error &lt;- afl_2019$predicted_attendance - afl_2019$attendance</code></pre>
 </article>
 <article class="post">
   
+    <article class="post">
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "dontblamethedata-com" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </article>
+
 
 </article>
 <div class="pagination">
   
-    <a href="/post/using-data-to-determine-which-afl-fans-jump-onthe-bandwagon/" class="button big previous"><i class="fas fa-angle-left"></i> Using Data To Determine Which AFL Fans Jump On The Bandwagon</a>
+    <a href="/blog/using-data-to-determine-which-afl-fans-jump-onthe-bandwagon/" class="button big previous"><i class="fas fa-angle-left"></i> Using Data To Determine Which AFL Fans Jump On The Bandwagon</a>
   
   
 </div>
@@ -1411,7 +1434,7 @@ error &lt;- afl_2019$predicted_attendance - afl_2019$attendance</code></pre>
 
         </section>
         <header>
-          <h1><a href="/post/building-a-linear-regression-model-in-r-to-predict-afl-crowds/">Building a Linear Regression Model in R to Predict AFL Crowds</a></h1>
+          <h1><a href="/blog/building-a-linear-regression-model-in-r-to-predict-afl-crowds/">Building a Linear Regression Model in R to Predict AFL Crowds</a></h1>
           <time class="published" datetime="">July 27, 2019</time>
         </header>
       </article>
@@ -1422,19 +1445,8 @@ error &lt;- afl_2019$predicted_attendance - afl_2019$attendance</code></pre>
 
         </section>
         <header>
-          <h1><a href="/post/using-data-to-determine-which-afl-fans-jump-onthe-bandwagon/">Using Data To Determine Which AFL Fans Jump On The Bandwagon</a></h1>
+          <h1><a href="/blog/using-data-to-determine-which-afl-fans-jump-onthe-bandwagon/">Using Data To Determine Which AFL Fans Jump On The Bandwagon</a></h1>
           <time class="published" datetime="">July 15, 2019</time>
-        </header>
-      </article>
-      
-      <article class="mini-post">
-        <section>
-          
-
-        </section>
-        <header>
-          <h1><a href="/post/">Post</a></h1>
-          <time class="published" datetime="">July 27, 2019</time>
         </header>
       </article>
       
@@ -1498,7 +1510,7 @@ error &lt;- afl_2019$predicted_attendance - afl_2019$attendance</code></pre>
     <header>
       <h1>About</h1>
     </header>
-    <p>test</p>
+    <p>A blog. Sports. Analytics. Sports analytics</p>
     <footer>
       <a href="/about" class="button">Learn More</a>
     </footer>

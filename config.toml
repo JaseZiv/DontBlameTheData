@@ -3,8 +3,8 @@ DefaultContentLanguage  = "en"
 title                   = "Don't Blame The Data"
 theme                   = "hugo-future-imperfect-slim"
 preserveTaxonomyNames   = true
-paginate                = 1
-disqusShortname         = ""
+paginate                = 3
+disqusShortname         = "dontblamethedata-com"
 googleAnalytics         = "UA-145056765-1"
 pluralizeListTitles     = false
 disableLanguages        = [""]
@@ -31,7 +31,7 @@ disableLanguages        = [""]
 
   [params.meta]
     # Sets the meta tag description
-    description         = "A theme by HTML5 UP, ported by Julio Pescador. Slimmed and enhanced by Patrick Collins. Multilingual by StatnMap. Powered by Hugo."
+    description         = "A blog for sports and data analytics and machine learning using R programming."
     # Sets the meta tag author
     author              = "HTML5UP and Hugo"
     # If you would like to add more comprehensive favicon support passed root
@@ -71,7 +71,7 @@ disableLanguages        = [""]
       alt                 = ""
 
   [params.sidebar]
-    about               = "test"
+    about               = "A blog. Sports. Analytics. Sports analytics"
     # Sets the number of recent posts to show in the sidebar. The default value is 5.
     postAmount          = 5
     # set to show or to hide categories in the sidebar
@@ -110,7 +110,7 @@ disableLanguages        = [""]
   # Identifier prepends a Font Awesome icon to the menu item
   [[menu.main]]
     name              = "Home"
-    url               = "/"
+    url               = "/about/"
     identifier        = "fas fa-home"
     weight            = 1
 

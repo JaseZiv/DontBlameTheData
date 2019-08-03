@@ -3,18 +3,24 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/post/building-a-linear-regression-model-in-r-to-predict-afl-crowds/</loc>
+    <loc>/blog/building-a-linear-regression-model-in-r-to-predict-afl-crowds/</loc>
     <lastmod>2019-07-27T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/post/using-data-to-determine-which-afl-fans-jump-onthe-bandwagon/</loc>
+    <loc>/blog/using-data-to-determine-which-afl-fans-jump-onthe-bandwagon/</loc>
     <lastmod>2019-07-15T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/about/</loc>
     <lastmod>2019-05-05T21:48:51-07:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/blog/</loc>
+    <lastmod>2019-07-27T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
@@ -66,12 +72,6 @@
                 hreflang="en"
                 href="/"
                 />
-  </url>
-  
-  <url>
-    <loc>/post/</loc>
-    <lastmod>2019-07-27T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
