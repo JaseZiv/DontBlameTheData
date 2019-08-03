@@ -39,12 +39,12 @@ type: post
 <p>The data is current to round 16 of the 2019 season.</p>
 <hr />
 <p>Over the last 20 years, the median (the 50% mark and a better measure than the average on skewed data) crowd to AFL games was 33,600. The data is positively skewed with a tail that extends out to 100,000.</p>
-<p><img src="/post/afl_bandwagon_analysis_files/figure-html/attendance-1.png" width="672" /></p>
+<p><img src="/blog/afl_bandwagon_analysis_files/figure-html/attendance-1.png" width="672" /></p>
 <p>As expected for the AFL, the finals series at the end of the season draws larger crowds than the premiership (regular season for non-AFL fans) season. The median attendance for the premiership season is just over 33,000, while for finals it is over 58,000. The finals series are the flagship games for the AFL - they would hope these games would draw larger crowds.</p>
-<p><img src="/post/afl_bandwagon_analysis_files/figure-html/finals_vreg-1.png" width="672" /></p>
+<p><img src="/blog/afl_bandwagon_analysis_files/figure-html/finals_vreg-1.png" width="672" /></p>
 <p>We can’t glean a lot from finals since they’re well patronised irrespective of who’s playing, so the rest of the analysis will focus on the premiership season.</p>
 <p>The last 20 seasons have seen some peaks and throughs though, with median attendances ranging from just under 29,000 in 2012 to just over 36,800 in 2008. The low attendances in 2012-13 were no doubt fuelled by the introduction of the newest expansion teams - Gold Coast and Greater Western Sydney (GWS) - in regions that are traditionally not AFL strongholds. The last five years however have seen a rebound of sorts, as these clubs slowly build up fanbases (and in the case of GWS start to have some success).</p>
-<p><img src="/post/afl_bandwagon_analysis_files/figure-html/attendance_seasons-1.png" width="672" /></p>
+<p><img src="/blog/afl_bandwagon_analysis_files/figure-html/attendance_seasons-1.png" width="672" /></p>
 </div>
 </div>
 <div id="which-teams-draw-larger-attendances" class="section level1">
@@ -62,7 +62,7 @@ type: post
 <li>Hawthorn</li>
 </ul>
 <p>Four of those clubs are Victorian clubs, with the other two from South Australia and Western Australia. This is important to note that even though the AFL is a national competition, these three states are traditionally stronghold states. Brisbane - despite their extreme success in the early part of this century and the fact that a Victorian club merged with then (Fitzroy Lions) - have the third lowest attendances. Only recent expansion teams GWS and Gold Coast have lower attendances. The north-east states are clearly a problem for the league.</p>
-<p><img src="/post/afl_bandwagon_analysis_files/figure-html/team_attendance-1.png" width="672" /></p>
+<p><img src="/blog/afl_bandwagon_analysis_files/figure-html/team_attendance-1.png" width="672" /></p>
 </div>
 <div id="which-teams-home-attendance-is-affected-more-because-of-the-previous-weeks-performance" class="section level1">
 <h1>Which team’s home attendance is affected more because of the previous week’s performance</h1>
@@ -81,7 +81,7 @@ type: post
 <li>With a p-value &lt; 0.05, the team’s last result is a significant predictor</li>
 </ol>
 <p>First thing we can do is visualise the data. Using boxplots to show the team’s distribution of home attendances for games both after a win and loss, we can see that there are what appear to be considerable differences for some teams. Where the line in the middle of the box (the median) differs noticably between a win or loss the previous week is an indication that that team’s supporters may be less inclined to attend their team’s games after a loss (or more inclined after a win).</p>
-<p><img src="/post/afl_bandwagon_analysis_files/figure-html/after_win-1.png" width="1152" /></p>
+<p><img src="/blog/afl_bandwagon_analysis_files/figure-html/after_win-1.png" width="1152" /></p>
 <div id="losing-impact-on-attendance-lioa" class="section level2">
 <h2>Losing Impact on Attendance (LIoA)</h2>
 <p>Hmmmm… well that certainly doesn’t help my case. Hawthorn’s Losing Impact on Attendance (LIoA) rating is -11.9% - a league worst, meaning that Hawthorn fan attendance at games after a loss is 13% lower than their season median home attendance. Another Victorian club, St Kilda, aren’t far behind, with a LIoA of -10.7%. GWS and Collingwood follow closely, with an LIoA of -7.9 and -7.6% respectively.</p>
@@ -551,12 +551,12 @@ Western Bulldogs
 <p>When the home team is the underdog, what is the impact to their home attendance?</p>
 <p>Carlton fans appear to be the most affected by their team’s chance of victory - when they’re the underdog, Carlton’s home attendance is 8.5% lower than their overall median home attendance. Strangely, Melbourne’s home attendance actually increases when they’re the underdog, with the attendance 13.7% higher.</p>
 <p>Hawthorn feature near the top of this list too… not a good sign.</p>
-<p><img src="/post/afl_bandwagon_analysis_files/figure-html/underdog_impact-1.png" width="672" /></p>
+<p><img src="/blog/afl_bandwagon_analysis_files/figure-html/underdog_impact-1.png" width="672" /></p>
 </div>
 <div id="favourite-impact" class="section level2">
 <h2>Favourite Impact</h2>
 <p>Wow… Ok this doesn’t look great. Hawthorn’s median attendance when favourite is over 45% higher than their overall home attendance since 2013. Geelong’s, just over 40%, is also abnormally high.</p>
-<p><img src="/post/afl_bandwagon_analysis_files/figure-html/fav_impact-1.png" width="672" /></p>
+<p><img src="/blog/afl_bandwagon_analysis_files/figure-html/fav_impact-1.png" width="672" /></p>
 <p>Well, that didn’t work out how I expected. Rather than busting the myth that Hawthorn fans are the biggest bandwagon jumpers in the league, I’ve actually added to the argument.</p>
 <p>Stay tuned for part two of this series, where I will attempt to build a predictive model that predicts AFL attendances.</p>
 <p>Feel free to leave any feedback / corrections / etc in the comments or get in <a href="https://www.linkedin.com/in/jason-zivkovic-4a0a1926/">touch</a>.</p>

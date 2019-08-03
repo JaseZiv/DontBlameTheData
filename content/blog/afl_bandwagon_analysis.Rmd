@@ -71,7 +71,7 @@ afl %>%
   ggplot(aes(x=attendance)) +
   geom_histogram(colour = "midnightblue", fill = "steelblue") +
   scale_x_continuous(labels = comma, name = "Attendance") +
-  labs(y= "Number of Games", title = "SOME LARGER DRAWING GAMES SKEWING DATA SLIGHTLY") +
+  labs(y= "Number of Games", title = "SOME LARGER DRAWING GAMES SKEWING\nDATA SLIGHTLY") +
   geom_vline(xintercept = median(afl$attendance), linetype = 2, colour = "darkred", size = 0.5) +
   geom_text(aes(label = paste0("Median Crowd: ", comma(median(afl$attendance))), x= median(afl$attendance) + 15000), y= 350, colour = "darkred") +
   ylim(0,400) +
@@ -159,7 +159,7 @@ team_attendances %>%
   coord_flip() +
   scale_y_continuous(labels = comma, name = "Attendance") +
   scale_fill_manual(values = c("steelblue", "lightgrey")) +
-  ggtitle("ATTENDANCES FOR EACH TEAM OVER THE LAST 20 YEARS") +
+  ggtitle("ATTENDANCES FOR EACH TEAM OVER\nTHE LAST 20 YEARS") +
   theme(axis.title.y = element_blank(), legend.position = "none")
 
 # ggsave("plots/team_attendance_box.png", width = 30, height = 22, units = "cm")
