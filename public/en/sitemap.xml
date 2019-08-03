@@ -18,6 +18,11 @@
   </url>
   
   <url>
+    <loc>/blog/federal-election-who-to-vote-for-according-to-twitter/</loc>
+    <lastmod>2019-05-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/blog/</loc>
     <lastmod>2019-07-27T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -134,8 +139,26 @@
   </url>
   
   <url>
+    <loc>/categories/politics/</loc>
+    <lastmod>2019-05-04T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/categories/sport/</loc>
     <lastmod>2019-07-27T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/text-analysis/</loc>
+    <lastmod>2019-05-04T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/tidytext/</loc>
+    <lastmod>2019-05-04T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

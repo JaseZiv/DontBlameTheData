@@ -56,11 +56,38 @@
     </item>
     
     <item>
+      <title>politics</title>
+      <link>/categories/politics/</link>
+      <pubDate>Sat, 04 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/politics/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>sport</title>
       <link>/categories/sport/</link>
       <pubDate>Sat, 27 Jul 2019 00:00:00 +0000</pubDate>
       
       <guid>/categories/sport/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>text analysis</title>
+      <link>/categories/text-analysis/</link>
+      <pubDate>Sat, 04 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/text-analysis/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tidytext</title>
+      <link>/categories/tidytext/</link>
+      <pubDate>Sat, 04 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/tidytext/</guid>
       <description></description>
     </item>
     

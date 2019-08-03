@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>politics on Don&#39;t Blame The Data</title>
+    <link>/categories/politics/</link>
+    <description>Recent content in politics on Don&#39;t Blame The Data</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 04 May 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/politics/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Federal Election... Who To Vote For According To Twitter</title>
+      <link>/blog/federal-election-who-to-vote-for-according-to-twitter/</link>
+      <pubDate>Sat, 04 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/federal-election-who-to-vote-for-according-to-twitter/</guid>
+      <description>Introduction The Australian 2019 Federal Election is almost upon us (18th of May) and as usual, I have no idea who to vote for. Well that’s not true, usually, I’m what is colloquially described as a “donkey voter” - someone who doesn’t vote. You see, in democratic Australia, it is compulsory to vote. From the Australian Electoral Commission (AEC):
+ Failure to vote at a federal election without a valid and sufficient reason is an offence under section 245 of the Commonwealth Electoral Act 1918.</description>
+    </item>
+    
+  </channel>
+</rss>

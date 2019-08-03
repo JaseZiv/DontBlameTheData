@@ -1,0 +1,489 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+<title>tidytext - Don&#39;t Blame The Data</title>
+<meta name="description" content="A blog for sports and current affairs data analysis and machine learning using R programming.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+  <meta name="generator" content="Hugo 0.54.0" />
+  
+<meta itemprop="name" content="tidytext">
+<meta itemprop="description" content="">
+
+
+  <meta property="og:title" content="tidytext" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="/categories/tidytext/" />
+
+<meta property="og:updated_time" content="2019-05-04T00:00:00&#43;00:00"/>
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="tidytext"/>
+<meta name="twitter:description" content=""/>
+<meta name="twitter:site" content="@https://twitter.com/jaseziv"/>
+
+  
+
+  <link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
+  
+    
+      <link rel="stylesheet" href="/css/normalize.css">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,800,900|Source+Sans+Pro:400,700">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.1.0/css/flag-icon.min.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css">
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.9.0/css/all.css" integrity="sha384-i1LQnF23gykqWXg6jxC2ZbCbUMxyw5gLZY6UiUS98LYV5unm8GWmfkIS6jqJfb4E" crossorigin="anonymous">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.min.css" />
+      <link rel="stylesheet" href="/css/main.min.css">
+      <link rel="stylesheet" href="/css/add-on.css">
+    
+  
+  
+  
+  
+  
+</head>
+
+  <body>
+    
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/">
+        
+          
+            Categories
+          
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu">
+      
+        <a href="/about/" class="link"><i class="fas fa-home">&nbsp;</i>Home</a>
+      
+        <a href="/about/" class="link"><i class="far fa-id-card">&nbsp;</i>About</a>
+      
+        <a href="/blog/" class="link"><i class="far fa-newspaper">&nbsp;</i>Blog</a>
+      
+        <a href="/categories/" class="link"><i class="fas fa-sitemap">&nbsp;</i>Categories</a>
+      
+        <a href="/contact/" class="link"><i class="far fa-envelope">&nbsp;</i>Contact</a>
+      
+      <a href="#share-menu" class="share-toggle"><i class="fas fa-share-alt">&nbsp;</i>Share</a>
+      
+
+    </menu>
+    
+
+    <a href="#share-menu" class="share-toggle"><i class="fas fa-share-alt fa-2x">&nbsp;</i></a>
+    
+    <a href="#site-nav" class="nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  
+  
+    <menu id="share-menu" class="flyout-menu">
+      <h1>Share Post</h1>
+      
+
+
+
+
+  
+    
+    <a href="//twitter.com/share?text=tidytext&amp;url=%2fcategories%2ftidytext%2f" target="_blank" rel="noopener" class="share-btn twitter">
+        <i class="fab fa-twitter"></i><p>&nbsp;Twitter</p>
+      </a>
+  
+
+  
+      <a href="//www.facebook.com/sharer/sharer.php?u=%2fcategories%2ftidytext%2f" target="_blank" rel="noopener" class="share-btn facebook">
+        <i class="fab fa-facebook"></i><p>&nbsp;Facebook</p>
+        </a>
+  
+
+  
+    <a href="//www.reddit.com/submit?url=%2fcategories%2ftidytext%2f&amp;title=tidytext" target="_blank" rel="noopener" class="share-btn reddit">
+          <i class="fab fa-reddit-alien"></i><p>&nbsp;Reddit</p>
+        </a>
+  
+
+  
+        <a href="//www.linkedin.com/shareArticle?url=%2fcategories%2ftidytext%2f&amp;title=tidytext" target="_blank" rel="noopener" class="share-btn linkedin">
+            <i class="fab fa-linkedin"></i><p>&nbsp;LinkedIn</p>
+          </a>
+  
+
+  
+        <a href="//www.pinterest.com/pin/create/button/?url=%2fcategories%2ftidytext%2f&amp;description=tidytext" target="_blank" rel="noopener" class="share-btn pinterest">
+          <i class="fab fa-pinterest-p"></i><p>&nbsp;Pinterest</p>
+        </a>
+  
+
+  
+        <a href="mailto:?subject=Check out this post by %7b%20%20%20%20%20%20%20%20map%5b%5d%7d&amp;body=%2fcategories%2ftidytext%2f" target="_blank" class="share-btn email" data-proofer-ignore>
+          <i class="fas fa-envelope"></i><p>&nbsp;Email</p>
+        </a>
+  
+
+
+    </menu>
+  
+</header>
+
+    <div id="wrapper">
+      <section id="site-intro">
+  <a href="/"><img src="/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <header>
+    <h1>Don't Blame the Data</h1>
+  </header>
+  <main>
+    <p>You can disagree with me, but don't blame the data</p>
+  </main>
+  
+    <footer>
+      <ul class="socnet-icons">
+        
+    <li><a href="/categories/tidytext/index.xml" type="application/rss+xml" target="_blank" title="RSS" class="fas fa-rss"></a></li>
+
+
+        <li><a href="//github.com/https://github.com/JaseZiv" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
+
+
+
+
+
+
+
+
+
+
+<li><a href="//medium.com/@https://medium.com/@jaseziv83" target="_blank" rel="noopener" title="Medium" class="fab fa-medium"></a></li>
+<li><a href="//linkedin.com/in/https://www.linkedin.com/in/jason-zivkovic-4a0a1926/" target="_blank" rel="noopener" title="LinkedIn" class="fab fa-linkedin"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="//twitter.com/https://twitter.com/jaseziv" target="_blank" rel="noopener" title="Twitter" class="fab fa-twitter"></a></li>
+
+
+
+
+
+
+
+
+
+
+<li><a href="mailto:jaseziv83@gmail.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
+
+      </ul>
+    </footer>
+  
+</section>
+
+      <main id="site-main">
+        <h1>tidytext</h1>
+        
+        
+            <article class="post">
+  <header>
+  <div class="title">
+    
+        <h2><a href="/blog/federal-election-who-to-vote-for-according-to-twitter/">Federal Election... Who To Vote For According To Twitter</a></h2>
+    
+    
+</div>
+  <div class="meta">
+    <time class="published" datetime="2019-05-04 00:00:00 &#43;0000 UTC">
+      May 4, 2019
+    </time>
+    <span class="author">Jason Zivkovic</span>
+    
+        <p>12 minute read</p>
+    
+  </div>
+</header>
+
+  
+
+  
+  <p>The Australian 2019 Federal Election is almost upon us (18th of May) and as usual, I have no idea who to vote for. Well that’s not true, usually, I’m what is colloquially described as a “donkey voter” - someone who doesn’t vote. You see, in democratic Australia, it is compulsory to vote. From the Australian Electoral Commission (AEC):</p>
+  <footer>
+    <a href="/blog/federal-election-who-to-vote-for-according-to-twitter/" class="button big">Read more</a>
+    <ul class="stats">
+  
+    
+    
+      <li class="categories">
+        <ul>
+          
+            
+            <li><a class="article-category-link" href="/categories/r">R</a></li>
+          
+            
+            <li><a class="article-category-link" href="/categories/politics">politics</a></li>
+          
+            
+            <li><a class="article-category-link" href="/categories/tidytext">tidytext</a></li>
+          
+            
+            <li><a class="article-category-link" href="/categories/text-analysis">text analysis</a></li>
+          
+            
+            <li><a class="article-category-link" href="/categories/tidyverse">tidyverse</a></li>
+          
+        </ul>
+      </li>
+    
+  
+  
+    
+    
+  
+</ul>
+
+  </footer>
+</article>
+
+        
+        
+<div class="pagination">
+  
+    <a href="#" class="disabled button big previous"><i class="fas fa-angle-left"></i></a>
+  
+  
+    <a href="#" class="disabled button big next"><i class="fas fa-angle-right"></i></a>
+  
+</div>
+
+      </main>
+      <section id="site-sidebar">
+  
+    <section id="recent-posts">
+      <header>
+        <h1>Recent posts</h1>
+      </header>
+      
+      <article class="mini-post">
+        <section>
+          
+
+        </section>
+        <header>
+          <h1><a href="/blog/building-a-linear-regression-model-in-r-to-predict-afl-crowds/">Building a Linear Regression Model in R to Predict AFL Crowds</a></h1>
+          <time class="published" datetime="">July 27, 2019</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+
+        </section>
+        <header>
+          <h1><a href="/blog/using-data-to-determine-which-afl-fans-jump-onthe-bandwagon/">Using Data To Determine Which AFL Fans Jump On The Bandwagon</a></h1>
+          <time class="published" datetime="">July 15, 2019</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+
+        </section>
+        <header>
+          <h1><a href="/blog/federal-election-who-to-vote-for-according-to-twitter/">Federal Election... Who To Vote For According To Twitter</a></h1>
+          <time class="published" datetime="">May 4, 2019</time>
+        </header>
+      </article>
+      
+      
+    </section>
+  
+
+  
+    
+      <section id="categories">
+        <header>
+          <h1><a href="/categories">Categories</a></h1>
+        </header>
+        <ul>
+          
+            
+          
+          
+          <li>
+            
+              <a href="/categories/r/">R<span class="count">3</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/tidyverse/">tidyverse<span class="count">3</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/afl/">afl<span class="count">2</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/analytics/">analytics<span class="count">2</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/sport/">sport<span class="count">2</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/linear-regression/">linear regression<span class="count">1</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/machine-learning/">machine learning<span class="count">1</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/politics/">politics<span class="count">1</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/text-analysis/">text analysis<span class="count">1</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/tidytext/">tidytext<span class="count">1</span></a>
+            
+          
+          </li>
+        </ul>
+      </section>
+    
+  
+
+  <section id="mini-bio">
+    <header>
+      <h1>About</h1>
+    </header>
+    <p>A blog. Sports. Analytics. Sports analytics</p>
+    <footer>
+      <a href="/about" class="button">Learn More</a>
+    </footer>
+  </section>
+</section>
+
+      <footer id="site-footer">
+  
+      <ul class="socnet-icons">
+        
+    <li><a href="/categories/tidytext/index.xml" type="application/rss+xml" target="_blank" title="RSS" class="fas fa-rss"></a></li>
+
+
+        <li><a href="//github.com/https://github.com/JaseZiv" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
+
+
+
+
+
+
+
+
+
+
+<li><a href="//medium.com/@https://medium.com/@jaseziv83" target="_blank" rel="noopener" title="Medium" class="fab fa-medium"></a></li>
+<li><a href="//linkedin.com/in/https://www.linkedin.com/in/jason-zivkovic-4a0a1926/" target="_blank" rel="noopener" title="LinkedIn" class="fab fa-linkedin"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="//twitter.com/https://twitter.com/jaseziv" target="_blank" rel="noopener" title="Twitter" class="fab fa-twitter"></a></li>
+
+
+
+
+
+
+
+
+
+
+<li><a href="mailto:jaseziv83@gmail.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
+
+      </ul>
+  
+  <p class="copyright">
+    
+      &copy; 2019
+      
+        Don&#39;t Blame The Data
+      
+    .
+    Powered by <a href="//gohugo.io" target="_blank" rel="noopener">Hugo</a>
+  </p>
+</footer>
+<a id="back-to-top" href="#" class="fas fa-arrow-up fa-2x"></a>
+
+      
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/html.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/css.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/js.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/toml.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+
+  
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/skel/3.0.1/skel.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.min.js"></script>
+  <script src=/js/util.js></script>
+  <script src=/js/main.js></script>
+  <script src=/js/add-on.js></script>
+  
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-145056765-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+    </div>
+  </body>
+</html>

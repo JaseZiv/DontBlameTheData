@@ -28,12 +28,13 @@ disableLanguages        = [""]
   # Options are twitter, facebook, reddit, linkedin, pinterest, email
   socialShare           = ["twitter", "facebook", "reddit", "linkedin",
                           "pinterest", "email"]
+  copyright             = "Copyright © 2019 Jason Zivkovic"
 
   [params.meta]
     # Sets the meta tag description
-    description         = "A blog for sports and data analytics and machine learning using R programming."
+    description         = "A blog for sports and current affairs data analysis and machine learning using R programming."
     # Sets the meta tag author
-    author              = "HTML5UP and Hugo"
+    author              = "Jason Zivkovic"
     # If you would like to add more comprehensive favicon support passed root
     # directory favicon.ico, utlize this funtion. It is recommened to use
     # https://realfavicongenerator.net to generate your icons as that is the basis
