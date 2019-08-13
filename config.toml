@@ -72,7 +72,7 @@ disableLanguages        = [""]
       alt                 = ""
 
   [params.sidebar]
-    about               = "A blog. Sports. Analytics. Sports analytics"
+    about               = "A data visualisation blog. Sports. Analytics. Sports analytics"
     # Sets the number of recent posts to show in the sidebar. The default value is 5.
     postAmount          = 5
     # set to show or to hide categories in the sidebar
