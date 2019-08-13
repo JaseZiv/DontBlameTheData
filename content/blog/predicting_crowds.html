@@ -68,7 +68,7 @@ type: post
 <p>Let’s look at our response variable - or the thing we’re trying to predict - <code>attendance</code> at AFL premiership season games.</p>
 <p>We can see that the attendance figures are somewhat positively skewed. We’ll see if the few higher attendance games cause any issues later on. This variable may need to undergo some form of transformation, but more on that later.</p>
 <p>The median attendance to AFL games during the regular season is just under 32,500 for the 1,340 games played since 2013.</p>
-<p><img src="/post/predicting_crowds_files/figure-html/attendance-1.png" width="672" /></p>
+<p><img src="/blog/predicting_crowds_files/figure-html/attendance-1.png" width="672" /></p>
 </div>
 <div id="some-key-predictors" class="section level2">
 <h2>Some Key Predictors</h2>
@@ -77,7 +77,7 @@ type: post
 <p>As was evident in the first post of this series, there was noticeable variation in attendances between the teams, and also whether teams won or lost their previous game. Finally, the first post showed that the home team’s favouritism status also seemed to have a relationship with attendance.</p>
 <p><strong>Categorical Features:</strong></p>
 <p>Some of the key categorical variables created that we would expect to have an impact on crowd figures are displayed below.</p>
-<p><img src="/post/predicting_crowds_files/figure-html/multi_plots-1.png" width="1344" /><img src="/post/predicting_crowds_files/figure-html/multi_plots-2.png" width="1344" /></p>
+<p><img src="/blog/predicting_crowds_files/figure-html/multi_plots-1.png" width="1344" /><img src="/blog/predicting_crowds_files/figure-html/multi_plots-2.png" width="1344" /></p>
 <p><strong>Some observations:</strong></p>
 <ul>
 <li><p>There appears to be a relationship between the venue the game is played at and the attendance. Stadiums classified as <code>Other</code> include secondary home grounds and some of the ovals not used in 2019. There were 238 of the 1,340 games at these stadiums</p></li>
@@ -177,7 +177,7 @@ baseline &lt;- afl_2019 %&gt;% select(team1, team2, venue, attendance) %&gt;%
 <h2>Transforming Response Variable</h2>
 <p>Because of the somewhat skewed nature of our response variable, it might be wise to undergo some sort of transformation to normalise it more. A log transformation is routinely used to “unskew” data. Below is the result of log transforming the attendance variable.</p>
 <p>It looks less skewed than the non-transformed variable, however (<em>spoiler alert</em>), the models performed worse with attendance being log transformed.</p>
-<p><img src="/post/predicting_crowds_files/figure-html/attendance_transformed-1.png" width="672" /></p>
+<p><img src="/blog/predicting_crowds_files/figure-html/attendance_transformed-1.png" width="672" /></p>
 </div>
 </div>
 <div id="feature-selection-using-stepwise-method" class="section level1">
@@ -289,7 +289,7 @@ summary(fit_lm)$adj.r.squared</code></pre>
   geom_histogram() +
   ggtitle(&quot;ERRORS ARE CENTRED AROUND ZERO&quot;) +
   scale_x_continuous(labels = comma, name = &quot;Model Residuals&quot;)</code></pre>
-<p><img src="/post/predicting_crowds_files/figure-html/residuals_plot-1.png" width="672" /></p>
+<p><img src="/blog/predicting_crowds_files/figure-html/residuals_plot-1.png" width="672" /></p>
 <pre class="r"><code># ggsave(&quot;plots/prediction_plots/errors_hist.png&quot;, width = 30, height = 22, units = &quot;cm&quot;)</code></pre>
 <p>Then we can look at the coefficients of each of the predictor variables.</p>
 <p>To make inspecting these easier, the <code>broom</code> package was used. Using the <code>tidy()</code> function, the results of the summary lm output are nicely displayed in a DF.</p>
@@ -1056,7 +1056,7 @@ error &lt;- afl_2019$predicted_attendance - afl_2019$attendance</code></pre>
   scale_x_continuous(labels = comma, name = &quot;Actual Attendance&quot;) +
   scale_y_continuous(labels = comma, name = &quot;Predicted Attendance&quot;) +
   annotate(geom = &quot;text&quot;, x=83000, y= 55000, label = &quot;Model under-predicted\non these games&quot;)</code></pre>
-<p><img src="/post/predicting_crowds_files/figure-html/pred_v_actual-1.png" width="960" /></p>
+<p><img src="/blog/predicting_crowds_files/figure-html/pred_v_actual-1.png" width="960" /></p>
 <pre class="r"><code># ggsave(&quot;plots/prediction_plots/actual_v_pred.png&quot;, width = 30, height = 22, units = &quot;cm&quot;)</code></pre>
 <p>We can also look at how the model performed predicting crowds at each of the venues.</p>
 <pre class="r"><code>afl_2019 %&gt;% 
@@ -1068,7 +1068,7 @@ error &lt;- afl_2019$predicted_attendance - afl_2019$attendance</code></pre>
   scale_x_continuous(labels = comma, name = &quot;Error&quot;) +
   ggtitle(&quot;Exploring Errors by Venue&quot;) +
   theme(axis.text.y = element_blank(), axis.title.y = element_blank())</code></pre>
-<p><img src="/post/predicting_crowds_files/figure-html/venue_errors-1.png" width="672" /></p>
+<p><img src="/blog/predicting_crowds_files/figure-html/venue_errors-1.png" width="672" /></p>
 <pre class="r"><code># ggsave(&quot;plots/prediction_plots/venue_errors.png&quot;, width = 30, height = 22, units = &quot;cm&quot;)</code></pre>
 <p>The model tended to over-predict attendances at the Gabba, Perth Stadium, Sydney Showgrounds and even the MCG, while it under-predicted at Carrara and “Other”.</p>
 <pre class="r"><code>print(paste0(&quot;RMSE: &quot;, sqrt(mean(error^2, na.rm = T))))</code></pre>
