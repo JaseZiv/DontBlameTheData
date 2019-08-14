@@ -8,7 +8,7 @@ categories:
   - afl
   - analytics
   - tidyverse
-tags: []
+tags: [R, tidyverse, ggplot, jarryd roughead, afl]
 description: 'Saying farewell to Jarryd Roughead by analysing some obscure data from his career.'
 featured: ''
 featuredalt: ''
@@ -25,7 +25,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Jarryd Roughead - four-time Hawthorn premiership player and all round great man - formally announced his retirement this week, with his last game coming over the weekend against the Gold Coast Suns.
 
-Not only was he a pivotal four-time premiership star for the Hawthorn Hawks, he survived a hell of a lot of adversity with some very serious cancer cares and handled himself with nothing but grace and dignity. He came back to captain his club in 2017 and while the on-filed element was tough to come back to, he was lumped with the burden of captaining the club after they parting ways with stalwarts Sam Mitchell and Jordan Lewis after the 2016 season.
+Not only was he a pivotal four-time premiership star for the Hawthorn Hawks, he survived a hell of a lot of adversity with some very serious cancer scares and handled himself with nothing but grace and dignity. He came back to captain his club in 2017 and while the on-field element was tough to come back to, he was lumped with the burden of captaining the club after they parted ways with stalwarts Sam Mitchell and Jordan Lewis after the 2016 season.
 
 He filled key posts down back during the early part of his career, then moved up forward where he played a very, very good second option, then also carved out a valuable ruck/midfielder role for the club a bit later on. He could play everywhere.
 
@@ -156,7 +156,7 @@ rough %>% filter(rainfall_clean == max(rainfall_clean)) %>%
 ```
 
 
-The coldest game he played in (the snow game last week in Canbera would've won had he played) was in Tasmania - no suprises - against the Lions in that horrible premiership hangover year in 2019. The maximum temperature was a crisp 10.8 degrees and there was even 5.2ml of rain. Roughy had a game to forget, with 7 kicks and only 1 goal. A stinker for the whole club.
+The coldest game he played in (the snow game last week in Canberra would've won had he played) was in Tasmania - no surprises - against the Lions in that horrible premiership hangover year in 2009. The maximum temperature was a crisp 10.8 degrees and there was even 5.2ml of rain. Roughy had a game to forget, with 7 kicks and only 1 goal. A stinker for the whole club.
 
 ```{r, warning=FALSE, message=FALSE, include=FALSE, echo=FALSE}
 rough %>% 
@@ -223,7 +223,7 @@ umpires <- rough %>%
 Roughy has seen 99 umpires during his time in the game.
 
 
-Brett Rosebury officiated 41 of Roughy's games, with Matt Nicholls and Matt Stevic following closely behing with 37 times each. Twelve umpires officiated Roughy's games on at least 20 occasions
+Brett Rosebury officiated 41 of Roughy's games, with Matt Nicholls and Matt Stevic following closely behind with 37 times each. Twelve umpires officiated Roughy's games on at least 20 occasions
 
 Of the 41 games Rosebury officiated, 13 were in finals - by far the most finals games with Roughy than any umpire. Of the umpires with at least 20 games, only Stephen McBurney hasn't umpired Rough in a final, while Troy Pannell has umpired him once.
 

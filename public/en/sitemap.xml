@@ -84,6 +84,12 @@
   </url>
   
   <url>
+    <loc>/tags/r/</loc>
+    <lastmod>2019-08-14T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/categories/r/</loc>
     <lastmod>2019-08-14T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -91,6 +97,7 @@
   
   <url>
     <loc>/tags/</loc>
+    <lastmod>2019-08-14T00:00:00+00:00</lastmod>
     <priority>0</priority>
     <xhtml:link
                 rel="alternate"
@@ -115,6 +122,12 @@
   </url>
   
   <url>
+    <loc>/tags/afl/</loc>
+    <lastmod>2019-08-14T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/categories/afl/</loc>
     <lastmod>2019-08-14T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -122,6 +135,18 @@
   
   <url>
     <loc>/categories/analytics/</loc>
+    <lastmod>2019-08-14T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/ggplot/</loc>
+    <lastmod>2019-08-14T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/jarryd-roughead/</loc>
     <lastmod>2019-08-14T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -140,6 +165,12 @@
   
   <url>
     <loc>/categories/sport/</loc>
+    <lastmod>2019-08-14T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/tidyverse/</loc>
     <lastmod>2019-08-14T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
