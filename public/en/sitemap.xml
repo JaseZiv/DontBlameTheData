@@ -33,13 +33,13 @@
     <priority>0</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="pl"
-                href="/pl/categories/"
+                hreflang="fr"
+                href="/fr/categories/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="fr"
-                href="/fr/categories/"
+                hreflang="pl"
+                href="/pl/categories/"
                 />
     <xhtml:link
                 rel="alternate"
@@ -94,13 +94,13 @@
     <priority>0</priority>
     <xhtml:link
                 rel="alternate"
-                hreflang="pl"
-                href="/pl/tags/"
+                hreflang="fr"
+                href="/fr/tags/"
                 />
     <xhtml:link
                 rel="alternate"
-                hreflang="fr"
-                href="/fr/tags/"
+                hreflang="pl"
+                href="/pl/tags/"
                 />
     <xhtml:link
                 rel="alternate"

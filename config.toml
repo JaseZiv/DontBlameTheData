@@ -262,7 +262,7 @@ disableLanguages        = [""]
 # and socialAppearAtBottom.
 [social]
   # Coding Communities
-  github                = "https://github.com/JaseZiv"
+  github                = "JaseZiv"
   gitlab                = ""
   stackoverflow         = "" # User Number
   bitbucket             = ""
@@ -275,9 +275,9 @@ disableLanguages        = [""]
   dribbble              = ""
   # Publishing Communities
   wordpress             = ""
-  medium                = "https://medium.com/@jaseziv83"
+  medium                = "jaseziv83"
   # Professional/Business Oriented Communities
-  linkedin              = "https://www.linkedin.com/in/jason-zivkovic-4a0a1926/"
+  linkedin              = "jason-zivkovic-4a0a1926"
   linkedin_company      = ""
   foursquare            = ""
   xing                  = ""
@@ -285,7 +285,7 @@ disableLanguages        = [""]
   # Social Networks
   facebook              = ""
   googleplus            = ""
-  reddit                = ""
+  reddit                = "jaseziv"
   quora                 = ""
   youtube               = ""
   vimeo                 = ""
@@ -295,7 +295,7 @@ disableLanguages        = [""]
     qq                  = "" # User ID Number
   instagram             = ""
   tumblr                = ""
-  twitter               = "https://twitter.com/jaseziv"
+  twitter               = "jaseziv"
   skype                 = ""
   snapchat              = ""
   pinterest             = ""
