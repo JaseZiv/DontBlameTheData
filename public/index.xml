@@ -6,10 +6,20 @@
     <description>Recent content on Don&#39;t Blame The Data</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 27 Jul 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 14 Aug 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>A tribute to Jarryd Roughead with some obscure data</title>
+      <link>/blog/a-tribute-to-jarryd-roughead-using-data-analysis/</link>
+      <pubDate>Wed, 14 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/a-tribute-to-jarryd-roughead-using-data-analysis/</guid>
+      <description>Jarryd Roughead - four-time Hawthorn premiership player and all round great man - formally announced his retirement this week, with his last game coming over the weekend against the Gold Coast Suns.
+Not only was he a pivotal four-time premiership star for the Hawthorn Hawks, he survived a hell of a lot of adversity with some very serious cancer cares and handled himself with nothing but grace and dignity.</description>
+    </item>
     
     <item>
       <title>Building a Linear Regression Model in R to Predict AFL Crowds</title>
@@ -38,16 +48,6 @@ Anyway, that’s my two cents worth.</description>
       <guid>/about/</guid>
       <description>My name is Jason Zivkovic and I&amp;rsquo;m a Data Scientist at the Reece Group.
 Growing up as a sports-mad child and teen, statistics were always in my world. But with the love of sport blinding me, I didn&amp;rsquo;t even realise it was a love of statistics and data. Then, after meandering (much to my mother&amp;rsquo;s chagrin) through my early work life, and dabbling with different careers, I discovered edX and DataCamp and the data analysis short courses they had available.</description>
-    </item>
-    
-    <item>
-      <title>Federal Election... Who To Vote For According To Twitter</title>
-      <link>/blog/federal-election-who-to-vote-for-according-to-twitter/</link>
-      <pubDate>Sat, 04 May 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/blog/federal-election-who-to-vote-for-according-to-twitter/</guid>
-      <description>Introduction The Australian 2019 Federal Election is almost upon us (18th of May) and as usual, I have no idea who to vote for. Well that’s not true, usually, I’m what is colloquially described as a “donkey voter” - someone who doesn’t vote. You see, in democratic Australia, it is compulsory to vote. From the Australian Electoral Commission (AEC):
- Failure to vote at a federal election without a valid and sufficient reason is an offence under section 245 of the Commonwealth Electoral Act 1918.</description>
     </item>
     
   </channel>

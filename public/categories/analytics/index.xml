@@ -6,10 +6,20 @@
     <description>Recent content in analytics on Don&#39;t Blame The Data</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 27 Jul 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 14 Aug 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/analytics/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>A tribute to Jarryd Roughead with some obscure data</title>
+      <link>/blog/a-tribute-to-jarryd-roughead-using-data-analysis/</link>
+      <pubDate>Wed, 14 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/a-tribute-to-jarryd-roughead-using-data-analysis/</guid>
+      <description>Jarryd Roughead - four-time Hawthorn premiership player and all round great man - formally announced his retirement this week, with his last game coming over the weekend against the Gold Coast Suns.
+Not only was he a pivotal four-time premiership star for the Hawthorn Hawks, he survived a hell of a lot of adversity with some very serious cancer cares and handled himself with nothing but grace and dignity.</description>
+    </item>
     
     <item>
       <title>Building a Linear Regression Model in R to Predict AFL Crowds</title>
