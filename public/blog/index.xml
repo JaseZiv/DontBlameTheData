@@ -6,10 +6,22 @@
     <description>Recent content in Blog on Don&#39;t Blame The Data</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 14 Aug 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 17 Aug 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/blog/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>An In Depth Analysis of FIFA 19</title>
+      <link>/blog/an-in-depth-analysis-of-fifa19/</link>
+      <pubDate>Sat, 17 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/an-in-depth-analysis-of-fifa19/</guid>
+      <description>This post was originally released on the Kaggle FIFA 19 Complete Player dataset that was kindly collected by Karan Gadiya. Many thanks Karan. The link to my original kernel is here
+The full code base can be found here
+Introduction From Wikipedia:
+ FIFA 19 is a football simulation video game developed by EA Vancouver as part of Electronic Arts’ FIFA series. Announced on 6 June 2018 for its E3 2018 press conference, it was released on 28 September 2018 for PlayStation 3, PlayStation 4, Xbox 360, Xbox One, Nintendo Switch, and Microsoft Windows.</description>
+    </item>
     
     <item>
       <title>A tribute to Jarryd Roughead with some obscure data</title>
