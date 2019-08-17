@@ -316,7 +316,7 @@ Not only was Roughy a superstar footballer, he was a gun junior basketballer.
 Bouncing is an important piece of the basketball puzzle... I wonder if Rough bounced the ball much?
 
 
-The average number of bounces per player per game is `r round(mean(stats_players$Bounces), 3)`. Thoughout Roughy's career, he bounced the ball at a rate of `r round(mean(rough$Bounces), 3)` per game... a fair bit off the average...
+The average number of bounces per player per game is `r round(mean(stats_players$Bounces), 3)`. Throughout Roughy's career, he bounced the ball at a rate of `r round(mean(rough$Bounces), 3)` per game... a fair bit off the average...
 
 His rookie season was his best bouncing season at a rate of 0.562 bounces per game.. Clarko must have ironed that out of his game and must have been thrilled in 2009 (other than the premiership hangover) when Roughy didn't bounce the ball once.
 
