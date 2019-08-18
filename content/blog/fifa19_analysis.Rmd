@@ -114,7 +114,8 @@ fifa_data %>%
   geom_histogram(color = "white", fill = "darkgrey") +
   ggtitle("Player Ratings Are Normally Distributed", subtitle = "The mean can be used as a measure of central tendancy") +
   theme_fivethirtyeight() +
-  theme(axis.text.y = element_blank())
+  theme(axis.text.y = element_blank()) +
+  theme(axis.title.x = element_text(hjust = 1)) + labs(x= "Overall Rating")
 ```
 
 
@@ -132,7 +133,7 @@ fifa_data %>%
   ggtitle("The Age Curve Flattens Off", subtitle = "Player ratings tend not to get better after the age of 30") +
   xlab("Age") +
   theme_fivethirtyeight() +
-  theme(axis.title = element_text(), axis.title.y = element_blank(), axis.title.x = element_text(face = "bold"))
+  theme(axis.title = element_text(), axis.title.y = element_blank(), axis.title.x = element_text(hjust = 1))
 ```
 
 
@@ -147,7 +148,8 @@ fifa_data %>%
   geom_line(size = 1, color = "grey50") +
   theme_fivethirtyeight() +
   facet_wrap(~ PositionGroup, ncol = 1) +
-  theme(strip.background = element_rect(fill = "darkgrey"), strip.text = element_text(colour = "white", face = "bold"))
+  theme(strip.background = element_rect(fill = "darkgrey"), strip.text = element_text(colour = "white", face = "bold")) +
+  theme(axis.title.x = element_text(hjust = 1)) + labs(x= "Age")
 ```
 
 
@@ -232,7 +234,8 @@ fifa_data %>%
   ggtitle("Higher Ratings Cost More Money", subtitle = "There are still some high rating players that \ndon't cost an arm and a leg") +
   scale_y_continuous(labels = dollar_format(prefix = "€")) +
   theme_fivethirtyeight() +
-  annotate("text", x= 70, y= 97000000, label = paste0("Spearman Correlation: ", round(cor(fifa_data$Overall, fifa_data$ValueNumeric_pounds, method = "spearman"),4)), color = "darkgreen", size = 8)
+  annotate("text", x= 70, y= 97000000, label = paste0("Spearman Correlation: ", round(cor(fifa_data$Overall, fifa_data$ValueNumeric_pounds, method = "spearman"),4)), color = "darkgreen", size = 8) +
+  theme(axis.title.x = element_text(hjust = 1)) + labs(x= "Overall Rating")
 
 ```
 
@@ -353,7 +356,8 @@ holder %>%
   theme_fivethirtyeight() +
   theme(legend.position = "none") +
   geom_text(data = subset(holder, Mult == "Overall"), aes(x= Name, y= 10, label=paste(Position, Value, Age, sep = ", "))) +
-  annotate("text", x= 14.5, y= 80, label = "The 'potential' left \nin the player")
+  annotate("text", x= 14.5, y= 80, label = "The 'potential' left \nin the player") +
+  theme(axis.title.x = element_text(hjust = 1)) + labs(y= "Potential")
 ####### Need to put in a left pointing arrow
 
 
@@ -376,7 +380,8 @@ fifa_data %>%
   geom_line(aes(y= Overall), color = "grey50", size = 1) +
   annotate("text", x= 30, y=71, label = "Potential meets overall\ntalent at 29 years old", color = "purple") +
   ggtitle("Potential And Overall Talent Converges", subtitle = "The average ratings were taken for each age") +
-  theme_fivethirtyeight()
+  theme_fivethirtyeight() +
+  theme(axis.title.x = element_text(hjust = 1)) + labs(x= "Age")
 ```
 
 
@@ -403,7 +408,8 @@ fifa_data %>%
   theme(axis.text = element_text(face = "bold"), legend.position = "none") +
   ggtitle("There's No Such Thing As A Free Lunch... Or Is There?", subtitle = "Plotting player age versus their overall rating for all players with a \nvaluation of €0. Purple names have potential over 80.") +
   annotate("text", x= 20, y= 79, label = "Rebuilding \ntarget area", size = 8, color = "darkgreen") +
-  annotate("text", x= 43, y= 79, label = "Win-Now \ntarget area", size = 8, color = "darkgreen")
+  annotate("text", x= 43, y= 79, label = "Win-Now \ntarget area", size = 8, color = "darkgreen") +
+  theme(axis.title.x = element_text(hjust = 1)) + labs(x= "Age")
   
   
   
@@ -480,7 +486,8 @@ fifa_data %>%
   ggtitle("Italian Teams Have The Highest Overall Ratings", subtitle = "The average overall rating of the 20 highest rated teams in the game, sorted in descending order") +
   coord_flip() +
   theme_fivethirtyeight() +
-  theme(legend.position = "none")
+  theme(legend.position = "none") +
+  theme(axis.title.x = element_text(hjust = 1)) + labs(y= "Overall Rating")
 ```
 
 
@@ -510,7 +517,8 @@ fifa_data %>%
   scale_y_continuous(breaks = seq(0,12,1))+
   coord_flip() +
   theme_fivethirtyeight() +
-  theme(legend.position = "none")
+  theme(legend.position = "none") +
+  theme(axis.title.x = element_text(hjust = 1)) + labs(y= "Elite Players")
 
 ```
 
