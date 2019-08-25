@@ -1,0 +1,73 @@
+---
+title: "How the narrative changed after the Boomers' win"
+date: '2019-08-25'
+slug: how-the-narrative-changed-after-the-boomers-win
+categories:
+  - R
+  - sport
+  - analytics
+  - twitter
+tags: [boomers, USA, teamusa, twitter, sentiment, patty mills, basketball]
+description: 'A look at how our perception and feelings changes after the Boomers historic win against Team USA'
+featured: ''
+featuredalt: ''
+featuredpath: ''
+linktitle: ''
+type: post
+
+---
+
+
+
+<p>On the 24th of August, 2019, the Australian Men’s Basketball team, the Boomers, created history when they were able to enact their own David and Golliath moment, taking down Team USA for the first time ever. More impressively was the fact that the US hadn’t lost a game in 13 years. It was a marvelous moment in Australian basketball history, and while the US fielded what is widely considered one of their weaker teams, it was a moment for us to all savour. The fact that we were able to bring the best country in the world to play some exhibition games should have been celebrated, regardless of the result.</p>
+<p>That was not to be the case…</p>
+<p>After the historic first men’s basketball game at Marvel Stadium, the narrative from the media appeared to be full of negativity, predominantly focusing on the expensive seating with poor views for fans.</p>
+<p>I suspect that this happens everywhere, but we Aussies seem to let our opinions swing more than most - we’re more than happy to rag on individuals or teams when things aren’t tracking so well, but flip pretty quickly when the are (Nick Kyrgios says hi).</p>
+<p>This analysis will look at the Twitter activity around the time of both games in an attempt to prove or disprove the narrative change.</p>
+<p>To collect tweet data, the <code>rtweet</code> and <code>ROAuth</code> packages were used. Tweets between the 22nd August and 2pm on the 25th of August were collected and analysed in the blow analysis. Tweets using the official hashtag - <code>#BoomersUSA</code> are referencing <code>@BasketballAus</code> were scraped.</p>
+<hr />
+<p>If the tweet was recorded after <code>2019-08-24 04:00:00 UTC</code> (tip-off time for game 2), it was classed as a tweet in <code>Game2 Starts</code>. This allows us to compare tweets leading in to the historic second game with those that occurred during and after the magical night.</p>
+<hr />
+<div id="tweet-analysis" class="section level2">
+<h2>Tweet Analysis</h2>
+<p>Looking at all tweets since game 1, we can see that game 2 had more tweets per hour. No doubt the shock result played a massive part in this.</p>
+<p><img src="/blog/boomers_vs_usa_tweets_files/figure-html/tweets_time-1.png" width="1056" /></p>
+<p>With 4019 ‘favourites’, the following tweet from NBATV was the most favoured tweet:</p>
+<blockquote>
+<p>It feels awesome. … I hope we can all build on this.” <span class="citation">@Patty_Mills</span> describes his emotions after leading <span class="citation">@BasketballAus</span> to its first ever win over the U.S.</p>
+</blockquote>
+<p>The most retweeted tweet from the period analysed came from NBL and had 833 retweets. The tweet was:</p>
+<blockquote>
+<p>Patty Mills in the 4th quarter is a piece of art 🔥#BoomersUSA <span class="citation">@SBSVICELAND</span> <span class="citation">@SBSOnDemand</span></p>
+</blockquote>
+</div>
+<div id="tweet-words-used" class="section level2">
+<h2>Tweet Words Used</h2>
+<p>Before we can measure the sentiments of tweets, the tweet strings need to be split into ‘tokens’ (or individual words).</p>
+<p>Once these tokens have been unnested (split out), we can plot the most frequently used words. Importantly, stop-words and other words we don’t want in our analysis have been omitted. Stop-words include “and”, “the”, “a”, etc - words that don’t add a lot to a sentiment analysis. Additionally, “BoomersUSA” was removed, as this was the hashtag for the game and was mentioned in almost all tweets.</p>
+<p>The 20 most frequently used words for tweets that occured before and after game 2 are plotted below.</p>
+<p>As expected, “seats”, “plastic”, “seating” were words that frequently appeared in tweets before Game 2, where only “seats” appeared in tweets after Game 2 started. For tweets after game 2 started, “history”, “Patty Mills”, “awesome” and “love” all appeared in tweets frequently - very soft and mushy hey?</p>
+<p><img src="/blog/boomers_vs_usa_tweets_files/figure-html/top_tokens-1.png" width="1056" /></p>
+<p>The plot below allows us to get an even better look at the differences between the words used before and after Game 2. Words to the bottom right of the diagonal line running through the plot indicate words more frequently used in tweets before game two, while words above the line were more frequently used during and after Game 2.</p>
+<p>Looks like we were a happy bunch finally…</p>
+<p><img src="/blog/boomers_vs_usa_tweets_files/figure-html/above_below_words-1.png" width="1056" /></p>
+</div>
+<div id="tweet-sentiment-analysis" class="section level2">
+<h2>Tweet Sentiment Analysis</h2>
+<p>Once the tokens have been separated, a sentiment score can be calculated.</p>
+<p>The method that will be used is the common lexicon for sentiment analysis created by Finn Årup Nielsen (<a href="http://www2.imm.dtu.dk/pubdb/views/publication_details.php?id=6010" class="uri">http://www2.imm.dtu.dk/pubdb/views/publication_details.php?id=6010</a>), called the <em>AFINN</em> lexicon. Words that are more positive (say, “awesome” for example) are given positive score further from 0 than more negative words (like “devastated”), which are given socres further below zero.</p>
+<p>To get a feel for the power of sentiment analysis, the following tweet was the most positive tweet, with a positivity index of 17:</p>
+<blockquote>
+<p>Totally thrilled with the Boomers win today, and Patty Mills was just brilliant when it counted. Really wonderful team effort. Bring on the World Cup! #BoomersUSA</p>
+</blockquote>
+<p>At the (complete) opposite end of the spectrum, the following tweet was the most negative, with a score of -18 (sorry for the profanities, I’ve done my best to clean them out):</p>
+<blockquote>
+<p>Who the f!&amp;% hired these people to organise this event, what a f!&amp;%ing bs stich up. $ chairs from Bunnings does that come with a forking snag c!&amp;%. Like WTF surely the company who funding to set up the stadium is not that broke.#BoomersUSA</p>
+</blockquote>
+<p>No surprises, the most positive tweet was after we won, the most negative after Game 1.</p>
+<p>Plotting the distribution of sentiment scores for each tweet, we can clearly see that the tweets after game 2 started became considerable more positive - the median positivity score (the ratio of positive to negative words) for these tweets was 0.95, over doube the 0.43 median for tweets prior to game 2.</p>
+<p><img src="/blog/boomers_vs_usa_tweets_files/figure-html/sentiment_plot-1.png" width="1056" /></p>
+<p>As I suspected, we became much happier after our historic win… almost to the point where we’d forgotten about the seating “debacle”, even though the second game was played at the exact venue, with the exact seating arrangement… very strange.</p>
+<p>I might put this theory of us Aussies to the ultimate test one day and see how we respond to Kyrgios’ success… if he ever tastes the ultimate success!</p>
+<p>Feel free to leave some feedback if you like in the comments below.</p>
+</div>

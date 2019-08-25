@@ -21,6 +21,15 @@
     </item>
     
     <item>
+      <title>USA</title>
+      <link>/tags/usa/</link>
+      <pubDate>Sun, 25 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/usa/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>afl</title>
       <link>/tags/afl/</link>
       <pubDate>Wed, 14 Aug 2019 00:00:00 +0000</pubDate>
@@ -35,6 +44,24 @@
       <pubDate>Sat, 17 Aug 2019 00:00:00 +0000</pubDate>
       
       <guid>/tags/analytics/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>basketball</title>
+      <link>/tags/basketball/</link>
+      <pubDate>Sun, 25 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/basketball/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>boomers</title>
+      <link>/tags/boomers/</link>
+      <pubDate>Sun, 25 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/boomers/</guid>
       <description></description>
     </item>
     
@@ -84,11 +111,47 @@
     </item>
     
     <item>
+      <title>patty mills</title>
+      <link>/tags/patty-mills/</link>
+      <pubDate>Sun, 25 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/patty-mills/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>sentiment</title>
+      <link>/tags/sentiment/</link>
+      <pubDate>Sun, 25 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/sentiment/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>teamusa</title>
+      <link>/tags/teamusa/</link>
+      <pubDate>Sun, 25 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/teamusa/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>tidyverse</title>
       <link>/tags/tidyverse/</link>
       <pubDate>Sat, 17 Aug 2019 00:00:00 +0000</pubDate>
       
       <guid>/tags/tidyverse/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>twitter</title>
+      <link>/tags/twitter/</link>
+      <pubDate>Sun, 25 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/twitter/</guid>
       <description></description>
     </item>
     

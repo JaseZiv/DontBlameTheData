@@ -13,7 +13,7 @@
     <item>
       <title>R</title>
       <link>/categories/r/</link>
-      <pubDate>Sat, 17 Aug 2019 00:00:00 +0000</pubDate>
+      <pubDate>Sun, 25 Aug 2019 00:00:00 +0000</pubDate>
       
       <guid>/categories/r/</guid>
       <description></description>
@@ -31,7 +31,7 @@
     <item>
       <title>analytics</title>
       <link>/categories/analytics/</link>
-      <pubDate>Sat, 17 Aug 2019 00:00:00 +0000</pubDate>
+      <pubDate>Sun, 25 Aug 2019 00:00:00 +0000</pubDate>
       
       <guid>/categories/analytics/</guid>
       <description></description>
@@ -76,7 +76,7 @@
     <item>
       <title>sport</title>
       <link>/categories/sport/</link>
-      <pubDate>Wed, 14 Aug 2019 00:00:00 +0000</pubDate>
+      <pubDate>Sun, 25 Aug 2019 00:00:00 +0000</pubDate>
       
       <guid>/categories/sport/</guid>
       <description></description>
@@ -88,6 +88,15 @@
       <pubDate>Sat, 17 Aug 2019 00:00:00 +0000</pubDate>
       
       <guid>/categories/tidyverse/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>twitter</title>
+      <link>/categories/twitter/</link>
+      <pubDate>Sun, 25 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/twitter/</guid>
       <description></description>
     </item>
     
