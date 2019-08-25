@@ -34,6 +34,8 @@ This analysis will look at the Twitter activity around the time of both games in
 
 To collect tweet data, the `rtweet` and `ROAuth` packages were used. Tweets between the 22nd August and 2pm on the 25th of August were collected and analysed in the blow analysis. Tweets using the official hashtag - `#BoomersUSA` are referencing `@BasketballAus` were scraped.
 
+The full code base and data for this project can be found [here](https://github.com/JaseZiv/Boomers-vs-USA-Tweets)
+
 ```{r, include=FALSE, warning=FALSE, message=FALSE, echo=FALSE}
 # load libraries
 library(rtweet) # for tweets
