@@ -231,7 +231,7 @@ tweet_words_counts %>%
 ## Tweet Sentiment Analysis
 Once the tokens have been separated, a sentiment score can be calculated.
 
-The method that will be used is the common lexicon for sentiment analysis created by Finn Årup Nielsen (http://www2.imm.dtu.dk/pubdb/views/publication_details.php?id=6010), called the *AFINN* lexicon. Words that are more positive (say, "awesome" for example) are given positive score further from 0 than more negative words (like "devastated"), which are given socres further below zero.
+The method that will be used is the common lexicon for sentiment analysis created by Finn Årup Nielsen (http://www2.imm.dtu.dk/pubdb/views/publication_details.php?id=6010), called the *AFINN* lexicon. Words that are more positive (say, "awesome" for example) are given positive score further from zero than more negative words (like "devastated"), which are given socres further below zero.
 
 
 
@@ -265,7 +265,7 @@ No surprises, the most positive tweet was after we won, the most negative after 
 
 
 
-Plotting the distribution of sentiment scores for each tweet, we can clearly see that the tweets after game 2 started became considerable more positive - the median positivity score (the ratio of positive to negative words) for these tweets was 0.95, over doube the 0.43 median for tweets prior to game 2.
+Plotting the distribution of sentiment scores for each tweet, we can clearly see that the tweets after game 2 started became considerably more positive - the median positivity score (the ratio of positive to negative words) for these tweets was 0.95, over doube the 0.43 median for tweets prior to game 2.
 
 
 ```{r, sentiment_plot, warning=FALSE, message=FALSE, fig.height=8, fig.width=11, echo=FALSE}

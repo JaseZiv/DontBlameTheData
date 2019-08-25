@@ -56,7 +56,7 @@ type: post
 <div id="tweet-sentiment-analysis" class="section level2">
 <h2>Tweet Sentiment Analysis</h2>
 <p>Once the tokens have been separated, a sentiment score can be calculated.</p>
-<p>The method that will be used is the common lexicon for sentiment analysis created by Finn Årup Nielsen (<a href="http://www2.imm.dtu.dk/pubdb/views/publication_details.php?id=6010" class="uri">http://www2.imm.dtu.dk/pubdb/views/publication_details.php?id=6010</a>), called the <em>AFINN</em> lexicon. Words that are more positive (say, “awesome” for example) are given positive score further from 0 than more negative words (like “devastated”), which are given socres further below zero.</p>
+<p>The method that will be used is the common lexicon for sentiment analysis created by Finn Årup Nielsen (<a href="http://www2.imm.dtu.dk/pubdb/views/publication_details.php?id=6010" class="uri">http://www2.imm.dtu.dk/pubdb/views/publication_details.php?id=6010</a>), called the <em>AFINN</em> lexicon. Words that are more positive (say, “awesome” for example) are given positive score further from zero than more negative words (like “devastated”), which are given socres further below zero.</p>
 <p>To get a feel for the power of sentiment analysis, the following tweet was the most positive tweet, with a positivity index of 17:</p>
 <blockquote>
 <p>Totally thrilled with the Boomers win today, and Patty Mills was just brilliant when it counted. Really wonderful team effort. Bring on the World Cup! #BoomersUSA</p>
@@ -66,7 +66,7 @@ type: post
 <p>Who the f!&amp;% hired these people to organise this event, what a f!&amp;%ing bs stich up. $ chairs from Bunnings does that come with a forking snag c!&amp;%. Like WTF surely the company who funding to set up the stadium is not that broke.#BoomersUSA</p>
 </blockquote>
 <p>No surprises, the most positive tweet was after we won, the most negative after Game 1.</p>
-<p>Plotting the distribution of sentiment scores for each tweet, we can clearly see that the tweets after game 2 started became considerable more positive - the median positivity score (the ratio of positive to negative words) for these tweets was 0.95, over doube the 0.43 median for tweets prior to game 2.</p>
+<p>Plotting the distribution of sentiment scores for each tweet, we can clearly see that the tweets after game 2 started became considerably more positive - the median positivity score (the ratio of positive to negative words) for these tweets was 0.95, over doube the 0.43 median for tweets prior to game 2.</p>
 <p><img src="/blog/boomers_vs_usa_tweets_files/figure-html/sentiment_plot-1.png" width="1056" /></p>
 <p>As I suspected, we became much happier after our historic win… almost to the point where we’d forgotten about the seating “debacle”, even though the second game was played at the exact venue, with the exact seating arrangement… very strange.</p>
 <p>I might put this theory of us Aussies to the ultimate test one day and see how we respond to Kyrgios’ success… if he ever tastes the ultimate success!</p>
