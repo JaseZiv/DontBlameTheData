@@ -33,6 +33,10 @@
   </url>
   
   <url>
+    <loc>/projects/about_projects/</loc>
+  </url>
+  
+  <url>
     <loc>/blog/</loc>
     <lastmod>2019-08-25T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -91,6 +95,11 @@
                 hreflang="en"
                 href="/"
                 />
+  </url>
+  
+  <url>
+    <loc>/projects/</loc>
+    <priority>0</priority>
   </url>
   
   <url>
