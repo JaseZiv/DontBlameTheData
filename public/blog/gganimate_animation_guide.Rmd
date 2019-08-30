@@ -184,7 +184,7 @@ Enter animations from gganimate!
 
 Using an animated plot allows us to remove even more elements. With the right mix of labelling and animation, the y-axis no longer is necessary - with each round, we can follow the winnings or losses as we go, while the break-even line gives us a reference point.
 
-The other things that were done here include the slowing down of frames using `fps` (frames per second) and adjusting the `range` in `trasition_reveal()` to be longer than the rounds it's transitioning over (ie adjusting the range to `c(0,25)`). This allows the animation to pause after it has finished its cycle.
+The other things that were done here include the slowing down of frames using `fps` (frames per second) and adjusting the `range` in `transition_reveal()` to be longer than the rounds it's transitioning over (ie adjusting the range to `c(0,25)`). This allows the animation to pause after it has finished its cycle.
 
 Finally, to increase the size of the output, adjust the `width` and `height` arguments to your liking.
 
