@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>line chart on Don&#39;t Blame The Data</title>
+    <link>/tags/line-chart/</link>
+    <description>Recent content in line chart on Don&#39;t Blame The Data</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Fri, 30 Aug 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/line-chart/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>All roads lead to gganimate</title>
+      <link>/blog/all-roads-lead-to-gganimate/</link>
+      <pubDate>Fri, 30 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/all-roads-lead-to-gganimate/</guid>
+      <description>This post aims to introduce you to animating ggplot2 visualisations in r using the gganimate package by Thomas Lin Pedersen.
+The post will visualise the theroetical winnings I would’ve had, had I followed the simple model to predict (or tip as it’s known in Australia) winners in the AFL that I explained in this post. The data used in the analysis was collected from the AFL Tables website as part of a larger series I wrote about on AFL crowds.</description>
+    </item>
+    
+  </channel>
+</rss>

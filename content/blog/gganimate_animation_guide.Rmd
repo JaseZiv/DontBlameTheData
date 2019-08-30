@@ -1,0 +1,223 @@
+---
+title: "All roads lead to gganimate"
+date: '2019-08-30'
+slug: all-roads-lead-to-gganimate
+categories:
+  - R
+  - gganimate
+  - ggplot2
+  - data visualisation
+  - learning
+tags: [gganimate, ggplot2, data visualisation, R, afl, line chart]
+description: 'Making the case to upgrading your static data visualisations to animated visualisations using gganimate'
+featured: ''
+featuredalt: ''
+featuredpath: ''
+linktitle: ''
+type: post
+---
+
+
+This post aims to introduce you to animating ggplot2 visualisations in r using the [gganimate](https://github.com/thomasp85/gganimate) package by Thomas Lin Pedersen. 
+
+The post will visualise the theroetical winnings I would've had, had I followed the simple model to predict (or tip as it's known in Australia) winners in the AFL that I explained in this [post](). The data used in the analysis was collected from the AFL Tables website as part of a larger series I wrote about on AFL crowds. The wider project can be found [here](https://github.com/JaseZiv/AFL-Crowd-Analytics)
+
+```{r, warning=FALSE, message=FALSE}
+library(tidyverse)
+library(lubridate)
+library(scales)
+library(gganimate)
+
+# set themes
+theme_set(theme_minimal() +
+          theme(axis.title.x = element_text(size = 16, hjust = 1), 
+                axis.title.y = element_text(size = 16), 
+                axis.text = element_text(size = 13),
+                plot.title = element_text(size = 19)))
+
+# create a colour pallette
+colours <- c("#5EB296", "#4E9EBA", "#F29239", "#C2CE46", "#FF7A7F", "#4D4D4D")
+
+
+#----- Read in data -----#
+afl <- read.csv("https://raw.githubusercontent.com/JaseZiv/AFL-Crowd-Analytics/master/data/cleaned_data/afl_model_data.csv", stringsAsFactors = F)
+
+# Data pre-processing -----------------------------------------------------
+
+# make all variables character type to make splitting and string manipulation easier
+afl <- afl %>% 
+  mutate_if(is.factor, as.character) %>% 
+  mutate(team1_score = as.numeric(team1_score),
+         team2_score = as.numeric(team2_score)) %>% 
+  mutate(fav_team = ifelse(AwayLineClose < 0, team2, team1))  %>% 
+  mutate(winning_team = ifelse(winner == "Home", team1, ifelse(winner == "Away", team2, "Draw"))) %>% 
+  mutate(fav_win = ifelse(fav_team == winning_team, "Yes", "No")) %>% 
+  filter(season >= 2014,
+         !str_detect(round, "F")) %>%
+  mutate(tip = ifelse(abs(AwayLineClose)  < 3, team1, fav_team))
+
+
+# function to calculate odds
+calculate_odds_available <- function(tip, winning_team, team1, team2, HomeOddsClose, AwayOddsClose) {
+  if(tip == winning_team) {
+    odds_available <- ifelse(tip == team1, HomeOddsClose, AwayOddsClose)
+    } else {
+      odds_available <- 0
+    }
+}
+
+# apply function and calculate returns
+afl <- afl %>% 
+  mutate(odds_available = mapply(calculate_odds_available, tip, winning_team, team1, team2, HomeOddsClose, AwayOddsClose),
+         game_return = odds_available * 10,
+         game_profit = game_return - 10)
+
+
+# create a df that calculates total winnings per round
+money_per_round <- afl %>% 
+  group_by(season, round) %>% 
+  summarise(total_profit = sum(game_profit)) %>% ungroup()
+
+# add a round 0, where all seasons start at $0
+zeros <- data.frame(season = (2014:2019), round = 0, total_profit = 0)
+
+# join zeros df on to money_per_round
+money_per_round <- money_per_round %>% rbind(zeros)
+
+# create a df that sums up winnings cumulatively
+total_money <- money_per_round %>% 
+  arrange(season, round) %>% 
+  group_by(season) %>% 
+  mutate(cumulating_winnings = cumsum(total_profit)) %>% ungroup()
+
+```
+
+
+
+## Let's start
+
+Ok, so the first step I took when writing the original post was to create a ggplot2 visual to plot the winnings (or losses) I would've made using my simple strategy.
+
+This was the result:
+
+```{r, static_line1, warning=FALSE, message=FALSE, fig.height=8, fig.width=11}
+total_money %>%
+  ggplot(aes(x= round, y= cumulating_winnings, 
+             group = season, colour = as.character(season))) +
+  geom_line(size = 1) +
+  geom_point(size = 2, colour = "black") +
+  labs(x= "Round", y= "Cumulative Wins/Losses", colour = "Season") +
+  scale_x_continuous(limits = c(0, 27), 
+                     labels = c(0, 3, 6, 9, 12, 15, 18, 21, 24), 
+                     breaks = c(0, 3, 6, 9, 12, 15, 18, 21, 24)) +
+  scale_colour_manual(values = colours) +
+  ggtitle("2017 WOULD'VE BEEN A BAD YEAR") +
+  theme(legend.position = "bottom")
+```
+
+Not bad, but certainly could be improved. To my mind, with six seasons being plotted, the legend is hard to map to the line itself. Also, other than the 2017 season, which was particularly bad, the other seasons' variation between rounds was hard to see.
+
+Additionally, plotting the data this way made it hard to realise without expending far too much energy to focus on where I would've made money, and where I would've lost it.
+
+
+## Labels and Annotations
+
+Yuck - you can't just simply add the season as a label - can't read anything!
+
+
+```{r, static_line2, warning=FALSE, message=FALSE, fig.height=8, fig.width=11}
+total_money %>%
+  ggplot(aes(x= round, y= cumulating_winnings, 
+             group = season, colour = as.character(season))) +
+  geom_line(size = 1) +
+  geom_point(size = 2, colour = "black") +
+  geom_hline(yintercept = 0, linetype = 2, size = 2) + # added in horizontal line at $0
+  geom_text(aes(label = season), hjust = -1, size = 6) + # season labels added
+  scale_colour_manual(values = colours) +
+  labs(x= "Round", y= "Cumulative Wins/Losses") +
+  scale_x_continuous(limits = c(0, 27), 
+                     labels = c(1, 3, 6, 9, 12, 15, 18, 21, 24), 
+                     breaks = c(1, 3, 6, 9, 12, 15, 18, 21, 24)) +
+  scale_y_continuous(labels = dollar) + # y-axis formatted to dollar format using scales
+  annotate("text", x= 26, y= 6, label = "Break Even $", size = 6) + # added text to break even line
+  ggtitle("2017 WOULD'VE BEEN A BAD YEAR") +
+  theme(legend.position = "none") # turned legend off
+```
+
+
+Instead, only one season label was applied, and applied at the end of each line's run. This looks much better.
+
+As we can see, further elements were added to our static chart, including:
+
+* Adding the break-even line;
+* Formatting the y-axis to a dollar format; and 
+* Adding labels and removing the legend
+
+This has greatly improved the readibility of the plot.
+
+```{r, static_line3, warning=FALSE, message=FALSE, fig.height=8, fig.width=11}
+total_money %>%
+  ggplot(aes(x= round, y= cumulating_winnings, 
+             group = season, colour = as.character(season))) +
+  geom_line(size = 1) +
+  geom_point(size = 2, colour = "black") +
+  geom_hline(yintercept = 0, linetype = 2, size = 2) + # added in horizontal line at $0
+  geom_text(data = total_money %>% filter(round == max(round)), aes(label = season), 
+            hjust = -0.3, size = 6) + # season labels added, but only one label per season
+  scale_colour_manual(values = colours) +
+  labs(x= "Round", y= "Cumulative Wins/Losses") +
+  scale_x_continuous(limits = c(0, 27), 
+                     labels = c(1, 3, 6, 9, 12, 15, 18, 21, 24), 
+                     breaks = c(1, 3, 6, 9, 12, 15, 18, 21, 24)) +
+  scale_y_continuous(labels = dollar) + # y-axis formatted to dollar format using scales
+  annotate("text", x= 26, y= 6, label = "Break Even $", size = 6) + # added text to break even line
+  ggtitle("2017 WOULD'VE BEEN A BAD YEAR") +
+  theme(legend.position = "none") # turned legend off
+```
+
+
+## Hello Animations!
+
+While the above chart looks a lot better, there are no theatrics!
+
+Enter animations from gganimate!
+
+Using an animated plot allows us to remove even more elements. With the right mix of labelling and animation, the y-axis no longer is necessary - with each round, we can follow the winnings or losses as we go, while the break-even line gives us a reference point.
+
+The other things that were done here include the slowing down of frames using `fps` (frames per second) and adjusting the `range` in `trasition_reveal()` to be longer than the rounds it's transitioning over (ie adjusting the range to `c(0,25)`). This allows the animation to pause after it has finished it's cycle.
+
+Finally, to increase the size of the output, adjust the `width` and `height` arguments to your liking.
+
+
+```{r, animation_plot, warning=FALSE, message=FALSE, fig.height=8, fig.width=11}
+total_money_anim <-  total_money %>%
+  ggplot(aes(x= round, y= cumulating_winnings, 
+             group = season, colour = as.character(season))) +
+  geom_line(size = 2) +
+  geom_point(size = 3, colour = "black") +
+  geom_hline(yintercept = 0, linetype = 2, size = 2) +
+  geom_text(aes(label = paste0(season, ": ", dollar(cumulating_winnings))), 
+            hjust = -0.3, size = 6) +
+  scale_colour_manual(values = colours) +
+  labs(x= "Round", y= "Cumulative Wins/Losses") +
+  scale_x_continuous(limits = c(0, 27), 
+                     labels = c(1, 3, 6, 9, 12, 15, 18, 21, 24), 
+                     breaks = c(1, 3, 6, 9, 12, 15, 18, 21, 24)) +
+  scale_y_continuous(labels = dollar) +
+  annotate("text", x= 26, y= 6, label = "Break Even $", size = 6) +
+  ggtitle("2017 WOULD'VE BEEN A BAD YEAR") +
+  theme(legend.position = "none", 
+        axis.text.y = element_blank(), 
+        axis.title.y = element_blank(), 
+        panel.grid.major.y = element_blank(), 
+        panel.grid.minor.y = element_blank()) +
+  transition_reveal(round, range = c(0, 25))
+
+
+animate(total_money_anim, width = 900, height = 900, fps = 5)
+```
+
+
+Hope this has given you some inspiration to go out and start producing some animated visualisations of your own.
+
+Let me know in the comments if you have any questions or suggestions.

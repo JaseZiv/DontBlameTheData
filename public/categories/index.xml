@@ -12,7 +12,7 @@
     <item>
       <title>R</title>
       <link>/categories/r/</link>
-      <pubDate>Sun, 25 Aug 2019 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 30 Aug 2019 00:00:00 +0000</pubDate>
       
       <guid>/categories/r/</guid>
       <description></description>
@@ -21,7 +21,7 @@
     <item>
       <title>afl</title>
       <link>/categories/afl/</link>
-      <pubDate>Wed, 14 Aug 2019 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 30 Aug 2019 00:00:00 +0000</pubDate>
       
       <guid>/categories/afl/</guid>
       <description></description>
@@ -37,6 +37,15 @@
     </item>
     
     <item>
+      <title>data visualisation</title>
+      <link>/categories/data-visualisation/</link>
+      <pubDate>Fri, 30 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/data-visualisation/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>gaming</title>
       <link>/categories/gaming/</link>
       <pubDate>Sat, 17 Aug 2019 00:00:00 +0000</pubDate>
@@ -46,11 +55,29 @@
     </item>
     
     <item>
+      <title>gganimate</title>
+      <link>/categories/gganimate/</link>
+      <pubDate>Fri, 30 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/gganimate/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>ggplot2</title>
       <link>/categories/ggplot2/</link>
-      <pubDate>Sat, 17 Aug 2019 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 30 Aug 2019 00:00:00 +0000</pubDate>
       
       <guid>/categories/ggplot2/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>learning</title>
+      <link>/categories/learning/</link>
+      <pubDate>Fri, 30 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/learning/</guid>
       <description></description>
     </item>
     

@@ -1,0 +1,652 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+<title>Effectively Simplifying AFL Tipping - Don&#39;t Blame The Data</title>
+<meta name="description" content="No need to overthink footy tipping with this simple, yet competitive tipping method">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+  <meta name="generator" content="Hugo 0.54.0" />
+  
+<meta itemprop="name" content="Effectively Simplifying AFL Tipping">
+<meta itemprop="description" content="No need to overthink footy tipping with this simple, yet competitive tipping method">
+
+
+<meta itemprop="datePublished" content="2019-08-30T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2019-08-30T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="487">
+
+
+
+<meta itemprop="keywords" content="afl,ggplot2,data visualisation,R,gganimate," />
+
+  <meta property="og:title" content="Effectively Simplifying AFL Tipping" />
+<meta property="og:description" content="No need to overthink footy tipping with this simple, yet competitive tipping method" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/simplifying-afl-tipping/" />
+<meta property="article:published_time" content="2019-08-30T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2019-08-30T00:00:00&#43;00:00"/>
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Effectively Simplifying AFL Tipping"/>
+<meta name="twitter:description" content="No need to overthink footy tipping with this simple, yet competitive tipping method"/>
+<meta name="twitter:site" content="@jaseziv"/>
+
+  
+
+  <link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
+  
+    
+      <link rel="stylesheet" href="/css/normalize.css">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,800,900|Source+Sans+Pro:400,700">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.1.0/css/flag-icon.min.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css">
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.9.0/css/all.css" integrity="sha384-i1LQnF23gykqWXg6jxC2ZbCbUMxyw5gLZY6UiUS98LYV5unm8GWmfkIS6jqJfb4E" crossorigin="anonymous">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.min.css" />
+      <link rel="stylesheet" href="/css/main.min.css">
+      <link rel="stylesheet" href="/css/add-on.css">
+    
+  
+  
+  
+  
+  
+</head>
+
+  <body>
+    
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/">
+        
+          
+            Blog
+          
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu">
+      
+        <a href="/about/" class="link"><i class="fas fa-home">&nbsp;</i>Home</a>
+      
+        <a href="/about/" class="link"><i class="far fa-id-card">&nbsp;</i>About</a>
+      
+        <a href="/blog/" class="link"><i class="far fa-newspaper">&nbsp;</i>Blog</a>
+      
+        <a href="/projects/" class="link"><i class="far fa-clone">&nbsp;</i>Projects</a>
+      
+        <a href="/categories/" class="link"><i class="fas fa-sitemap">&nbsp;</i>Categories</a>
+      
+        <a href="/contact/" class="link"><i class="far fa-envelope">&nbsp;</i>Contact</a>
+      
+      <a href="#share-menu" class="share-toggle"><i class="fas fa-share-alt">&nbsp;</i>Share</a>
+      
+
+    </menu>
+    
+
+    <a href="#share-menu" class="share-toggle"><i class="fas fa-share-alt fa-2x">&nbsp;</i></a>
+    
+    <a href="#site-nav" class="nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  
+  
+    <menu id="share-menu" class="flyout-menu">
+      <h1>Share Post</h1>
+      
+
+
+
+
+  
+    
+    <a href="//twitter.com/share?text=Effectively%20Simplifying%20AFL%20Tipping&amp;url=%2fblog%2fsimplifying-afl-tipping%2f" target="_blank" rel="noopener" class="share-btn twitter">
+        <i class="fab fa-twitter"></i><p>&nbsp;Twitter</p>
+      </a>
+  
+
+  
+      <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2fsimplifying-afl-tipping%2f" target="_blank" rel="noopener" class="share-btn facebook">
+        <i class="fab fa-facebook"></i><p>&nbsp;Facebook</p>
+        </a>
+  
+
+  
+    <a href="//www.reddit.com/submit?url=%2fblog%2fsimplifying-afl-tipping%2f&amp;title=Effectively%20Simplifying%20AFL%20Tipping" target="_blank" rel="noopener" class="share-btn reddit">
+          <i class="fab fa-reddit-alien"></i><p>&nbsp;Reddit</p>
+        </a>
+  
+
+  
+        <a href="//www.linkedin.com/shareArticle?url=%2fblog%2fsimplifying-afl-tipping%2f&amp;title=Effectively%20Simplifying%20AFL%20Tipping" target="_blank" rel="noopener" class="share-btn linkedin">
+            <i class="fab fa-linkedin"></i><p>&nbsp;LinkedIn</p>
+          </a>
+  
+
+  
+        <a href="//www.pinterest.com/pin/create/button/?url=%2fblog%2fsimplifying-afl-tipping%2f&amp;description=Effectively%20Simplifying%20AFL%20Tipping" target="_blank" rel="noopener" class="share-btn pinterest">
+          <i class="fab fa-pinterest-p"></i><p>&nbsp;Pinterest</p>
+        </a>
+  
+
+  
+        <a href="mailto:?subject=Check out this post by %7b%20%20%20%20%20%20%20%20map%5b%5d%7d&amp;body=%2fblog%2fsimplifying-afl-tipping%2f" target="_blank" class="share-btn email" data-proofer-ignore>
+          <i class="fas fa-envelope"></i><p>&nbsp;Email</p>
+        </a>
+  
+
+
+    </menu>
+  
+</header>
+
+    <div id="wrapper">
+      <section id="site-intro">
+  <a href="/"><img src="/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <header>
+    <h1>Don't Blame the Data</h1>
+  </header>
+  <main>
+    <p>You can disagree with me, but don't blame the data</p>
+  </main>
+  
+    <footer>
+      <ul class="socnet-icons">
+        
+
+        <li><a href="//github.com/JaseZiv" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
+
+
+
+
+
+
+
+
+
+
+<li><a href="//medium.com/@jaseziv83" target="_blank" rel="noopener" title="Medium" class="fab fa-medium"></a></li>
+<li><a href="//linkedin.com/in/jason-zivkovic-4a0a1926" target="_blank" rel="noopener" title="LinkedIn" class="fab fa-linkedin"></a></li>
+
+
+
+
+
+<li><a href="//reddit.com/user/jaseziv" target="_blank" rel="noopener" title="Reddit" class="fab fa-reddit"></a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="//twitter.com/jaseziv" target="_blank" rel="noopener" title="Twitter" class="fab fa-twitter"></a></li>
+
+
+
+
+
+
+
+
+
+
+<li><a href="mailto:jaseziv83@gmail.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
+
+      </ul>
+    </footer>
+  
+</section>
+
+      <main id="site-main">
+        <article class="post">
+  <header>
+  <div class="title">
+    
+        <h2><a href="/blog/simplifying-afl-tipping/">Effectively Simplifying AFL Tipping</a></h2>
+    
+    
+        <p>No need to overthink footy tipping with this simple, yet competitive tipping method</p>
+    
+</div>
+  <div class="meta">
+    <time class="published" datetime="2019-08-30 00:00:00 &#43;0000 UTC">
+      August 30, 2019
+    </time>
+    <span class="author"></span>
+    
+        <p>3 minute read</p>
+    
+  </div>
+</header>
+
+  <section id="socnet-share">
+    
+
+
+
+
+  
+    
+    <a href="//twitter.com/share?text=Effectively%20Simplifying%20AFL%20Tipping&amp;url=%2fblog%2fsimplifying-afl-tipping%2f" target="_blank" rel="noopener" class="share-btn twitter">
+        <i class="fab fa-twitter"></i><p>&nbsp;Twitter</p>
+      </a>
+  
+
+  
+      <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2fsimplifying-afl-tipping%2f" target="_blank" rel="noopener" class="share-btn facebook">
+        <i class="fab fa-facebook"></i><p>&nbsp;Facebook</p>
+        </a>
+  
+
+  
+    <a href="//www.reddit.com/submit?url=%2fblog%2fsimplifying-afl-tipping%2f&amp;title=Effectively%20Simplifying%20AFL%20Tipping" target="_blank" rel="noopener" class="share-btn reddit">
+          <i class="fab fa-reddit-alien"></i><p>&nbsp;Reddit</p>
+        </a>
+  
+
+  
+        <a href="//www.linkedin.com/shareArticle?url=%2fblog%2fsimplifying-afl-tipping%2f&amp;title=Effectively%20Simplifying%20AFL%20Tipping" target="_blank" rel="noopener" class="share-btn linkedin">
+            <i class="fab fa-linkedin"></i><p>&nbsp;LinkedIn</p>
+          </a>
+  
+
+  
+        <a href="//www.pinterest.com/pin/create/button/?url=%2fblog%2fsimplifying-afl-tipping%2f&amp;description=Effectively%20Simplifying%20AFL%20Tipping" target="_blank" rel="noopener" class="share-btn pinterest">
+          <i class="fab fa-pinterest-p"></i><p>&nbsp;Pinterest</p>
+        </a>
+  
+
+  
+        <a href="mailto:?subject=Check out this post by %7b%20%20%20%20%20%20%20%20map%5b%5d%7d&amp;body=%2fblog%2fsimplifying-afl-tipping%2f" target="_blank" class="share-btn email" data-proofer-ignore>
+          <i class="fas fa-envelope"></i><p>&nbsp;Email</p>
+        </a>
+  
+
+
+  </section>
+  
+
+  <div class="content">
+    
+
+
+<p>I feel like I always overthink footy tipping. During each round, I make myself believe I have some sort of secret sauce and conjure up visions in my head of nailing a solid roughy… and then fall flat half way through the season and give up…</p>
+<p>So then I thought, surely there’s an easier way. Only problem was, I thought this up last weekend (during the last season of the round)…</p>
+<p>I though to myself, I wonder how many tips I would’ve gotten this year had I just picked the home team every game…</p>
+<p><img src="/blog/afl_tipping_files/figure-html/unnamed-chunk-2-1.png" width="1056" /></p>
+<p>Ok, so 113 winners wouldn’t have been good enough…</p>
+<hr />
+<div id="using-the-market" class="section level1">
+<h1>Using the Market</h1>
+<p>Then I thought, what if I just picked the favourites in the betting market for each game, but with a twist? If the line was less that half a goal (3 points - virtually a coin flip), then I’d just go safe and pick the home team.</p>
+<p>The betting odds data comes from the Australian Sports Betting website which uses Bet365 odds.</p>
+<p><img src="/blog/afl_tipping_files/figure-html/unnamed-chunk-3-1.png" width="1056" /></p>
+<p><strong>Wow!!</strong></p>
+<p>Ok, so I would’ve been able to (theoretically) get my tips up to 135 for the 2019 season - a really handy result, and beating some popular machine learning models that are out there! This 135 correct tips also doesn’t count draws being awarded as a point, as some tipping competitions do (although there were no draws in 2019).</p>
+<p>Other than 2017, this model - I’ll refer to it as <em>“Simple Model”</em> - would’ve been fairly competitive in each season since 2014.</p>
+<p>Maybe next year, I’ll know what I’ll employ my <em>Simple Model</em>!</p>
+<hr />
+<div id="but-can-we-make-some-money" class="section level2">
+<h2>But can we make some money</h2>
+<p>Ok, so now that I know that the <em>Simple Model</em>’* performs fairly competitively in tipping comps, I want to know if I can make some money using this method?</p>
+<p>To answer this question, I’m placing a theoretic $10 on each game and seeing how many bags of cash are left at the end.</p>
+<p><img src="/blog/afl_tipping_files/figure-html/unnamed-chunk-4-1.png" width="1056" /></p>
+<p>Hmmm… so using this method, I would’ve lost almost $40, even though it was good enough to win some tipping comps. Only in 2018 would this method have worked, with a net profit of $26.82… The 2017 season would’ve been the most brutal, losing just over $245 for the season.</p>
+<p>To find out where everything went so wrong, we can use an animated line plot that tracks the overall profit throughout each round of the season. To get a rundown on how the animated plot was generated, see this post <a href="">here</a>.</p>
+<p><img src="/blog/afl_tipping_files/figure-html/animation_plot-1.gif" /><!-- --></p>
+<p>During the 2019 season, we can see that things would’ve started off really bleak - after round five, I would’ve been down over $120! Things started to pick up from there though, even being in the black at round 1. At no point during the 2015 and 2017 seasons would this model have been profitable.</p>
+<p>While keeping me competitive in footy tipping comps, this model certainly isn’t going to allow me to retire anytime soon.</p>
+</div>
+</div>
+
+  </div>
+  <footer>
+    <ul class="stats">
+  
+    
+    
+      <li class="categories">
+        <ul>
+          
+            
+            <li><a class="article-category-link" href="/categories/afl">afl</a></li>
+          
+            
+            <li><a class="article-category-link" href="/categories/r">R</a></li>
+          
+            
+            <li><a class="article-category-link" href="/categories/ggplot2">ggplot2</a></li>
+          
+            
+            <li><a class="article-category-link" href="/categories/gganimate">gganimate</a></li>
+          
+        </ul>
+      </li>
+    
+  
+  
+    
+    
+      <li class="tags">
+        <ul>
+          
+            
+            <li><a class="article-category-link" href="/tags/afl">afl</a></li>
+          
+            
+            <li><a class="article-category-link" href="/tags/ggplot2">ggplot2</a></li>
+          
+            
+            <li><a class="article-category-link" href="/tags/data-visualisation">data visualisation</a></li>
+          
+            
+            <li><a class="article-category-link" href="/tags/r">R</a></li>
+          
+            
+            <li><a class="article-category-link" href="/tags/gganimate">gganimate</a></li>
+          
+        </ul>
+      </li>
+    
+  
+</ul>
+
+  </footer>
+</article>
+<article class="post">
+  
+    <article class="post">
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "dontblamethedata-com" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </article>
+
+
+</article>
+<div class="pagination">
+  
+    <a href="/blog/how-the-narrative-changed-after-the-boomers-win/" class="button big previous"><i class="fas fa-angle-left"></i> How the narrative changed after the Boomers&#39; win</a>
+  
+  
+    <a href="/blog/all-roads-lead-to-gganimate/" class="button big next">All roads lead to gganimate <i class="fas fa-angle-right"></i></a>
+  
+</div>
+
+
+      </main>
+      <section id="site-sidebar">
+  
+    <section id="recent-posts">
+      <header>
+        <h1>Recent posts</h1>
+      </header>
+      
+      <article class="mini-post">
+        <section>
+          
+
+        </section>
+        <header>
+          <h1><a href="/blog/all-roads-lead-to-gganimate/">All roads lead to gganimate</a></h1>
+          <time class="published" datetime="">August 30, 2019</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+
+        </section>
+        <header>
+          <h1><a href="/blog/simplifying-afl-tipping/">Effectively Simplifying AFL Tipping</a></h1>
+          <time class="published" datetime="">August 30, 2019</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+
+        </section>
+        <header>
+          <h1><a href="/blog/how-the-narrative-changed-after-the-boomers-win/">How the narrative changed after the Boomers&#39; win</a></h1>
+          <time class="published" datetime="">August 25, 2019</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+
+        </section>
+        <header>
+          <h1><a href="/blog/an-in-depth-analysis-of-fifa19/">An In Depth Analysis of FIFA 19</a></h1>
+          <time class="published" datetime="">August 17, 2019</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+
+        </section>
+        <header>
+          <h1><a href="/blog/a-tribute-to-jarryd-roughead-using-data-analysis/">A tribute to Jarryd Roughead with some obscure data</a></h1>
+          <time class="published" datetime="">August 14, 2019</time>
+        </header>
+      </article>
+      
+      
+        <a href="/blog/" class="button">See more</a>
+      
+    </section>
+  
+
+  
+    
+      <section id="categories">
+        <header>
+          <h1><a href="/categories">Categories</a></h1>
+        </header>
+        <ul>
+          
+            
+          
+          
+          <li>
+            
+              <a href="/categories/r/">R<span class="count">7</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/analytics/">analytics<span class="count">5</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/afl/">afl<span class="count">4</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/sport/">sport<span class="count">4</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/tidyverse/">tidyverse<span class="count">4</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/ggplot2/">ggplot2<span class="count">3</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/gganimate/">gganimate<span class="count">2</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/data-visualisation/">data visualisation<span class="count">1</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/gaming/">gaming<span class="count">1</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/learning/">learning<span class="count">1</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/linear-regression/">linear regression<span class="count">1</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/machine-learning/">machine learning<span class="count">1</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/twitter/">twitter<span class="count">1</span></a>
+            
+          
+          </li>
+        </ul>
+      </section>
+    
+  
+
+  <section id="mini-bio">
+    <header>
+      <h1>About</h1>
+    </header>
+    <p>A data visualisation blog. Sports. Analytics. Sports analytics</p>
+    <footer>
+      <a href="/about" class="button">Learn More</a>
+    </footer>
+  </section>
+</section>
+
+      <footer id="site-footer">
+  
+      <ul class="socnet-icons">
+        
+
+        <li><a href="//github.com/JaseZiv" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
+
+
+
+
+
+
+
+
+
+
+<li><a href="//medium.com/@jaseziv83" target="_blank" rel="noopener" title="Medium" class="fab fa-medium"></a></li>
+<li><a href="//linkedin.com/in/jason-zivkovic-4a0a1926" target="_blank" rel="noopener" title="LinkedIn" class="fab fa-linkedin"></a></li>
+
+
+
+
+
+<li><a href="//reddit.com/user/jaseziv" target="_blank" rel="noopener" title="Reddit" class="fab fa-reddit"></a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="//twitter.com/jaseziv" target="_blank" rel="noopener" title="Twitter" class="fab fa-twitter"></a></li>
+
+
+
+
+
+
+
+
+
+
+<li><a href="mailto:jaseziv83@gmail.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
+
+      </ul>
+  
+  <p class="copyright">
+    
+      &copy; 2019
+      
+        Don&#39;t Blame The Data
+      
+    .
+    Powered by <a href="//gohugo.io" target="_blank" rel="noopener">Hugo</a>
+  </p>
+</footer>
+<a id="back-to-top" href="#" class="fas fa-arrow-up fa-2x"></a>
+
+      
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/html.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/css.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/js.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/toml.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+
+  
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/skel/3.0.1/skel.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.min.js"></script>
+  <script src=/js/util.js></script>
+  <script src=/js/main.js></script>
+  <script src=/js/add-on.js></script>
+  
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-145056765-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+    </div>
+  </body>
+</html>

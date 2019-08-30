@@ -5,10 +5,30 @@
     <link>/categories/ggplot2/</link>
     <description>Recent content in ggplot2 on Don&#39;t Blame The Data</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Sat, 17 Aug 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 30 Aug 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/ggplot2/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>All roads lead to gganimate</title>
+      <link>/blog/all-roads-lead-to-gganimate/</link>
+      <pubDate>Fri, 30 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/all-roads-lead-to-gganimate/</guid>
+      <description>This post aims to introduce you to animating ggplot2 visualisations in r using the gganimate package by Thomas Lin Pedersen.
+The post will visualise the theroetical winnings I would’ve had, had I followed the simple model to predict (or tip as it’s known in Australia) winners in the AFL that I explained in this post. The data used in the analysis was collected from the AFL Tables website as part of a larger series I wrote about on AFL crowds.</description>
+    </item>
+    
+    <item>
+      <title>Effectively Simplifying AFL Tipping</title>
+      <link>/blog/simplifying-afl-tipping/</link>
+      <pubDate>Fri, 30 Aug 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/simplifying-afl-tipping/</guid>
+      <description>I feel like I always overthink footy tipping. During each round, I make myself believe I have some sort of secret sauce and conjure up visions in my head of nailing a solid roughy… and then fall flat half way through the season and give up…
+So then I thought, surely there’s an easier way. Only problem was, I thought this up last weekend (during the last season of the round)…</description>
+    </item>
     
     <item>
       <title>An In Depth Analysis of FIFA 19</title>

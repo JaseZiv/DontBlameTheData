@@ -3,6 +3,16 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/blog/all-roads-lead-to-gganimate/</loc>
+    <lastmod>2019-08-30T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/blog/simplifying-afl-tipping/</loc>
+    <lastmod>2019-08-30T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/blog/how-the-narrative-changed-after-the-boomers-win/</loc>
     <lastmod>2019-08-25T00:00:00+00:00</lastmod>
   </url>
@@ -34,7 +44,7 @@
   
   <url>
     <loc>/blog/</loc>
-    <lastmod>2019-08-25T00:00:00+00:00</lastmod>
+    <lastmod>2019-08-30T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -49,7 +59,7 @@
   
   <url>
     <loc>/</loc>
-    <lastmod>2019-08-25T00:00:00+00:00</lastmod>
+    <lastmod>2019-08-30T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -63,20 +73,20 @@
   </url>
   
   <url>
-    <loc>/tags/r/</loc>
-    <lastmod>2019-08-17T00:00:00+00:00</lastmod>
+    <loc>/categories/r/</loc>
+    <lastmod>2019-08-30T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/categories/r/</loc>
-    <lastmod>2019-08-25T00:00:00+00:00</lastmod>
+    <loc>/tags/r/</loc>
+    <lastmod>2019-08-30T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/tags/</loc>
-    <lastmod>2019-08-17T00:00:00+00:00</lastmod>
+    <lastmod>2019-08-30T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -87,26 +97,26 @@
   </url>
   
   <url>
-    <loc>/tags/afl/</loc>
-    <lastmod>2019-08-14T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>/categories/afl/</loc>
-    <lastmod>2019-08-14T00:00:00+00:00</lastmod>
+    <lastmod>2019-08-30T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/analytics/</loc>
-    <lastmod>2019-08-17T00:00:00+00:00</lastmod>
+    <loc>/tags/afl/</loc>
+    <lastmod>2019-08-30T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/categories/analytics/</loc>
     <lastmod>2019-08-25T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/analytics/</loc>
+    <lastmod>2019-08-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -129,6 +139,18 @@
   </url>
   
   <url>
+    <loc>/categories/data-visualisation/</loc>
+    <lastmod>2019-08-30T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/data-visualisation/</loc>
+    <lastmod>2019-08-30T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/tags/fifa/</loc>
     <lastmod>2019-08-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -147,6 +169,18 @@
   </url>
   
   <url>
+    <loc>/categories/gganimate/</loc>
+    <lastmod>2019-08-30T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/gganimate/</loc>
+    <lastmod>2019-08-30T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/tags/ggplot/</loc>
     <lastmod>2019-08-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -154,13 +188,31 @@
   
   <url>
     <loc>/categories/ggplot2/</loc>
-    <lastmod>2019-08-17T00:00:00+00:00</lastmod>
+    <lastmod>2019-08-30T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/ggplot2/</loc>
+    <lastmod>2019-08-30T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/tags/jarryd-roughead/</loc>
     <lastmod>2019-08-14T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/learning/</loc>
+    <lastmod>2019-08-30T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/line-chart/</loc>
+    <lastmod>2019-08-30T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -201,25 +253,25 @@
   </url>
   
   <url>
-    <loc>/tags/tidyverse/</loc>
-    <lastmod>2019-08-17T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>/categories/tidyverse/</loc>
     <lastmod>2019-08-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/twitter/</loc>
-    <lastmod>2019-08-25T00:00:00+00:00</lastmod>
+    <loc>/tags/tidyverse/</loc>
+    <lastmod>2019-08-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/categories/twitter/</loc>
+    <lastmod>2019-08-25T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/twitter/</loc>
     <lastmod>2019-08-25T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
