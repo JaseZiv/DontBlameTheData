@@ -20,7 +20,7 @@ type: post
 
 This post aims to introduce you to animating ggplot2 visualisations in r using the [gganimate](https://github.com/thomasp85/gganimate) package by Thomas Lin Pedersen. 
 
-The post will visualise the theroetical winnings I would've had, had I followed the simple model to predict (or tip as it's known in Australia) winners in the AFL that I explained in this [post](). The data used in the analysis was collected from the AFL Tables website as part of a larger series I wrote about on AFL crowds. The wider project can be found [here](https://github.com/JaseZiv/AFL-Crowd-Analytics)
+The post will visualise the theroetical winnings I would've had, had I followed the simple model to predict (or tip as it's known in Australia) winners in the AFL that I explained in this [post](https://www.dontblamethedata.com/blog/simplifying-afl-tipping/). The data used in the analysis was collected from the AFL Tables website as part of a larger series I wrote about on AFL crowds. The wider project can be found [here](https://github.com/JaseZiv/AFL-Crowd-Analytics)
 
 ```{r, warning=FALSE, message=FALSE}
 library(tidyverse)
