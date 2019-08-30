@@ -20,7 +20,7 @@ type: post
 
 This post aims to introduce you to animating ggplot2 visualisations in r using the [gganimate](https://github.com/thomasp85/gganimate) package by Thomas Lin Pedersen. 
 
-The post will visualise the theroetical winnings I would've had, had I followed the simple model to predict (or tip as it's known in Australia) winners in the AFL that I explained in this [post](https://www.dontblamethedata.com/blog/simplifying-afl-tipping/). The data used in the analysis was collected from the AFL Tables website as part of a larger series I wrote about on AFL crowds. The wider project can be found [here](https://github.com/JaseZiv/AFL-Crowd-Analytics)
+The post will visualise the theoretical winnings I would've had, had I followed the simple model to predict (or tip as it's known in Australia) winners in the AFL that I explained in this [post](https://www.dontblamethedata.com/blog/simplifying-afl-tipping/). The data used in the analysis was collected from the AFL Tables website as part of a larger series I wrote about on AFL crowds. The wider project can be found [here](https://github.com/JaseZiv/AFL-Crowd-Analytics)
 
 ```{r, warning=FALSE, message=FALSE}
 library(tidyverse)
@@ -117,12 +117,12 @@ total_money %>%
 
 Not bad, but certainly could be improved. To my mind, with six seasons being plotted, the legend is hard to map to the line itself. Also, other than the 2017 season, which was particularly bad, the other seasons' variation between rounds was hard to see.
 
-Additionally, plotting the data this way made it hard to realise without expending far too much energy to focus on where I would've made money, and where I would've lost it.
+Additionally, plotting the data this way made it hard to realise without expending far too much energy focusing on where I would've made money, and where I would've lost it.
 
 
 ## Labels and Annotations
 
-Yuck - you can't just simply add the season as a label - can't read anything!
+Yuck - you can't just simply add the season as a label - you can't read anything!
 
 
 ```{r, static_line2, warning=FALSE, message=FALSE, fig.height=8, fig.width=11}
@@ -153,7 +153,7 @@ As we can see, further elements were added to our static chart, including:
 * Formatting the y-axis to a dollar format; and 
 * Adding labels and removing the legend
 
-This has greatly improved the readibility of the plot.
+This has greatly improved the readability of the plot.
 
 ```{r, static_line3, warning=FALSE, message=FALSE, fig.height=8, fig.width=11}
 total_money %>%
@@ -184,7 +184,7 @@ Enter animations from gganimate!
 
 Using an animated plot allows us to remove even more elements. With the right mix of labelling and animation, the y-axis no longer is necessary - with each round, we can follow the winnings or losses as we go, while the break-even line gives us a reference point.
 
-The other things that were done here include the slowing down of frames using `fps` (frames per second) and adjusting the `range` in `trasition_reveal()` to be longer than the rounds it's transitioning over (ie adjusting the range to `c(0,25)`). This allows the animation to pause after it has finished it's cycle.
+The other things that were done here include the slowing down of frames using `fps` (frames per second) and adjusting the `range` in `trasition_reveal()` to be longer than the rounds it's transitioning over (ie adjusting the range to `c(0,25)`). This allows the animation to pause after it has finished its cycle.
 
 Finally, to increase the size of the output, adjust the `width` and `height` arguments to your liking.
 

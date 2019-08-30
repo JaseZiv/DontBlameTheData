@@ -20,7 +20,7 @@ type: post
 
 
 <p>This post aims to introduce you to animating ggplot2 visualisations in r using the <a href="https://github.com/thomasp85/gganimate">gganimate</a> package by Thomas Lin Pedersen.</p>
-<p>The post will visualise the theroetical winnings I would’ve had, had I followed the simple model to predict (or tip as it’s known in Australia) winners in the AFL that I explained in this <a href="https://www.dontblamethedata.com/blog/simplifying-afl-tipping/">post</a>. The data used in the analysis was collected from the AFL Tables website as part of a larger series I wrote about on AFL crowds. The wider project can be found <a href="https://github.com/JaseZiv/AFL-Crowd-Analytics">here</a></p>
+<p>The post will visualise the theoretical winnings I would’ve had, had I followed the simple model to predict (or tip as it’s known in Australia) winners in the AFL that I explained in this <a href="https://www.dontblamethedata.com/blog/simplifying-afl-tipping/">post</a>. The data used in the analysis was collected from the AFL Tables website as part of a larger series I wrote about on AFL crowds. The wider project can be found <a href="https://github.com/JaseZiv/AFL-Crowd-Analytics">here</a></p>
 <pre class="r"><code>library(tidyverse)
 library(lubridate)
 library(scales)
@@ -105,11 +105,11 @@ total_money &lt;- money_per_round %&gt;%
   theme(legend.position = &quot;bottom&quot;)</code></pre>
 <p><img src="/blog/gganimate_animation_guide_files/figure-html/static_line1-1.png" width="1056" /></p>
 <p>Not bad, but certainly could be improved. To my mind, with six seasons being plotted, the legend is hard to map to the line itself. Also, other than the 2017 season, which was particularly bad, the other seasons’ variation between rounds was hard to see.</p>
-<p>Additionally, plotting the data this way made it hard to realise without expending far too much energy to focus on where I would’ve made money, and where I would’ve lost it.</p>
+<p>Additionally, plotting the data this way made it hard to realise without expending far too much energy focusing on where I would’ve made money, and where I would’ve lost it.</p>
 </div>
 <div id="labels-and-annotations" class="section level2">
 <h2>Labels and Annotations</h2>
-<p>Yuck - you can’t just simply add the season as a label - can’t read anything!</p>
+<p>Yuck - you can’t just simply add the season as a label - you can’t read anything!</p>
 <pre class="r"><code>total_money %&gt;%
   ggplot(aes(x= round, y= cumulating_winnings, 
              group = season, colour = as.character(season))) +
@@ -134,7 +134,7 @@ total_money &lt;- money_per_round %&gt;%
 <li>Formatting the y-axis to a dollar format; and</li>
 <li>Adding labels and removing the legend</li>
 </ul>
-<p>This has greatly improved the readibility of the plot.</p>
+<p>This has greatly improved the readability of the plot.</p>
 <pre class="r"><code>total_money %&gt;%
   ggplot(aes(x= round, y= cumulating_winnings, 
              group = season, colour = as.character(season))) +
@@ -159,7 +159,7 @@ total_money &lt;- money_per_round %&gt;%
 <p>While the above chart looks a lot better, there are no theatrics!</p>
 <p>Enter animations from gganimate!</p>
 <p>Using an animated plot allows us to remove even more elements. With the right mix of labelling and animation, the y-axis no longer is necessary - with each round, we can follow the winnings or losses as we go, while the break-even line gives us a reference point.</p>
-<p>The other things that were done here include the slowing down of frames using <code>fps</code> (frames per second) and adjusting the <code>range</code> in <code>trasition_reveal()</code> to be longer than the rounds it’s transitioning over (ie adjusting the range to <code>c(0,25)</code>). This allows the animation to pause after it has finished it’s cycle.</p>
+<p>The other things that were done here include the slowing down of frames using <code>fps</code> (frames per second) and adjusting the <code>range</code> in <code>trasition_reveal()</code> to be longer than the rounds it’s transitioning over (ie adjusting the range to <code>c(0,25)</code>). This allows the animation to pause after it has finished its cycle.</p>
 <p>Finally, to increase the size of the output, adjust the <code>width</code> and <code>height</code> arguments to your liking.</p>
 <pre class="r"><code>total_money_anim &lt;-  total_money %&gt;%
   ggplot(aes(x= round, y= cumulating_winnings, 
