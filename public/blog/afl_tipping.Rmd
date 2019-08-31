@@ -88,7 +88,7 @@ Ok, so 113 winners wouldn't have been good enough...
 
 # Using the Market
 
-Then I thought, what if I just picked the favourites in the betting market for each game, but with a twist? If the line was less that half a goal (3 points - virtually a coin flip), then I'd just go safe and pick the home team.
+Then I thought, what if I just picked the favourites in the betting market for each game, but with a twist? If the line was less than half a goal (3 points - virtually a coin flip), then I'd just go safe and pick the home team.
 
 The betting odds data comes from the Australian Sports Betting website which uses Bet365 odds.
 
@@ -121,7 +121,7 @@ Ok, so I would've been able to (theoretically) get my tips up to 135 for the 201
 
 Other than 2017, this model - I'll refer to it as *"Simple Model"* - would've been fairly competitive in each season since 2014.
 
-Maybe next year, I'll know what I'll employ my *Simple Model*!
+Maybe next year, I'll know what I'll employ... my *Simple Model*!
 
 
 ***
@@ -220,7 +220,7 @@ animate(total_money_anim, width = 900, height = 900, fps = 5)
 ```
 
 
-During the 2019 season, we can see that things would've started off really bleak - after round five, I would've been down over $120! Things started to pick up from there though, even being in the black at round 1. At no point during the 2015 and 2017 seasons would this model have been profitable.
+During the 2019 season, we can see that things would've started off really bleak - after round five, I would've been down over $120! Things started to pick up from there though, even being in the black at round 14. At no point during the 2015 and 2017 seasons would this model have been profitable.
 
 While keeping me competitive in footy tipping comps, this model certainly isn't going to allow me to retire anytime soon.
 
