@@ -5,10 +5,20 @@
     <link>/tags/data-visualisation/</link>
     <description>Recent content in data visualisation on Don&#39;t Blame The Data</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Fri, 30 Aug 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 04 Dec 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/data-visualisation/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Analysing AFL Team Age... Properly!</title>
+      <link>/blog/analysing-afl-team-age/</link>
+      <pubDate>Wed, 04 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/analysing-afl-team-age/</guid>
+      <description>After seeing my beloved Hawthorn Hawks tweet out an article on their website regarding player ages for each team, it got me riled up that the media love to cite Champion Data’s “average age” as their measure.
+As can be seen with the age distribution of players as at the start of the 2020 AFL Premiership Season, the figure is going to be skewed by the older players on lists, especially with guys like Shaun Burgoyne, Kade Simpson, Gary Ablett Junior…</description>
+    </item>
     
     <item>
       <title>All roads lead to gganimate</title>

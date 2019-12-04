@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/blog/analysing-afl-team-age/</loc>
+    <lastmod>2019-12-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/blog/all-roads-lead-to-gganimate/</loc>
     <lastmod>2019-08-30T00:00:00+00:00</lastmod>
   </url>
@@ -44,7 +49,7 @@
   
   <url>
     <loc>/blog/</loc>
-    <lastmod>2019-08-30T00:00:00+00:00</lastmod>
+    <lastmod>2019-12-04T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -59,7 +64,7 @@
   
   <url>
     <loc>/</loc>
-    <lastmod>2019-08-30T00:00:00+00:00</lastmod>
+    <lastmod>2019-12-04T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -98,25 +103,25 @@
   
   <url>
     <loc>/tags/afl/</loc>
-    <lastmod>2019-08-30T00:00:00+00:00</lastmod>
+    <lastmod>2019-12-04T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/categories/afl/</loc>
-    <lastmod>2019-08-30T00:00:00+00:00</lastmod>
+    <lastmod>2019-12-04T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/tags/analytics/</loc>
-    <lastmod>2019-08-17T00:00:00+00:00</lastmod>
+    <lastmod>2019-12-04T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/categories/analytics/</loc>
-    <lastmod>2019-08-25T00:00:00+00:00</lastmod>
+    <lastmod>2019-12-04T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -140,7 +145,7 @@
   
   <url>
     <loc>/tags/data-visualisation/</loc>
-    <lastmod>2019-08-30T00:00:00+00:00</lastmod>
+    <lastmod>2019-12-04T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -188,7 +193,7 @@
   
   <url>
     <loc>/tags/ggplot2/</loc>
-    <lastmod>2019-08-30T00:00:00+00:00</lastmod>
+    <lastmod>2019-12-04T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -243,6 +248,12 @@
   <url>
     <loc>/categories/sport/</loc>
     <lastmod>2019-08-25T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/statistics/</loc>
+    <lastmod>2019-12-04T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

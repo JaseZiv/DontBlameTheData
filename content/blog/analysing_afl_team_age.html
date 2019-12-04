@@ -1,0 +1,66 @@
+---
+title: "Analysing AFL Team Age... Properly!"
+date: "2019-12-04"
+slug: analysing-afl-team-age
+categories:
+  - afl
+  - analytics
+tags: [afl, ggplot2, data visualisation, analytics, statistics]
+description: 'When using the median would be a more appropriate measure of the oldest (or youngest) AFL playing lists'
+featured: ''
+featuredalt: ''
+featuredpath: ''
+linktitle: ''
+type: post
+---
+
+
+
+<p>After seeing my beloved Hawthorn Hawks tweet out an <a href="https://www.hawthornfc.com.au/news/2019-12-04/hawks-no-longer-the-oldest-list">article</a> on their website regarding player ages for each team, it got me riled up that the media love to cite Champion Data’s “average age” as their measure.</p>
+<p>As can be seen with the age distribution of players as at the start of the 2020 AFL Premiership Season, the figure is going to be skewed by the older players on lists, especially with guys like Shaun Burgoyne, Kade Simpson, Gary Ablett Junior…</p>
+<p><br><br></p>
+<p><img src="/blog/analysing_afl_team_age_files/figure-html/unnamed-chunk-2-1.png" width="864" /></p>
+<div id="mean-medianwhat-of-it" class="section level2">
+<h2>Mean, Median…what of it?</h2>
+<p>The <em>mean</em>, from <a href="https://en.wikipedia.org/wiki/Mean">Wikipedia</a>;</p>
+<blockquote>
+<p>For a data set, the arithmetic mean, also called the mathematical expectation or average, is the central value of a discrete set of numbers: specifically, the sum of the values divided by the number of values.</p>
+</blockquote>
+<p>The <em>median</em>, also <a href="https://en.wikipedia.org/wiki/Median">Wikipedia</a>;</p>
+<blockquote>
+<p>The median is the value separating the higher half from the lower half of a data sample (a population or a probability distribution). For a data set, it may be thought of as the “middle” value. For example, in the data set {1, 3, 3, 6, 7, 8, 9}, the median is 6, the fourth largest, and also the fourth smallest, number in the sample. For a continuous probability distribution, the median is the value such that a number is equally likely to fall above or below it.</p>
+</blockquote>
+<p>When data is not normally distributed around the mean (as is the case here), using it to describe the measure of centre is misleading. In cases like this, the median provides a more representative statistic. With a positively skewed distribution like the one above, statistics 101 tells us that the median will be less than the average, while the opposite would hold true where the distribution was negatively skewed.</p>
+<p>The average age of all players on team lists for the 2020 AFL premiership season is 24.17 years, while the median age is 23.6 years.</p>
+<p><br><br></p>
+<div id="so-why-do-they-still-report-averages" class="section level3">
+<h3>So why do they still report averages?</h3>
+<p>I suspect media outlets report the <em>average</em> age for two reasons;</p>
+<ol style="list-style-type: decimal">
+<li>Who can be bothered explaining the nuances between the mean and the median; or more likely,</li>
+<li>The average is more prone to pull this number higher for some teams, fuelling the narrative they want to run with.</li>
+</ol>
+<p><br><br></p>
+</div>
+<div id="implications-of-the-different-measures" class="section level3">
+<h3>Implications of the different measures</h3>
+<p>When we plot both the average and median ages of each of the teams, we can see that we get some very different outcomes.</p>
+<p>We are led to believe that the Geelong Cats have the fourth oldest list but when using the median as the statistic, they are the 11th oldest playing list, with the Kangaroos, GWS, Saints, Demons, Bombers, Bulldogs and Tigers all having older lists than them.</p>
+<p>Some of the other implications:</p>
+<ul>
+<li>The Brisbane Lions have the youngest list for the 2020 season, not the Gold Coast</li>
+<li>The Hawks are actually the fourth oldest list, with North Melbourne being third</li>
+<li>The Demons are the the 7th oldest list, not the 12th oldest</li>
+<li>The Power are the equal third (with the Swans) youngest list, not the 10th oldest</li>
+</ul>
+<p><br><br></p>
+<p><img src="/blog/analysing_afl_team_age_files/figure-html/unnamed-chunk-3-1.png" width="1056" /></p>
+</div>
+</div>
+<div id="why-does-any-of-this-matter" class="section level2">
+<h2>Why does any of this matter?</h2>
+<p>How this figure is reported probably doesn’t matter ultimately; the age of a playing list likely isn’t all that important when it comes to the ultimate glory of premiership success, as can be seen in the different age distributions of recent premiership teams in this great little analysis at <a href="https://thearcfooty.com/2016/04/24/how-old-is-the-typical-premiership-team/">TheArc</a>.</p>
+<p>That aside, it would be nice to see this figure reported a little more accurately.</p>
+<p>Rant. Over.</p>
+<p>The data for this post and the code used to scrape it can be found <a href="https://github.com/JaseZiv/Dont-Blame-the-Data-Data-Files/tree/master/analysing_afl_team_age">here</a>.</p>
+</div>

@@ -31,7 +31,7 @@
     <item>
       <title>afl</title>
       <link>/tags/afl/</link>
-      <pubDate>Fri, 30 Aug 2019 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 04 Dec 2019 00:00:00 +0000</pubDate>
       
       <guid>/tags/afl/</guid>
       <description></description>
@@ -40,7 +40,7 @@
     <item>
       <title>analytics</title>
       <link>/tags/analytics/</link>
-      <pubDate>Sat, 17 Aug 2019 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 04 Dec 2019 00:00:00 +0000</pubDate>
       
       <guid>/tags/analytics/</guid>
       <description></description>
@@ -76,7 +76,7 @@
     <item>
       <title>data visualisation</title>
       <link>/tags/data-visualisation/</link>
-      <pubDate>Fri, 30 Aug 2019 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 04 Dec 2019 00:00:00 +0000</pubDate>
       
       <guid>/tags/data-visualisation/</guid>
       <description></description>
@@ -121,7 +121,7 @@
     <item>
       <title>ggplot2</title>
       <link>/tags/ggplot2/</link>
-      <pubDate>Fri, 30 Aug 2019 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 04 Dec 2019 00:00:00 +0000</pubDate>
       
       <guid>/tags/ggplot2/</guid>
       <description></description>
@@ -160,6 +160,15 @@
       <pubDate>Sun, 25 Aug 2019 00:00:00 +0000</pubDate>
       
       <guid>/tags/sentiment/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>statistics</title>
+      <link>/tags/statistics/</link>
+      <pubDate>Wed, 04 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/statistics/</guid>
       <description></description>
     </item>
     
