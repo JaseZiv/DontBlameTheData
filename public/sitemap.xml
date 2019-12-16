@@ -83,13 +83,13 @@
   </url>
   
   <url>
-    <loc>/categories/r/</loc>
+    <loc>/tags/r/</loc>
     <lastmod>2019-12-16T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/r/</loc>
+    <loc>/categories/r/</loc>
     <lastmod>2019-12-16T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -113,25 +113,25 @@
   </url>
   
   <url>
-    <loc>/categories/afl/</loc>
-    <lastmod>2019-12-04T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>/tags/afl/</loc>
     <lastmod>2019-12-04T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/categories/analytics/</loc>
+    <loc>/categories/afl/</loc>
     <lastmod>2019-12-04T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/tags/analytics/</loc>
+    <lastmod>2019-12-04T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/analytics/</loc>
     <lastmod>2019-12-04T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -155,14 +155,14 @@
   </url>
   
   <url>
-    <loc>/categories/data-visualisation/</loc>
-    <lastmod>2019-08-30T00:00:00+00:00</lastmod>
+    <loc>/tags/data-visualisation/</loc>
+    <lastmod>2019-12-04T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/data-visualisation/</loc>
-    <lastmod>2019-12-04T00:00:00+00:00</lastmod>
+    <loc>/categories/data-visualisation/</loc>
+    <lastmod>2019-08-30T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -179,13 +179,13 @@
   </url>
   
   <url>
-    <loc>/categories/fitzroy/</loc>
+    <loc>/tags/fitzroy/</loc>
     <lastmod>2019-12-16T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/fitzroy/</loc>
+    <loc>/categories/fitzroy/</loc>
     <lastmod>2019-12-16T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -197,13 +197,13 @@
   </url>
   
   <url>
-    <loc>/categories/gganimate/</loc>
+    <loc>/tags/gganimate/</loc>
     <lastmod>2019-08-30T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/gganimate/</loc>
+    <loc>/categories/gganimate/</loc>
     <lastmod>2019-08-30T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -215,14 +215,14 @@
   </url>
   
   <url>
-    <loc>/categories/ggplot2/</loc>
-    <lastmod>2019-08-30T00:00:00+00:00</lastmod>
+    <loc>/tags/ggplot2/</loc>
+    <lastmod>2019-12-04T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/ggplot2/</loc>
-    <lastmod>2019-12-04T00:00:00+00:00</lastmod>
+    <loc>/categories/ggplot2/</loc>
+    <lastmod>2019-08-30T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -257,13 +257,13 @@
   </url>
   
   <url>
-    <loc>/categories/open-source/</loc>
+    <loc>/tags/open-source/</loc>
     <lastmod>2019-12-16T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/open-source/</loc>
+    <loc>/categories/open-source/</loc>
     <lastmod>2019-12-16T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -305,25 +305,25 @@
   </url>
   
   <url>
-    <loc>/categories/tidyverse/</loc>
-    <lastmod>2019-08-17T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>/tags/tidyverse/</loc>
     <lastmod>2019-08-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/categories/twitter/</loc>
-    <lastmod>2019-08-25T00:00:00+00:00</lastmod>
+    <loc>/categories/tidyverse/</loc>
+    <lastmod>2019-08-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/tags/twitter/</loc>
+    <lastmod>2019-08-25T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/twitter/</loc>
     <lastmod>2019-08-25T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
