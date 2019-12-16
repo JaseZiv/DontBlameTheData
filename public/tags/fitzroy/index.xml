@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>fitzRoy on Don&#39;t Blame The Data</title>
+    <link>/tags/fitzroy/</link>
+    <description>Recent content in fitzRoy on Don&#39;t Blame The Data</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Mon, 16 Dec 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/fitzroy/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>The Agony and the Ecstacy of my first open source contribution</title>
+      <link>/blog/first-open-source-contribution/</link>
+      <pubDate>Mon, 16 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/first-open-source-contribution/</guid>
+      <description>For the last year or so, I’ve had this desire to contribute to an open source R package, but like a lot of people, I found the thought of tackling the task frightening.
+While I work in a really dynamic and close team every day, and in the world of remote repositories (Git), I’ve had really limited exposure to collaborative working in these remote repositories… We tend more to work on projects largely on our own, so the concepts of pull requests (PRs), merging, forking… well it was all a bit daunting.</description>
+    </item>
+    
+  </channel>
+</rss>
