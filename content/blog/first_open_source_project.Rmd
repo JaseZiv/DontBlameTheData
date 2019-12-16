@@ -113,6 +113,7 @@ The below code gives a glimpse into how the function can be used.
 
 library(fitzRoy)
 library(tidyverse)
+library(kableExtra)
 
 # get a data frame of AFL data using get_match_results
 afl_data <- get_match_results()
@@ -124,7 +125,10 @@ afl_data <- get_match_results()
 ```{r ladder_all, warning=FALSE, message=FALSE}
 # apply the return_ladder function
 ladder <- return_ladder(match_results_df = afl_data)
-head(ladder, 16)
+head(ladder, 16) %>% 
+  kable(format = "html", escape = F) %>%
+  kable_styling("striped") %>% 
+  scroll_box(width = "750px", height = "600px")
 ```
 
 
@@ -134,7 +138,10 @@ head(ladder, 16)
 ```{r ladder_round, warning=FALSE, message=FALSE}
 # what if we want the ladder for a specific round?
 ladder_round_1 <- return_ladder(match_results_df = afl_data, season_round = 1)
-tail(ladder_round_1, 18)
+tail(ladder_round_1, 18) %>% 
+  kable(format = "html", escape = F) %>%
+  kable_styling("striped") %>% 
+  scroll_box(width = "750px", height = "600px")
 ```
 
 
@@ -143,7 +150,10 @@ tail(ladder_round_1, 18)
 ```{r ladder_season, warning=FALSE, message=FALSE}
 # finally, for every round in just one season
 ladder_2018 <- return_ladder(match_results_df = afl_data, season = 2018)
-head(ladder_2018, 18)
+head(ladder_2018, 18) %>% 
+  kable(format = "html", escape = F) %>%
+  kable_styling("striped") %>% 
+  scroll_box(width = "750px", height = "600px")
 ```
 
 

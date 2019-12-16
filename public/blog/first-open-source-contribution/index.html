@@ -16,7 +16,7 @@
 
 <meta itemprop="datePublished" content="2019-12-16T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2019-12-16T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="1735">
+<meta itemprop="wordCount" content="1722">
 
 
 
@@ -275,6 +275,7 @@
 
   <div class="content">
     
+<script src="/rmarkdown-libs/kePrint/kePrint.js"></script>
 
 
 <p>For the last year or so, I’ve had this desire to contribute to an open source R package, but like a lot of people, I found the thought of tackling the task frightening.</p>
@@ -351,85 +352,1485 @@
 
 library(fitzRoy)
 library(tidyverse)
+library(kableExtra)
 
 # get a data frame of AFL data using get_match_results
 afl_data &lt;- get_match_results()</code></pre>
 <p>** Return the ladder for all teams, for all rounds since 1897**</p>
 <pre class="r"><code># apply the return_ladder function
 ladder &lt;- return_ladder(match_results_df = afl_data)
-head(ladder, 16)</code></pre>
-<pre><code>## # A tibble: 16 x 8
-##    Season Team  Round.Number Season.Points Score.For Score.Against
-##     &lt;dbl&gt; &lt;chr&gt;        &lt;int&gt;         &lt;dbl&gt;     &lt;dbl&gt;         &lt;dbl&gt;
-##  1   1897 Fitz…            1             4        49            16
-##  2   1897 Coll…            1             4        41            16
-##  3   1897 Esse…            1             4        47            24
-##  4   1897 Melb…            1             4        44            27
-##  5   1897 Sydn…            1             0        27            44
-##  6   1897 Geel…            1             0        24            47
-##  7   1897 St K…            1             0        16            41
-##  8   1897 Carl…            1             0        16            49
-##  9   1897 Fitz…            2             8       115            42
-## 10   1897 Melb…            2             8       108            46
-## 11   1897 Coll…            2             8        91            46
-## 12   1897 Esse…            2             4        77            74
-## 13   1897 Sydn…            2             4        67            80
-## 14   1897 Carl…            2             0        52            89
-## 15   1897 St K…            2             0        42           107
-## 16   1897 Geel…            2             0        43           111
-## # … with 2 more variables: Percentage &lt;dbl&gt;, Ladder.Position &lt;int&gt;</code></pre>
+head(ladder, 16) %&gt;% 
+  kable(format = &quot;html&quot;, escape = F) %&gt;%
+  kable_styling(&quot;striped&quot;) %&gt;% 
+  scroll_box(width = &quot;750px&quot;, height = &quot;600px&quot;)</code></pre>
+<div style="border: 1px solid #ddd; padding: 5px; overflow-y: scroll; height:600px; overflow-x: scroll; width:750px; ">
+<table class="table table-striped" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+Season
+</th>
+<th style="text-align:left;">
+Team
+</th>
+<th style="text-align:right;">
+Round.Number
+</th>
+<th style="text-align:right;">
+Season.Points
+</th>
+<th style="text-align:right;">
+Score.For
+</th>
+<th style="text-align:right;">
+Score.Against
+</th>
+<th style="text-align:right;">
+Percentage
+</th>
+<th style="text-align:right;">
+Ladder.Position
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1897
+</td>
+<td style="text-align:left;">
+Fitzroy
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+49
+</td>
+<td style="text-align:right;">
+16
+</td>
+<td style="text-align:right;">
+3.0625000
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1897
+</td>
+<td style="text-align:left;">
+Collingwood
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+41
+</td>
+<td style="text-align:right;">
+16
+</td>
+<td style="text-align:right;">
+2.5625000
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1897
+</td>
+<td style="text-align:left;">
+Essendon
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+47
+</td>
+<td style="text-align:right;">
+24
+</td>
+<td style="text-align:right;">
+1.9583333
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1897
+</td>
+<td style="text-align:left;">
+Melbourne
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+44
+</td>
+<td style="text-align:right;">
+27
+</td>
+<td style="text-align:right;">
+1.6296296
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1897
+</td>
+<td style="text-align:left;">
+Sydney
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+27
+</td>
+<td style="text-align:right;">
+44
+</td>
+<td style="text-align:right;">
+0.6136364
+</td>
+<td style="text-align:right;">
+5
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1897
+</td>
+<td style="text-align:left;">
+Geelong
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+24
+</td>
+<td style="text-align:right;">
+47
+</td>
+<td style="text-align:right;">
+0.5106383
+</td>
+<td style="text-align:right;">
+6
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1897
+</td>
+<td style="text-align:left;">
+St Kilda
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+16
+</td>
+<td style="text-align:right;">
+41
+</td>
+<td style="text-align:right;">
+0.3902439
+</td>
+<td style="text-align:right;">
+7
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1897
+</td>
+<td style="text-align:left;">
+Carlton
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+16
+</td>
+<td style="text-align:right;">
+49
+</td>
+<td style="text-align:right;">
+0.3265306
+</td>
+<td style="text-align:right;">
+8
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1897
+</td>
+<td style="text-align:left;">
+Fitzroy
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+115
+</td>
+<td style="text-align:right;">
+42
+</td>
+<td style="text-align:right;">
+2.7380952
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1897
+</td>
+<td style="text-align:left;">
+Melbourne
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+108
+</td>
+<td style="text-align:right;">
+46
+</td>
+<td style="text-align:right;">
+2.3478261
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1897
+</td>
+<td style="text-align:left;">
+Collingwood
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+91
+</td>
+<td style="text-align:right;">
+46
+</td>
+<td style="text-align:right;">
+1.9782609
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1897
+</td>
+<td style="text-align:left;">
+Essendon
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+77
+</td>
+<td style="text-align:right;">
+74
+</td>
+<td style="text-align:right;">
+1.0405405
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1897
+</td>
+<td style="text-align:left;">
+Sydney
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+67
+</td>
+<td style="text-align:right;">
+80
+</td>
+<td style="text-align:right;">
+0.8375000
+</td>
+<td style="text-align:right;">
+5
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1897
+</td>
+<td style="text-align:left;">
+Carlton
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+52
+</td>
+<td style="text-align:right;">
+89
+</td>
+<td style="text-align:right;">
+0.5842697
+</td>
+<td style="text-align:right;">
+6
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1897
+</td>
+<td style="text-align:left;">
+St Kilda
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+42
+</td>
+<td style="text-align:right;">
+107
+</td>
+<td style="text-align:right;">
+0.3925234
+</td>
+<td style="text-align:right;">
+7
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1897
+</td>
+<td style="text-align:left;">
+Geelong
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+43
+</td>
+<td style="text-align:right;">
+111
+</td>
+<td style="text-align:right;">
+0.3873874
+</td>
+<td style="text-align:right;">
+8
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <p><strong>Return the ladder for round 1 for all teams since 1897</strong></p>
 <pre class="r"><code># what if we want the ladder for a specific round?
 ladder_round_1 &lt;- return_ladder(match_results_df = afl_data, season_round = 1)
-tail(ladder_round_1, 18)</code></pre>
-<pre><code>## # A tibble: 18 x 8
-##    Season Team  Round.Number Season.Points Score.For Score.Against
-##     &lt;dbl&gt; &lt;chr&gt;        &lt;int&gt;         &lt;dbl&gt;     &lt;dbl&gt;         &lt;dbl&gt;
-##  1   2019 GWS              1             4       112            40
-##  2   2019 Frem…            1             4       141            59
-##  3   2019 Bris…            1             4       102            58
-##  4   2019 Hawt…            1             4        87            55
-##  5   2019 Rich…            1             4        97            64
-##  6   2019 Port…            1             4        87            61
-##  7   2019 Foot…            1             4        82            65
-##  8   2019 Geel…            1             4        72            65
-##  9   2019 St K…            1             4        85            84
-## 10   2019 Gold…            1             0        84            85
-## 11   2019 Coll…            1             0        65            72
-## 12   2019 Sydn…            1             0        65            82
-## 13   2019 Melb…            1             0        61            87
-## 14   2019 Carl…            1             0        64            97
-## 15   2019 Adel…            1             0        55            87
-## 16   2019 West…            1             0        58           102
-## 17   2019 Nort…            1             0        59           141
-## 18   2019 Esse…            1             0        40           112
-## # … with 2 more variables: Percentage &lt;dbl&gt;, Ladder.Position &lt;int&gt;</code></pre>
+tail(ladder_round_1, 18) %&gt;% 
+  kable(format = &quot;html&quot;, escape = F) %&gt;%
+  kable_styling(&quot;striped&quot;) %&gt;% 
+  scroll_box(width = &quot;750px&quot;, height = &quot;600px&quot;)</code></pre>
+<div style="border: 1px solid #ddd; padding: 5px; overflow-y: scroll; height:600px; overflow-x: scroll; width:750px; ">
+<table class="table table-striped" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+Season
+</th>
+<th style="text-align:left;">
+Team
+</th>
+<th style="text-align:right;">
+Round.Number
+</th>
+<th style="text-align:right;">
+Season.Points
+</th>
+<th style="text-align:right;">
+Score.For
+</th>
+<th style="text-align:right;">
+Score.Against
+</th>
+<th style="text-align:right;">
+Percentage
+</th>
+<th style="text-align:right;">
+Ladder.Position
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:left;">
+GWS
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+112
+</td>
+<td style="text-align:right;">
+40
+</td>
+<td style="text-align:right;">
+2.8000000
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:left;">
+Fremantle
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+141
+</td>
+<td style="text-align:right;">
+59
+</td>
+<td style="text-align:right;">
+2.3898305
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:left;">
+Brisbane Lions
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+102
+</td>
+<td style="text-align:right;">
+58
+</td>
+<td style="text-align:right;">
+1.7586207
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:left;">
+Hawthorn
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+87
+</td>
+<td style="text-align:right;">
+55
+</td>
+<td style="text-align:right;">
+1.5818182
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:left;">
+Richmond
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+97
+</td>
+<td style="text-align:right;">
+64
+</td>
+<td style="text-align:right;">
+1.5156250
+</td>
+<td style="text-align:right;">
+5
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:left;">
+Port Adelaide
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+87
+</td>
+<td style="text-align:right;">
+61
+</td>
+<td style="text-align:right;">
+1.4262295
+</td>
+<td style="text-align:right;">
+6
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:left;">
+Footscray
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+82
+</td>
+<td style="text-align:right;">
+65
+</td>
+<td style="text-align:right;">
+1.2615385
+</td>
+<td style="text-align:right;">
+7
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:left;">
+Geelong
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+72
+</td>
+<td style="text-align:right;">
+65
+</td>
+<td style="text-align:right;">
+1.1076923
+</td>
+<td style="text-align:right;">
+8
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:left;">
+St Kilda
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+85
+</td>
+<td style="text-align:right;">
+84
+</td>
+<td style="text-align:right;">
+1.0119048
+</td>
+<td style="text-align:right;">
+9
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:left;">
+Gold Coast
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+84
+</td>
+<td style="text-align:right;">
+85
+</td>
+<td style="text-align:right;">
+0.9882353
+</td>
+<td style="text-align:right;">
+10
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:left;">
+Collingwood
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+65
+</td>
+<td style="text-align:right;">
+72
+</td>
+<td style="text-align:right;">
+0.9027778
+</td>
+<td style="text-align:right;">
+11
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:left;">
+Sydney
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+65
+</td>
+<td style="text-align:right;">
+82
+</td>
+<td style="text-align:right;">
+0.7926829
+</td>
+<td style="text-align:right;">
+12
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:left;">
+Melbourne
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+61
+</td>
+<td style="text-align:right;">
+87
+</td>
+<td style="text-align:right;">
+0.7011494
+</td>
+<td style="text-align:right;">
+13
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:left;">
+Carlton
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+64
+</td>
+<td style="text-align:right;">
+97
+</td>
+<td style="text-align:right;">
+0.6597938
+</td>
+<td style="text-align:right;">
+14
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:left;">
+Adelaide
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+55
+</td>
+<td style="text-align:right;">
+87
+</td>
+<td style="text-align:right;">
+0.6321839
+</td>
+<td style="text-align:right;">
+15
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:left;">
+West Coast
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+58
+</td>
+<td style="text-align:right;">
+102
+</td>
+<td style="text-align:right;">
+0.5686275
+</td>
+<td style="text-align:right;">
+16
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:left;">
+North Melbourne
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+59
+</td>
+<td style="text-align:right;">
+141
+</td>
+<td style="text-align:right;">
+0.4184397
+</td>
+<td style="text-align:right;">
+17
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2019
+</td>
+<td style="text-align:left;">
+Essendon
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+40
+</td>
+<td style="text-align:right;">
+112
+</td>
+<td style="text-align:right;">
+0.3571429
+</td>
+<td style="text-align:right;">
+18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <p><strong>Return the ladder for every round of the 2018 season</strong></p>
 <pre class="r"><code># finally, for every round in just one season
 ladder_2018 &lt;- return_ladder(match_results_df = afl_data, season = 2018)
-head(ladder_2018, 18)</code></pre>
-<pre><code>## # A tibble: 18 x 8
-##    Season Team  Round.Number Season.Points Score.For Score.Against
-##     &lt;dbl&gt; &lt;chr&gt;        &lt;int&gt;         &lt;dbl&gt;     &lt;dbl&gt;         &lt;dbl&gt;
-##  1   2018 GWS              1             4       133            51
-##  2   2018 Port…            1             4       110            60
-##  3   2018 Hawt…            1             4       101            67
-##  4   2018 Gold…            1             4        55            39
-##  5   2018 Sydn…            1             4       115            86
-##  6   2018 St K…            1             4       107            82
-##  7   2018 Rich…            1             4       121            95
-##  8   2018 Esse…            1             4        99            87
-##  9   2018 Geel…            1             4        97            94
-## 10   2018 Melb…            1             0        94            97
-## 11   2018 Adel…            1             0        87            99
-## 12   2018 Carl…            1             0        95           121
-## 13   2018 Bris…            1             0        82           107
-## 14   2018 West…            1             0        86           115
-## 15   2018 Nort…            1             0        39            55
-## 16   2018 Coll…            1             0        67           101
-## 17   2018 Frem…            1             0        60           110
-## 18   2018 Foot…            1             0        51           133
-## # … with 2 more variables: Percentage &lt;dbl&gt;, Ladder.Position &lt;int&gt;</code></pre>
+head(ladder_2018, 18) %&gt;% 
+  kable(format = &quot;html&quot;, escape = F) %&gt;%
+  kable_styling(&quot;striped&quot;) %&gt;% 
+  scroll_box(width = &quot;750px&quot;, height = &quot;600px&quot;)</code></pre>
+<div style="border: 1px solid #ddd; padding: 5px; overflow-y: scroll; height:600px; overflow-x: scroll; width:750px; ">
+<table class="table table-striped" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+Season
+</th>
+<th style="text-align:left;">
+Team
+</th>
+<th style="text-align:right;">
+Round.Number
+</th>
+<th style="text-align:right;">
+Season.Points
+</th>
+<th style="text-align:right;">
+Score.For
+</th>
+<th style="text-align:right;">
+Score.Against
+</th>
+<th style="text-align:right;">
+Percentage
+</th>
+<th style="text-align:right;">
+Ladder.Position
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:left;">
+GWS
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+133
+</td>
+<td style="text-align:right;">
+51
+</td>
+<td style="text-align:right;">
+2.6078431
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:left;">
+Port Adelaide
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+110
+</td>
+<td style="text-align:right;">
+60
+</td>
+<td style="text-align:right;">
+1.8333333
+</td>
+<td style="text-align:right;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:left;">
+Hawthorn
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+101
+</td>
+<td style="text-align:right;">
+67
+</td>
+<td style="text-align:right;">
+1.5074627
+</td>
+<td style="text-align:right;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:left;">
+Gold Coast
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+55
+</td>
+<td style="text-align:right;">
+39
+</td>
+<td style="text-align:right;">
+1.4102564
+</td>
+<td style="text-align:right;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:left;">
+Sydney
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+115
+</td>
+<td style="text-align:right;">
+86
+</td>
+<td style="text-align:right;">
+1.3372093
+</td>
+<td style="text-align:right;">
+5
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:left;">
+St Kilda
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+107
+</td>
+<td style="text-align:right;">
+82
+</td>
+<td style="text-align:right;">
+1.3048780
+</td>
+<td style="text-align:right;">
+6
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:left;">
+Richmond
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+121
+</td>
+<td style="text-align:right;">
+95
+</td>
+<td style="text-align:right;">
+1.2736842
+</td>
+<td style="text-align:right;">
+7
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:left;">
+Essendon
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+99
+</td>
+<td style="text-align:right;">
+87
+</td>
+<td style="text-align:right;">
+1.1379310
+</td>
+<td style="text-align:right;">
+8
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:left;">
+Geelong
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+97
+</td>
+<td style="text-align:right;">
+94
+</td>
+<td style="text-align:right;">
+1.0319149
+</td>
+<td style="text-align:right;">
+9
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:left;">
+Melbourne
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+94
+</td>
+<td style="text-align:right;">
+97
+</td>
+<td style="text-align:right;">
+0.9690722
+</td>
+<td style="text-align:right;">
+10
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:left;">
+Adelaide
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+87
+</td>
+<td style="text-align:right;">
+99
+</td>
+<td style="text-align:right;">
+0.8787879
+</td>
+<td style="text-align:right;">
+11
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:left;">
+Carlton
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+95
+</td>
+<td style="text-align:right;">
+121
+</td>
+<td style="text-align:right;">
+0.7851240
+</td>
+<td style="text-align:right;">
+12
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:left;">
+Brisbane Lions
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+82
+</td>
+<td style="text-align:right;">
+107
+</td>
+<td style="text-align:right;">
+0.7663551
+</td>
+<td style="text-align:right;">
+13
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:left;">
+West Coast
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+86
+</td>
+<td style="text-align:right;">
+115
+</td>
+<td style="text-align:right;">
+0.7478261
+</td>
+<td style="text-align:right;">
+14
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:left;">
+North Melbourne
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+39
+</td>
+<td style="text-align:right;">
+55
+</td>
+<td style="text-align:right;">
+0.7090909
+</td>
+<td style="text-align:right;">
+15
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:left;">
+Collingwood
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+67
+</td>
+<td style="text-align:right;">
+101
+</td>
+<td style="text-align:right;">
+0.6633663
+</td>
+<td style="text-align:right;">
+16
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:left;">
+Fremantle
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+60
+</td>
+<td style="text-align:right;">
+110
+</td>
+<td style="text-align:right;">
+0.5454545
+</td>
+<td style="text-align:right;">
+17
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:left;">
+Footscray
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+51
+</td>
+<td style="text-align:right;">
+133
+</td>
+<td style="text-align:right;">
+0.3834586
+</td>
+<td style="text-align:right;">
+18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <p>I will be writing a follow up post analysing the AFL ladder through history to really test the function out!</p>
 <p>Stay tuned.</p>
 </div>
