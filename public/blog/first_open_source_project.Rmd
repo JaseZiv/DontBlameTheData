@@ -26,7 +26,7 @@ While I work in a really dynamic and close team every day, and in the world of r
 
 The following is a glimpse at the journey, and will be explained in this post:
 
-![](../../static/images/process.png)
+![](static/images/process.png)
 
 
 What this post won't be is an exhaustive step-by-step guide of every touch point, rather a medium-high level summary.
@@ -39,7 +39,7 @@ With George's words in mind, I thought time to push myself to jump in.
 
 Scrolling through Twitter (as one does when nursing a newborn), I came across a tweet about a package I've used in a few analyses on *Don't Blame the Data* that said that the package was now live on CRAN (a great achievement).
 
-![](../../static/images/twitter.png)
+![](static/images/twitter.png)
 
 This naturally led me to the repository on [github](https://github.com/jimmyday12/fitzRoy), at which point I noticed there were open "Issues", and one of these being for a function to create a ladder for any round.
 
@@ -55,7 +55,7 @@ While I certainly haven't done any extensive analysis on this point, I would gue
 
 So rather than think about how good it would be to contribute, why not just get in touch with James and offer to address the open issue...
 
-![](../../static/images/communicate.png)
+![](static/images/communicate.png)
 
 James was super easy to deal with, and boy was he helpful (and patient with this bumbling fool).
 
@@ -83,7 +83,7 @@ My local changes were committed and a PR was made, I'm ready to be a contributor
 
 Once these tests were written, I commit my changes, I'm ready to be a contributor, and then bam! Changes have been made to the master that I haven't got in my PR... ok so I need to merge the master in my PR - easy (for some maybe, I have no idea). A bit of googling, seems pretty easy, but after typing `git merge origin/master`, I get this editor pop up in terminal:
 
-![](../../static/images/vim.png)
+![](static/images/vim.png)
 
 My initial thoughts? What the is this?!
 
