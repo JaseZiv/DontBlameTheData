@@ -120,7 +120,7 @@ afl_data <- get_match_results()
 ```
 
 
-** Return the ladder for all teams, for all rounds since 1897**
+**Return the ladder for all teams, for all rounds since 1897**
 
 ```{r ladder_all, warning=FALSE, message=FALSE}
 # apply the return_ladder function
