@@ -1,5 +1,5 @@
 ---
-title: "The Agony and the Ecstacy of my first open source contribution"
+title: "The Agony and the Ecstasy of my first open source contribution"
 date: "2019-12-16"
 slug: first-open-source-contribution
 categories:
@@ -120,7 +120,7 @@ afl_data <- get_match_results()
 ```
 
 
-** Return the ladder for all teams, for all rounds since 1897**
+**Return the ladder for all teams, for all rounds since 1897**
 
 ```{r ladder_all, warning=FALSE, message=FALSE}
 # apply the return_ladder function
