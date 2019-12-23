@@ -1,0 +1,804 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+<title>Playing List Ages at the Pointy End - Don&#39;t Blame The Data</title>
+<meta name="description" content="Measuring the 2020 season age of your AFL team&#39;s best players">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+  <meta name="generator" content="Hugo 0.54.0" />
+  
+<meta itemprop="name" content="Playing List Ages at the Pointy End">
+<meta itemprop="description" content="Measuring the 2020 season age of your AFL team&#39;s best players">
+
+
+<meta itemprop="datePublished" content="2019-12-23T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2019-12-23T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="548">
+
+
+
+<meta itemprop="keywords" content="afl,ggplot2,data visualisation,analytics,statistics," />
+
+  <meta property="og:title" content="Playing List Ages at the Pointy End" />
+<meta property="og:description" content="Measuring the 2020 season age of your AFL team&#39;s best players" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/age-of-best-players/" />
+<meta property="article:published_time" content="2019-12-23T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2019-12-23T00:00:00&#43;00:00"/>
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Playing List Ages at the Pointy End"/>
+<meta name="twitter:description" content="Measuring the 2020 season age of your AFL team&#39;s best players"/>
+<meta name="twitter:site" content="@jaseziv"/>
+
+  
+
+  <link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
+  
+    
+      <link rel="stylesheet" href="/css/normalize.css">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,800,900|Source+Sans+Pro:400,700">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.1.0/css/flag-icon.min.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css">
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.9.0/css/all.css" integrity="sha384-i1LQnF23gykqWXg6jxC2ZbCbUMxyw5gLZY6UiUS98LYV5unm8GWmfkIS6jqJfb4E" crossorigin="anonymous">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.min.css" />
+      <link rel="stylesheet" href="/css/main.min.css">
+      <link rel="stylesheet" href="/css/add-on.css">
+    
+  
+  
+  
+  
+  
+</head>
+
+  <body>
+    
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/">
+        
+          
+            Blog
+          
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu">
+      
+        <a href="/about/" class="link"><i class="fas fa-home">&nbsp;</i>Home</a>
+      
+        <a href="/about/" class="link"><i class="far fa-id-card">&nbsp;</i>About</a>
+      
+        <a href="/blog/" class="link"><i class="far fa-newspaper">&nbsp;</i>Blog</a>
+      
+        <a href="/projects/" class="link"><i class="far fa-clone">&nbsp;</i>Projects</a>
+      
+        <a href="/categories/" class="link"><i class="fas fa-sitemap">&nbsp;</i>Categories</a>
+      
+        <a href="/contact/" class="link"><i class="far fa-envelope">&nbsp;</i>Contact</a>
+      
+      <a href="#share-menu" class="share-toggle"><i class="fas fa-share-alt">&nbsp;</i>Share</a>
+      
+
+    </menu>
+    
+
+    <a href="#share-menu" class="share-toggle"><i class="fas fa-share-alt fa-2x">&nbsp;</i></a>
+    
+    <a href="#site-nav" class="nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  
+  
+    <menu id="share-menu" class="flyout-menu">
+      <h1>Share Post</h1>
+      
+
+
+
+
+  
+    
+    <a href="//twitter.com/share?text=Playing%20List%20Ages%20at%20the%20Pointy%20End&amp;url=%2fblog%2fage-of-best-players%2f" target="_blank" rel="noopener" class="share-btn twitter">
+        <i class="fab fa-twitter"></i><p>&nbsp;Twitter</p>
+      </a>
+  
+
+  
+      <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2fage-of-best-players%2f" target="_blank" rel="noopener" class="share-btn facebook">
+        <i class="fab fa-facebook"></i><p>&nbsp;Facebook</p>
+        </a>
+  
+
+  
+    <a href="//www.reddit.com/submit?url=%2fblog%2fage-of-best-players%2f&amp;title=Playing%20List%20Ages%20at%20the%20Pointy%20End" target="_blank" rel="noopener" class="share-btn reddit">
+          <i class="fab fa-reddit-alien"></i><p>&nbsp;Reddit</p>
+        </a>
+  
+
+  
+        <a href="//www.linkedin.com/shareArticle?url=%2fblog%2fage-of-best-players%2f&amp;title=Playing%20List%20Ages%20at%20the%20Pointy%20End" target="_blank" rel="noopener" class="share-btn linkedin">
+            <i class="fab fa-linkedin"></i><p>&nbsp;LinkedIn</p>
+          </a>
+  
+
+  
+        <a href="//www.pinterest.com/pin/create/button/?url=%2fblog%2fage-of-best-players%2f&amp;description=Playing%20List%20Ages%20at%20the%20Pointy%20End" target="_blank" rel="noopener" class="share-btn pinterest">
+          <i class="fab fa-pinterest-p"></i><p>&nbsp;Pinterest</p>
+        </a>
+  
+
+  
+        <a href="mailto:?subject=Check out this post by %7b%20%20%20%20%20%20%20%20map%5b%5d%7d&amp;body=%2fblog%2fage-of-best-players%2f" target="_blank" class="share-btn email" data-proofer-ignore>
+          <i class="fas fa-envelope"></i><p>&nbsp;Email</p>
+        </a>
+  
+
+
+    </menu>
+  
+</header>
+
+    <div id="wrapper">
+      <section id="site-intro">
+  <a href="/"><img src="/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
+  <header>
+    <h1>Don't Blame the Data</h1>
+  </header>
+  <main>
+    <p>You can disagree with me, but don't blame the data</p>
+  </main>
+  
+    <footer>
+      <ul class="socnet-icons">
+        
+
+        <li><a href="//github.com/JaseZiv" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
+
+
+
+
+
+
+
+
+
+
+<li><a href="//medium.com/@jaseziv83" target="_blank" rel="noopener" title="Medium" class="fab fa-medium"></a></li>
+<li><a href="//linkedin.com/in/jason-zivkovic-4a0a1926" target="_blank" rel="noopener" title="LinkedIn" class="fab fa-linkedin"></a></li>
+
+
+
+
+
+<li><a href="//reddit.com/user/jaseziv" target="_blank" rel="noopener" title="Reddit" class="fab fa-reddit"></a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="//twitter.com/jaseziv" target="_blank" rel="noopener" title="Twitter" class="fab fa-twitter"></a></li>
+
+
+
+
+
+
+
+
+
+
+<li><a href="mailto:jaseziv83@gmail.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
+
+      </ul>
+    </footer>
+  
+</section>
+
+      <main id="site-main">
+        <article class="post">
+  <header>
+  <div class="title">
+    
+        <h2><a href="/blog/age-of-best-players/">Playing List Ages at the Pointy End</a></h2>
+    
+    
+        <p>Measuring the 2020 season age of your AFL team&#39;s best players</p>
+    
+</div>
+  <div class="meta">
+    <time class="published" datetime="2019-12-23 00:00:00 &#43;0000 UTC">
+      December 23, 2019
+    </time>
+    <span class="author"></span>
+    
+        <p>3 minute read</p>
+    
+  </div>
+</header>
+
+  <section id="socnet-share">
+    
+
+
+
+
+  
+    
+    <a href="//twitter.com/share?text=Playing%20List%20Ages%20at%20the%20Pointy%20End&amp;url=%2fblog%2fage-of-best-players%2f" target="_blank" rel="noopener" class="share-btn twitter">
+        <i class="fab fa-twitter"></i><p>&nbsp;Twitter</p>
+      </a>
+  
+
+  
+      <a href="//www.facebook.com/sharer/sharer.php?u=%2fblog%2fage-of-best-players%2f" target="_blank" rel="noopener" class="share-btn facebook">
+        <i class="fab fa-facebook"></i><p>&nbsp;Facebook</p>
+        </a>
+  
+
+  
+    <a href="//www.reddit.com/submit?url=%2fblog%2fage-of-best-players%2f&amp;title=Playing%20List%20Ages%20at%20the%20Pointy%20End" target="_blank" rel="noopener" class="share-btn reddit">
+          <i class="fab fa-reddit-alien"></i><p>&nbsp;Reddit</p>
+        </a>
+  
+
+  
+        <a href="//www.linkedin.com/shareArticle?url=%2fblog%2fage-of-best-players%2f&amp;title=Playing%20List%20Ages%20at%20the%20Pointy%20End" target="_blank" rel="noopener" class="share-btn linkedin">
+            <i class="fab fa-linkedin"></i><p>&nbsp;LinkedIn</p>
+          </a>
+  
+
+  
+        <a href="//www.pinterest.com/pin/create/button/?url=%2fblog%2fage-of-best-players%2f&amp;description=Playing%20List%20Ages%20at%20the%20Pointy%20End" target="_blank" rel="noopener" class="share-btn pinterest">
+          <i class="fab fa-pinterest-p"></i><p>&nbsp;Pinterest</p>
+        </a>
+  
+
+  
+        <a href="mailto:?subject=Check out this post by %7b%20%20%20%20%20%20%20%20map%5b%5d%7d&amp;body=%2fblog%2fage-of-best-players%2f" target="_blank" class="share-btn email" data-proofer-ignore>
+          <i class="fas fa-envelope"></i><p>&nbsp;Email</p>
+        </a>
+  
+
+
+  </section>
+  
+
+  <div class="content">
+    
+<script src="/rmarkdown-libs/kePrint/kePrint.js"></script>
+
+
+<p>This is the second installment at my look at the age distributions of each AFL team for the 2020 season. The fist post (which can be found <a href="https://www.dontblamethedata.com/blog/analysing-afl-team-age/">here</a>), looked at the impact that the statistic chosen to report out the age profiles can have, specifically using the mean versus the median. Rightly so, many pointed out in feedback that some of the younger players on lists may not play as much or might not be as important as some of the older talent and as such, their age shouldn’t be given as much weighting as some of the stars of each team.</p>
+<p>That feedback led to this post, which will look at identifying each team’s top line talent and comparing the talent age distribution.</p>
+<p>To do this, club Best and Fairest (B&amp;F) results have been analysed to identify the top players at each club. Top 10 B&amp;F data comes from <a href="https://www.foxsports.com.au/afl/afl-best-and-fairest-winners-2019-club-champion-awards-dates-votes-leaderboards-who-won-each-clubs-best-and-fairest/news-story/a6f87d3cadd61c24aff1ba760da5549c">here</a>. There are 181 players in total (Richmond have 11 players because of a tie for 10th spot). Given there has been some player movement in the offseason (six players in the list analysed, most notably Tim Kelly to West Coast finished in their team’s top 10 and then changed clubs), these players have now been placed in their new team’s distribution. Doing this has resulted in some teams having more than 10 players analysed, while others less. See below:</p>
+<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Team
+</th>
+<th style="text-align:right;">
+Number of Players
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Adelaide
+</td>
+<td style="text-align:right;">
+9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Brisbane Lions
+</td>
+<td style="text-align:right;">
+10
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Carlton
+</td>
+<td style="text-align:right;">
+10
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Collingwood
+</td>
+<td style="text-align:right;">
+10
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Essendon
+</td>
+<td style="text-align:right;">
+10
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Footscray
+</td>
+<td style="text-align:right;">
+12
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Fremantle
+</td>
+<td style="text-align:right;">
+8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Geelong
+</td>
+<td style="text-align:right;">
+9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Gold Coast
+</td>
+<td style="text-align:right;">
+10
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GWS
+</td>
+<td style="text-align:right;">
+10
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Hawthorn
+</td>
+<td style="text-align:right;">
+11
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Melbourne
+</td>
+<td style="text-align:right;">
+10
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+North Melbourne
+</td>
+<td style="text-align:right;">
+10
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Port Adelaide
+</td>
+<td style="text-align:right;">
+10
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Richmond
+</td>
+<td style="text-align:right;">
+11
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+St Kilda
+</td>
+<td style="text-align:right;">
+10
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Sydney
+</td>
+<td style="text-align:right;">
+10
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+West Coast
+</td>
+<td style="text-align:right;">
+11
+</td>
+</tr>
+</tbody>
+</table>
+<div id="the-age-of-top-talent" class="section level2">
+<h2>The Age of Top Talent</h2>
+<p>Using the age of top players at each club to measure the age profile of the club shows us that Geelong’s list is the oldest at the top end, with an average age of 29.2 years. These results highlight a concern for Kangaroos fans, as their club’s top 10 B&amp;F comes in at second on this list at 28.9 years and they missed the finals last year (by a bit too, two games out and in 12th position). Adelaide fans also won’t be too happy given their results last year.</p>
+<p>Less concerning for GWS, Essendon and the Bulldogs (who each made finals last year), their top players are in the bottom half of this age analysis. Could be some happy times ahead for these clubs?</p>
+<p>Melbourne has the youngest list, with an average age of 24.7 years, while St Kilda may see this number rise at the start of the 2021 season after they made a decent push in free agency at the end of the 2019 season.</p>
+<p><img src="/blog/age_of_best_players_files/figure-html/oldest_teams-1.png" width="768" /></p>
+<p>We can also see that there is a negative relationship between the top players age distribution and ladder position at the end of a season - the younger the average age of your teams top 10 B&amp;F, the lower the ladder poisition tended to be (with some exceptions of course as mentioned above).</p>
+<p><img src="/blog/age_of_best_players_files/figure-html/relationship-1.png" width="768" /></p>
+<p>It would be interesting to see the impact of this for more than just the most recent season. Might be one for someone else to pick up where I’ve left off, or for a later post.</p>
+<p>Data and code for this project can be found <a href="https://github.com/JaseZiv/Dont-Blame-the-Data-Data-Files/tree/master/age_at_top_end">here</a>.</p>
+</div>
+
+  </div>
+  <footer>
+    <ul class="stats">
+  
+    
+    
+      <li class="categories">
+        <ul>
+          
+            
+            <li><a class="article-category-link" href="/categories/afl">afl</a></li>
+          
+            
+            <li><a class="article-category-link" href="/categories/analytics">analytics</a></li>
+          
+        </ul>
+      </li>
+    
+  
+  
+    
+    
+      <li class="tags">
+        <ul>
+          
+            
+            <li><a class="article-category-link" href="/tags/afl">afl</a></li>
+          
+            
+            <li><a class="article-category-link" href="/tags/ggplot2">ggplot2</a></li>
+          
+            
+            <li><a class="article-category-link" href="/tags/data-visualisation">data visualisation</a></li>
+          
+            
+            <li><a class="article-category-link" href="/tags/analytics">analytics</a></li>
+          
+            
+            <li><a class="article-category-link" href="/tags/statistics">statistics</a></li>
+          
+        </ul>
+      </li>
+    
+  
+</ul>
+
+  </footer>
+</article>
+<article class="post">
+  
+    <article class="post">
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "dontblamethedata-com" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </article>
+
+
+</article>
+<div class="pagination">
+  
+    <a href="/blog/first-open-source-contribution/" class="button big previous"><i class="fas fa-angle-left"></i> The Agony and the Ecstasy of my first open source contribution</a>
+  
+  
+</div>
+
+
+      </main>
+      <section id="site-sidebar">
+  
+    <section id="recent-posts">
+      <header>
+        <h1>Recent posts</h1>
+      </header>
+      
+      <article class="mini-post">
+        <section>
+          
+
+        </section>
+        <header>
+          <h1><a href="/blog/age-of-best-players/">Playing List Ages at the Pointy End</a></h1>
+          <time class="published" datetime="">December 23, 2019</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+
+        </section>
+        <header>
+          <h1><a href="/blog/first-open-source-contribution/">The Agony and the Ecstasy of my first open source contribution</a></h1>
+          <time class="published" datetime="">December 16, 2019</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+
+        </section>
+        <header>
+          <h1><a href="/blog/analysing-afl-team-age/">Analysing AFL Team Age... Properly!</a></h1>
+          <time class="published" datetime="">December 4, 2019</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+
+        </section>
+        <header>
+          <h1><a href="/blog/all-roads-lead-to-gganimate/">All roads lead to gganimate</a></h1>
+          <time class="published" datetime="">August 30, 2019</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+        <section>
+          
+
+        </section>
+        <header>
+          <h1><a href="/blog/simplifying-afl-tipping/">Effectively Simplifying AFL Tipping</a></h1>
+          <time class="published" datetime="">August 30, 2019</time>
+        </header>
+      </article>
+      
+      
+        <a href="/blog/" class="button">See more</a>
+      
+    </section>
+  
+
+  
+    
+      <section id="categories">
+        <header>
+          <h1><a href="/categories">Categories</a></h1>
+        </header>
+        <ul>
+          
+            
+          
+          
+          <li>
+            
+              <a href="/categories/r/">R<span class="count">8</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/analytics/">analytics<span class="count">7</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/afl/">afl<span class="count">6</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/sport/">sport<span class="count">4</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/tidyverse/">tidyverse<span class="count">4</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/ggplot2/">ggplot2<span class="count">3</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/gganimate/">gganimate<span class="count">2</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/data-visualisation/">data visualisation<span class="count">1</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/fitzroy/">fitzRoy<span class="count">1</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/gaming/">gaming<span class="count">1</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/learning/">learning<span class="count">1</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/linear-regression/">linear regression<span class="count">1</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/machine-learning/">machine learning<span class="count">1</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/open-source/">open source<span class="count">1</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/programming/">programming<span class="count">1</span></a>
+            
+          
+          <li>
+            
+              <a href="/categories/twitter/">twitter<span class="count">1</span></a>
+            
+          
+          </li>
+        </ul>
+      </section>
+    
+  
+
+  <section id="mini-bio">
+    <header>
+      <h1>About</h1>
+    </header>
+    <p>A data visualisation blog. Sports. Analytics. Sports analytics</p>
+    <footer>
+      <a href="/about" class="button">Learn More</a>
+    </footer>
+  </section>
+</section>
+
+      <footer id="site-footer">
+  
+      <ul class="socnet-icons">
+        
+
+        <li><a href="//github.com/JaseZiv" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
+
+
+
+
+
+
+
+
+
+
+<li><a href="//medium.com/@jaseziv83" target="_blank" rel="noopener" title="Medium" class="fab fa-medium"></a></li>
+<li><a href="//linkedin.com/in/jason-zivkovic-4a0a1926" target="_blank" rel="noopener" title="LinkedIn" class="fab fa-linkedin"></a></li>
+
+
+
+
+
+<li><a href="//reddit.com/user/jaseziv" target="_blank" rel="noopener" title="Reddit" class="fab fa-reddit"></a></li>
+
+
+
+
+
+
+
+
+
+<li><a href="//twitter.com/jaseziv" target="_blank" rel="noopener" title="Twitter" class="fab fa-twitter"></a></li>
+
+
+
+
+
+
+
+
+
+
+<li><a href="mailto:jaseziv83@gmail.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
+
+      </ul>
+  
+  <p class="copyright">
+    
+      &copy; 2019
+      
+        Don&#39;t Blame The Data
+      
+    .
+    Powered by <a href="//gohugo.io" target="_blank" rel="noopener">Hugo</a>
+  </p>
+</footer>
+<a id="back-to-top" href="#" class="fas fa-arrow-up fa-2x"></a>
+
+      
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/html.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/css.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/js.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/toml.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+
+  
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/skel/3.0.1/skel.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.min.js"></script>
+  <script src=/js/util.js></script>
+  <script src=/js/main.js></script>
+  <script src=/js/add-on.js></script>
+  
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-145056765-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+    </div>
+  </body>
+</html>

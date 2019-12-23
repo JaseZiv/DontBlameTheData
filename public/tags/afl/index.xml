@@ -5,10 +5,19 @@
     <link>/tags/afl/</link>
     <description>Recent content in afl on Don&#39;t Blame The Data</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 04 Dec 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 23 Dec 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/afl/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Playing List Ages at the Pointy End</title>
+      <link>/blog/age-of-best-players/</link>
+      <pubDate>Mon, 23 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/age-of-best-players/</guid>
+      <description>This is the second installment at my look at the age distributions of each AFL team for the 2020 season. The fist post (which can be found here), looked at the impact that the statistic chosen to report out the age profiles can have, specifically using the mean versus the median. Rightly so, many pointed out in feedback that some of the younger players on lists may not play as much or might not be as important as some of the older talent and as such, their age shouldn’t be given as much weighting as some of the stars of each team.</description>
+    </item>
     
     <item>
       <title>Analysing AFL Team Age... Properly!</title>
