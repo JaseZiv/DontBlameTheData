@@ -1,20 +1,38 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Categories on Don&#39;t Blame The Data</title>
+    <title>Categories | Don&#39;t Blame the Data</title>
     <link>/categories/</link>
-    <description>Recent content in Categories on Don&#39;t Blame The Data</description>
-    <generator>Hugo -- gohugo.io</generator>
+      <atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
+    <description>Categories</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>©2020</copyright><lastBuildDate>Sun, 08 Mar 2020 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/img/logo.jpg</url>
+      <title>Categories</title>
+      <link>/categories/</link>
+    </image>
     
-	<atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
-    
+    <item>
+      <title>pythagorean expectation</title>
+      <link>/categories/pythagorean-expectation/</link>
+      <pubDate>Sun, 08 Mar 2020 00:00:00 +0000</pubDate>
+      <guid>/categories/pythagorean-expectation/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>R</title>
       <link>/categories/r/</link>
-      <pubDate>Mon, 16 Dec 2019 00:00:00 +0000</pubDate>
-      
+      <pubDate>Sun, 08 Mar 2020 00:00:00 +0000</pubDate>
       <guid>/categories/r/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>sports analytics</title>
+      <link>/categories/sports-analytics/</link>
+      <pubDate>Sun, 08 Mar 2020 00:00:00 +0000</pubDate>
+      <guid>/categories/sports-analytics/</guid>
       <description></description>
     </item>
     
@@ -22,7 +40,6 @@
       <title>afl</title>
       <link>/categories/afl/</link>
       <pubDate>Mon, 23 Dec 2019 00:00:00 +0000</pubDate>
-      
       <guid>/categories/afl/</guid>
       <description></description>
     </item>
@@ -31,17 +48,7 @@
       <title>analytics</title>
       <link>/categories/analytics/</link>
       <pubDate>Mon, 23 Dec 2019 00:00:00 +0000</pubDate>
-      
       <guid>/categories/analytics/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>data visualisation</title>
-      <link>/categories/data-visualisation/</link>
-      <pubDate>Fri, 30 Aug 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/categories/data-visualisation/</guid>
       <description></description>
     </item>
     
@@ -49,62 +56,7 @@
       <title>fitzRoy</title>
       <link>/categories/fitzroy/</link>
       <pubDate>Mon, 16 Dec 2019 00:00:00 +0000</pubDate>
-      
       <guid>/categories/fitzroy/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>gaming</title>
-      <link>/categories/gaming/</link>
-      <pubDate>Sat, 17 Aug 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/categories/gaming/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>gganimate</title>
-      <link>/categories/gganimate/</link>
-      <pubDate>Fri, 30 Aug 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/categories/gganimate/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>ggplot2</title>
-      <link>/categories/ggplot2/</link>
-      <pubDate>Fri, 30 Aug 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/categories/ggplot2/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>learning</title>
-      <link>/categories/learning/</link>
-      <pubDate>Fri, 30 Aug 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/categories/learning/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>linear regression</title>
-      <link>/categories/linear-regression/</link>
-      <pubDate>Sat, 27 Jul 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/categories/linear-regression/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>machine learning</title>
-      <link>/categories/machine-learning/</link>
-      <pubDate>Sat, 27 Jul 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/categories/machine-learning/</guid>
       <description></description>
     </item>
     
@@ -112,7 +64,6 @@
       <title>open source</title>
       <link>/categories/open-source/</link>
       <pubDate>Mon, 16 Dec 2019 00:00:00 +0000</pubDate>
-      
       <guid>/categories/open-source/</guid>
       <description></description>
     </item>
@@ -121,8 +72,39 @@
       <title>programming</title>
       <link>/categories/programming/</link>
       <pubDate>Mon, 16 Dec 2019 00:00:00 +0000</pubDate>
-      
       <guid>/categories/programming/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>data visualisation</title>
+      <link>/categories/data-visualisation/</link>
+      <pubDate>Fri, 30 Aug 2019 00:00:00 +0000</pubDate>
+      <guid>/categories/data-visualisation/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>gganimate</title>
+      <link>/categories/gganimate/</link>
+      <pubDate>Fri, 30 Aug 2019 00:00:00 +0000</pubDate>
+      <guid>/categories/gganimate/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ggplot2</title>
+      <link>/categories/ggplot2/</link>
+      <pubDate>Fri, 30 Aug 2019 00:00:00 +0000</pubDate>
+      <guid>/categories/ggplot2/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>learning</title>
+      <link>/categories/learning/</link>
+      <pubDate>Fri, 30 Aug 2019 00:00:00 +0000</pubDate>
+      <guid>/categories/learning/</guid>
       <description></description>
     </item>
     
@@ -130,17 +112,7 @@
       <title>sport</title>
       <link>/categories/sport/</link>
       <pubDate>Sun, 25 Aug 2019 00:00:00 +0000</pubDate>
-      
       <guid>/categories/sport/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>tidyverse</title>
-      <link>/categories/tidyverse/</link>
-      <pubDate>Sat, 17 Aug 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/categories/tidyverse/</guid>
       <description></description>
     </item>
     
@@ -148,8 +120,39 @@
       <title>twitter</title>
       <link>/categories/twitter/</link>
       <pubDate>Sun, 25 Aug 2019 00:00:00 +0000</pubDate>
-      
       <guid>/categories/twitter/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>gaming</title>
+      <link>/categories/gaming/</link>
+      <pubDate>Sat, 17 Aug 2019 00:00:00 +0000</pubDate>
+      <guid>/categories/gaming/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tidyverse</title>
+      <link>/categories/tidyverse/</link>
+      <pubDate>Sat, 17 Aug 2019 00:00:00 +0000</pubDate>
+      <guid>/categories/tidyverse/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>linear regression</title>
+      <link>/categories/linear-regression/</link>
+      <pubDate>Sat, 27 Jul 2019 00:00:00 +0000</pubDate>
+      <guid>/categories/linear-regression/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>machine learning</title>
+      <link>/categories/machine-learning/</link>
+      <pubDate>Sat, 27 Jul 2019 00:00:00 +0000</pubDate>
+      <guid>/categories/machine-learning/</guid>
       <description></description>
     </item>
     

@@ -1,25 +1,1091 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>fifa on Don&#39;t Blame The Data</title>
+    <title>fifa | Don&#39;t Blame the Data</title>
     <link>/tags/fifa/</link>
-    <description>Recent content in fifa on Don&#39;t Blame The Data</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Sat, 17 Aug 2019 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="/tags/fifa/index.xml" rel="self" type="application/rss+xml" />
-    
+      <atom:link href="/tags/fifa/index.xml" rel="self" type="application/rss+xml" />
+    <description>fifa</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>©2020</copyright><lastBuildDate>Sat, 17 Aug 2019 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/img/logo.jpg</url>
+      <title>fifa</title>
+      <link>/tags/fifa/</link>
+    </image>
     
     <item>
       <title>An In Depth Analysis of FIFA 19</title>
       <link>/blog/an-in-depth-analysis-of-fifa19/</link>
       <pubDate>Sat, 17 Aug 2019 00:00:00 +0000</pubDate>
-      
       <guid>/blog/an-in-depth-analysis-of-fifa19/</guid>
-      <description>This post was originally released on the Kaggle FIFA 19 Complete Player dataset that was kindly collected by Karan Gadiya. Many thanks Karan. The link to my original kernel is here
-The full code base can be found here
-Introduction From Wikipedia:
- FIFA 19 is a football simulation video game developed by EA Vancouver as part of Electronic Arts’ FIFA series. Announced on 6 June 2018 for its E3 2018 press conference, it was released on 28 September 2018 for PlayStation 3, PlayStation 4, Xbox 360, Xbox One, Nintendo Switch, and Microsoft Windows.</description>
+      <description>
+&lt;script src=&#34;/rmarkdown-libs/kePrint/kePrint.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;p&gt;&lt;em&gt;This post was originally released on the Kaggle &lt;a href=&#34;https://www.kaggle.com/karangadiya/fifa19&#34;&gt;FIFA 19 Complete Player&lt;/a&gt; dataset that was kindly collected by Karan Gadiya. Many thanks Karan. The link to my original kernel is &lt;a href=&#34;https://www.kaggle.com/jaseziv83/clustering-to-help-club-managers&#34;&gt;here&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;The full code base can be found &lt;a href=&#34;https://github.com/JaseZiv/FIFA19-Analysis&#34;&gt;here&lt;/a&gt;&lt;/p&gt;
+&lt;div id=&#34;introduction&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Introduction&lt;/h1&gt;
+&lt;p&gt;From Wikipedia:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;FIFA 19 is a football simulation video game developed by EA Vancouver as part of Electronic Arts’ FIFA series. Announced on 6 June 2018 for its E3 2018 press conference, it was released on 28 September 2018 for PlayStation 3, PlayStation 4, Xbox 360, Xbox One, Nintendo Switch, and Microsoft Windows. It is the 26th installment in the FIFA series. As with FIFA 18, Cristiano Ronaldo appears as the cover athlete of the regular edition.
+&lt;a href=&#34;https://en.wikipedia.org/wiki/FIFA_19&#34; class=&#34;uri&#34;&gt;https://en.wikipedia.org/wiki/FIFA_19&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The game features a number of different playing modes, however Career mode as a manager holds the most appeal for me.&lt;/p&gt;
+&lt;p&gt;The following analysis will be tailored toward having the best chance at success in that mode for anyone interested.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Some things I want to analyse in this paper:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;High level Exploratory Data Analysis&lt;/li&gt;
+&lt;li&gt;Which features are highly correlated with a player’s overall rating by player position&lt;/li&gt;
+&lt;li&gt;Analyse the differences between a player’s current rating and their potential rating&lt;/li&gt;
+&lt;li&gt;Find out which teams have the highest potential&lt;/li&gt;
+&lt;li&gt;Find out the youngest teams / oldest teams&lt;/li&gt;
+&lt;li&gt;Use k-means clustering to try to find “bargains”; ie if there is someone with the same skills/potential, can they be found for a bargain?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;feature-engineering&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Feature engineering&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Load libraries
+library(tidyverse)
+library(scales)
+library(ggthemes)
+library(kableExtra)
+library(plotly)
+
+options(scipen = 999)
+
+fifa_data &amp;lt;- read_csv(&amp;quot;https://raw.githubusercontent.com/JaseZiv/FIFA19-Analysis/master/data/data.csv&amp;quot;) %&amp;gt;% select(-X1)
+
+fifa_data &amp;lt;- fifa_data %&amp;gt;%
+  mutate(ValueMultiplier = ifelse(str_detect(Value, &amp;quot;K&amp;quot;), 1000, ifelse(str_detect(Value, &amp;quot;M&amp;quot;), 1000000, 1))) %&amp;gt;%
+  mutate(ValueNumeric_pounds = as.numeric(str_extract(Value, &amp;quot;[[:digit:]]+\\.*[[:digit:]]*&amp;quot;)) * ValueMultiplier) %&amp;gt;%
+  mutate(Position = ifelse(is.na(Position), &amp;quot;Unknown&amp;quot;, Position))
+
+
+fifa_data &amp;lt;- fifa_data %&amp;gt;%
+  mutate(WageMultiplier = ifelse(str_detect(Wage, &amp;quot;K&amp;quot;), 1000, ifelse(str_detect(Wage, &amp;quot;M&amp;quot;), 1000000, 1))) %&amp;gt;%
+  mutate(WageNumeric_pounds = as.numeric(str_extract(Wage, &amp;quot;[[:digit:]]+\\.*[[:digit:]]*&amp;quot;)) * WageMultiplier)
+
+
+positions &amp;lt;- unique(fifa_data$Position)
+
+gk &amp;lt;- &amp;quot;GK&amp;quot;
+defs &amp;lt;- positions[str_detect(positions, &amp;quot;B$&amp;quot;)]
+mids &amp;lt;- positions[str_detect(positions, &amp;quot;M$&amp;quot;)]
+f1 &amp;lt;- positions[str_detect(positions, &amp;quot;F$&amp;quot;)]
+f2 &amp;lt;- positions[str_detect(positions, &amp;quot;S$&amp;quot;)]
+f3 &amp;lt;- positions[str_detect(positions, &amp;quot;T$&amp;quot;)]
+f4 &amp;lt;- positions[str_detect(positions, &amp;quot;W$&amp;quot;)]
+fwds &amp;lt;- c(f1, f2, f3, f4)
+
+fifa_data &amp;lt;- fifa_data %&amp;gt;% 
+  mutate(PositionGroup = ifelse(Position %in% gk, &amp;quot;GK&amp;quot;, ifelse(Position %in% defs, &amp;quot;DEF&amp;quot;, ifelse(Position %in% mids, &amp;quot;MID&amp;quot;, ifelse(Position %in% fwds, &amp;quot;FWD&amp;quot;, &amp;quot;Unknown&amp;quot;)))))
+
+fifa_data &amp;lt;- fifa_data %&amp;gt;%
+  mutate(AgeGroup = ifelse(Age &amp;lt;= 20, &amp;quot;20 and under&amp;quot;, ifelse(Age &amp;gt; 20 &amp;amp; Age &amp;lt;=25, &amp;quot;21 to 25&amp;quot;, ifelse(Age &amp;gt; 25 &amp;amp; Age &amp;lt;= 30, &amp;quot;25 to 30&amp;quot;, ifelse(Age &amp;gt; 30 &amp;amp; Age &amp;lt;= 35, &amp;quot;31 to 35&amp;quot;, &amp;quot;Over 35&amp;quot;)))))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;1. Player Valuation&lt;/strong&gt;
+The raw data has player valuations as a character string, with a designation at the end specifying whether the value is thousands or millions. Regex is used to create a numeric variable called &lt;code&gt;ValueNumeric_pounds&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2. Player Wage&lt;/strong&gt;
+See Point 1 above. Same transformation has occurred for player Wage&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;3. Player Positions&lt;/strong&gt;
+There are 28 different positions in FIFA2019. To make analysis less granular, I have decided to create four groupings; &lt;em&gt;GK&lt;/em&gt;, &lt;em&gt;DEF&lt;/em&gt;, &lt;em&gt;MID&lt;/em&gt; and &lt;em&gt;FWD&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;4. Player Age&lt;/strong&gt;
+I have decided to group players into age buckets, in 5 year increments other than for players 20 years and younger, and players 35 years and over.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;overall-ratings&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Overall Ratings&lt;/h1&gt;
+&lt;p&gt;Player ratings are normally distributed in FIFA19, with a mean of 66.2387 and standard deviation of 6.9089&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/fifa19_analysis_files/figure-html/ratings-1.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
+&lt;div id=&#34;age-vs-overall-rating&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Age vs Overall Rating&lt;/h2&gt;
+&lt;p&gt;Athletes in all domains have no doubt been looking for the elixir of life since the dawn of time, but to no avail unfortunately. When it comes to a player’s overall rating, it appears as though player ratings are growing on average until around 30 years of age, whereby they level off for a couple of years, and then start the inevitable decline at around 34 years.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/fifa19_analysis_files/figure-html/age_v_ratings-1.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;When this relationship is explored by the major position groups, we can see that defender ratings tend to beging their decline earliest at around 33 years of age, while the decline starts somewher closer to 35 for both attackers and midfielders.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/fifa19_analysis_files/figure-html/position_v_ratings-1.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;player-valuations&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Player Valuations&lt;/h1&gt;
+&lt;p&gt;Player valuations show a heavily positive skew, being skewed by the superstars of the game - Messi, Neymar, De Bryune, etc.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/fifa19_analysis_files/figure-html/valuations-1.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
+&lt;div id=&#34;age-vs-valuations&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Age vs Valuations&lt;/h2&gt;
+&lt;p&gt;It is intuitive to think that players get better with age and experience and that their valuations would refelect this relationship.&lt;/p&gt;
+&lt;p&gt;Plotting the relationship below, it can be seen that as players age, their valuations tend to increase up to their early 30s, and then begin declining in the years of age between 31-35, and then rapidly decline for players older than 35. This is in line with the findings when the overall rating was plotted as a function of the player’s age.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/fifa19_analysis_files/figure-html/rating_over_ages-1.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;position-vs-valuations&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Position vs Valuations&lt;/h2&gt;
+&lt;p&gt;As expected, Forwards and Midfielders are going to cost you more than Defenders and Goalkeepers.&lt;/p&gt;
+&lt;p&gt;Specifically, it’s left and right forwards and left and right attacking-midfielders that are the most expensive positions.
+&lt;img src=&#34;/post/fifa19_analysis_files/figure-html/rating_over_positions-1.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;player-rating-and-valuations&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Player Rating and Valuations&lt;/h2&gt;
+&lt;p&gt;There a strong positive relationship between the players rating and valuation with a Spearman correlation of 0.9081. The Spearman method was used to calculate the correlation because of presence of large outliers.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/fifa19_analysis_files/figure-html/ratings_valuations-1.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;correlations-with-a-players-overall-rating&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Correlations with a players Overall rating&lt;/h2&gt;
+&lt;p&gt;The below correlation matrix data displays the correlations between the Overall rating and other key attribute variables for all players except goalkeepers. Both the &lt;em&gt;Pearson&lt;/em&gt; and &lt;em&gt;Spearman&lt;/em&gt; correlation methods were used to display the differences.&lt;/p&gt;
+&lt;p&gt;The &lt;em&gt;Spearman&lt;/em&gt; correlation method is more robust with dealing with extreme outliers, hence the player &lt;code&gt;Value&lt;/code&gt; having the highest spearman correlation (0.92). &lt;code&gt;Reactions&lt;/code&gt;, &lt;code&gt;Composure&lt;/code&gt;, &lt;code&gt;Special&lt;/code&gt; and (surprisingly) &lt;code&gt;Wage&lt;/code&gt; rounding out the top 5 correlated variables with Overall rating using the Spearman method. I say surprisingly because Soccernomics (Kuper.S, Szymanski.S, 2014) stated the best predictor of team success was the teams wage bill.&lt;/p&gt;
+&lt;p&gt;Using the &lt;em&gt;Pearson&lt;/em&gt; method, we get different results. the top 5 correlated variables with the Overall rating is &lt;code&gt;Reactions&lt;/code&gt;, &lt;code&gt;Composure&lt;/code&gt;, &lt;code&gt;Special&lt;/code&gt;, &lt;code&gt;ShortPassing&lt;/code&gt; and &lt;code&gt;BallControl&lt;/code&gt;. Both value and wage don’t appear ni this list because they are prone to large outliers.&lt;/p&gt;
+&lt;table class=&#34;table table-striped&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+Feature
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+Spearman
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+Pearson
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+ValueNumeric_pounds
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.9160253
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.6346473
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Reactions
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.8430347
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.8477221
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Composure
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.7928322
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.8017716
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Special
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.7808008
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.7959002
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+WageNumeric_pounds
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.7786888
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.5755838
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+BallControl
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.7327561
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.7178017
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+ShortPassing
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.7209597
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.7226152
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Potential
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.6148446
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.6506847
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+ShotPower
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.5928283
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.5629406
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+LongPassing
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.5878514
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.5853744
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div id=&#34;which-positions-are-skilled-in-which-attributes&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Which positions are skilled in which attributes&lt;/h2&gt;
+&lt;p&gt;The heat map below displays the median attributes for each position available. The analysis was done on players other than goalkeepers, and also only on players with an overall rating of 75 or higher.&lt;/p&gt;
+&lt;p&gt;It shows that centre backs are high on strength and are typically strong in agression. Right and Left Wingers and Left Forwards are very agile, while Left and Right Midfielders have great acceleration.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/fifa19_analysis_files/figure-html/correlations-1.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;helping-me-manage-a-team&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Helping me manage a team&lt;/h1&gt;
+&lt;p&gt;The next section will be devoted to analysis that will assist those wanting to magae a team. I will analyse which players to target if you want to manage a team in rebuilding mode, players to target with a low budget if managing lower division teams or lower-budget teams, which teams to manage if tyou want an attacking team, or a defensive team.&lt;/p&gt;
+&lt;div id=&#34;young-player-analysis&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Young Player Analysis&lt;/h2&gt;
+&lt;p&gt;If you are wanting to be a manager that gives youngsters a chance and watch them blossom, then the list of below players might be ones to target.&lt;/p&gt;
+&lt;p&gt;The violet bars indicate the difference between the player’s potential and their current overally rating. &lt;em&gt;J. von Moos&lt;/em&gt;, a striker (17 years old and costs €280K) and &lt;em&gt;D. Campbell&lt;/em&gt;, a central midfielder (also 17 years old and only costs €60K) are the two players with the highest room to grow, with both players having a differential of 26. &lt;em&gt;R. Griffiths&lt;/em&gt;, also a striker, but 18 years old, has a potential of 84, however will cost you €575K. I know who I’d be choosing between Griffiths and the previously mentioned J. von Moos who also has an overall rating of 84.&lt;/p&gt;
+&lt;p&gt;If it’s a real bargain you’re looking for, the 16 year old central midfielder &lt;em&gt;B. Mumba&lt;/em&gt; will only cost you €190K, but has a potential rating of 80… Juicy!&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/fifa19_analysis_files/figure-html/young_players-1.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;when-does-potential-end&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;When does potential end?&lt;/h2&gt;
+&lt;p&gt;This now raises an interesting topic… is there an age that players finally realise all of their potential, or is there room to grow throughout their careers?&lt;/p&gt;
+&lt;p&gt;It appears as though a player’s potential and their overall rating converge at approximately 30 years of age.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/fifa19_analysis_files/figure-html/potential_age-1.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;free-valuation-players&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Free Valuation Players&lt;/h1&gt;
+&lt;p&gt;Are there some real bargains to be had? It would appear that there is! Below plots all players that have a free valuation, and displays a player’s age against their current overall rating.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;L. Paredes!!!!!&lt;/strong&gt;
+Depending on what you’re looking for, either of the top-left or top-right quadrants are where the players to target are. The best player to target is &lt;em&gt;L. Paredes&lt;/em&gt;, a fairly young CM at 24 with an overall rating of 80 (and even better still a potential of 85).&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;P. Mahlambi&lt;/em&gt;, a South African CAM 20 year old with a potential of 84 is another big target, as is the 18 year old RCB &lt;em&gt;B. Méndez&lt;/em&gt; and 19 year old CAM &lt;em&gt;I. Hagi&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/fifa19_analysis_files/figure-html/freebies-1.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;which-team-do-i-want-to-manage&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Which Team do I want to manage&lt;/h1&gt;
+&lt;p&gt;This section is designed to help future managers decide what team to manage, based on various factors.&lt;/p&gt;
+&lt;p&gt;I will include an analysis on the youngest and oldest teams, the most talented teams, the great attacking teams, most expensive teams and teams with the highest player valuations.&lt;/p&gt;
+&lt;div id=&#34;team-age&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Team Age&lt;/h2&gt;
+&lt;p&gt;If you’re the type of manager who likes to take charge of younger teams, then teams in some of the European teams might be for you. FC Nordsjælland (Danish) is the youngest team on average in FIFA19, with an average age of 20.3 years old, followed by FC Groningen (Dutch) at 21.4 years old and Bohemian FC (Ireland) at 21.5 years old. Interestingly, Dutch powerhouses PSV and Ajax both make the list of the 20 youngest teams. They’re certainly the type of teams I’d be looking towards.&lt;/p&gt;
+&lt;p&gt;At the other end of the spectrum, if managing older teams is your thing, then South America is the place for you.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/fifa19_analysis_files/figure-html/oldest_youngest-1.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;team-overall-talent&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Team Overall Talent&lt;/h2&gt;
+&lt;p&gt;If you’re trying to pick the most talented team, how you choose to interpret “talent” can have an impact on which team you finally settle for.&lt;/p&gt;
+&lt;p&gt;When looking at the average overall ratings for each team, four of the five highest average rated teams come from Serie A (Juventus, Napoli, Inter and Milan), with Real Madrid the only non-Italian side in the top 5. FC Barcelona, PSG, Roma, Man Utd and surprisingly SL Benfica rounding out the top 10.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/fifa19_analysis_files/figure-html/team_talent-1.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Now if you wish to define “talent” as the most number of superstars, then your selection will be slightly different.&lt;/p&gt;
+&lt;p&gt;I have chosen to define superstars as those players whose rating is 85 or above. There are 110 110 players in the game with this designation.&lt;/p&gt;
+&lt;p&gt;Looking at the top three from the previous plot, we can see that it’s a much different story. Juventus - the highest average overall rated team only have the third most amount of superstars, replaced at the top by Real Madrid and Manchester City. The story is even more pronounced for Napoli, who went from second in the previous measurement to 11th here, with Inter also dropping form 3rd to 8th.&lt;/p&gt;
+&lt;p&gt;The Galacticos of Real Madrid proudly sit atop this perch with 12 players on the list having an overall rating of 85 or over.&lt;/p&gt;
+&lt;p&gt;Interestingly, only the the top leagues are represented in the list of clubs with more than one superstar.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/fifa19_analysis_files/figure-html/elite_talent-1.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;deadly-teams-up-front&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Deadly Teams Up Front&lt;/h2&gt;
+&lt;p&gt;How does one determine the most attacking teams? The method used in this analysis takes an average rating of the four main attributes related to goals - &lt;code&gt;Finishing&lt;/code&gt;, &lt;code&gt;LongShots&lt;/code&gt;, &lt;code&gt;Penalties&lt;/code&gt;, &lt;code&gt;ShotPower&lt;/code&gt; and &lt;code&gt;Positioning&lt;/code&gt;. The attributes are added together and an average rating is calculated. To determine the teams with the highest attacking rating, only midfielders and attackers are considered.&lt;/p&gt;
+&lt;p&gt;The average rating of the most dangerous teams in front of goals are displayed below. Inter (12 midfielders and attackers) and Juventus (13 midfielders and attackers) are the most dangerous teams in front of goal, clearly ahead of the third most dangerous club, Napoli (13 midfielders and attackers). Interestingly, there are a few leagues are represented in the 20 most dangerous teams up front - Portugese, Turkish, Greek, in addition to the usual suspects in England, Italy, Germany, Spain, France.&lt;/p&gt;
+&lt;table class=&#34;table table-striped&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+Club
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+NumberOfAttackers
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+TeamAttackingRating
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Inter
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+12
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+74.43333
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Juventus
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+13
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+74.03077
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Napoli
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+13
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+71.72308
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Manchester United
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+19
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+71.50526
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Sporting CP
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+17
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+71.15294
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+FC Porto
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+71.05000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+FC Barcelona
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+18
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+71.03333
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Real Madrid
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+17
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+71.01176
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+SL Benfica
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+70.87500
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+FC Bayern München
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+17
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+70.82353
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+SC Braga
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+15
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+70.78667
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Roma
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+13
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+70.60000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Manchester City
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+70.37500
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Milan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+70.27143
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Olympique de Marseille
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+12
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+70.13333
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+FC Schalke 04
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+69.12500
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Valencia CF
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+17
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+69.01176
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Beşiktaş JK
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+68.75714
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Paris Saint-Germain
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+17
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+68.51765
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+SV Werder Bremen
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+17
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+68.45882
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div id=&#34;team-wage-bills-and-value-for-money&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Team Wage Bills and Value for Money&lt;/h2&gt;
+&lt;p&gt;Real Madrid and Barcelona blow the other teams away when it comes to wage bills, with weekly wage bills sitting at just over €5M and €4.83M respectively. Man City is a distant third with a weekly wage bill of €3.7M.&lt;/p&gt;
+&lt;p&gt;Surprisingly, Inter Milan, one of the most highly rated teams in terms of overall talent (see above) comes in at number 16 on the list - talk about value for money! Even more strangely, Premier League sides Everton and West Ham have higher wage bills than Inter! What’s worse for those two EPL clubs, Milan, Napoli and Inter were three of the top five overall rated clubs in the game. As a result, these three clubs have had great value for money, with each overall rating point only costing Inter €20K, as opposed to Everton’s €27K per overall rating. Of course this is dwarfed by the two Spaniards, who both spend over €60K per point.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/fifa19_analysis_files/figure-html/spenders-1.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;At the other end of the spectrum, there are some clubs that are exceptionally efficient with their wage bills. Highlighted clubs are those that have an average overall rating over 70. Spartak Moscow are the leaders, with each rating point only costing €369 - what a difference from Real Madrid!&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/fifa19_analysis_files/figure-html/shrewd-1.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;k-means-clustering&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;K-Means Clustering&lt;/h1&gt;
+&lt;p&gt;Trying to find players who are similar can be a very difficult task. There are close to 100 variables that you might need to analyse to determine “similarity” between players. Couple that with comparing multiple players and it’s almost imposible.&lt;/p&gt;
+&lt;p&gt;Enter K-Means!&lt;/p&gt;
+&lt;p&gt;K-means clustering aims to partition n observations into k clusters in which each observation belongs to the cluster with the nearest mean, serving as a prototype of the cluster. This results in a partitioning of the data space into Voronoi cells &lt;a href=&#34;https://en.wikipedia.org/wiki/K-means_clustering&#34; class=&#34;uri&#34;&gt;https://en.wikipedia.org/wiki/K-means_clustering&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The steps used are outlined below:&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;Filter out Goalkeepers and any players without a position listed&lt;/li&gt;
+&lt;li&gt;Select only numeric variables, mainly the attribute variables. Player value, wages and overall rating have been omitted from the data so that these variables don’t sway our groupings, allowing for the clusters to contain like-for-like players based off their skillsets.&lt;/li&gt;
+&lt;li&gt;Scale the data - without scaling, some variables, especially &lt;code&gt;Special&lt;/code&gt; will skew the clusters to than variable.&lt;/li&gt;
+&lt;li&gt;Run K-Means using, looping through a number of cluster centres to find the optimal number (k). This can be done visually, where the elbow of the plot “bends”.&lt;/li&gt;
+&lt;li&gt;Set the number of centres (8 in this example)&lt;/li&gt;
+&lt;li&gt;Re-run the model with K = 8&lt;/li&gt;
+&lt;li&gt;Assign the cluster group back to the main data&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Get data ready
+data_cluster &amp;lt;- fifa_data %&amp;gt;%
+  filter(PositionGroup != &amp;quot;Unknown&amp;quot;) %&amp;gt;%
+  filter(PositionGroup != &amp;quot;GK&amp;quot;) %&amp;gt;%
+  mutate(RoomToGrow = Potential - Overall) %&amp;gt;%
+  select_if(is.numeric) %&amp;gt;%
+  select(-ID, -`Jersey Number`, -AttackingRating, -starts_with(&amp;quot;Value&amp;quot;), - starts_with(&amp;quot;Wage&amp;quot;), -starts_with(&amp;quot;GK&amp;quot;), -Overall)
+
+
+scaled_data &amp;lt;- scale(data_cluster)
+
+set.seed(109)
+# Initialize total within sum of squares error: wss
+wss &amp;lt;- 0
+# For 1 to 30 cluster centers
+for (j in 1:30) {
+  km.out &amp;lt;- kmeans(scaled_data, centers = j, nstart = 20)
+  # Save total within sum of squares to wss variable
+  wss[j] &amp;lt;- km.out$tot.withinss
+}
+
+
+# create a DF to use in a ggplot visualisation
+wss_df &amp;lt;- data.frame(num_cluster = 1:30, wgss = wss)
+
+# plot to determine optimal k
+ggplot(data = wss_df, aes(x=num_cluster, y= wgss)) + 
+  geom_line(color = &amp;quot;lightgrey&amp;quot;, size = 2) + 
+  geom_point(color = &amp;quot;green&amp;quot;, size = 4) +
+  theme_fivethirtyeight() +
+  geom_curve(x=14, xend=8, y=300000, yend= 290500, arrow = arrow(length = unit(0.2,&amp;quot;cm&amp;quot;)), size =1, colour = &amp;quot;purple&amp;quot;) +
+  geom_text(label = &amp;quot;k = 8\noptimal level&amp;quot;, x=14, y= 290000, colour = &amp;quot;purple&amp;quot;) +
+  labs(title = &amp;quot;Using Eight Clusters To Group Players&amp;quot;, subtitle = &amp;quot;Selecting the point where the elbow &amp;#39;bends&amp;#39;, or where the slope of \nthe Within groups sum of squares levels out&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/fifa19_analysis_files/figure-html/cluster_elbow-1.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Set k equal to the number of clusters corresponding to the elbow location
+k &amp;lt;- 8
+
+# Create a k-means model on wisc.data: wisc.km
+wisc.km &amp;lt;- kmeans(scale(data_cluster), centers = k, nstart = 20)
+
+# add the cluster group back to the original DF for all players other than GK and Unknown
+cluster_data &amp;lt;- fifa_data %&amp;gt;%
+  filter(PositionGroup != &amp;quot;Unknown&amp;quot;) %&amp;gt;%
+  filter(PositionGroup != &amp;quot;GK&amp;quot;) %&amp;gt;%
+  mutate(Cluster = wisc.km$cluster)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;K-means has split the data into the following 8 clusters as outlined below.&lt;/p&gt;
+&lt;p&gt;It appears that clusters 4 and 8 are representing the more defensive-midfielder types (made up mainly of DEFs and MIDs). Cluster 7 looks to be grouping very attacking minded midfielders midfielders (mande up mainly of MIDs and FWDs).&lt;/p&gt;
+&lt;p&gt;Cluster 2 is grouping Midfielders, Cluster 5 is for Forwards, while clusters 1 and 3 are for the Defenders.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;##    
+##      DEF  FWD  MID
+##   1 1137   43 1802
+##   2 1498   39 1282
+##   3 1443    7  136
+##   4   16  742 1668
+##   5   20  989 1001
+##   6  143  269  614
+##   7 1608    3  185
+##   8    1 1326  150&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Plotting the 20 highest rated players in each cluster shows us which players are similar in terms of their skill sets.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/fifa19_analysis_files/figure-html/cluster_plot-1.png&#34; width=&#34;1440&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;I am going to build a shiny app based off this clustering analysis to enable users to input a player they wish to find a similar replacement for, and the resulting output displaying a list of players and their attributes who are most similar.&lt;/p&gt;
+&lt;p&gt;For example, selecting I. Perišić from Inter as someone to replicate, the below results will appear.&lt;/p&gt;
+&lt;p&gt;The function will take three inputs, the player name how many players you want returned, and what how close to the player’s value do you want to see results for (ie if you want all players within 10% of the player’s value, use 0.1).&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;return_similar_players &amp;lt;- function(player, num_results, return_within_fraction) {
+  
+  cluster_filter &amp;lt;- cluster_analysis$Cluster[cluster_analysis$Name == player]
+  player_value &amp;lt;- cluster_analysis$ValueNumeric_pounds[cluster_analysis$Name == player]
+  
+  cluster_analysis %&amp;gt;%
+    filter(Cluster == cluster_filter,
+           ValueNumeric_pounds &amp;gt;= (player_value * (1- return_within_fraction)) &amp;amp; ValueNumeric_pounds &amp;lt;= (player_value * (1 + return_within_fraction))) %&amp;gt;%
+    head(num_results)
+
+}
+
+
+return_similar_players(&amp;quot;I. Perišić&amp;quot;, 100, .05) %&amp;gt;% 
+  kable(format = &amp;quot;html&amp;quot;, escape = F) %&amp;gt;%
+  kable_styling(&amp;quot;striped&amp;quot;, full_width = F)&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table table-striped&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+ID
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+Name
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+Club
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+Age
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+PositionGroup
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+Overall
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+Cluster
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+ValueNumeric_pounds
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+189332
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Jordi Alba
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+FC Barcelona
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+29
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+DEF
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+87
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+38000000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+191043
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Alex Sandro
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Juventus
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+27
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+DEF
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+86
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+36500000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+184087
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+T. Alderweireld
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Tottenham Hotspur
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+29
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+DEF
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+86
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+39000000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+197445
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+D. Alaba
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+FC Bayern München
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+26
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+DEF
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+85
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+38000000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+189513
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Parejo
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Valencia CF
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+29
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+MID
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+85
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+37000000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+187961
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Paulinho
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Guangzhou Evergrande Taobao FC
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+29
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+MID
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+85
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+37000000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+184941
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+A. Sánchez
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Manchester United
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+29
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+FWD
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+85
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+37500000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+184267
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Y. Brahimi
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+FC Porto
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+28
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+MID
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+85
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+39000000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+181458
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+I. Perišić
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Inter
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+29
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+MID
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+85
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+37500000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+179844
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Diego Costa
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Atlético Madrid
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+29
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+FWD
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+85
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+38500000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+165153
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+K. Benzema
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Real Madrid
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+30
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+FWD
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+85
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+37000000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+205498
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Jorginho
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Chelsea
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+26
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+MID
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+84
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+38000000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+204970
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+F. Thauvin
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Olympique de Marseille
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+25
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+MID
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+84
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+39000000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+200104
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+H. Son
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Tottenham Hotspur
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+25
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+MID
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+84
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+37000000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+212523
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Anderson Talisca
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Guangzhou Evergrande Taobao FC
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+24
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+MID
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+83
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+36500000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;This code will be able to be re-used on FIFA 20 data when it comes out - feel free to use this as a basis for any further analysis!&lt;/p&gt;
+&lt;p&gt;Would love your thoughts on the analysis.&lt;/p&gt;
+&lt;/div&gt;
+</description>
     </item>
     
   </channel>

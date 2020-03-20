@@ -1,65 +1,3078 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>R on Don&#39;t Blame The Data</title>
+    <title>R | Don&#39;t Blame the Data</title>
     <link>/tags/r/</link>
-    <description>Recent content in R on Don&#39;t Blame The Data</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 16 Dec 2019 00:00:00 +0000</lastBuildDate>
+      <atom:link href="/tags/r/index.xml" rel="self" type="application/rss+xml" />
+    <description>R</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>©2020</copyright><lastBuildDate>Sun, 08 Mar 2020 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/img/logo.jpg</url>
+      <title>R</title>
+      <link>/tags/r/</link>
+    </image>
     
-	<atom:link href="/tags/r/index.xml" rel="self" type="application/rss+xml" />
-    
+    <item>
+      <title>Applying Pythagorean Expectation to Pro Sports - An Intro</title>
+      <link>/blog/pythagorean-expectation-pro-sports/</link>
+      <pubDate>Sun, 08 Mar 2020 00:00:00 +0000</pubDate>
+      <guid>/blog/pythagorean-expectation-pro-sports/</guid>
+      <description>
+
+
+&lt;div id=&#34;introduction&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Introduction&lt;/h1&gt;
+&lt;p&gt;This piece is the first part in a series of posts I will be realeasing that will look to analyse how many wins teams should’ve won given their performances over the season and compare them to their actual wins achieved. To achieve this goal, it will apply a commonly known method in the sports analytics community called Pythagorean Expectation.&lt;/p&gt;
+&lt;div id=&#34;sports-in-the-report&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Sports in the Report:&lt;/h2&gt;
+&lt;p&gt;The the series of posts will look to analyse a number of very popular sports leagues around the globe (ie the NBA), and in some sports’ cases, the analysis will span multiple leagues (ie professional soccer has a number of “major” leagues around the globe).&lt;/p&gt;
+&lt;p&gt;The following professional sports/sporting leagues will be included in the series:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;College Basketball (Men’s and Women’s)&lt;/li&gt;
+&lt;li&gt;NBA&lt;/li&gt;
+&lt;li&gt;NFL&lt;/li&gt;
+&lt;li&gt;NHL&lt;/li&gt;
+&lt;li&gt;Soccer (Football)&lt;/li&gt;
+&lt;li&gt;Australian Rules Football (AFL)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;As they become available, you’ll be able to click the link to them.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;pythagorean-expectation&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Pythagorean Expectation&lt;/h1&gt;
+&lt;div class=&#34;figure&#34;&gt;
+&lt;img src=&#34;/img/Morey%20formula_L.jpg&#34; alt=&#34;&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;GM of the Houston Rockets Daryl Morey. Source: Northwestern.edu&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;While we are easily able to count the wins and losses a team experiences, we might want to be able to assess the number of wins they had against how many wins they should have had, given their performances during the season. This might be able to tell us something about whether any luck or other factors played a part in a team’s success (or failure).&lt;/p&gt;
+&lt;p&gt;Ok great, so how do we know how many wins our team was meant to get?&lt;/p&gt;
+&lt;p&gt;Enter, &lt;em&gt;Pythagorean Expectation&lt;/em&gt;. While many question whether he was actually the creator of the &lt;em&gt;Pythagorean Theorem&lt;/em&gt;, the famed philosopher Pythagoras (c. 570 – c. 495 BC) had nothing to do with &lt;em&gt;Pythagorean Expectation&lt;/em&gt;, rather, another legend of our time and one of the founding fathers of sports analytics, Bill James, came up with this for the sport of baseball.&lt;/p&gt;
+&lt;p&gt;Rather than explaining Pythagorean Expectation myself, why not consult wikipedia:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Pythagorean expectation is a sports analytics formula devised by Bill James to estimate the percentage of games a baseball team “should” have won based on the number of runs they scored and allowed. Comparing a team’s actual and Pythagorean winning percentage can be used to make predictions and evaluate which teams are over-performing and under-performing. The name comes from the formula’s resemblance to the Pythagorean theorem.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;James’ formula is as follows:&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(win\ ratio_{baseball} = \frac{runs\ scored^{k}}{runs\ scored^{k}\ +\ runs\ allowed^{k}}\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Note: the k-factor James came up with was 2, but has since been modified to 1.83 to better “fit”&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Using James’ formula as a blueprint, the GM of the Houston Rockets Daryl Morey too the formula and modified it for basketball, and found that the best fit occurred when &lt;code&gt;k = 13.91&lt;/code&gt;, leaving the folowing formula to calculate Pythagorean Expected wins for Basketball:&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(win\ ratio_{basketball} = \frac{points\ for^{13.91}}{points\ for^{13.91}\ +\ points\ against^{13.91}}\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;The output of this formula is then multiplied against games played to give the expected wins for the period analysed. This expected wins value is then compared to the teams actual wins, to determine how much lady luck played a part in the team’s season.&lt;/p&gt;
+&lt;p&gt;You must see a pattern by now. The formula remains the same, while the &lt;code&gt;k&lt;/code&gt; factor changes based on the sport.&lt;/p&gt;
+&lt;div id=&#34;different-ks&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Different K’s&lt;/h2&gt;
+&lt;p&gt;The &lt;code&gt;k&lt;/code&gt; factor changes between sports because of the nature of the sports themselves.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th&gt;Sport&lt;/th&gt;
+&lt;th&gt;K*&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;Basketball&lt;/td&gt;
+&lt;td&gt;13.91&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;NFL&lt;/td&gt;
+&lt;td&gt;2.37&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;NHL&lt;/td&gt;
+&lt;td&gt;2.15&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;EPL&lt;/td&gt;
+&lt;td&gt;1.3&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;em&gt;*k may vary based on who has derived an “optimal” k&lt;/em&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;how-can-we-use-it&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;How can we use it?&lt;/h2&gt;
+&lt;p&gt;The results have shown that winning more games than your Pythagorean Expectation tends to mean a team will decline the following season, while falling short of expectations in the current year tends to mean a team will improve the following season.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;the-formula-in-code&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;The formula in code&lt;/h1&gt;
+&lt;p&gt;The below function in R code will be used extensively throughout the series to calculate our expected wins factor, to be applied to a team’s games played during the season.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# create function to apply the formula
+calculate_expected_wins &amp;lt;- function(points_for, points_against, k) {
+  expected_wins &amp;lt;- ((points_for^k) / ((points_for^k) + (points_against^k)))
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Stay tuned for the first sport in our series, College Basketball!&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
     
     <item>
       <title>The Agony and the Ecstasy of my first open source contribution</title>
       <link>/blog/first-open-source-contribution/</link>
       <pubDate>Mon, 16 Dec 2019 00:00:00 +0000</pubDate>
-      
       <guid>/blog/first-open-source-contribution/</guid>
-      <description>For the last year or so, I’ve had this desire to contribute to an open source R package, but like a lot of people, I found the thought of tackling the task frightening.
-While I work in a really dynamic and close team every day, and in the world of remote repositories (Git), I’ve had really limited exposure to collaborative working in these remote repositories… We tend more to work on projects largely on our own, so the concepts of pull requests (PRs), merging, forking… well it was all a bit daunting.</description>
+      <description>
+&lt;script src=&#34;/rmarkdown-libs/kePrint/kePrint.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;p&gt;For the last year or so, I’ve had this desire to contribute to an open source R package, but like a lot of people, I found the thought of tackling the task frightening.&lt;/p&gt;
+&lt;p&gt;While I work in a really dynamic and close team every day, and in the world of remote repositories (Git), I’ve had really limited exposure to collaborative working in these remote repositories… We tend more to work on projects largely on our own, so the concepts of pull requests (PRs), merging, forking… well it was all a bit daunting.&lt;/p&gt;
+&lt;p&gt;The following is a glimpse at the journey, and will be explained in this post:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/process.png&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;What this post won’t be is an exhaustive step-by-step guide of every touch point, rather a medium-high level summary.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;Life is not meant to be easy, my child; but take courage: it can be delightful.&lt;/em&gt;
+- George Bernard Shaw&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;With George’s words in mind, I thought time to push myself to jump in.&lt;/p&gt;
+&lt;p&gt;Scrolling through Twitter (as one does when nursing a newborn), I came across a tweet about a package I’ve used in a few analyses on &lt;em&gt;Don’t Blame the Data&lt;/em&gt; that said that the package was now live on CRAN (a great achievement).&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/twitter.png&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;This naturally led me to the repository on &lt;a href=&#34;https://github.com/jimmyday12/fitzRoy&#34;&gt;github&lt;/a&gt;, at which point I noticed there were open “Issues”, and one of these being for a function to create a ladder for any round.&lt;/p&gt;
+&lt;div id=&#34;the-fitzroy-package&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;The fitzRoy Package&lt;/h2&gt;
+&lt;p&gt;The fitzRoy package, created by &lt;a href=&#34;https://github.com/jimmyday12&#34;&gt;James Day&lt;/a&gt;, is a package designed to help R users extract and analyse Australian Football League (AFL) data for both the men’s and women’s competitions:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The goal of fitzRoy is to provide a set of functions that allows for users to easily get access to AFL data from sources such as afltables.com and footywire.com. There are also tools for processing and cleaning that data.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;While I certainly haven’t done any extensive analysis on this point, I would guess that a large proportion of all AFL data analytics projects are completed with the help of this package.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;jumping-right-in&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Jumping right in&lt;/h2&gt;
+&lt;p&gt;So rather than think about how good it would be to contribute, why not just get in touch with James and offer to address the open issue…&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/communicate.png&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;James was super easy to deal with, and boy was he helpful (and patient with this bumbling fool).&lt;/p&gt;
+&lt;p&gt;Then came the time to write the function. Well sort of write the function. Fortunately, I had already written this function for a linear regression model I built for predicting the attendance of AFL home and away games &lt;a href=&#34;https://www.dontblamethedata.com/blog/building-a-linear-regression-model-in-r-to-predict-afl-crowds/&#34;&gt;here&lt;/a&gt;. The function was aptly named &lt;code&gt;return_ladder()&lt;/code&gt;… I’m a Data Scientist, not a poet.&lt;/p&gt;
+&lt;p&gt;The function was modified somewhat though to take advantage of the &lt;code&gt;get_match_results()&lt;/code&gt; function in the package to return the starting data frame for &lt;code&gt;return_ladder&lt;/code&gt; When writing the function, I wanted to address the requirement that the ladder be returned for any round, and for it to be returned for even earlier than the 2011 season, which another API already offered.&lt;/p&gt;
+&lt;p&gt;With that in mind, the function written takes in three arguments, all of which have the option of being blank, as well as specified:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;match_results_df&lt;/code&gt; - A data frame extracted using &lt;code&gt;get_match_results()&lt;/code&gt;,&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;season_round&lt;/code&gt; - The round of the season the user wants the ladder for,&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;season&lt;/code&gt; - The season the ladder is required for.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;If these are all left blank, the function will return the ladder for every round of every season since the 1897 season.&lt;/p&gt;
+&lt;p&gt;Having the function written was one thing, it also required roxygen notes, that are returned to the user in the help docs of the function. Hadley’s &lt;a href=&#34;http://r-pkgs.had.co.nz/man.html&#34;&gt;R Packages&lt;/a&gt; book does a good job explaining these.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;im-ready-to-be-a-contributor&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;I’m ready to be a contributor&lt;/h2&gt;
+&lt;p&gt;I’ve written the function, the help docs, and have checked the package using &lt;code&gt;devtools::check()&lt;/code&gt; to make sure I haven’t made any mistakes that would cause the package to fail it’s build… Nothing looks alarming (well there are some warnings about &lt;em&gt;No visible binding for global variable&lt;/em&gt; or something but I’m sure there’s nothing to worry about), but all looked good to me.&lt;/p&gt;
+&lt;p&gt;My local changes were committed and a PR was made, I’m ready to be a contributor, and then bam! &lt;strong&gt;Failed codecov&lt;/strong&gt;!! What is that?! An email to James and I’m told it’s because there were no tests written. Ok cool, I’ll write some tests… WHAT ARE TESTS?! HOW DO I WRITE THESE TESTS?! I found this &lt;a href=&#34;https://katherinemwood.github.io/post/testthat/&#34;&gt;post&lt;/a&gt; to be really helpful, as well as Hadley’s tests in the R Packages book.&lt;/p&gt;
+&lt;p&gt;Once these tests were written, I commit my changes, I’m ready to be a contributor, and then bam! Changes have been made to the master that I haven’t got in my PR… ok so I need to merge the master in my PR - easy (for some maybe, I have no idea). A bit of googling, seems pretty easy, but after typing &lt;code&gt;git merge origin/master&lt;/code&gt;, I get this editor pop up in terminal:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/vim.png&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;My initial thoughts? What the is this?!&lt;/p&gt;
+&lt;p&gt;Bit of googling, ok, it’s a VIM editor. Easy. Write a commit message and then all should be good… WAIT?! How do I get out of this screen?! Bit more googling and after typing &lt;code&gt;:WQ&lt;/code&gt;, we’re ready to rock.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;what.-am.-i.-doing&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;What. Am. I. Doing?!!&lt;/h2&gt;
+&lt;p&gt;Ok so things were looking good. I’d committed my changes, all checks passed, happy days.&lt;/p&gt;
+&lt;p&gt;You know that line I had earlier about &lt;em&gt;well there are some warnings about ‘No visible binding for global variable’ or something but I’m sure there’s nothing to worry about&lt;/em&gt;?? Well that was nagging away at me, because as James had advised, these would cause issues when trying to include the update on CRAN. So I fixed those, and also updated the Men’s vignette. It’s at this point that I’m a bit hazy on what I did, but all I know is is that I must have spun myself into a Git web…&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;Master&lt;/code&gt; of my forked repo was two commits behind my branch &lt;code&gt;Ladder&lt;/code&gt;, which was five commit’s ahead of &lt;code&gt;Origin/Master&lt;/code&gt;. What. Am. I. Doing?! Trial and error, error and trial. After much heartache (I can’t stress enough how much heartache), eventually, I got myself all sorted, created another PR and… SUCCESS!!!&lt;/p&gt;
+&lt;p&gt;Finally I can say I have successfully made my first contribution to an open source project. I hope that users of this package find the function useful and as with everything, can find improvements to make it even better.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;a-quick-look-at-the-function&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;A quick look at the function&lt;/h2&gt;
+&lt;p&gt;The below code gives a glimpse into how the function can be used.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#----- Install and Load Package -----#
+# devtools::install_github(&amp;quot;jimmyday12/fitzRoy&amp;quot;)
+
+library(fitzRoy)
+library(tidyverse)
+library(kableExtra)
+
+# get a data frame of AFL data using get_match_results
+afl_data &amp;lt;- get_match_results()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Return the ladder for all teams, for all rounds since 1897&lt;/strong&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# apply the return_ladder function
+ladder &amp;lt;- return_ladder(match_results_df = afl_data)
+head(ladder, 16) %&amp;gt;% 
+  kable(format = &amp;quot;html&amp;quot;, escape = F) %&amp;gt;%
+  kable_styling(&amp;quot;striped&amp;quot;) %&amp;gt;% 
+  scroll_box(width = &amp;quot;750px&amp;quot;, height = &amp;quot;600px&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;div style=&#34;border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:600px; overflow-x: scroll; width:750px; &#34;&gt;
+&lt;table class=&#34;table table-striped&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+Season
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+Team
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+Round.Number
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+Season.Points
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+Score.For
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+Score.Against
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+Percentage
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+Ladder.Position
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1897
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Fitzroy
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+49
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3.0625000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1897
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Collingwood
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+41
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.5625000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1897
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Essendon
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+47
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+24
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.9583333
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1897
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Melbourne
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+44
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+27
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.6296296
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1897
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Sydney
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+27
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+44
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.6136364
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1897
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Geelong
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+24
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+47
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.5106383
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1897
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+St Kilda
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+41
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.3902439
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1897
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Carlton
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+49
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.3265306
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1897
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Fitzroy
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+115
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+42
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.7380952
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1897
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Melbourne
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+108
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+46
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.3478261
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1897
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Collingwood
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+91
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+46
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.9782609
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1897
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Essendon
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+77
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+74
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.0405405
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1897
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Sydney
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+67
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+80
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.8375000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1897
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Carlton
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+52
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+89
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.5842697
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1897
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+St Kilda
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+42
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+107
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.3925234
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1897
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Geelong
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+43
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+111
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.3873874
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;Return the ladder for round 1 for all teams since 1897&lt;/strong&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# what if we want the ladder for a specific round?
+ladder_round_1 &amp;lt;- return_ladder(match_results_df = afl_data, season_round = 1)
+tail(ladder_round_1, 18) %&amp;gt;% 
+  kable(format = &amp;quot;html&amp;quot;, escape = F) %&amp;gt;%
+  kable_styling(&amp;quot;striped&amp;quot;) %&amp;gt;% 
+  scroll_box(width = &amp;quot;750px&amp;quot;, height = &amp;quot;600px&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;div style=&#34;border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:600px; overflow-x: scroll; width:750px; &#34;&gt;
+&lt;table class=&#34;table table-striped&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+Season
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+Team
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+Round.Number
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+Season.Points
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+Score.For
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+Score.Against
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+Percentage
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+Ladder.Position
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2019
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+GWS
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+112
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+40
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.8000000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2019
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Fremantle
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+141
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+59
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.3898305
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2019
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Brisbane Lions
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+102
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+58
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.7586207
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2019
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Hawthorn
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+87
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+55
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.5818182
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2019
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Richmond
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+97
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+64
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.5156250
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2019
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Port Adelaide
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+87
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+61
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.4262295
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2019
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Footscray
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+82
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+65
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.2615385
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2019
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Geelong
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+72
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+65
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.1076923
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2019
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+St Kilda
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+85
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+84
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.0119048
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2019
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Gold Coast
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+84
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+85
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.9882353
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2019
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Collingwood
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+65
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+72
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.9027778
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2019
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Sydney
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+65
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+82
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.7926829
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+12
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2019
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Melbourne
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+61
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+87
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.7011494
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+13
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2019
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Carlton
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+64
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+97
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.6597938
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2019
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Adelaide
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+55
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+87
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.6321839
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+15
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2019
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+West Coast
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+58
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+102
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.5686275
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2019
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+North Melbourne
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+59
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+141
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.4184397
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+17
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2019
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Essendon
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+40
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+112
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.3571429
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+18
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;Return the ladder for every round of the 2018 season&lt;/strong&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# finally, for every round in just one season
+ladder_2018 &amp;lt;- return_ladder(match_results_df = afl_data, season = 2018)
+head(ladder_2018, 18) %&amp;gt;% 
+  kable(format = &amp;quot;html&amp;quot;, escape = F) %&amp;gt;%
+  kable_styling(&amp;quot;striped&amp;quot;) %&amp;gt;% 
+  scroll_box(width = &amp;quot;750px&amp;quot;, height = &amp;quot;600px&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;div style=&#34;border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:600px; overflow-x: scroll; width:750px; &#34;&gt;
+&lt;table class=&#34;table table-striped&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+Season
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+Team
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+Round.Number
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+Season.Points
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+Score.For
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+Score.Against
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+Percentage
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+Ladder.Position
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2018
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+GWS
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+133
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+51
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.6078431
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2018
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Port Adelaide
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+110
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+60
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.8333333
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2018
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Hawthorn
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+101
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+67
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.5074627
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2018
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Gold Coast
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+55
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+39
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.4102564
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2018
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Sydney
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+115
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+86
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.3372093
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2018
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+St Kilda
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+107
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+82
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.3048780
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2018
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Richmond
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+121
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+95
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.2736842
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2018
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Essendon
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+99
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+87
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.1379310
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2018
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Geelong
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+97
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+94
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.0319149
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2018
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Melbourne
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+94
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+97
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.9690722
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2018
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Adelaide
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+87
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+99
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.8787879
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2018
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Carlton
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+95
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+121
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.7851240
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+12
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2018
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Brisbane Lions
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+82
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+107
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.7663551
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+13
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2018
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+West Coast
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+86
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+115
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.7478261
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2018
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+North Melbourne
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+39
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+55
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.7090909
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+15
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2018
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Collingwood
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+67
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+101
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.6633663
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2018
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Fremantle
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+60
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+110
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.5454545
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+17
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2018
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Footscray
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+51
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+133
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.3834586
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+18
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;p&gt;I will be writing a follow up post analysing the AFL ladder through history to really test the function out!&lt;/p&gt;
+&lt;p&gt;Stay tuned.&lt;/p&gt;
+&lt;/div&gt;
+</description>
     </item>
     
     <item>
       <title>All roads lead to gganimate</title>
       <link>/blog/all-roads-lead-to-gganimate/</link>
       <pubDate>Fri, 30 Aug 2019 00:00:00 +0000</pubDate>
-      
       <guid>/blog/all-roads-lead-to-gganimate/</guid>
-      <description>This post aims to introduce you to animating ggplot2 visualisations in r using the gganimate package by Thomas Lin Pedersen.
-The post will visualise the theoretical winnings I would’ve had, had I followed the simple model to predict (or tip as it’s known in Australia) winners in the AFL that I explained in this post. The data used in the analysis was collected from the AFL Tables website as part of a larger series I wrote about on AFL crowds.</description>
+      <description>
+
+
+&lt;p&gt;This post aims to introduce you to animating ggplot2 visualisations in r using the &lt;a href=&#34;https://github.com/thomasp85/gganimate&#34;&gt;gganimate&lt;/a&gt; package by Thomas Lin Pedersen.&lt;/p&gt;
+&lt;p&gt;The post will visualise the theoretical winnings I would’ve had, had I followed the simple model to predict (or tip as it’s known in Australia) winners in the AFL that I explained in this &lt;a href=&#34;https://www.dontblamethedata.com/blog/simplifying-afl-tipping/&#34;&gt;post&lt;/a&gt;. The data used in the analysis was collected from the AFL Tables website as part of a larger series I wrote about on AFL crowds. The wider project can be found &lt;a href=&#34;https://github.com/JaseZiv/AFL-Crowd-Analytics&#34;&gt;here&lt;/a&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(tidyverse)
+library(lubridate)
+library(scales)
+library(gganimate)
+
+# set themes
+theme_set(theme_minimal() +
+          theme(axis.title.x = element_text(size = 16, hjust = 1), 
+                axis.title.y = element_text(size = 16), 
+                axis.text = element_text(size = 13),
+                plot.title = element_text(size = 19)))
+
+# create a colour pallette
+colours &amp;lt;- c(&amp;quot;#5EB296&amp;quot;, &amp;quot;#4E9EBA&amp;quot;, &amp;quot;#F29239&amp;quot;, &amp;quot;#C2CE46&amp;quot;, &amp;quot;#FF7A7F&amp;quot;, &amp;quot;#4D4D4D&amp;quot;)
+
+
+#----- Read in data -----#
+afl &amp;lt;- read.csv(&amp;quot;https://raw.githubusercontent.com/JaseZiv/AFL-Crowd-Analytics/master/data/cleaned_data/afl_model_data.csv&amp;quot;, stringsAsFactors = F)
+
+# Data pre-processing -----------------------------------------------------
+
+# make all variables character type to make splitting and string manipulation easier
+afl &amp;lt;- afl %&amp;gt;% 
+  mutate_if(is.factor, as.character) %&amp;gt;% 
+  mutate(team1_score = as.numeric(team1_score),
+         team2_score = as.numeric(team2_score)) %&amp;gt;% 
+  mutate(fav_team = ifelse(AwayLineClose &amp;lt; 0, team2, team1))  %&amp;gt;% 
+  mutate(winning_team = ifelse(winner == &amp;quot;Home&amp;quot;, team1, ifelse(winner == &amp;quot;Away&amp;quot;, team2, &amp;quot;Draw&amp;quot;))) %&amp;gt;% 
+  mutate(fav_win = ifelse(fav_team == winning_team, &amp;quot;Yes&amp;quot;, &amp;quot;No&amp;quot;)) %&amp;gt;% 
+  filter(season &amp;gt;= 2014,
+         !str_detect(round, &amp;quot;F&amp;quot;)) %&amp;gt;%
+  mutate(tip = ifelse(abs(AwayLineClose)  &amp;lt; 3, team1, fav_team))
+
+
+# function to calculate odds
+calculate_odds_available &amp;lt;- function(tip, winning_team, team1, team2, HomeOddsClose, AwayOddsClose) {
+  if(tip == winning_team) {
+    odds_available &amp;lt;- ifelse(tip == team1, HomeOddsClose, AwayOddsClose)
+    } else {
+      odds_available &amp;lt;- 0
+    }
+}
+
+# apply function and calculate returns
+afl &amp;lt;- afl %&amp;gt;% 
+  mutate(odds_available = mapply(calculate_odds_available, tip, winning_team, team1, team2, HomeOddsClose, AwayOddsClose),
+         game_return = odds_available * 10,
+         game_profit = game_return - 10)
+
+
+# create a df that calculates total winnings per round
+money_per_round &amp;lt;- afl %&amp;gt;% 
+  group_by(season, round) %&amp;gt;% 
+  summarise(total_profit = sum(game_profit)) %&amp;gt;% ungroup()
+
+# add a round 0, where all seasons start at $0
+zeros &amp;lt;- data.frame(season = (2014:2019), round = 0, total_profit = 0)
+
+# join zeros df on to money_per_round
+money_per_round &amp;lt;- money_per_round %&amp;gt;% rbind(zeros)
+
+# create a df that sums up winnings cumulatively
+total_money &amp;lt;- money_per_round %&amp;gt;% 
+  arrange(season, round) %&amp;gt;% 
+  group_by(season) %&amp;gt;% 
+  mutate(cumulating_winnings = cumsum(total_profit)) %&amp;gt;% ungroup()&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;lets-start&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Let’s start&lt;/h2&gt;
+&lt;p&gt;Ok, so the first step I took when writing the original post was to create a ggplot2 visual to plot the winnings (or losses) I would’ve made using my simple strategy.&lt;/p&gt;
+&lt;p&gt;This was the result:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;total_money %&amp;gt;%
+  ggplot(aes(x= round, y= cumulating_winnings, 
+             group = season, colour = as.character(season))) +
+  geom_line(size = 1) +
+  geom_point(size = 2, colour = &amp;quot;black&amp;quot;) +
+  labs(x= &amp;quot;Round&amp;quot;, y= &amp;quot;Cumulative Wins/Losses&amp;quot;, colour = &amp;quot;Season&amp;quot;) +
+  scale_x_continuous(limits = c(0, 27), 
+                     labels = c(0, 3, 6, 9, 12, 15, 18, 21, 24), 
+                     breaks = c(0, 3, 6, 9, 12, 15, 18, 21, 24)) +
+  scale_colour_manual(values = colours) +
+  ggtitle(&amp;quot;2017 WOULD&amp;#39;VE BEEN A BAD YEAR&amp;quot;) +
+  theme(legend.position = &amp;quot;bottom&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/gganimate_animation_guide_files/figure-html/static_line1-1.png&#34; width=&#34;1056&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Not bad, but certainly could be improved. To my mind, with six seasons being plotted, the legend is hard to map to the line itself. Also, other than the 2017 season, which was particularly bad, the other seasons’ variation between rounds was hard to see.&lt;/p&gt;
+&lt;p&gt;Additionally, plotting the data this way made it hard to realise without expending far too much energy focusing on where I would’ve made money, and where I would’ve lost it.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;labels-and-annotations&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Labels and Annotations&lt;/h2&gt;
+&lt;p&gt;Yuck - you can’t just simply add the season as a label - you can’t read anything!&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;total_money %&amp;gt;%
+  ggplot(aes(x= round, y= cumulating_winnings, 
+             group = season, colour = as.character(season))) +
+  geom_line(size = 1) +
+  geom_point(size = 2, colour = &amp;quot;black&amp;quot;) +
+  geom_hline(yintercept = 0, linetype = 2, size = 2) + # added in horizontal line at $0
+  geom_text(aes(label = season), hjust = -1, size = 6) + # season labels added
+  scale_colour_manual(values = colours) +
+  labs(x= &amp;quot;Round&amp;quot;, y= &amp;quot;Cumulative Wins/Losses&amp;quot;) +
+  scale_x_continuous(limits = c(0, 27), 
+                     labels = c(1, 3, 6, 9, 12, 15, 18, 21, 24), 
+                     breaks = c(1, 3, 6, 9, 12, 15, 18, 21, 24)) +
+  scale_y_continuous(labels = dollar) + # y-axis formatted to dollar format using scales
+  annotate(&amp;quot;text&amp;quot;, x= 26, y= 6, label = &amp;quot;Break Even $&amp;quot;, size = 6) + # added text to break even line
+  ggtitle(&amp;quot;2017 WOULD&amp;#39;VE BEEN A BAD YEAR&amp;quot;) +
+  theme(legend.position = &amp;quot;none&amp;quot;) # turned legend off&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/gganimate_animation_guide_files/figure-html/static_line2-1.png&#34; width=&#34;1056&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Instead, only one season label was applied, and applied at the end of each line’s run. This looks much better.&lt;/p&gt;
+&lt;p&gt;As we can see, further elements were added to our static chart, including:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Adding the break-even line;&lt;/li&gt;
+&lt;li&gt;Formatting the y-axis to a dollar format; and&lt;/li&gt;
+&lt;li&gt;Adding labels and removing the legend&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This has greatly improved the readability of the plot.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;total_money %&amp;gt;%
+  ggplot(aes(x= round, y= cumulating_winnings, 
+             group = season, colour = as.character(season))) +
+  geom_line(size = 1) +
+  geom_point(size = 2, colour = &amp;quot;black&amp;quot;) +
+  geom_hline(yintercept = 0, linetype = 2, size = 2) + # added in horizontal line at $0
+  geom_text(data = total_money %&amp;gt;% filter(round == max(round)), aes(label = season), 
+            hjust = -0.3, size = 6) + # season labels added, but only one label per season
+  scale_colour_manual(values = colours) +
+  labs(x= &amp;quot;Round&amp;quot;, y= &amp;quot;Cumulative Wins/Losses&amp;quot;) +
+  scale_x_continuous(limits = c(0, 27), 
+                     labels = c(1, 3, 6, 9, 12, 15, 18, 21, 24), 
+                     breaks = c(1, 3, 6, 9, 12, 15, 18, 21, 24)) +
+  scale_y_continuous(labels = dollar) + # y-axis formatted to dollar format using scales
+  annotate(&amp;quot;text&amp;quot;, x= 26, y= 6, label = &amp;quot;Break Even $&amp;quot;, size = 6) + # added text to break even line
+  ggtitle(&amp;quot;2017 WOULD&amp;#39;VE BEEN A BAD YEAR&amp;quot;) +
+  theme(legend.position = &amp;quot;none&amp;quot;) # turned legend off&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/gganimate_animation_guide_files/figure-html/static_line3-1.png&#34; width=&#34;1056&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;hello-animations&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Hello Animations!&lt;/h2&gt;
+&lt;p&gt;While the above chart looks a lot better, there are no theatrics!&lt;/p&gt;
+&lt;p&gt;Enter animations from gganimate!&lt;/p&gt;
+&lt;p&gt;Using an animated plot allows us to remove even more elements. With the right mix of labelling and animation, the y-axis no longer is necessary - with each round, we can follow the winnings or losses as we go, while the break-even line gives us a reference point.&lt;/p&gt;
+&lt;p&gt;The other things that were done here include the slowing down of frames using &lt;code&gt;fps&lt;/code&gt; (frames per second) and adjusting the &lt;code&gt;range&lt;/code&gt; in &lt;code&gt;transition_reveal()&lt;/code&gt; to be longer than the rounds it’s transitioning over (ie adjusting the range to &lt;code&gt;c(0,25)&lt;/code&gt;). This allows the animation to pause after it has finished its cycle.&lt;/p&gt;
+&lt;p&gt;Finally, to increase the size of the output, adjust the &lt;code&gt;width&lt;/code&gt; and &lt;code&gt;height&lt;/code&gt; arguments to your liking.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;total_money_anim &amp;lt;-  total_money %&amp;gt;%
+  ggplot(aes(x= round, y= cumulating_winnings, 
+             group = season, colour = as.character(season))) +
+  geom_line(size = 2) +
+  geom_point(size = 3, colour = &amp;quot;black&amp;quot;) +
+  geom_hline(yintercept = 0, linetype = 2, size = 2) +
+  geom_text(aes(label = paste0(season, &amp;quot;: &amp;quot;, dollar(cumulating_winnings))), 
+            hjust = -0.3, size = 6) +
+  scale_colour_manual(values = colours) +
+  labs(x= &amp;quot;Round&amp;quot;, y= &amp;quot;Cumulative Wins/Losses&amp;quot;) +
+  scale_x_continuous(limits = c(0, 27), 
+                     labels = c(1, 3, 6, 9, 12, 15, 18, 21, 24), 
+                     breaks = c(1, 3, 6, 9, 12, 15, 18, 21, 24)) +
+  scale_y_continuous(labels = dollar) +
+  annotate(&amp;quot;text&amp;quot;, x= 26, y= 6, label = &amp;quot;Break Even $&amp;quot;, size = 6) +
+  ggtitle(&amp;quot;2017 WOULD&amp;#39;VE BEEN A BAD YEAR&amp;quot;) +
+  theme(legend.position = &amp;quot;none&amp;quot;, 
+        axis.text.y = element_blank(), 
+        axis.title.y = element_blank(), 
+        panel.grid.major.y = element_blank(), 
+        panel.grid.minor.y = element_blank()) +
+  transition_reveal(round, range = c(0, 25))
+
+
+animate(total_money_anim, width = 900, height = 900, fps = 5)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/gganimate_animation_guide_files/figure-html/animation_plot-1.gif&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+&lt;p&gt;Hope this has given you some inspiration to go out and start producing some animated visualisations of your own.&lt;/p&gt;
+&lt;p&gt;Let me know in the comments if you have any questions or suggestions.&lt;/p&gt;
+&lt;/div&gt;
+</description>
     </item>
     
     <item>
       <title>Effectively Simplifying AFL Tipping</title>
       <link>/blog/simplifying-afl-tipping/</link>
       <pubDate>Fri, 30 Aug 2019 00:00:00 +0000</pubDate>
-      
       <guid>/blog/simplifying-afl-tipping/</guid>
-      <description>I feel like I always overthink footy tipping. During each round, I make myself believe I have some sort of secret sauce and conjure up visions in my head of nailing a solid roughy… and then fall flat half way through the season and give up…
-So then I thought, surely there’s an easier way. Only problem was, I thought this up last weekend (during the last season of the round)…</description>
+      <description>
+
+
+&lt;p&gt;I feel like I always overthink footy tipping. During each round, I make myself believe I have some sort of secret sauce and conjure up visions in my head of nailing a solid roughy… and then fall flat half way through the season and give up…&lt;/p&gt;
+&lt;p&gt;So then I thought, surely there’s an easier way. Only problem was, I thought this up last weekend (during the last season of the round)…&lt;/p&gt;
+&lt;p&gt;I though to myself, I wonder how many tips I would’ve gotten this year had I just picked the home team every game…&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/afl_tipping_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;1056&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Ok, so 113 winners wouldn’t have been good enough…&lt;/p&gt;
+&lt;hr /&gt;
+&lt;div id=&#34;using-the-market&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Using the Market&lt;/h1&gt;
+&lt;p&gt;Then I thought, what if I just picked the favourites in the betting market for each game, but with a twist? If the line was less than half a goal (3 points - virtually a coin flip), then I’d just go safe and pick the home team.&lt;/p&gt;
+&lt;p&gt;The betting odds data comes from the Australian Sports Betting website which uses Bet365 odds.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/afl_tipping_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;1056&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Wow!!&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Ok, so I would’ve been able to (theoretically) get my tips up to 135 for the 2019 season - a really handy result, and beating some popular machine learning models that are out there! This 135 correct tips also doesn’t count draws being awarded as a point, as some tipping competitions do (although there were no draws in 2019).&lt;/p&gt;
+&lt;p&gt;Other than 2017, this model - I’ll refer to it as &lt;em&gt;“Simple Model”&lt;/em&gt; - would’ve been fairly competitive in each season since 2014.&lt;/p&gt;
+&lt;p&gt;Maybe next year, I’ll know what I’ll employ… my &lt;em&gt;Simple Model&lt;/em&gt;!&lt;/p&gt;
+&lt;hr /&gt;
+&lt;div id=&#34;but-can-we-make-some-money&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;But can we make some money&lt;/h2&gt;
+&lt;p&gt;Ok, so now that I know that the &lt;em&gt;Simple Model&lt;/em&gt;’* performs fairly competitively in tipping comps, I want to know if I can make some money using this method?&lt;/p&gt;
+&lt;p&gt;To answer this question, I’m placing a theoretic $10 on each game and seeing how many bags of cash are left at the end.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/afl_tipping_files/figure-html/unnamed-chunk-4-1.png&#34; width=&#34;1056&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Hmmm… so using this method, I would’ve lost almost $40, even though it was good enough to win some tipping comps. Only in 2018 would this method have worked, with a net profit of $26.82… The 2017 season would’ve been the most brutal, losing just over $245 for the season.&lt;/p&gt;
+&lt;p&gt;To find out where everything went so wrong, we can use an animated line plot that tracks the overall profit throughout each round of the season. To get a rundown on how the animated plot was generated, see this post &lt;a href=&#34;https://www.dontblamethedata.com/blog/all-roads-lead-to-gganimate/&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/afl_tipping_files/figure-html/animation_plot-1.gif&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+&lt;p&gt;During the 2019 season, we can see that things would’ve started off really bleak - after round five, I would’ve been down over $120! Things started to pick up from there though, even being in the black at round 14. At no point during the 2015 and 2017 seasons would this model have been profitable.&lt;/p&gt;
+&lt;p&gt;While keeping me competitive in footy tipping comps, this model certainly isn’t going to allow me to retire anytime soon.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
     </item>
     
     <item>
       <title>An In Depth Analysis of FIFA 19</title>
       <link>/blog/an-in-depth-analysis-of-fifa19/</link>
       <pubDate>Sat, 17 Aug 2019 00:00:00 +0000</pubDate>
-      
       <guid>/blog/an-in-depth-analysis-of-fifa19/</guid>
-      <description>This post was originally released on the Kaggle FIFA 19 Complete Player dataset that was kindly collected by Karan Gadiya. Many thanks Karan. The link to my original kernel is here
-The full code base can be found here
-Introduction From Wikipedia:
- FIFA 19 is a football simulation video game developed by EA Vancouver as part of Electronic Arts’ FIFA series. Announced on 6 June 2018 for its E3 2018 press conference, it was released on 28 September 2018 for PlayStation 3, PlayStation 4, Xbox 360, Xbox One, Nintendo Switch, and Microsoft Windows.</description>
+      <description>
+&lt;script src=&#34;/rmarkdown-libs/kePrint/kePrint.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;p&gt;&lt;em&gt;This post was originally released on the Kaggle &lt;a href=&#34;https://www.kaggle.com/karangadiya/fifa19&#34;&gt;FIFA 19 Complete Player&lt;/a&gt; dataset that was kindly collected by Karan Gadiya. Many thanks Karan. The link to my original kernel is &lt;a href=&#34;https://www.kaggle.com/jaseziv83/clustering-to-help-club-managers&#34;&gt;here&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;The full code base can be found &lt;a href=&#34;https://github.com/JaseZiv/FIFA19-Analysis&#34;&gt;here&lt;/a&gt;&lt;/p&gt;
+&lt;div id=&#34;introduction&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Introduction&lt;/h1&gt;
+&lt;p&gt;From Wikipedia:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;FIFA 19 is a football simulation video game developed by EA Vancouver as part of Electronic Arts’ FIFA series. Announced on 6 June 2018 for its E3 2018 press conference, it was released on 28 September 2018 for PlayStation 3, PlayStation 4, Xbox 360, Xbox One, Nintendo Switch, and Microsoft Windows. It is the 26th installment in the FIFA series. As with FIFA 18, Cristiano Ronaldo appears as the cover athlete of the regular edition.
+&lt;a href=&#34;https://en.wikipedia.org/wiki/FIFA_19&#34; class=&#34;uri&#34;&gt;https://en.wikipedia.org/wiki/FIFA_19&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The game features a number of different playing modes, however Career mode as a manager holds the most appeal for me.&lt;/p&gt;
+&lt;p&gt;The following analysis will be tailored toward having the best chance at success in that mode for anyone interested.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Some things I want to analyse in this paper:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;High level Exploratory Data Analysis&lt;/li&gt;
+&lt;li&gt;Which features are highly correlated with a player’s overall rating by player position&lt;/li&gt;
+&lt;li&gt;Analyse the differences between a player’s current rating and their potential rating&lt;/li&gt;
+&lt;li&gt;Find out which teams have the highest potential&lt;/li&gt;
+&lt;li&gt;Find out the youngest teams / oldest teams&lt;/li&gt;
+&lt;li&gt;Use k-means clustering to try to find “bargains”; ie if there is someone with the same skills/potential, can they be found for a bargain?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;feature-engineering&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Feature engineering&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Load libraries
+library(tidyverse)
+library(scales)
+library(ggthemes)
+library(kableExtra)
+library(plotly)
+
+options(scipen = 999)
+
+fifa_data &amp;lt;- read_csv(&amp;quot;https://raw.githubusercontent.com/JaseZiv/FIFA19-Analysis/master/data/data.csv&amp;quot;) %&amp;gt;% select(-X1)
+
+fifa_data &amp;lt;- fifa_data %&amp;gt;%
+  mutate(ValueMultiplier = ifelse(str_detect(Value, &amp;quot;K&amp;quot;), 1000, ifelse(str_detect(Value, &amp;quot;M&amp;quot;), 1000000, 1))) %&amp;gt;%
+  mutate(ValueNumeric_pounds = as.numeric(str_extract(Value, &amp;quot;[[:digit:]]+\\.*[[:digit:]]*&amp;quot;)) * ValueMultiplier) %&amp;gt;%
+  mutate(Position = ifelse(is.na(Position), &amp;quot;Unknown&amp;quot;, Position))
+
+
+fifa_data &amp;lt;- fifa_data %&amp;gt;%
+  mutate(WageMultiplier = ifelse(str_detect(Wage, &amp;quot;K&amp;quot;), 1000, ifelse(str_detect(Wage, &amp;quot;M&amp;quot;), 1000000, 1))) %&amp;gt;%
+  mutate(WageNumeric_pounds = as.numeric(str_extract(Wage, &amp;quot;[[:digit:]]+\\.*[[:digit:]]*&amp;quot;)) * WageMultiplier)
+
+
+positions &amp;lt;- unique(fifa_data$Position)
+
+gk &amp;lt;- &amp;quot;GK&amp;quot;
+defs &amp;lt;- positions[str_detect(positions, &amp;quot;B$&amp;quot;)]
+mids &amp;lt;- positions[str_detect(positions, &amp;quot;M$&amp;quot;)]
+f1 &amp;lt;- positions[str_detect(positions, &amp;quot;F$&amp;quot;)]
+f2 &amp;lt;- positions[str_detect(positions, &amp;quot;S$&amp;quot;)]
+f3 &amp;lt;- positions[str_detect(positions, &amp;quot;T$&amp;quot;)]
+f4 &amp;lt;- positions[str_detect(positions, &amp;quot;W$&amp;quot;)]
+fwds &amp;lt;- c(f1, f2, f3, f4)
+
+fifa_data &amp;lt;- fifa_data %&amp;gt;% 
+  mutate(PositionGroup = ifelse(Position %in% gk, &amp;quot;GK&amp;quot;, ifelse(Position %in% defs, &amp;quot;DEF&amp;quot;, ifelse(Position %in% mids, &amp;quot;MID&amp;quot;, ifelse(Position %in% fwds, &amp;quot;FWD&amp;quot;, &amp;quot;Unknown&amp;quot;)))))
+
+fifa_data &amp;lt;- fifa_data %&amp;gt;%
+  mutate(AgeGroup = ifelse(Age &amp;lt;= 20, &amp;quot;20 and under&amp;quot;, ifelse(Age &amp;gt; 20 &amp;amp; Age &amp;lt;=25, &amp;quot;21 to 25&amp;quot;, ifelse(Age &amp;gt; 25 &amp;amp; Age &amp;lt;= 30, &amp;quot;25 to 30&amp;quot;, ifelse(Age &amp;gt; 30 &amp;amp; Age &amp;lt;= 35, &amp;quot;31 to 35&amp;quot;, &amp;quot;Over 35&amp;quot;)))))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;1. Player Valuation&lt;/strong&gt;
+The raw data has player valuations as a character string, with a designation at the end specifying whether the value is thousands or millions. Regex is used to create a numeric variable called &lt;code&gt;ValueNumeric_pounds&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;2. Player Wage&lt;/strong&gt;
+See Point 1 above. Same transformation has occurred for player Wage&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;3. Player Positions&lt;/strong&gt;
+There are 28 different positions in FIFA2019. To make analysis less granular, I have decided to create four groupings; &lt;em&gt;GK&lt;/em&gt;, &lt;em&gt;DEF&lt;/em&gt;, &lt;em&gt;MID&lt;/em&gt; and &lt;em&gt;FWD&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;4. Player Age&lt;/strong&gt;
+I have decided to group players into age buckets, in 5 year increments other than for players 20 years and younger, and players 35 years and over.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;overall-ratings&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Overall Ratings&lt;/h1&gt;
+&lt;p&gt;Player ratings are normally distributed in FIFA19, with a mean of 66.2387 and standard deviation of 6.9089&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/fifa19_analysis_files/figure-html/ratings-1.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
+&lt;div id=&#34;age-vs-overall-rating&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Age vs Overall Rating&lt;/h2&gt;
+&lt;p&gt;Athletes in all domains have no doubt been looking for the elixir of life since the dawn of time, but to no avail unfortunately. When it comes to a player’s overall rating, it appears as though player ratings are growing on average until around 30 years of age, whereby they level off for a couple of years, and then start the inevitable decline at around 34 years.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/fifa19_analysis_files/figure-html/age_v_ratings-1.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;When this relationship is explored by the major position groups, we can see that defender ratings tend to beging their decline earliest at around 33 years of age, while the decline starts somewher closer to 35 for both attackers and midfielders.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/fifa19_analysis_files/figure-html/position_v_ratings-1.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;player-valuations&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Player Valuations&lt;/h1&gt;
+&lt;p&gt;Player valuations show a heavily positive skew, being skewed by the superstars of the game - Messi, Neymar, De Bryune, etc.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/fifa19_analysis_files/figure-html/valuations-1.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
+&lt;div id=&#34;age-vs-valuations&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Age vs Valuations&lt;/h2&gt;
+&lt;p&gt;It is intuitive to think that players get better with age and experience and that their valuations would refelect this relationship.&lt;/p&gt;
+&lt;p&gt;Plotting the relationship below, it can be seen that as players age, their valuations tend to increase up to their early 30s, and then begin declining in the years of age between 31-35, and then rapidly decline for players older than 35. This is in line with the findings when the overall rating was plotted as a function of the player’s age.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/fifa19_analysis_files/figure-html/rating_over_ages-1.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;position-vs-valuations&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Position vs Valuations&lt;/h2&gt;
+&lt;p&gt;As expected, Forwards and Midfielders are going to cost you more than Defenders and Goalkeepers.&lt;/p&gt;
+&lt;p&gt;Specifically, it’s left and right forwards and left and right attacking-midfielders that are the most expensive positions.
+&lt;img src=&#34;/post/fifa19_analysis_files/figure-html/rating_over_positions-1.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;player-rating-and-valuations&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Player Rating and Valuations&lt;/h2&gt;
+&lt;p&gt;There a strong positive relationship between the players rating and valuation with a Spearman correlation of 0.9081. The Spearman method was used to calculate the correlation because of presence of large outliers.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/fifa19_analysis_files/figure-html/ratings_valuations-1.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;correlations-with-a-players-overall-rating&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Correlations with a players Overall rating&lt;/h2&gt;
+&lt;p&gt;The below correlation matrix data displays the correlations between the Overall rating and other key attribute variables for all players except goalkeepers. Both the &lt;em&gt;Pearson&lt;/em&gt; and &lt;em&gt;Spearman&lt;/em&gt; correlation methods were used to display the differences.&lt;/p&gt;
+&lt;p&gt;The &lt;em&gt;Spearman&lt;/em&gt; correlation method is more robust with dealing with extreme outliers, hence the player &lt;code&gt;Value&lt;/code&gt; having the highest spearman correlation (0.92). &lt;code&gt;Reactions&lt;/code&gt;, &lt;code&gt;Composure&lt;/code&gt;, &lt;code&gt;Special&lt;/code&gt; and (surprisingly) &lt;code&gt;Wage&lt;/code&gt; rounding out the top 5 correlated variables with Overall rating using the Spearman method. I say surprisingly because Soccernomics (Kuper.S, Szymanski.S, 2014) stated the best predictor of team success was the teams wage bill.&lt;/p&gt;
+&lt;p&gt;Using the &lt;em&gt;Pearson&lt;/em&gt; method, we get different results. the top 5 correlated variables with the Overall rating is &lt;code&gt;Reactions&lt;/code&gt;, &lt;code&gt;Composure&lt;/code&gt;, &lt;code&gt;Special&lt;/code&gt;, &lt;code&gt;ShortPassing&lt;/code&gt; and &lt;code&gt;BallControl&lt;/code&gt;. Both value and wage don’t appear ni this list because they are prone to large outliers.&lt;/p&gt;
+&lt;table class=&#34;table table-striped&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+Feature
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+Spearman
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+Pearson
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+ValueNumeric_pounds
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.9160253
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.6346473
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Reactions
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.8430347
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.8477221
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Composure
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.7928322
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.8017716
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Special
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.7808008
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.7959002
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+WageNumeric_pounds
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.7786888
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.5755838
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+BallControl
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.7327561
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.7178017
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+ShortPassing
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.7209597
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.7226152
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Potential
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.6148446
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.6506847
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+ShotPower
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.5928283
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.5629406
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+LongPassing
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.5878514
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.5853744
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div id=&#34;which-positions-are-skilled-in-which-attributes&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Which positions are skilled in which attributes&lt;/h2&gt;
+&lt;p&gt;The heat map below displays the median attributes for each position available. The analysis was done on players other than goalkeepers, and also only on players with an overall rating of 75 or higher.&lt;/p&gt;
+&lt;p&gt;It shows that centre backs are high on strength and are typically strong in agression. Right and Left Wingers and Left Forwards are very agile, while Left and Right Midfielders have great acceleration.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/fifa19_analysis_files/figure-html/correlations-1.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;helping-me-manage-a-team&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Helping me manage a team&lt;/h1&gt;
+&lt;p&gt;The next section will be devoted to analysis that will assist those wanting to magae a team. I will analyse which players to target if you want to manage a team in rebuilding mode, players to target with a low budget if managing lower division teams or lower-budget teams, which teams to manage if tyou want an attacking team, or a defensive team.&lt;/p&gt;
+&lt;div id=&#34;young-player-analysis&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Young Player Analysis&lt;/h2&gt;
+&lt;p&gt;If you are wanting to be a manager that gives youngsters a chance and watch them blossom, then the list of below players might be ones to target.&lt;/p&gt;
+&lt;p&gt;The violet bars indicate the difference between the player’s potential and their current overally rating. &lt;em&gt;J. von Moos&lt;/em&gt;, a striker (17 years old and costs €280K) and &lt;em&gt;D. Campbell&lt;/em&gt;, a central midfielder (also 17 years old and only costs €60K) are the two players with the highest room to grow, with both players having a differential of 26. &lt;em&gt;R. Griffiths&lt;/em&gt;, also a striker, but 18 years old, has a potential of 84, however will cost you €575K. I know who I’d be choosing between Griffiths and the previously mentioned J. von Moos who also has an overall rating of 84.&lt;/p&gt;
+&lt;p&gt;If it’s a real bargain you’re looking for, the 16 year old central midfielder &lt;em&gt;B. Mumba&lt;/em&gt; will only cost you €190K, but has a potential rating of 80… Juicy!&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/fifa19_analysis_files/figure-html/young_players-1.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;when-does-potential-end&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;When does potential end?&lt;/h2&gt;
+&lt;p&gt;This now raises an interesting topic… is there an age that players finally realise all of their potential, or is there room to grow throughout their careers?&lt;/p&gt;
+&lt;p&gt;It appears as though a player’s potential and their overall rating converge at approximately 30 years of age.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/fifa19_analysis_files/figure-html/potential_age-1.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;free-valuation-players&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Free Valuation Players&lt;/h1&gt;
+&lt;p&gt;Are there some real bargains to be had? It would appear that there is! Below plots all players that have a free valuation, and displays a player’s age against their current overall rating.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;L. Paredes!!!!!&lt;/strong&gt;
+Depending on what you’re looking for, either of the top-left or top-right quadrants are where the players to target are. The best player to target is &lt;em&gt;L. Paredes&lt;/em&gt;, a fairly young CM at 24 with an overall rating of 80 (and even better still a potential of 85).&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;P. Mahlambi&lt;/em&gt;, a South African CAM 20 year old with a potential of 84 is another big target, as is the 18 year old RCB &lt;em&gt;B. Méndez&lt;/em&gt; and 19 year old CAM &lt;em&gt;I. Hagi&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/fifa19_analysis_files/figure-html/freebies-1.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;which-team-do-i-want-to-manage&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Which Team do I want to manage&lt;/h1&gt;
+&lt;p&gt;This section is designed to help future managers decide what team to manage, based on various factors.&lt;/p&gt;
+&lt;p&gt;I will include an analysis on the youngest and oldest teams, the most talented teams, the great attacking teams, most expensive teams and teams with the highest player valuations.&lt;/p&gt;
+&lt;div id=&#34;team-age&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Team Age&lt;/h2&gt;
+&lt;p&gt;If you’re the type of manager who likes to take charge of younger teams, then teams in some of the European teams might be for you. FC Nordsjælland (Danish) is the youngest team on average in FIFA19, with an average age of 20.3 years old, followed by FC Groningen (Dutch) at 21.4 years old and Bohemian FC (Ireland) at 21.5 years old. Interestingly, Dutch powerhouses PSV and Ajax both make the list of the 20 youngest teams. They’re certainly the type of teams I’d be looking towards.&lt;/p&gt;
+&lt;p&gt;At the other end of the spectrum, if managing older teams is your thing, then South America is the place for you.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/fifa19_analysis_files/figure-html/oldest_youngest-1.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;team-overall-talent&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Team Overall Talent&lt;/h2&gt;
+&lt;p&gt;If you’re trying to pick the most talented team, how you choose to interpret “talent” can have an impact on which team you finally settle for.&lt;/p&gt;
+&lt;p&gt;When looking at the average overall ratings for each team, four of the five highest average rated teams come from Serie A (Juventus, Napoli, Inter and Milan), with Real Madrid the only non-Italian side in the top 5. FC Barcelona, PSG, Roma, Man Utd and surprisingly SL Benfica rounding out the top 10.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/fifa19_analysis_files/figure-html/team_talent-1.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Now if you wish to define “talent” as the most number of superstars, then your selection will be slightly different.&lt;/p&gt;
+&lt;p&gt;I have chosen to define superstars as those players whose rating is 85 or above. There are 110 110 players in the game with this designation.&lt;/p&gt;
+&lt;p&gt;Looking at the top three from the previous plot, we can see that it’s a much different story. Juventus - the highest average overall rated team only have the third most amount of superstars, replaced at the top by Real Madrid and Manchester City. The story is even more pronounced for Napoli, who went from second in the previous measurement to 11th here, with Inter also dropping form 3rd to 8th.&lt;/p&gt;
+&lt;p&gt;The Galacticos of Real Madrid proudly sit atop this perch with 12 players on the list having an overall rating of 85 or over.&lt;/p&gt;
+&lt;p&gt;Interestingly, only the the top leagues are represented in the list of clubs with more than one superstar.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/fifa19_analysis_files/figure-html/elite_talent-1.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;deadly-teams-up-front&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Deadly Teams Up Front&lt;/h2&gt;
+&lt;p&gt;How does one determine the most attacking teams? The method used in this analysis takes an average rating of the four main attributes related to goals - &lt;code&gt;Finishing&lt;/code&gt;, &lt;code&gt;LongShots&lt;/code&gt;, &lt;code&gt;Penalties&lt;/code&gt;, &lt;code&gt;ShotPower&lt;/code&gt; and &lt;code&gt;Positioning&lt;/code&gt;. The attributes are added together and an average rating is calculated. To determine the teams with the highest attacking rating, only midfielders and attackers are considered.&lt;/p&gt;
+&lt;p&gt;The average rating of the most dangerous teams in front of goals are displayed below. Inter (12 midfielders and attackers) and Juventus (13 midfielders and attackers) are the most dangerous teams in front of goal, clearly ahead of the third most dangerous club, Napoli (13 midfielders and attackers). Interestingly, there are a few leagues are represented in the 20 most dangerous teams up front - Portugese, Turkish, Greek, in addition to the usual suspects in England, Italy, Germany, Spain, France.&lt;/p&gt;
+&lt;table class=&#34;table table-striped&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+Club
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+NumberOfAttackers
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+TeamAttackingRating
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Inter
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+12
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+74.43333
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Juventus
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+13
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+74.03077
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Napoli
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+13
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+71.72308
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Manchester United
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+19
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+71.50526
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Sporting CP
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+17
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+71.15294
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+FC Porto
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+71.05000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+FC Barcelona
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+18
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+71.03333
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Real Madrid
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+17
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+71.01176
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+SL Benfica
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+70.87500
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+FC Bayern München
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+17
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+70.82353
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+SC Braga
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+15
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+70.78667
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Roma
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+13
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+70.60000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Manchester City
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+70.37500
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Milan
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+70.27143
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Olympique de Marseille
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+12
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+70.13333
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+FC Schalke 04
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+69.12500
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Valencia CF
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+17
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+69.01176
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Beşiktaş JK
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+68.75714
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Paris Saint-Germain
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+17
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+68.51765
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+SV Werder Bremen
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+17
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+68.45882
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div id=&#34;team-wage-bills-and-value-for-money&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Team Wage Bills and Value for Money&lt;/h2&gt;
+&lt;p&gt;Real Madrid and Barcelona blow the other teams away when it comes to wage bills, with weekly wage bills sitting at just over €5M and €4.83M respectively. Man City is a distant third with a weekly wage bill of €3.7M.&lt;/p&gt;
+&lt;p&gt;Surprisingly, Inter Milan, one of the most highly rated teams in terms of overall talent (see above) comes in at number 16 on the list - talk about value for money! Even more strangely, Premier League sides Everton and West Ham have higher wage bills than Inter! What’s worse for those two EPL clubs, Milan, Napoli and Inter were three of the top five overall rated clubs in the game. As a result, these three clubs have had great value for money, with each overall rating point only costing Inter €20K, as opposed to Everton’s €27K per overall rating. Of course this is dwarfed by the two Spaniards, who both spend over €60K per point.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/fifa19_analysis_files/figure-html/spenders-1.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;At the other end of the spectrum, there are some clubs that are exceptionally efficient with their wage bills. Highlighted clubs are those that have an average overall rating over 70. Spartak Moscow are the leaders, with each rating point only costing €369 - what a difference from Real Madrid!&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/fifa19_analysis_files/figure-html/shrewd-1.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;k-means-clustering&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;K-Means Clustering&lt;/h1&gt;
+&lt;p&gt;Trying to find players who are similar can be a very difficult task. There are close to 100 variables that you might need to analyse to determine “similarity” between players. Couple that with comparing multiple players and it’s almost imposible.&lt;/p&gt;
+&lt;p&gt;Enter K-Means!&lt;/p&gt;
+&lt;p&gt;K-means clustering aims to partition n observations into k clusters in which each observation belongs to the cluster with the nearest mean, serving as a prototype of the cluster. This results in a partitioning of the data space into Voronoi cells &lt;a href=&#34;https://en.wikipedia.org/wiki/K-means_clustering&#34; class=&#34;uri&#34;&gt;https://en.wikipedia.org/wiki/K-means_clustering&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The steps used are outlined below:&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;Filter out Goalkeepers and any players without a position listed&lt;/li&gt;
+&lt;li&gt;Select only numeric variables, mainly the attribute variables. Player value, wages and overall rating have been omitted from the data so that these variables don’t sway our groupings, allowing for the clusters to contain like-for-like players based off their skillsets.&lt;/li&gt;
+&lt;li&gt;Scale the data - without scaling, some variables, especially &lt;code&gt;Special&lt;/code&gt; will skew the clusters to than variable.&lt;/li&gt;
+&lt;li&gt;Run K-Means using, looping through a number of cluster centres to find the optimal number (k). This can be done visually, where the elbow of the plot “bends”.&lt;/li&gt;
+&lt;li&gt;Set the number of centres (8 in this example)&lt;/li&gt;
+&lt;li&gt;Re-run the model with K = 8&lt;/li&gt;
+&lt;li&gt;Assign the cluster group back to the main data&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Get data ready
+data_cluster &amp;lt;- fifa_data %&amp;gt;%
+  filter(PositionGroup != &amp;quot;Unknown&amp;quot;) %&amp;gt;%
+  filter(PositionGroup != &amp;quot;GK&amp;quot;) %&amp;gt;%
+  mutate(RoomToGrow = Potential - Overall) %&amp;gt;%
+  select_if(is.numeric) %&amp;gt;%
+  select(-ID, -`Jersey Number`, -AttackingRating, -starts_with(&amp;quot;Value&amp;quot;), - starts_with(&amp;quot;Wage&amp;quot;), -starts_with(&amp;quot;GK&amp;quot;), -Overall)
+
+
+scaled_data &amp;lt;- scale(data_cluster)
+
+set.seed(109)
+# Initialize total within sum of squares error: wss
+wss &amp;lt;- 0
+# For 1 to 30 cluster centers
+for (j in 1:30) {
+  km.out &amp;lt;- kmeans(scaled_data, centers = j, nstart = 20)
+  # Save total within sum of squares to wss variable
+  wss[j] &amp;lt;- km.out$tot.withinss
+}
+
+
+# create a DF to use in a ggplot visualisation
+wss_df &amp;lt;- data.frame(num_cluster = 1:30, wgss = wss)
+
+# plot to determine optimal k
+ggplot(data = wss_df, aes(x=num_cluster, y= wgss)) + 
+  geom_line(color = &amp;quot;lightgrey&amp;quot;, size = 2) + 
+  geom_point(color = &amp;quot;green&amp;quot;, size = 4) +
+  theme_fivethirtyeight() +
+  geom_curve(x=14, xend=8, y=300000, yend= 290500, arrow = arrow(length = unit(0.2,&amp;quot;cm&amp;quot;)), size =1, colour = &amp;quot;purple&amp;quot;) +
+  geom_text(label = &amp;quot;k = 8\noptimal level&amp;quot;, x=14, y= 290000, colour = &amp;quot;purple&amp;quot;) +
+  labs(title = &amp;quot;Using Eight Clusters To Group Players&amp;quot;, subtitle = &amp;quot;Selecting the point where the elbow &amp;#39;bends&amp;#39;, or where the slope of \nthe Within groups sum of squares levels out&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/fifa19_analysis_files/figure-html/cluster_elbow-1.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Set k equal to the number of clusters corresponding to the elbow location
+k &amp;lt;- 8
+
+# Create a k-means model on wisc.data: wisc.km
+wisc.km &amp;lt;- kmeans(scale(data_cluster), centers = k, nstart = 20)
+
+# add the cluster group back to the original DF for all players other than GK and Unknown
+cluster_data &amp;lt;- fifa_data %&amp;gt;%
+  filter(PositionGroup != &amp;quot;Unknown&amp;quot;) %&amp;gt;%
+  filter(PositionGroup != &amp;quot;GK&amp;quot;) %&amp;gt;%
+  mutate(Cluster = wisc.km$cluster)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;K-means has split the data into the following 8 clusters as outlined below.&lt;/p&gt;
+&lt;p&gt;It appears that clusters 4 and 8 are representing the more defensive-midfielder types (made up mainly of DEFs and MIDs). Cluster 7 looks to be grouping very attacking minded midfielders midfielders (mande up mainly of MIDs and FWDs).&lt;/p&gt;
+&lt;p&gt;Cluster 2 is grouping Midfielders, Cluster 5 is for Forwards, while clusters 1 and 3 are for the Defenders.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;##    
+##      DEF  FWD  MID
+##   1 1137   43 1802
+##   2 1498   39 1282
+##   3 1443    7  136
+##   4   16  742 1668
+##   5   20  989 1001
+##   6  143  269  614
+##   7 1608    3  185
+##   8    1 1326  150&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Plotting the 20 highest rated players in each cluster shows us which players are similar in terms of their skill sets.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/fifa19_analysis_files/figure-html/cluster_plot-1.png&#34; width=&#34;1440&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;I am going to build a shiny app based off this clustering analysis to enable users to input a player they wish to find a similar replacement for, and the resulting output displaying a list of players and their attributes who are most similar.&lt;/p&gt;
+&lt;p&gt;For example, selecting I. Perišić from Inter as someone to replicate, the below results will appear.&lt;/p&gt;
+&lt;p&gt;The function will take three inputs, the player name how many players you want returned, and what how close to the player’s value do you want to see results for (ie if you want all players within 10% of the player’s value, use 0.1).&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;return_similar_players &amp;lt;- function(player, num_results, return_within_fraction) {
+  
+  cluster_filter &amp;lt;- cluster_analysis$Cluster[cluster_analysis$Name == player]
+  player_value &amp;lt;- cluster_analysis$ValueNumeric_pounds[cluster_analysis$Name == player]
+  
+  cluster_analysis %&amp;gt;%
+    filter(Cluster == cluster_filter,
+           ValueNumeric_pounds &amp;gt;= (player_value * (1- return_within_fraction)) &amp;amp; ValueNumeric_pounds &amp;lt;= (player_value * (1 + return_within_fraction))) %&amp;gt;%
+    head(num_results)
+
+}
+
+
+return_similar_players(&amp;quot;I. Perišić&amp;quot;, 100, .05) %&amp;gt;% 
+  kable(format = &amp;quot;html&amp;quot;, escape = F) %&amp;gt;%
+  kable_styling(&amp;quot;striped&amp;quot;, full_width = F)&lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table table-striped&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+ID
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+Name
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+Club
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+Age
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+PositionGroup
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+Overall
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+Cluster
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+ValueNumeric_pounds
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+189332
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Jordi Alba
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+FC Barcelona
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+29
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+DEF
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+87
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+38000000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+191043
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Alex Sandro
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Juventus
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+27
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+DEF
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+86
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+36500000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+184087
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+T. Alderweireld
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Tottenham Hotspur
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+29
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+DEF
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+86
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+39000000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+197445
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+D. Alaba
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+FC Bayern München
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+26
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+DEF
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+85
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+38000000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+189513
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Parejo
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Valencia CF
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+29
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+MID
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+85
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+37000000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+187961
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Paulinho
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Guangzhou Evergrande Taobao FC
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+29
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+MID
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+85
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+37000000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+184941
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+A. Sánchez
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Manchester United
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+29
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+FWD
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+85
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+37500000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+184267
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Y. Brahimi
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+FC Porto
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+28
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+MID
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+85
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+39000000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+181458
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+I. Perišić
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Inter
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+29
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+MID
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+85
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+37500000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+179844
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Diego Costa
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Atlético Madrid
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+29
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+FWD
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+85
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+38500000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+165153
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+K. Benzema
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Real Madrid
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+30
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+FWD
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+85
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+37000000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+205498
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Jorginho
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Chelsea
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+26
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+MID
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+84
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+38000000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+204970
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+F. Thauvin
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Olympique de Marseille
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+25
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+MID
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+84
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+39000000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+200104
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+H. Son
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Tottenham Hotspur
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+25
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+MID
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+84
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+37000000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+212523
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Anderson Talisca
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Guangzhou Evergrande Taobao FC
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+24
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+MID
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+83
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+36500000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;This code will be able to be re-used on FIFA 20 data when it comes out - feel free to use this as a basis for any further analysis!&lt;/p&gt;
+&lt;p&gt;Would love your thoughts on the analysis.&lt;/p&gt;
+&lt;/div&gt;
+</description>
     </item>
     
     <item>
       <title>A tribute to Jarryd Roughead with some obscure data</title>
       <link>/blog/a-tribute-to-jarryd-roughead-using-data-analysis/</link>
       <pubDate>Wed, 14 Aug 2019 00:00:00 +0000</pubDate>
-      
       <guid>/blog/a-tribute-to-jarryd-roughead-using-data-analysis/</guid>
-      <description>Jarryd Roughead - four-time Hawthorn premiership player and all round great man - formally announced his retirement this week, with his last game coming over the weekend against the Gold Coast Suns.
-Not only was he a pivotal four-time premiership star for the Hawthorn Hawks, he survived a hell of a lot of adversity with some very serious cancer scares and handled himself with nothing but grace and dignity.</description>
+      <description>
+&lt;script src=&#34;/rmarkdown-libs/kePrint/kePrint.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;p&gt;Jarryd Roughead - four-time Hawthorn premiership player and all round great man - formally announced his retirement this week, with his last game coming over the weekend against the Gold Coast Suns.&lt;/p&gt;
+&lt;p&gt;Not only was he a pivotal four-time premiership star for the Hawthorn Hawks, he survived a hell of a lot of adversity with some very serious cancer scares and handled himself with nothing but grace and dignity. He came back to captain his club in 2017 and while the on-field element was tough to come back to, he was lumped with the burden of captaining the club after they parted ways with stalwarts Sam Mitchell and Jordan Lewis after the 2016 season.&lt;/p&gt;
+&lt;p&gt;He filled key posts down back during the early part of his career, then moved up forward where he played a very, very good second option, then also carved out a valuable ruck/midfielder role for the club a bit later on. He could play everywhere.&lt;/p&gt;
+&lt;p&gt;I loved him as a footballer, but the man he seems to be makes me envious I don’t know him personally. I wanted to take an in depth (but different) look at the career he had with the mighty Hawks using some frequently used data visualisations.&lt;/p&gt;
+&lt;p&gt;A lot of the articles written about this great man will focus on the more well known numbers of his career… the 282 (to be 283 after his last game), the 572 goals, the four flags, Coleman Medal in 2013 and All Australian selections in 2013-14. Rightfully so too.&lt;/p&gt;
+&lt;p&gt;This post however is going to look at some of the more obscure aspects of Roughy’s playing time so we have a full view of his time in the game.&lt;/p&gt;
+&lt;p&gt;The data for this post originally comes from AFL Tables, but through Jimmy Day’s amazing &lt;a href=&#34;https://github.com/jimmyday12/fitzRoy&#34;&gt;fitzRoy&lt;/a&gt; R package.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(fitzRoy)
+library(stringr)
+library(tidyverse)
+library(lubridate)
+
+theme_set(theme_minimal())
+
+stats_players &amp;lt;- get_afltables_stats(start_date = &amp;quot;2000-01-01&amp;quot;, end_date = &amp;quot;2019-10-01&amp;quot;)
+
+rough &amp;lt;- stats_players %&amp;gt;% 
+  filter(str_detect(First.name, &amp;quot;Jarryd&amp;quot;),
+         str_detect(Surname, &amp;quot;Roughead&amp;quot;))
+
+
+rough &amp;lt;- rough %&amp;gt;% 
+  mutate(final = ifelse(str_detect(Round, &amp;quot;F&amp;quot;), &amp;quot;Y&amp;quot;, &amp;quot;N&amp;quot;),
+         Opponent = ifelse(Home.team == Playing.for, Away.team, Home.team))
+
+
+rough &amp;lt;- rough %&amp;gt;% 
+  mutate(Date = ymd(Date),
+         Weekday = wday(Date, label = T),
+         StartingHour = substr(Local.start.time, 1,2 ),
+         TimePeriod = ifelse(as.numeric(StartingHour) &amp;lt; 17, &amp;quot;Afternoon&amp;quot;, &amp;quot;Evening&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;when-were-roughys-games-played&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;When were Roughy’s games played?&lt;/h1&gt;
+&lt;p&gt;Of Roughy’s 282 games, not one of them was played on a Wednesday - understandable given the Hawks don’t have any ANZAC Day games and no other holiday falls on a Wednesday. Every other day of the week he played. Saturdays are where he played most of his games, with 47% of his games played then.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/tribute_to_roughy_files/figure-html/weekdays-1.png&#34; width=&#34;1056&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;The most frequent starting time of games Roughy played was in the 20th hour of the day (start time between 7pm and 8pm), followed by games starting between 2pm to 3pm.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/tribute_to_roughy_files/figure-html/startTime-1.png&#34; width=&#34;1056&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;where-were-roughs-games-played&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Where were Rough’s games played?&lt;/h1&gt;
+&lt;p&gt;No surprises to see that Roughy played most of his games at either the ’G or in Tasmania.&lt;/p&gt;
+&lt;p&gt;Interestingly, the only interstate finals Rough ever played in were at Subiaco (in Western Australia), where he played three (two of those came in the same finals series - the 2015 season, where the Hawks won their third premiership in a row).&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/tribute_to_roughy_files/figure-html/venues-1.png&#34; width=&#34;1056&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;what-conditions-did-the-great-man-play-in&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;What conditions did the great man play in?&lt;/h1&gt;
+&lt;p&gt;For this section, I will use the weather data from my series on AFL crowds and the data and code for collecting the data can be found &lt;a href=&#34;https://github.com/JaseZiv/AFL-Crowd-Analytics&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# read in data
+rain_data &amp;lt;- read.csv(&amp;quot;https://raw.githubusercontent.com/JaseZiv/AFL-Crowd-Analytics/master/data/cleaned_data/afl_preprocessed.csv&amp;quot;, stringsAsFactors = F)
+
+# select just the required variables, first creating a key to join back to the &amp;#39;rough&amp;#39; df
+rain_data &amp;lt;- rain_data %&amp;gt;% 
+  select(team1, team2, date, rainfall_clean, min_temp, max_temp) %&amp;gt;% 
+  mutate(gameId = paste(team1, team2, date, sep = &amp;quot;-&amp;quot;)) %&amp;gt;% 
+  select(-team1, -team2, -date)
+
+# join data back
+rough &amp;lt;- rough %&amp;gt;% 
+  mutate(gameId = paste(Home.team, Away.team, Date, sep = &amp;quot;-&amp;quot;)) %&amp;gt;% 
+  left_join(rain_data, by = &amp;quot;gameId&amp;quot;) %&amp;gt;% 
+  select(-gameId)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The wettest game Roughy played in was a 2012 loss against Richmond at the MCG, where 28ml fell in 24 hours. In a dirty day for the Hawks, Roughy had an ok game, kicking 2 goals 1 behind and took 6 marks.&lt;/p&gt;
+&lt;p&gt;The coldest game he played in (the snow game last week in Canberra would’ve won had he played) was in Tasmania - no surprises - against the Lions in that horrible premiership hangover year in 2009. The maximum temperature was a crisp 10.8 degrees and there was even 5.2ml of rain. Roughy had a game to forget, with 7 kicks and only 1 goal. A stinker for the whole club.&lt;/p&gt;
+&lt;p&gt;On the flip side, the round three matchup in Rough’s first season against Essendon was the hottest game he played in… again the Hawks lost this one in a tight two-point loss. Rough managed to kick two goals.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;what-about-chas-brownlow&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;What about Chas Brownlow?&lt;/h1&gt;
+&lt;p&gt;Not known for his prolific Brownlow vote getting, the big Rough received 59 votes in total, at an average of 0.225 votes per game.&lt;/p&gt;
+&lt;p&gt;Roughy’s All Australian years in 2013 and 2014 saw his average votes per games peak; he received 0.59 and 0.55 votes per game respectively. Five of his 14 seasons saw zero votes awarded.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/tribute_to_roughy_files/figure-html/votes-1.png&#34; width=&#34;1056&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;who-umpired-the-big-man&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Who umpired the big man?&lt;/h1&gt;
+&lt;p&gt;Roughy has seen 99 umpires during his time in the game.&lt;/p&gt;
+&lt;p&gt;Brett Rosebury officiated 41 of Roughy’s games, with Matt Nicholls and Matt Stevic following closely behind with 37 times each. Twelve umpires officiated Roughy’s games on at least 20 occasions&lt;/p&gt;
+&lt;p&gt;Of the 41 games Rosebury officiated, 13 were in finals - by far the most finals games with Roughy than any umpire. Of the umpires with at least 20 games, only Stephen McBurney hasn’t umpired Rough in a final, while Troy Pannell has umpired him once.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/tribute_to_roughy_files/figure-html/umpires-1.png&#34; width=&#34;1056&#34; /&gt;&lt;/p&gt;
+&lt;div id=&#34;were-some-kinder-to-rough&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Were some kinder to Rough?&lt;/h2&gt;
+&lt;p&gt;We can answer this question looking at Brownlow votes and Free Kick counts… The analysis will limit itself to those 12 umpires who have officiated his games at least 20 times.&lt;/p&gt;
+&lt;p&gt;I always knew I disliked Razor Ray… now I know why. He and Michael Vozzo were the only umpires on this list to fail to award a Brownlow vote to the big man. Shaun Ryan awarded them at a rate of just over half a vote for the 23 games he officiated Roughy’s games.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/tribute_to_roughy_files/figure-html/umpVotes-1.png&#34; width=&#34;1056&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Not only did Shaun Ryan award Brownlow votes at a higher rate than any of his brethren on this list, he also didn’t discriminate between how many frees were awarded for and against the big man, though he did award 1.05 frees against, the fifth highest amount on average.&lt;/p&gt;
+&lt;p&gt;Michael Vozzo had the largest discrepancy between the number of frees, awarding less than 0.5 frees for Roughy (0.478), while penalising the big Rough at a rate of 1.09 per game.&lt;/p&gt;
+&lt;p&gt;At 1.1 frees against per game, the pest Razor and Shane McInerney penalised Rough the most, while Simon Meredith (0.75) penalised him the least (0.84).&lt;/p&gt;
+&lt;p&gt;Troy Pannell awarded Roughy the most frees on average (1.29).&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/tribute_to_roughy_files/figure-html/frees-1.png&#34; width=&#34;1056&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;finally-bouncing&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Finally, Bouncing&lt;/h1&gt;
+&lt;p&gt;Not only was Roughy a superstar footballer, he was a gun junior basketballer.&lt;/p&gt;
+&lt;p&gt;Bouncing is an important piece of the basketball puzzle… I wonder if Rough bounced the ball much?&lt;/p&gt;
+&lt;p&gt;The average number of bounces per player per game is 0.529. Throughout Roughy’s career, he bounced the ball at a rate of 0.12 per game… a fair bit off the average…&lt;/p&gt;
+&lt;p&gt;His rookie season was his best bouncing season at a rate of 0.562 bounces per game.. Clarko must have ironed that out of his game and must have been thrilled in 2009 (other than the premiership hangover) when Roughy didn’t bounce the ball once.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/tribute_to_roughy_files/figure-html/bouncing-1.png&#34; width=&#34;1056&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Well that’s all for this tribute to the great Jarryd Roughead.&lt;/p&gt;
+&lt;p&gt;Looking forward to watching his last game, and then seeing him around the media hopefully.&lt;/p&gt;
+&lt;p&gt;We love ya Rough!&lt;/p&gt;
+&lt;p&gt;As always, feel free to get in touch if there’s any feedback &lt;a href=&#34;https://www.linkedin.com/in/jason-zivkovic-4a0a1926/&#34;&gt;here&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
     </item>
     
   </channel>

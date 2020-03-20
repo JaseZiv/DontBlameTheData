@@ -1,71 +1,2040 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>afl on Don&#39;t Blame The Data</title>
+    <title>afl | Don&#39;t Blame the Data</title>
     <link>/categories/afl/</link>
-    <description>Recent content in afl on Don&#39;t Blame The Data</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 23 Dec 2019 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="/categories/afl/index.xml" rel="self" type="application/rss+xml" />
-    
+      <atom:link href="/categories/afl/index.xml" rel="self" type="application/rss+xml" />
+    <description>afl</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>©2020</copyright><lastBuildDate>Mon, 23 Dec 2019 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/img/logo.jpg</url>
+      <title>afl</title>
+      <link>/categories/afl/</link>
+    </image>
     
     <item>
       <title>Playing List Ages at the Pointy End</title>
       <link>/blog/age-of-best-players/</link>
       <pubDate>Mon, 23 Dec 2019 00:00:00 +0000</pubDate>
-      
       <guid>/blog/age-of-best-players/</guid>
-      <description>This is the second installment at my look at the age distributions of each AFL team for the 2020 season. The fist post (which can be found here), looked at the impact that the statistic chosen to report out the age profiles can have, specifically using the mean versus the median. Rightly so, many pointed out in feedback that some of the younger players on lists may not play as much or might not be as important as some of the older talent and as such, their age shouldn’t be given as much weighting as some of the stars of each team.</description>
+      <description>
+&lt;script src=&#34;/rmarkdown-libs/kePrint/kePrint.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;p&gt;This is the second installment at my look at the age distributions of each AFL team for the 2020 season. The fist post (which can be found &lt;a href=&#34;https://www.dontblamethedata.com/blog/analysing-afl-team-age/&#34;&gt;here&lt;/a&gt;), looked at the impact that the statistic chosen to report out the age profiles can have, specifically using the mean versus the median. Rightly so, many pointed out in feedback that some of the younger players on lists may not play as much or might not be as important as some of the older talent and as such, their age shouldn’t be given as much weighting as some of the stars of each team.&lt;/p&gt;
+&lt;p&gt;That feedback led to this post, which will look at identifying each team’s top line talent and comparing the talent age distribution.&lt;/p&gt;
+&lt;p&gt;To do this, club Best and Fairest (B&amp;amp;F) results have been analysed to identify the top players at each club. Top 10 B&amp;amp;F data comes from &lt;a href=&#34;https://www.foxsports.com.au/afl/afl-best-and-fairest-winners-2019-club-champion-awards-dates-votes-leaderboards-who-won-each-clubs-best-and-fairest/news-story/a6f87d3cadd61c24aff1ba760da5549c&#34;&gt;here&lt;/a&gt;. There are 181 players in total (Richmond have 11 players because of a tie for 10th spot). Given there has been some player movement in the offseason (six players in the list analysed, most notably Tim Kelly to West Coast finished in their team’s top 10 and then changed clubs), these players have now been placed in their new team’s distribution. Doing this has resulted in some teams having more than 10 players analysed, while others less. See below:&lt;/p&gt;
+&lt;table class=&#34;table table-striped&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+Team
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+Number of Players
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Adelaide
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Brisbane Lions
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Carlton
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Collingwood
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Essendon
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Footscray
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+12
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Fremantle
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Geelong
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Gold Coast
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+GWS
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Hawthorn
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Melbourne
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+North Melbourne
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Port Adelaide
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Richmond
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+St Kilda
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Sydney
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+West Coast
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;div id=&#34;the-age-of-top-talent&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;The Age of Top Talent&lt;/h2&gt;
+&lt;p&gt;Using the age of top players at each club to measure the age profile of the club shows us that Geelong’s list is the oldest at the top end, with an average age of 29.2 years. These results highlight a concern for Kangaroos fans, as their club’s top 10 B&amp;amp;F comes in at second on this list at 28.9 years and they missed the finals last year (by a bit too, two games out and in 12th position). Adelaide fans also won’t be too happy given their results last year.&lt;/p&gt;
+&lt;p&gt;Less concerning for GWS, Essendon and the Bulldogs (who each made finals last year), their top players are in the bottom half of this age analysis. Could be some happy times ahead for these clubs?&lt;/p&gt;
+&lt;p&gt;Melbourne has the youngest list, with an average age of 24.7 years, while St Kilda may see this number rise at the start of the 2021 season after they made a decent push in free agency at the end of the 2019 season.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/age_of_best_players_files/figure-html/oldest_teams-1.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;We can also see that there is a negative relationship between the top players age distribution and ladder position at the end of a season - the younger the average age of your teams top 10 B&amp;amp;F, the lower the ladder poisition tended to be (with some exceptions of course as mentioned above).&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/age_of_best_players_files/figure-html/relationship-1.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;It would be interesting to see the impact of this for more than just the most recent season. Might be one for someone else to pick up where I’ve left off, or for a later post.&lt;/p&gt;
+&lt;p&gt;Data and code for this project can be found &lt;a href=&#34;https://github.com/JaseZiv/Dont-Blame-the-Data-Data-Files/tree/master/age_at_top_end&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+</description>
     </item>
     
     <item>
       <title>Analysing AFL Team Age... Properly!</title>
       <link>/blog/analysing-afl-team-age/</link>
       <pubDate>Wed, 04 Dec 2019 00:00:00 +0000</pubDate>
-      
       <guid>/blog/analysing-afl-team-age/</guid>
-      <description>After seeing my beloved Hawthorn Hawks tweet out an article on their website regarding player ages for each team, it got me riled up that the media love to cite Champion Data’s “average age” as their measure.
-As can be seen with the age distribution of players as at the start of the 2020 AFL Premiership Season, the figure is going to be skewed by the older players on lists, especially with guys like Shaun Burgoyne, Kade Simpson, Gary Ablett Junior…</description>
+      <description>
+
+
+&lt;p&gt;After seeing my beloved Hawthorn Hawks tweet out an &lt;a href=&#34;https://www.hawthornfc.com.au/news/2019-12-04/hawks-no-longer-the-oldest-list&#34;&gt;article&lt;/a&gt; on their website regarding player ages for each team, it got me riled up that the media love to cite Champion Data’s “average age” as their measure.&lt;/p&gt;
+&lt;p&gt;As can be seen with the age distribution of players as at the start of the 2020 AFL Premiership Season, the figure is going to be skewed by the older players on lists, especially with guys like Shaun Burgoyne, Kade Simpson, Gary Ablett Junior…&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/analysing_afl_team_age_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;864&#34; /&gt;&lt;/p&gt;
+&lt;div id=&#34;mean-medianwhat-of-it&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Mean, Median…what of it?&lt;/h2&gt;
+&lt;p&gt;The &lt;em&gt;mean&lt;/em&gt;, from &lt;a href=&#34;https://en.wikipedia.org/wiki/Mean&#34;&gt;Wikipedia&lt;/a&gt;;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;For a data set, the arithmetic mean, also called the mathematical expectation or average, is the central value of a discrete set of numbers: specifically, the sum of the values divided by the number of values.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The &lt;em&gt;median&lt;/em&gt;, also &lt;a href=&#34;https://en.wikipedia.org/wiki/Median&#34;&gt;Wikipedia&lt;/a&gt;;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The median is the value separating the higher half from the lower half of a data sample (a population or a probability distribution). For a data set, it may be thought of as the “middle” value. For example, in the data set {1, 3, 3, 6, 7, 8, 9}, the median is 6, the fourth largest, and also the fourth smallest, number in the sample. For a continuous probability distribution, the median is the value such that a number is equally likely to fall above or below it.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;When data is not normally distributed around the mean (as is the case here), using it to describe the measure of centre is misleading. In cases like this, the median provides a more representative statistic. With a positively skewed distribution like the one above, statistics 101 tells us that the median will be less than the average, while the opposite would hold true where the distribution was negatively skewed.&lt;/p&gt;
+&lt;p&gt;The average age of all players on team lists for the 2020 AFL premiership season is 24.17 years, while the median age is 23.6 years.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;div id=&#34;so-why-do-they-still-report-averages&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;So why do they still report averages?&lt;/h3&gt;
+&lt;p&gt;I suspect media outlets report the &lt;em&gt;average&lt;/em&gt; age for two reasons;&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;Who can be bothered explaining the nuances between the mean and the median; or more likely,&lt;/li&gt;
+&lt;li&gt;The average is more prone to pull this number higher for some teams, fuelling the narrative they want to run with.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;implications-of-the-different-measures&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Implications of the different measures&lt;/h3&gt;
+&lt;p&gt;When we plot both the average and median ages of each of the teams, we can see that we get some very different outcomes.&lt;/p&gt;
+&lt;p&gt;We are led to believe that the Geelong Cats have the fourth oldest list but when using the median as the statistic, they are the 11th oldest playing list, with the Kangaroos, GWS, Saints, Demons, Bombers, Bulldogs and Tigers all having older lists than them.&lt;/p&gt;
+&lt;p&gt;Some of the other implications:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The Brisbane Lions have the youngest list for the 2020 season, not the Gold Coast&lt;/li&gt;
+&lt;li&gt;The Hawks are actually the fourth oldest list, with North Melbourne being third&lt;/li&gt;
+&lt;li&gt;The Demons are the the 7th oldest list, not the 12th oldest&lt;/li&gt;
+&lt;li&gt;The Power are the equal third (with the Swans) youngest list, not the 10th oldest&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/analysing_afl_team_age_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;1056&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;why-does-any-of-this-matter&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Why does any of this matter?&lt;/h2&gt;
+&lt;p&gt;How this figure is reported probably doesn’t matter ultimately; the age of a playing list likely isn’t all that important when it comes to the ultimate glory of premiership success, as can be seen in the different age distributions of recent premiership teams in this great little analysis at &lt;a href=&#34;https://thearcfooty.com/2016/04/24/how-old-is-the-typical-premiership-team/&#34;&gt;TheArc&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;That aside, it would be nice to see this figure reported a little more accurately.&lt;/p&gt;
+&lt;p&gt;Rant. Over.&lt;/p&gt;
+&lt;p&gt;The data for this post and the code used to scrape it can be found &lt;a href=&#34;https://github.com/JaseZiv/Dont-Blame-the-Data-Data-Files/tree/master/analysing_afl_team_age&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+</description>
     </item>
     
     <item>
       <title>Effectively Simplifying AFL Tipping</title>
       <link>/blog/simplifying-afl-tipping/</link>
       <pubDate>Fri, 30 Aug 2019 00:00:00 +0000</pubDate>
-      
       <guid>/blog/simplifying-afl-tipping/</guid>
-      <description>I feel like I always overthink footy tipping. During each round, I make myself believe I have some sort of secret sauce and conjure up visions in my head of nailing a solid roughy… and then fall flat half way through the season and give up…
-So then I thought, surely there’s an easier way. Only problem was, I thought this up last weekend (during the last season of the round)…</description>
+      <description>
+
+
+&lt;p&gt;I feel like I always overthink footy tipping. During each round, I make myself believe I have some sort of secret sauce and conjure up visions in my head of nailing a solid roughy… and then fall flat half way through the season and give up…&lt;/p&gt;
+&lt;p&gt;So then I thought, surely there’s an easier way. Only problem was, I thought this up last weekend (during the last season of the round)…&lt;/p&gt;
+&lt;p&gt;I though to myself, I wonder how many tips I would’ve gotten this year had I just picked the home team every game…&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/afl_tipping_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;1056&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Ok, so 113 winners wouldn’t have been good enough…&lt;/p&gt;
+&lt;hr /&gt;
+&lt;div id=&#34;using-the-market&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Using the Market&lt;/h1&gt;
+&lt;p&gt;Then I thought, what if I just picked the favourites in the betting market for each game, but with a twist? If the line was less than half a goal (3 points - virtually a coin flip), then I’d just go safe and pick the home team.&lt;/p&gt;
+&lt;p&gt;The betting odds data comes from the Australian Sports Betting website which uses Bet365 odds.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/afl_tipping_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;1056&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Wow!!&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Ok, so I would’ve been able to (theoretically) get my tips up to 135 for the 2019 season - a really handy result, and beating some popular machine learning models that are out there! This 135 correct tips also doesn’t count draws being awarded as a point, as some tipping competitions do (although there were no draws in 2019).&lt;/p&gt;
+&lt;p&gt;Other than 2017, this model - I’ll refer to it as &lt;em&gt;“Simple Model”&lt;/em&gt; - would’ve been fairly competitive in each season since 2014.&lt;/p&gt;
+&lt;p&gt;Maybe next year, I’ll know what I’ll employ… my &lt;em&gt;Simple Model&lt;/em&gt;!&lt;/p&gt;
+&lt;hr /&gt;
+&lt;div id=&#34;but-can-we-make-some-money&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;But can we make some money&lt;/h2&gt;
+&lt;p&gt;Ok, so now that I know that the &lt;em&gt;Simple Model&lt;/em&gt;’* performs fairly competitively in tipping comps, I want to know if I can make some money using this method?&lt;/p&gt;
+&lt;p&gt;To answer this question, I’m placing a theoretic $10 on each game and seeing how many bags of cash are left at the end.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/afl_tipping_files/figure-html/unnamed-chunk-4-1.png&#34; width=&#34;1056&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Hmmm… so using this method, I would’ve lost almost $40, even though it was good enough to win some tipping comps. Only in 2018 would this method have worked, with a net profit of $26.82… The 2017 season would’ve been the most brutal, losing just over $245 for the season.&lt;/p&gt;
+&lt;p&gt;To find out where everything went so wrong, we can use an animated line plot that tracks the overall profit throughout each round of the season. To get a rundown on how the animated plot was generated, see this post &lt;a href=&#34;https://www.dontblamethedata.com/blog/all-roads-lead-to-gganimate/&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/afl_tipping_files/figure-html/animation_plot-1.gif&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+&lt;p&gt;During the 2019 season, we can see that things would’ve started off really bleak - after round five, I would’ve been down over $120! Things started to pick up from there though, even being in the black at round 14. At no point during the 2015 and 2017 seasons would this model have been profitable.&lt;/p&gt;
+&lt;p&gt;While keeping me competitive in footy tipping comps, this model certainly isn’t going to allow me to retire anytime soon.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
     </item>
     
     <item>
       <title>A tribute to Jarryd Roughead with some obscure data</title>
       <link>/blog/a-tribute-to-jarryd-roughead-using-data-analysis/</link>
       <pubDate>Wed, 14 Aug 2019 00:00:00 +0000</pubDate>
-      
       <guid>/blog/a-tribute-to-jarryd-roughead-using-data-analysis/</guid>
-      <description>Jarryd Roughead - four-time Hawthorn premiership player and all round great man - formally announced his retirement this week, with his last game coming over the weekend against the Gold Coast Suns.
-Not only was he a pivotal four-time premiership star for the Hawthorn Hawks, he survived a hell of a lot of adversity with some very serious cancer scares and handled himself with nothing but grace and dignity.</description>
+      <description>
+&lt;script src=&#34;/rmarkdown-libs/kePrint/kePrint.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;p&gt;Jarryd Roughead - four-time Hawthorn premiership player and all round great man - formally announced his retirement this week, with his last game coming over the weekend against the Gold Coast Suns.&lt;/p&gt;
+&lt;p&gt;Not only was he a pivotal four-time premiership star for the Hawthorn Hawks, he survived a hell of a lot of adversity with some very serious cancer scares and handled himself with nothing but grace and dignity. He came back to captain his club in 2017 and while the on-field element was tough to come back to, he was lumped with the burden of captaining the club after they parted ways with stalwarts Sam Mitchell and Jordan Lewis after the 2016 season.&lt;/p&gt;
+&lt;p&gt;He filled key posts down back during the early part of his career, then moved up forward where he played a very, very good second option, then also carved out a valuable ruck/midfielder role for the club a bit later on. He could play everywhere.&lt;/p&gt;
+&lt;p&gt;I loved him as a footballer, but the man he seems to be makes me envious I don’t know him personally. I wanted to take an in depth (but different) look at the career he had with the mighty Hawks using some frequently used data visualisations.&lt;/p&gt;
+&lt;p&gt;A lot of the articles written about this great man will focus on the more well known numbers of his career… the 282 (to be 283 after his last game), the 572 goals, the four flags, Coleman Medal in 2013 and All Australian selections in 2013-14. Rightfully so too.&lt;/p&gt;
+&lt;p&gt;This post however is going to look at some of the more obscure aspects of Roughy’s playing time so we have a full view of his time in the game.&lt;/p&gt;
+&lt;p&gt;The data for this post originally comes from AFL Tables, but through Jimmy Day’s amazing &lt;a href=&#34;https://github.com/jimmyday12/fitzRoy&#34;&gt;fitzRoy&lt;/a&gt; R package.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(fitzRoy)
+library(stringr)
+library(tidyverse)
+library(lubridate)
+
+theme_set(theme_minimal())
+
+stats_players &amp;lt;- get_afltables_stats(start_date = &amp;quot;2000-01-01&amp;quot;, end_date = &amp;quot;2019-10-01&amp;quot;)
+
+rough &amp;lt;- stats_players %&amp;gt;% 
+  filter(str_detect(First.name, &amp;quot;Jarryd&amp;quot;),
+         str_detect(Surname, &amp;quot;Roughead&amp;quot;))
+
+
+rough &amp;lt;- rough %&amp;gt;% 
+  mutate(final = ifelse(str_detect(Round, &amp;quot;F&amp;quot;), &amp;quot;Y&amp;quot;, &amp;quot;N&amp;quot;),
+         Opponent = ifelse(Home.team == Playing.for, Away.team, Home.team))
+
+
+rough &amp;lt;- rough %&amp;gt;% 
+  mutate(Date = ymd(Date),
+         Weekday = wday(Date, label = T),
+         StartingHour = substr(Local.start.time, 1,2 ),
+         TimePeriod = ifelse(as.numeric(StartingHour) &amp;lt; 17, &amp;quot;Afternoon&amp;quot;, &amp;quot;Evening&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;when-were-roughys-games-played&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;When were Roughy’s games played?&lt;/h1&gt;
+&lt;p&gt;Of Roughy’s 282 games, not one of them was played on a Wednesday - understandable given the Hawks don’t have any ANZAC Day games and no other holiday falls on a Wednesday. Every other day of the week he played. Saturdays are where he played most of his games, with 47% of his games played then.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/tribute_to_roughy_files/figure-html/weekdays-1.png&#34; width=&#34;1056&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;The most frequent starting time of games Roughy played was in the 20th hour of the day (start time between 7pm and 8pm), followed by games starting between 2pm to 3pm.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/tribute_to_roughy_files/figure-html/startTime-1.png&#34; width=&#34;1056&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;where-were-roughs-games-played&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Where were Rough’s games played?&lt;/h1&gt;
+&lt;p&gt;No surprises to see that Roughy played most of his games at either the ’G or in Tasmania.&lt;/p&gt;
+&lt;p&gt;Interestingly, the only interstate finals Rough ever played in were at Subiaco (in Western Australia), where he played three (two of those came in the same finals series - the 2015 season, where the Hawks won their third premiership in a row).&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/tribute_to_roughy_files/figure-html/venues-1.png&#34; width=&#34;1056&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;what-conditions-did-the-great-man-play-in&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;What conditions did the great man play in?&lt;/h1&gt;
+&lt;p&gt;For this section, I will use the weather data from my series on AFL crowds and the data and code for collecting the data can be found &lt;a href=&#34;https://github.com/JaseZiv/AFL-Crowd-Analytics&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# read in data
+rain_data &amp;lt;- read.csv(&amp;quot;https://raw.githubusercontent.com/JaseZiv/AFL-Crowd-Analytics/master/data/cleaned_data/afl_preprocessed.csv&amp;quot;, stringsAsFactors = F)
+
+# select just the required variables, first creating a key to join back to the &amp;#39;rough&amp;#39; df
+rain_data &amp;lt;- rain_data %&amp;gt;% 
+  select(team1, team2, date, rainfall_clean, min_temp, max_temp) %&amp;gt;% 
+  mutate(gameId = paste(team1, team2, date, sep = &amp;quot;-&amp;quot;)) %&amp;gt;% 
+  select(-team1, -team2, -date)
+
+# join data back
+rough &amp;lt;- rough %&amp;gt;% 
+  mutate(gameId = paste(Home.team, Away.team, Date, sep = &amp;quot;-&amp;quot;)) %&amp;gt;% 
+  left_join(rain_data, by = &amp;quot;gameId&amp;quot;) %&amp;gt;% 
+  select(-gameId)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The wettest game Roughy played in was a 2012 loss against Richmond at the MCG, where 28ml fell in 24 hours. In a dirty day for the Hawks, Roughy had an ok game, kicking 2 goals 1 behind and took 6 marks.&lt;/p&gt;
+&lt;p&gt;The coldest game he played in (the snow game last week in Canberra would’ve won had he played) was in Tasmania - no surprises - against the Lions in that horrible premiership hangover year in 2009. The maximum temperature was a crisp 10.8 degrees and there was even 5.2ml of rain. Roughy had a game to forget, with 7 kicks and only 1 goal. A stinker for the whole club.&lt;/p&gt;
+&lt;p&gt;On the flip side, the round three matchup in Rough’s first season against Essendon was the hottest game he played in… again the Hawks lost this one in a tight two-point loss. Rough managed to kick two goals.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;what-about-chas-brownlow&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;What about Chas Brownlow?&lt;/h1&gt;
+&lt;p&gt;Not known for his prolific Brownlow vote getting, the big Rough received 59 votes in total, at an average of 0.225 votes per game.&lt;/p&gt;
+&lt;p&gt;Roughy’s All Australian years in 2013 and 2014 saw his average votes per games peak; he received 0.59 and 0.55 votes per game respectively. Five of his 14 seasons saw zero votes awarded.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/tribute_to_roughy_files/figure-html/votes-1.png&#34; width=&#34;1056&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;who-umpired-the-big-man&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Who umpired the big man?&lt;/h1&gt;
+&lt;p&gt;Roughy has seen 99 umpires during his time in the game.&lt;/p&gt;
+&lt;p&gt;Brett Rosebury officiated 41 of Roughy’s games, with Matt Nicholls and Matt Stevic following closely behind with 37 times each. Twelve umpires officiated Roughy’s games on at least 20 occasions&lt;/p&gt;
+&lt;p&gt;Of the 41 games Rosebury officiated, 13 were in finals - by far the most finals games with Roughy than any umpire. Of the umpires with at least 20 games, only Stephen McBurney hasn’t umpired Rough in a final, while Troy Pannell has umpired him once.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/tribute_to_roughy_files/figure-html/umpires-1.png&#34; width=&#34;1056&#34; /&gt;&lt;/p&gt;
+&lt;div id=&#34;were-some-kinder-to-rough&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Were some kinder to Rough?&lt;/h2&gt;
+&lt;p&gt;We can answer this question looking at Brownlow votes and Free Kick counts… The analysis will limit itself to those 12 umpires who have officiated his games at least 20 times.&lt;/p&gt;
+&lt;p&gt;I always knew I disliked Razor Ray… now I know why. He and Michael Vozzo were the only umpires on this list to fail to award a Brownlow vote to the big man. Shaun Ryan awarded them at a rate of just over half a vote for the 23 games he officiated Roughy’s games.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/tribute_to_roughy_files/figure-html/umpVotes-1.png&#34; width=&#34;1056&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Not only did Shaun Ryan award Brownlow votes at a higher rate than any of his brethren on this list, he also didn’t discriminate between how many frees were awarded for and against the big man, though he did award 1.05 frees against, the fifth highest amount on average.&lt;/p&gt;
+&lt;p&gt;Michael Vozzo had the largest discrepancy between the number of frees, awarding less than 0.5 frees for Roughy (0.478), while penalising the big Rough at a rate of 1.09 per game.&lt;/p&gt;
+&lt;p&gt;At 1.1 frees against per game, the pest Razor and Shane McInerney penalised Rough the most, while Simon Meredith (0.75) penalised him the least (0.84).&lt;/p&gt;
+&lt;p&gt;Troy Pannell awarded Roughy the most frees on average (1.29).&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/tribute_to_roughy_files/figure-html/frees-1.png&#34; width=&#34;1056&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;finally-bouncing&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Finally, Bouncing&lt;/h1&gt;
+&lt;p&gt;Not only was Roughy a superstar footballer, he was a gun junior basketballer.&lt;/p&gt;
+&lt;p&gt;Bouncing is an important piece of the basketball puzzle… I wonder if Rough bounced the ball much?&lt;/p&gt;
+&lt;p&gt;The average number of bounces per player per game is 0.529. Throughout Roughy’s career, he bounced the ball at a rate of 0.12 per game… a fair bit off the average…&lt;/p&gt;
+&lt;p&gt;His rookie season was his best bouncing season at a rate of 0.562 bounces per game.. Clarko must have ironed that out of his game and must have been thrilled in 2009 (other than the premiership hangover) when Roughy didn’t bounce the ball once.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/tribute_to_roughy_files/figure-html/bouncing-1.png&#34; width=&#34;1056&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Well that’s all for this tribute to the great Jarryd Roughead.&lt;/p&gt;
+&lt;p&gt;Looking forward to watching his last game, and then seeing him around the media hopefully.&lt;/p&gt;
+&lt;p&gt;We love ya Rough!&lt;/p&gt;
+&lt;p&gt;As always, feel free to get in touch if there’s any feedback &lt;a href=&#34;https://www.linkedin.com/in/jason-zivkovic-4a0a1926/&#34;&gt;here&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
     </item>
     
     <item>
       <title>Building a Linear Regression Model in R to Predict AFL Crowds</title>
       <link>/blog/building-a-linear-regression-model-in-r-to-predict-afl-crowds/</link>
       <pubDate>Sat, 27 Jul 2019 00:00:00 +0000</pubDate>
-      
       <guid>/blog/building-a-linear-regression-model-in-r-to-predict-afl-crowds/</guid>
-      <description>Introduction There is a lot of talk about crowd behaviour and crowd issues with the modern day AFL. I personally feel the crowd issues are a case of business-as-usual; I’ve been going to AFL games on-and-off for close to three decades and the crowd behaviour is no different today as it was 20 years ago… just now everyone with a phone and Twitter account is a journo.
-Anyway, that’s my two cents worth.</description>
+      <description>
+&lt;script src=&#34;/rmarkdown-libs/kePrint/kePrint.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;div id=&#34;introduction&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Introduction&lt;/h1&gt;
+&lt;p&gt;There is a lot of talk about crowd behaviour and crowd issues with the modern day AFL. I personally feel the crowd issues are a case of &lt;em&gt;business-as-usual&lt;/em&gt;; I’ve been going to AFL games on-and-off for close to three decades and the crowd behaviour is no different today as it was 20 years ago… just now everyone with a phone and Twitter account is a journo.&lt;/p&gt;
+&lt;p&gt;Anyway, that’s my two cents worth. This analysis is not on crowd behaviour. This post is primarily concerned with building a model to predict AFL crowds during the season proper. While data was collected since the beginning of the 2000 season, the model will be bult on training data from the beginning of the 2013 season to the end of the 2018 season (Finals series excluded), with the trained model then used to predict the attendance figures of AFL games during the 2019 season up until round 18 which concluded on Sunday 21st July, 2019. The linear model will be built using R (version 3.5.3) in &lt;a href=&#34;http://www.rstudio.com/&#34;&gt;RStudio&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;This post is a follow up to my introductory analysis done on bandwagon fans. It can be found &lt;a href=&#34;https://medium.com/@jaseziv83/using-data-to-determine-which-afl-fans-jump-on-the-bandwagon-8adbcc4160b0?sk=b4c0788b1f54aca1cfd50e2766eadd5c&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The article was inspired by the amazing work Tony Corke does, specifically his post on &lt;a href=&#34;http://www.matterofstats.com/mafl-stats-journal/2016/3/16/the-predic&#34;&gt;The Predictability of AFL Crowds&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;All code for this project can be found on GitHub &lt;a href=&#34;https://github.com/JaseZiv/AFL-Crowd-Analytics&#34;&gt;here&lt;/a&gt;&lt;/p&gt;
+&lt;div id=&#34;the-data&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;The Data&lt;/h2&gt;
+&lt;p&gt;Three sources of data were used in the project:&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;&lt;a href=&#34;https://afltables.com&#34;&gt;AFL Tables&lt;/a&gt; was used as the primary source of information. This is no doubt the go to for anyone looking at doing AFL analysis&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.aussportsbetting.com&#34;&gt;Australian Sports Betting&lt;/a&gt; was used to get betting data for matches from the 2013 season&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.bom.gov.au/climate/data/&#34;&gt;Australian Bureau of Meteorology&lt;/a&gt; was used for climat data (rain and temperature). Part of the scraper for BOM data was taken from James Day’s &lt;a href=&#34;https://github.com/jimmyday12/fitzRoy&#34;&gt;fitzRoy&lt;/a&gt; R package. Big thanks to him. The rain and temperature data had some missing observations. Missing rain data was filled by averaging out the next taken reading over the missed data points before it. Missing temperature was filled taking the average temperature for that month.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;feature-engineering&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Feature Engineering&lt;/h1&gt;
+&lt;p&gt;The data contained at AFL Tables is a rich source of information, but some steps were needed to glean some additional information from the data.&lt;/p&gt;
+&lt;p&gt;The original three data sources combined contained approximately 35 variables for potential use. Feature engineering (the process of creating additional explanatory variables to use in a predictive model) was then conducted and resulted in ~95 features in total to see if they would ultimately be added to the final model to be used.&lt;/p&gt;
+&lt;div id=&#34;features-created&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Features Created&lt;/h2&gt;
+&lt;p&gt;Based on some feedback from the Banwagon article and other things that I wanted to explore, some new features were created to see if they had any predictive power.&lt;/p&gt;
+&lt;p&gt;Take the game start time as an example - having the time is great, but a regression model may find it better to categorise the time to a period of the day to reduce some of the noise. So, with that in mind, a feature (&lt;code&gt;time_period&lt;/code&gt;) was created - if the game started by 5pm, I have classified it as an afternoon game. Games started between 5pm-7pm were classified as evening games, while games later than this were night games.&lt;/p&gt;
+&lt;p&gt;Additionally, the day of the week and the &lt;code&gt;time_period&lt;/code&gt; were joined into one variable &lt;code&gt;game_time&lt;/code&gt; to use in the model. For example, if it was a Saturday game starting at 5:30pm, it was classified as “Sat-Evening”.&lt;/p&gt;
+&lt;p&gt;Venues that were used infrequently, or more accurately, weren’t the teams primary “home” stadium were labelled as “Other”. There were 94 games played at these venues, and this includes at stadiums like &lt;em&gt;Eureka Stadium&lt;/em&gt;, &lt;em&gt;Cazaly’s Stadium&lt;/em&gt;, &lt;em&gt;Traeger Park&lt;/em&gt;, and international venues &lt;em&gt;Wellington&lt;/em&gt; in NZ and &lt;em&gt;Jiangwan Stadium&lt;/em&gt; in China.&lt;/p&gt;
+&lt;p&gt;Another feature was created to determine rivalry games - the thinking being that when two fierce rivals face off against each other, the crowds will come. To be a rivalry game, a few different options existed. The first contains the four oldest traditional rivals, all from Melbourne - Collingwood, Richmond, Essendon and Carlton (hold your Carlton opinions, I know they’ve been horrible but their fans still turn up to these rivalry games). The Derby in SA (&lt;em&gt;The Showdown&lt;/em&gt; between Adelaide and Port Adelaide) and in WA (&lt;em&gt;Western Derby&lt;/em&gt; between West Coast and Fremantle) are also classed as rivalry games.&lt;/p&gt;
+&lt;p&gt;After hearing a key AFL staffer talk a few years back talk about betting markets being a strong predictor of attendances, I collected betting data to test this assumption. A number of features were created in addition to the raw odds and line data scraped. These included calculating the differences between the odds of the home and away team and also calculating the change in betting throughout the week.&lt;/p&gt;
+&lt;p&gt;Features were also created of the average experience of both the home and away teams, as were milestone games (where players of either team are playing in their 100, 200, 250 or 300th games).&lt;/p&gt;
+&lt;p&gt;Each team’s last game result was calculated, as was the number of wins each team had in their previous three games. Additionally, whether the team played finals the previous season was identified.&lt;/p&gt;
+&lt;p&gt;A ladder at each round was created and ladder position, percentage and score for and against was explored as possible features for the end model.&lt;/p&gt;
+&lt;p&gt;A feature was also created to identify games played by teams from the same state or not.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;exploratory-data-analysis&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Exploratory Data Analysis&lt;/h1&gt;
+&lt;p&gt;Before we start building the model, we need to understand both the response and predictor variables. The most effective way to do this is through visualisations, and what package is better to use than &lt;code&gt;ggplot2&lt;/code&gt;!&lt;/p&gt;
+&lt;p&gt;This section will contain some Exploratory Data Analysis (more commonly known as ‘EDA’), which is a natural first step in any data analysis project. It is an extrememly important step and allows the analyst to inspect the data - what shape does the target and predictor variables have, are there any correlations between the variables that may be included in a predictive model, are there any outliers in the data, or any missing data… you get the point, EDA is very important!&lt;/p&gt;
+&lt;p&gt;Well there is no missing data in the dataset being used… that has all been cleaned in the pre-processing stage that can be found in &lt;a href=&#34;https://github.com/JaseZiv/AFL-Crowd-Analytics/blob/master/src/preprocessing.R&#34;&gt;this&lt;/a&gt; R code.&lt;/p&gt;
+&lt;div id=&#34;the-response-variable---attendance&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;The Response Variable - &lt;code&gt;Attendance&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;Let’s look at our response variable - or the thing we’re trying to predict - &lt;code&gt;attendance&lt;/code&gt; at AFL premiership season games.&lt;/p&gt;
+&lt;p&gt;We can see that the attendance figures are somewhat positively skewed. We’ll see if the few higher attendance games cause any issues later on. This variable may need to undergo some form of transformation, but more on that later.&lt;/p&gt;
+&lt;p&gt;The median attendance to AFL games during the regular season is just under 32,500 for the 1,340 games played since 2013.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/predicting_crowds_files/figure-html/attendance-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;some-key-predictors&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Some Key Predictors&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;data_for_model &amp;lt;- afl_premiership_season %&amp;gt;%
+  select(season, attendance, team1, team2, round, venue, game_time, home_median_experience, home_mean_experience, away_median_experience, away_mean_experience, home_300, home_milestone, away_300, away_milestone, count_milestones, rainfall_clean, min_temp, max_temp, last_five_days_rain, temperature_diff, HomeOddsOpen, AwayOddsOpen, HomeLineOpen, AwayLineOpen, odds_diff, rivalry_game, HomeTeamFav, team1_last_result, team2_last_result, split_round, home_team_finals_last_season, away_team_finals_last_season, season_stage, temperature, IsHomeMilestone, IsAwayMilestone, count_milestones, last_results, home_team_state, away_team_state, is_same_state, temperature_diff, home_odds_change, away_odds_change, home_line_change, away_line_change, second_home_game, home_season_points, home_score_for, home_percentage, home_ladder_pos, away_wins_last_three, away_season_points, away_score_for, away_percentage, away_ladder_pos, teams_in_eight, finals_last_season, home_wins_last_three, away_wins_last_three) %&amp;gt;% na.omit()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;As was evident in the first post of this series, there was noticeable variation in attendances between the teams, and also whether teams won or lost their previous game. Finally, the first post showed that the home team’s favouritism status also seemed to have a relationship with attendance.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Categorical Features:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Some of the key categorical variables created that we would expect to have an impact on crowd figures are displayed below.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/predicting_crowds_files/figure-html/multi_plots-1.png&#34; width=&#34;1344&#34; /&gt;&lt;img src=&#34;/post/predicting_crowds_files/figure-html/multi_plots-2.png&#34; width=&#34;1344&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Some observations:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;There appears to be a relationship between the venue the game is played at and the attendance. Stadiums classified as &lt;code&gt;Other&lt;/code&gt; include secondary home grounds and some of the ovals not used in 2019. There were 238 of the 1,340 games at these stadiums&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Whether either the home or away team played finals last year seems to have a weak relationship with attendance. It may be useful to include in our model&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;When the game is played and attendance appear to be related. &lt;code&gt;Weekday Afternoon&lt;/code&gt; and &lt;code&gt;Friday Afternoon&lt;/code&gt; are high because of ANZAC day clashes between Essendon and Collingwood no doubt. Friday and Sunday night games seem to draw better crowds. Could be a useful predictor&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;There appears to be some variance in attendance figures between the different rounds during a season. Could be a useful predictor&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Games classed as “Rivalry Games” clearly draw larger attendances than non-rivalry games. Could be a useful predictor&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Whether the round was a split round (where some teams have a bye, or week off) or not doesn’t appear to be related to attendances. Might not be a useful predictor&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;There appears to be slightly higher crowds when the home team has a player playing a milestone (either a 100, 200, 250 or 300th game), but the relationship certainly doesn’t appear strong. Might not be a useful predictor&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;When the two competing teams are from the same state, crowds appear to be higher. Could be a useful predictor&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;To be expected, games where the home team is playing the game at their second home ground (Hawthorn and North in Tasmania, Melbourne, Western Bulldogs in Darwin, etc) draw lower crowds. This is probably more to do with lower statium capacities, but may still be a useful feature&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Numerical Features:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;To explore the relationship between the numerical features and &lt;code&gt;attendance&lt;/code&gt;, Pearson’s correlation will be employed.&lt;/p&gt;
+&lt;p&gt;Using dplyr to select just the numerical features and then calculate the correlations on the converted matrix yields the below correlations with &lt;code&gt;attendance&lt;/code&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;numeric_features &amp;lt;- data_for_model %&amp;gt;% select_if(is.numeric)
+
+numeric_features %&amp;gt;% 
+  as.matrix() %&amp;gt;% 
+  cor() %&amp;gt;% .[,&amp;quot;attendance&amp;quot;] %&amp;gt;% sort(decreasing = T)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##             attendance   home_mean_experience        home_percentage 
+##             1.00000000             0.26242775             0.23603629 
+## home_median_experience   home_wins_last_three   away_mean_experience 
+##             0.23224717             0.17740024             0.16024146 
+## away_median_experience     home_season_points        away_percentage 
+##             0.12698259             0.10829187             0.10549367 
+##   away_wins_last_three                 season           AwayLineOpen 
+##             0.08874187             0.06906937             0.06717077 
+##       temperature_diff       count_milestones       home_line_change 
+##             0.04693253             0.04502199             0.03176978 
+##         away_milestone               home_300         home_milestone 
+##             0.02947022             0.02805048             0.02612771 
+##     away_season_points               away_300       home_odds_change 
+##             0.01964212             0.01305329             0.01234577 
+##       away_odds_change         home_score_for       away_line_change 
+##            -0.01732249            -0.02851372            -0.03176978 
+##           AwayOddsOpen         rainfall_clean         away_score_for 
+##            -0.05413613            -0.06190488            -0.06313146 
+##           HomeLineOpen    last_five_days_rain                  round 
+##            -0.06717077            -0.08122135            -0.08681637 
+##               max_temp               min_temp        away_ladder_pos 
+##            -0.09200801            -0.13811543            -0.15435393 
+##           HomeOddsOpen              odds_diff            temperature 
+##            -0.15999933            -0.16722767            -0.20128979 
+##        home_ladder_pos 
+##            -0.27541679&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;While all correlations appear to be fairly weak, the following observations can be made:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;The average experience (&lt;code&gt;home_mean_experience&lt;/code&gt;) for the home team, calculated as the average games played by each player at each game they play in, yields the highest Pearson correlation with attendance of 0.264&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;The Home team’s percentage (scores for / scores against) also have a correlation above 0.2 at 0.236&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;The number of wins the home team had in their last three games had a Pearson correlation of 0.175, while the correlation of away team’s average playing experience was 0.159&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Strangely, the home team’s ladder position had a negative correlation, with a Pearson correlation of -0.273. The away team’s ladder position also had a negative correlation of -0.150&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Betting data shows some relationships; as the &lt;code&gt;HomeOddsOpen&lt;/code&gt; increase, the &lt;code&gt;attendance&lt;/code&gt; tends to decrease, which is somewhat expected. The &lt;code&gt;odds_diff&lt;/code&gt; variable (the difference between the home teams opening odds and the away teams) also has a weak negative relationship (correlation -0.168)&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Weather data shows some relationships. As expected, the maximum temperation and rainfall, both on the day and the accumulation of last five day’s rainfall has a negative relationship with attendance (-0.091, -0.081 and -0.65 respectively)&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;building-the-model&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Building the model&lt;/h1&gt;
+&lt;p&gt;In any project that aims to build a machine learning model to predict the outcome of some response variable, it’s important to hold out a subset of your data when training the model. These two sets are generally referred to as training and test sets. The training set is what you pass to the model to build, and then the resulting predictions are made on the data the model hasn’t “seen”, to best mimic real life examples.&lt;/p&gt;
+&lt;p&gt;In this case, the model will be trained on data from the 2013 to 2018 seasons inclusive (&lt;code&gt;afl_pre_2019&lt;/code&gt;), with the predictions then made on 2019 data that the model hasn’t seen, &lt;code&gt;afl_2019&lt;/code&gt;. This is done to ensure the model doesn’t “overfit” the data. Models that overfit the data generally perform worse on unseen accurrences.&lt;/p&gt;
+&lt;div id=&#34;things-that-were-attempted-but-not-included-in-the-model&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Things that were attempted but not included in the model&lt;/h2&gt;
+&lt;p&gt;The following features were thought to have some validity but when run through the model were found to have no predictive power:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The number of wins the teams had in their last three games didn’t contribute&lt;/li&gt;
+&lt;li&gt;The rainfall on the day had no predictive power (however the total rainfall for the five days leading up to game day did)&lt;/li&gt;
+&lt;li&gt;Milestone games made the model perform worse&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;whats-missing-would-be-good-to-have&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;What’s missing / would be good to have&lt;/h2&gt;
+&lt;p&gt;There is some information that wasn’t available publicly (or I didn’t try to get) which may prove handy in any future modelling work. These include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Ticket pricing for games during each season to explore the effect ticket pricing has on attendance&lt;/li&gt;
+&lt;li&gt;Whether tickets were given away to fans for games and whether that had an impact on attendances&lt;/li&gt;
+&lt;li&gt;Any social media posts / newspaper text analysis regarding teams / topical matters involving players playing in games, etc&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;afl_pre_2019 &amp;lt;- data_for_model %&amp;gt;% filter(season &amp;lt; 2019, season &amp;gt;= 2013)
+
+afl_2019 &amp;lt;- data_for_model %&amp;gt;% filter(season == 2019)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;baseline-model&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Baseline Model&lt;/h2&gt;
+&lt;p&gt;Before building a model to predict games, we want a baseline model to be able to compare to. The temptation would be there to use the average crowd for each game as a baseline, but the different venue capacities make this less than relevant. As a result, to calculate the baseline model, I will use the median attendance for each vanue (taking the average of the venues labelled “Other” as a whole), for each home-away team combo. For example, Collingwood(H) vs Essendon(A) is different to Essendon(H) vs Collingwood(A). The median is used because of the slightly skewed nature of AFL crowds.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;median_attendances &amp;lt;- afl_pre_2019 %&amp;gt;% 
+  group_by(team1, team2, venue) %&amp;gt;% 
+  summarise(baseline_attendance = median(attendance)) %&amp;gt;% ungroup()
+
+baseline &amp;lt;- afl_2019 %&amp;gt;% select(team1, team2, venue, attendance) %&amp;gt;% 
+  left_join(median_attendances, by = c(&amp;quot;team1&amp;quot;, &amp;quot;team2&amp;quot;, &amp;quot;venue&amp;quot;)) %&amp;gt;% 
+  filter(!is.na(baseline_attendance))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Using the average attendances per ground as our baseline, an RMSE of 6,816 and a mean absolute error of 4,958 is achieved. Any model that is built from here needs to be better than this.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;transforming-response-variable&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Transforming Response Variable&lt;/h2&gt;
+&lt;p&gt;Because of the somewhat skewed nature of our response variable, it might be wise to undergo some sort of transformation to normalise it more. A log transformation is routinely used to “unskew” data. Below is the result of log transforming the attendance variable.&lt;/p&gt;
+&lt;p&gt;It looks less skewed than the non-transformed variable, however (&lt;em&gt;spoiler alert&lt;/em&gt;), the models performed worse with attendance being log transformed.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/predicting_crowds_files/figure-html/attendance_transformed-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;feature-selection-using-stepwise-method&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Feature Selection Using Stepwise Method&lt;/h1&gt;
+&lt;p&gt;A popular method to select which features go into a model is using stepwise regression. This can either be performed:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;forward&lt;/em&gt;, where variables are added one by one, with only those that improve the model’s explainability (R-squared) retained,&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;backward&lt;/em&gt;, which starts with all variables, then removes them if they don’t add value to the model’s explainability, or&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;both&lt;/em&gt;, which is an ensemble of both &lt;em&gt;forward&lt;/em&gt; and &lt;em&gt;backward&lt;/em&gt; feature selection.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Using stepwise in &lt;em&gt;both&lt;/em&gt; directions maximised the model’s Adjusted R-squared measure at 0.87.&lt;/p&gt;
+&lt;p&gt;When performing linear regression, we want to ensure there is no collinearity between the variables. One way to asses this is to calculate the Variable Inflation Factor (VIF). This is made easy with the &lt;code&gt;vif&lt;/code&gt; function in the &lt;code&gt;car&lt;/code&gt; package. A VIF above 5 is considered to be too high.&lt;/p&gt;
+&lt;p&gt;While the round the game is played is just over 5 (5.7), we will keep this in, however &lt;code&gt;odds_diff&lt;/code&gt; and &lt;code&gt;home_score_for&lt;/code&gt; will be removed from the full model selected using stepwise and re-run.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;full_model &amp;lt;- lm(attendance ~ ., data = afl_pre_2019)
+
+
+# Set seed for reproducibility
+set.seed(123)
+
+step.model &amp;lt;- MASS::stepAIC(full_model, direction = &amp;quot;both&amp;quot;, 
+                      trace = FALSE)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;car::vif(step.model)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##                                      GVIF Df GVIF^(1/(2*Df))
+## team1                        3.760325e+07 17        1.670324
+## team2                        8.911787e+00 17        1.066449
+## round                        3.249472e+01  1        5.700414
+## venue                        1.490291e+07  9        2.503312
+## game_time                    3.502667e+00 11        1.058633
+## home_milestone               1.077704e+00  1        1.038125
+## rainfall_clean               1.600109e+00  1        1.264954
+## min_temp                     2.442144e+00  1        1.562736
+## max_temp                     2.943632e+00  1        1.715702
+## last_five_days_rain          1.624607e+00  1        1.274601
+## HomeOddsOpen                 7.850335e+01  1        8.860212
+## AwayOddsOpen                 1.469414e+02  1       12.121938
+## HomeLineOpen                 1.017707e+01  1        3.190152
+## odds_diff                    1.645084e+02  1       12.826085
+## rivalry_game                 1.682047e+00  1        1.296937
+## split_round                  1.097575e+00  1        1.047652
+## last_results                 1.901405e+00  3        1.113044
+## is_same_state                2.561134e+00  1        1.600354
+## home_season_points           1.171072e+01  1        3.422093
+## home_score_for               4.401100e+01  1        6.634079
+## away_season_points           1.013471e+01  1        3.183506
+## away_ladder_pos              8.299211e+00  1        2.880835
+## teams_in_eight               1.384744e+01  3        1.549631
+## home_team_finals_last_season 1.855485e+00  1        1.362162&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# the backward selection model include a variable with hi collinearity (VIF = 12). Will recreate model without odds_diff
+full_model_clean &amp;lt;- lm(attendance ~ team1 + team2 + round + venue + game_time + 
+    home_milestone + rainfall_clean + min_temp + max_temp + last_five_days_rain + 
+    HomeOddsOpen + AwayOddsOpen + HomeLineOpen + 
+    rivalry_game + split_round + last_results + is_same_state + 
+    home_season_points + away_season_points + 
+    away_ladder_pos + teams_in_eight + home_team_finals_last_season, 
+    data = afl_pre_2019)
+
+# summary(full_model_clean)
+
+car::vif(full_model_clean)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##                                      GVIF Df GVIF^(1/(2*Df))
+## team1                        3.221921e+07 17        1.662750
+## team2                        8.429548e+00 17        1.064706
+## round                        1.151616e+01  1        3.393547
+## venue                        1.470969e+07  9        2.501498
+## game_time                    3.423992e+00 11        1.057540
+## home_milestone               1.074063e+00  1        1.036370
+## rainfall_clean               1.588738e+00  1        1.260451
+## min_temp                     2.440252e+00  1        1.562131
+## max_temp                     2.939080e+00  1        1.714374
+## last_five_days_rain          1.623319e+00  1        1.274095
+## HomeOddsOpen                 2.900135e+00  1        1.702978
+## AwayOddsOpen                 3.400223e+00  1        1.843969
+## HomeLineOpen                 9.825720e+00  1        3.134600
+## rivalry_game                 1.680106e+00  1        1.296189
+## split_round                  1.096713e+00  1        1.047241
+## last_results                 1.885393e+00  3        1.111477
+## is_same_state                2.559836e+00  1        1.599949
+## home_season_points           7.899789e+00  1        2.810656
+## away_season_points           9.963380e+00  1        3.156482
+## away_ladder_pos              8.290049e+00  1        2.879245
+## teams_in_eight               1.339704e+01  3        1.541114
+## home_team_finals_last_season 1.848796e+00  1        1.359704&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The cleaned model’s Adjusted R-squared is 0.8652, while the RMSE was 6,474 and MAE 4,855. These results better the baseline model, but only just.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;best-model&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Best model:&lt;/h1&gt;
+&lt;p&gt;Determining the “best” model is an interesting exercise. If the explainability powers of the model is what we’re after, then we want to maximise the Adjusted R-squared metric. This analysis is aimed at maximising the success of predicting crowds, and as such, the Root Mean Squared Error (RMSE) or Mean Absolute Error (MAE) are the metrics we’re going to focus on. Both measures can be related back to the response variable - attendance - the difference being that MAE is the average absolute error of the model (difference between prediction and actual), while the RMSE penalises the model the larger the error.&lt;/p&gt;
+&lt;p&gt;For both RMSE and MAE, the below model results in the lowest RMSE and MAE when applied to the 2019 season games.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;set.seed(123)
+
+fit_lm &amp;lt;- lm(attendance ~ team1 + team2 + round + venue + game_time + I(HomeLineOpen * home_ladder_pos) + rivalry_game + last_results + last_five_days_rain + max_temp + min_temp + home_mean_experience + away_mean_experience + is_same_state + home_score_for + I(home_percentage * home_ladder_pos) + I(home_wins_last_three * round) + round * finals_last_season, data = afl_pre_2019)
+
+summary(fit_lm)$adj.r.squared&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 0.8582593&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The Adjusted R-Squared of the model is 0.858, indicating that almost 86% of the variablility in AFL attendances in the training set (2013-2018) is explained by the model.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Interaction Terms&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Features were not only used on their own in this model. Interaction terms wera also employed. The following features were combined to form a feature and gave the model a boost in predictive power:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;I(HomeLineOpen * home_ladder_pos)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;I(home_percentage * home_ladder_pos)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;I(home_wins_last_three * round)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;round * finals_last_season&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div id=&#34;analysing-the-best-model&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Analysing the best model&lt;/h2&gt;
+&lt;p&gt;The first thing we want to do is ensure the residuals are normally distributed to satisfy the condition of normality for linear models.&lt;/p&gt;
+&lt;p&gt;The below histogram suggests that the errors are fairly normally distributed and centred around zero. A good sign.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(data = data.frame(fit_lm$residuals), aes(x= fit_lm.residuals)) + 
+  geom_histogram() +
+  ggtitle(&amp;quot;ERRORS ARE CENTRED AROUND ZERO&amp;quot;) +
+  scale_x_continuous(labels = comma, name = &amp;quot;Model Residuals&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/predicting_crowds_files/figure-html/residuals_plot-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# ggsave(&amp;quot;plots/prediction_plots/errors_hist.png&amp;quot;, width = 30, height = 22, units = &amp;quot;cm&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Then we can look at the coefficients of each of the predictor variables.&lt;/p&gt;
+&lt;p&gt;To make inspecting these easier, the &lt;code&gt;broom&lt;/code&gt; package was used. Using the &lt;code&gt;tidy()&lt;/code&gt; function, the results of the summary lm output are nicely displayed in a DF.&lt;/p&gt;
+&lt;p&gt;The coefficients for each of the predictor variables (other than home and away teams) are displayed below.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;a &amp;lt;- broom::tidy(fit_lm) %&amp;gt;% mutate(p.value = round(p.value, 5))
+
+a %&amp;gt;% filter(!str_detect(term, &amp;quot;team1&amp;quot;), !str_detect(term, &amp;quot;team2&amp;quot;)) %&amp;gt;%  
+  kableExtra::kable(format = &amp;quot;html&amp;quot;, escape = F) %&amp;gt;%
+  kableExtra::kable_styling(&amp;quot;striped&amp;quot;, full_width = F) &lt;/code&gt;&lt;/pre&gt;
+&lt;table class=&#34;table table-striped&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+term
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+estimate
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+std.error
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+statistic
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+p.value
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+(Intercept)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+61007.772536
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7066.622895
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8.6332288
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.00000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+round
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-628.797448
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+147.199874
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-4.2717255
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.00002
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+venueCarrara
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-9384.433835
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4893.988254
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-1.9175432
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.05543
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+venueDocklands
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2025.790428
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1843.347042
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.0989740
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.27202
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+venueGabba
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-12078.813180
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7915.867406
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-1.5258989
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.12732
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+venueKardinia Park
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-790.290125
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2477.093571
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-0.3190393
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.74976
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+venueM.C.G.
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14604.069479
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1859.992224
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7.8516831
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.00000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+venueOther
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-11316.633901
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1521.161777
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-7.4394677
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.00000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+venuePerth Stadium
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2344.181828
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2119.734512
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.1058846
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.26902
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+venueS.C.G.
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-6985.844583
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2854.176355
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-2.4475869
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.01454
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+venueSydney Showground
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-13915.330942
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2344.860834
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-5.9343952
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.00000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+game_timeFri Evening
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-14669.992661
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7858.171556
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-1.8668456
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.06219
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+game_timeFri Night
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-26232.422896
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6419.398624
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-4.0864300
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.00005
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+game_timeSat Afternoon
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-27517.789656
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6413.609760
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-4.2905307
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.00002
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+game_timeSat Evening
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-28587.419367
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6425.144735
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-4.4493036
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.00001
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+game_timeSat Night
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-27304.481145
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6416.346545
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-4.2554561
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.00002
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+game_timeSun Afternoon
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-28302.693645
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6410.217064
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-4.4152473
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.00001
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+game_timeSun Evening
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-30499.992506
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6441.388865
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-4.7350025
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.00000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+game_timeSun Night
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-29709.469650
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6969.788830
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-4.2626069
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.00002
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+game_timeWeekday Afternoon
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-6264.436854
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6587.953778
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-0.9508927
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.34187
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+game_timeWeekday Evening
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-32666.780662
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8987.962304
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-3.6345035
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.00029
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+game_timeWeekday Night
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-24296.860101
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6490.825702
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-3.7432618
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.00019
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+I(HomeLineOpen * home_ladder_pos)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-3.929212
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.897336
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-4.3787523
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.00001
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+rivalry_gameRivalry
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4243.471176
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1103.664170
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3.8448935
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.00013
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+last_resultsboth_won
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3278.290173
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+599.102681
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.4720005
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.00000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+last_resultsonly_away_team_won
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1354.077316
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+536.942587
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.5218289
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.01181
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+last_resultsonly_home_team_won
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1381.030990
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+594.706552
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.3222058
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.02040
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+last_five_days_rain
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-44.287937
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+12.297250
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-3.6014505
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.00033
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+max_temp
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+310.452321
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+61.108889
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5.0803137
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.00000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+min_temp
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-125.802409
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+59.279520
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-2.1221901
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.03404
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+home_mean_experience
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+25.443372
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14.678437
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.7333843
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.08331
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+away_mean_experience
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+45.390519
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14.339468
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3.1654256
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.00159
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+is_same_stateyes
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8151.587887
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+601.638591
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+13.5489778
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.00000
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+home_score_for
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7.394136
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.692602
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4.3685025
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.00001
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+I(home_percentage * home_ladder_pos)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-294.795766
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+66.179029
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-4.4545193
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.00001
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+I(home_wins_last_three * round)
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3.645874
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+19.738164
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.1847119
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.85349
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+finals_last_seasonboth_played
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1691.406848
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1188.541482
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.4230945
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.15499
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+finals_last_seasonhome_only_played
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+953.657176
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1235.936253
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.7716071
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.44051
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+finals_last_seasonneither_played
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+482.072356
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1101.460684
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.4376664
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.66171
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+round:finals_last_seasonboth_played
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+17.403974
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+83.889701
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.2074626
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.83569
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+round:finals_last_seasonhome_only_played
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-13.710531
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+82.253765
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+-0.1666858
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.86765
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+round:finals_last_seasonneither_played
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+21.455146
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+76.032301
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.2821846
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.77785
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;actual_2019crowds &amp;lt;- afl_2019$attendance
+
+# fit linear model 
+afl_2019$predicted_attendance &amp;lt;- predict(fit_lm, afl_2019)
+
+# put a floor on AFL attendances - surely the AFL doesn&amp;#39;t let the crowd fall below 6,000
+afl_2019$predicted_attendance &amp;lt;- ifelse(afl_2019$predicted_attendance &amp;lt; 6000, 6000, afl_2019$predicted_attendance)
+
+# calculate the errors
+error &amp;lt;- afl_2019$predicted_attendance - afl_2019$attendance&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Then we want to annalyse how well the model fit the relationship. This can be achieved by plotting the actual vs predicted values on a scatterplot.&lt;/p&gt;
+&lt;p&gt;I can be seen that the linear model does a fairly good job on average. There model did under-predict some of the larger drawing games, while also predicting an attendance of over 30,000 to the Hawthorn vs GWS game at the MCG in round 8, which only drew 14,636 fans.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;afl_2019 %&amp;gt;% 
+  ggplot(aes(x=attendance, y= predicted_attendance)) +
+  geom_point() +
+  geom_abline(slope = 1, intercept=0) +
+  ggtitle(&amp;quot;MODEL UNDER-PREDICTED SOME\nLARGE DRAWING GAMES&amp;quot;) +
+  scale_x_continuous(labels = comma, name = &amp;quot;Actual Attendance&amp;quot;) +
+  scale_y_continuous(labels = comma, name = &amp;quot;Predicted Attendance&amp;quot;) +
+  annotate(geom = &amp;quot;text&amp;quot;, x=83000, y= 55000, label = &amp;quot;Model under-predicted\non these games&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/predicting_crowds_files/figure-html/pred_v_actual-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# ggsave(&amp;quot;plots/prediction_plots/actual_v_pred.png&amp;quot;, width = 30, height = 22, units = &amp;quot;cm&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We can also look at how the model performed predicting crowds at each of the venues.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;afl_2019 %&amp;gt;% 
+  mutate(error = predicted_attendance - attendance) %&amp;gt;% 
+  ggplot(aes(x= error)) +
+  geom_density() +
+  geom_vline(xintercept = 0, linetype = 2) +
+  facet_wrap(~ venue, scales = &amp;quot;free_y&amp;quot;, ncol = 2) +
+  scale_x_continuous(labels = comma, name = &amp;quot;Error&amp;quot;) +
+  ggtitle(&amp;quot;Exploring Errors by Venue&amp;quot;) +
+  theme(axis.text.y = element_blank(), axis.title.y = element_blank())&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/predicting_crowds_files/figure-html/venue_errors-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# ggsave(&amp;quot;plots/prediction_plots/venue_errors.png&amp;quot;, width = 30, height = 22, units = &amp;quot;cm&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The model tended to over-predict attendances at the Gabba, Perth Stadium, Sydney Showgrounds and even the MCG, while it under-predicted at Carrara and “Other”.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;print(paste0(&amp;quot;RMSE: &amp;quot;, sqrt(mean(error^2, na.rm = T))))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;RMSE: 6601.69023180541&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;print(paste0(&amp;quot;MAE: &amp;quot;, mean(abs(error), na.rm = T)))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;MAE: 4881.5087837533&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;overall-performance-of-the-model&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Overall Performance of the Model&lt;/h1&gt;
+&lt;p&gt;The final model selected achieved an RMSE of 5,953 and MAE of 4,466, meaning that on average, the model is off by just under 4,500 fans when predicting attendances. When compared to the baseline model (RMSE of 6,816 and a MAE of 4,958), this model betters the baseline by over 500 people on average, but also doesn’t have as many extreme errors.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;conclusion&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Conclusion&lt;/h1&gt;
+&lt;p&gt;Hopefully you’ve made it to here!&lt;/p&gt;
+&lt;p&gt;I’d love to hear from you with any feedback / corrections / etc in the comments or get in &lt;a href=&#34;https://www.linkedin.com/in/jason-zivkovic-4a0a1926/&#34;&gt;touch&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Thanks!&lt;/p&gt;
+&lt;/div&gt;
+</description>
     </item>
     
     <item>
       <title>Using Data To Determine Which AFL Fans Jump On The Bandwagon</title>
       <link>/blog/using-data-to-determine-which-afl-fans-jump-onthe-bandwagon/</link>
       <pubDate>Mon, 15 Jul 2019 00:00:00 +0000</pubDate>
-      
       <guid>/blog/using-data-to-determine-which-afl-fans-jump-onthe-bandwagon/</guid>
-      <description>Introduction This post is the first in a two-part series on AFL crowds. This analysis will be a thorough look at AFL crowd numbers over the last 20 years, and will aim to discover which team’s fans are the biggest bandwagon jumpers. Bandwagon Jumpers are those fans that are the loudest in the office or in your friendship group when things are going well, and the quietest when their team is losing.</description>
+      <description>
+&lt;script src=&#34;/rmarkdown-libs/kePrint/kePrint.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;div id=&#34;introduction&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Introduction&lt;/h1&gt;
+&lt;p&gt;This post is the first in a two-part series on AFL crowds. This analysis will be a thorough look at AFL crowd numbers over the last 20 years, and will aim to discover which team’s fans are the biggest bandwagon jumpers. &lt;em&gt;Bandwagon Jumpers&lt;/em&gt; are those fans that are the loudest in the office or in your friendship group when things are going well, and the quietest when their team is losing. The analysis will use two questions to answer this:&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;Which team’s home attendance is affected more because of the previous week’s performance
+&lt;ol style=&#34;list-style-type: lower-alpha&#34;&gt;
+&lt;li&gt;Here I will introduce three new metrics to measure this effect&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;
+&lt;li&gt;Does a team’s betting odds affect home attendance&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;People all have their theories on which team’s fans are the worst offending bandwagoners; this analysis will try to answer it once and for all! Also, sefishly, I’m sick of people telling me that fans of my team - the Hawthorn Hawks (a team that has experienced tremendous success over the last 10 years) are the worst offenders.&lt;/p&gt;
+&lt;div id=&#34;the-data&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;The Data&lt;/h2&gt;
+&lt;p&gt;Data was collected from a few different online sources. The game and attendance data was sourced using the &lt;a href=&#34;https://github.com/tidyverse/rvest&#34;&gt;rvest&lt;/a&gt; package from the amazing &lt;a href=&#34;https://afltables.com&#34;&gt;AFL Tables&lt;/a&gt;, while the betting data was sourced from the &lt;a href=&#34;http://www.aussportsbetting.com&#34;&gt;Australian Sports Betting&lt;/a&gt; website.&lt;/p&gt;
+&lt;p&gt;All the code and data for this project is available on &lt;a href=&#34;https://github.com/JaseZiv/AFL-Crowd-Analytics&#34;&gt;GitHub&lt;/a&gt;. The &lt;a href=&#34;https://www.tidyverse.org/&#34;&gt;Tidyverse&lt;/a&gt; suite of packages features heavily throughout.&lt;/p&gt;
+&lt;p&gt;The data is current to round 16 of the 2019 season.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;Over the last 20 years, the median (the 50% mark and a better measure than the average on skewed data) crowd to AFL games was 33,600. The data is positively skewed with a tail that extends out to 100,000.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/afl_bandwagon_analysis_files/figure-html/attendance-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;As expected for the AFL, the finals series at the end of the season draws larger crowds than the premiership (regular season for non-AFL fans) season. The median attendance for the premiership season is just over 33,000, while for finals it is over 58,000. The finals series are the flagship games for the AFL - they would hope these games would draw larger crowds.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/afl_bandwagon_analysis_files/figure-html/finals_vreg-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;We can’t glean a lot from finals since they’re well patronised irrespective of who’s playing, so the rest of the analysis will focus on the premiership season.&lt;/p&gt;
+&lt;p&gt;The last 20 seasons have seen some peaks and throughs though, with median attendances ranging from just under 29,000 in 2012 to just over 36,800 in 2008. The low attendances in 2012-13 were no doubt fuelled by the introduction of the newest expansion teams - Gold Coast and Greater Western Sydney (GWS) - in regions that are traditionally not AFL strongholds. The last five years however have seen a rebound of sorts, as these clubs slowly build up fanbases (and in the case of GWS start to have some success).&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/afl_bandwagon_analysis_files/figure-html/attendance_seasons-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;which-teams-draw-larger-attendances&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Which teams draw larger attendances&lt;/h1&gt;
+&lt;p&gt;So what about the age old question asked around the water cooler… who has more fans?&lt;/p&gt;
+&lt;p&gt;Well this post won’t be able to answer that question. What it can answer is which teams’s fans attend games in greater numbers?&lt;/p&gt;
+&lt;p&gt;There are seven teams that have had above average crowds since the 2000 season:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Collingwood&lt;/li&gt;
+&lt;li&gt;Essendon&lt;/li&gt;
+&lt;li&gt;Richmond&lt;/li&gt;
+&lt;li&gt;Adelaide&lt;/li&gt;
+&lt;li&gt;Carlton&lt;/li&gt;
+&lt;li&gt;West Coast&lt;/li&gt;
+&lt;li&gt;Hawthorn&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Four of those clubs are Victorian clubs, with the other two from South Australia and Western Australia. This is important to note that even though the AFL is a national competition, these three states are traditionally stronghold states. Brisbane - despite their extreme success in the early part of this century and the fact that a Victorian club merged with then (Fitzroy Lions) - have the third lowest attendances. Only recent expansion teams GWS and Gold Coast have lower attendances. The north-east states are clearly a problem for the league.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/afl_bandwagon_analysis_files/figure-html/team_attendance-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;which-teams-home-attendance-is-affected-more-because-of-the-previous-weeks-performance&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Which team’s home attendance is affected more because of the previous week’s performance&lt;/h1&gt;
+&lt;p&gt;To answer this question, we can look at the difference in attendance for each team the next game after a win or a loss. Three metrics have been created to help answer this question:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Losing Impact on Attendance (LIoA)&lt;/li&gt;
+&lt;li&gt;Winning Impact on Attendance (WIoA)&lt;/li&gt;
+&lt;li&gt;Overall Performance Impact (OPI)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;To create the LIoA and WIoA metrics, the median home attendance (regadless if the previous game was a a win or loss) was calculated for each team. To calculate the LIoA, the median home attendance after a loss was claculated and the percentage difference between this and the overall median home attendance became the measure. The WIoA was calculated in almost the same way, but the median home attandance after a win was used instead.&lt;/p&gt;
+&lt;p&gt;Finally, OPI is calculated as the difference between WIoA and LIoA.&lt;/p&gt;
+&lt;p&gt;A few things to note using this method:&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;Round one games have been excluded as the previous game was the last season and there’s too much noise using that&lt;/li&gt;
+&lt;li&gt;Only home games for each team have been used to calculate the metrics&lt;/li&gt;
+&lt;li&gt;With a p-value &amp;lt; 0.05, the team’s last result is a significant predictor&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;First thing we can do is visualise the data. Using boxplots to show the team’s distribution of home attendances for games both after a win and loss, we can see that there are what appear to be considerable differences for some teams. Where the line in the middle of the box (the median) differs noticably between a win or loss the previous week is an indication that that team’s supporters may be less inclined to attend their team’s games after a loss (or more inclined after a win).&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/afl_bandwagon_analysis_files/figure-html/after_win-1.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
+&lt;div id=&#34;losing-impact-on-attendance-lioa&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Losing Impact on Attendance (LIoA)&lt;/h2&gt;
+&lt;p&gt;Hmmmm… well that certainly doesn’t help my case. Hawthorn’s Losing Impact on Attendance (LIoA) rating is -11.9% - a league worst, meaning that Hawthorn fan attendance at games after a loss is 13% lower than their season median home attendance. Another Victorian club, St Kilda, aren’t far behind, with a LIoA of -10.7%. GWS and Collingwood follow closely, with an LIoA of -7.9 and -7.6% respectively.&lt;/p&gt;
+&lt;p&gt;At the other end of the spectrum, Geelong supporters appear to be unaffected by their team losing their prior game, with a 0.6% difference between their median home attendance. The Gold Coast Suns and South Australian club Adelaide are also fairly unaffected, with LIoA of -1.8% and -1.9% respectively.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;winning-impact-on-attendance-wioa&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Winning Impact on Attendance (WIoA)&lt;/h2&gt;
+&lt;p&gt;Conversely, we can apply the same methodology to calculate a team’s Winning Impact on Attendance (WIoA) to determine which fans respond more positively after a win. The Melbourne Football Club’s fans appear to respond the most positively after their team win, with a WIoA of 13.6%. St Kilda are second on this list too, with a WIoA of 11.3% and North Melbourn are at 11.2%. Thankfully, my Hawks don’t top this measure, however with a WIoA of 10.3%, they’re not far behind.&lt;/p&gt;
+&lt;p&gt;Again, Geelong fans have the best WIoA at less than half a percent, while Gold Coast and Essendon are also both under 2%.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;overall-performance-impact&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Overall Performance Impact&lt;/h2&gt;
+&lt;p&gt;Calculating the difference between the two measures give an overall indicator of fan senstitvity to their team’s last performance. I hate to say it, but Hawthorn fans top this list with an OPI of 22.2%, just edging out St Kilda on 22.0%. Melbourne and GWS are at around the 18% mark, while North, Richmond, Collingwood and Carlton in the 16-17% range.&lt;/p&gt;
+&lt;p&gt;This pains me to say, but Geelong fans are the most consistent set of fans with an OPI of 1.1% Gold Coast, Adelaide and Essendon supporters are also fairly consistent in their attendance.&lt;/p&gt;
+&lt;table class=&#34;table table-striped&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+Team
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+Median Home Attendance
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+Attendance After Loss
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+Attendance After Win
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+LIoA
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+WIoA
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+OPI
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Adelaide
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+41897.5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+41095.0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+42415.0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: grey !important;&#34;&gt;-0.0192&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: lightblue !important;&#34;&gt;0.0124&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: grey !important;&#34;&gt;0.0316&lt;/span&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Brisbane Lions
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+25403.0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+23943.0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+26872.0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: grey !important;&#34;&gt;-0.0575&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: grey !important;&#34;&gt;0.0578&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: grey !important;&#34;&gt;0.1153&lt;/span&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Carlton
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+35147.5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+33115.5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+38743.5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: grey !important;&#34;&gt;-0.0578&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: orange !important;&#34;&gt;0.1023&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: orange !important;&#34;&gt;0.1601&lt;/span&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Collingwood
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+48261.0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+44607.0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+52592.0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: grey !important;&#34;&gt;-0.0757&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: grey !important;&#34;&gt;0.0897&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: orange !important;&#34;&gt;0.1654&lt;/span&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Essendon
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+43947.0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+42617.0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+44736.0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: grey !important;&#34;&gt;-0.0303&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: grey !important;&#34;&gt;0.018&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: grey !important;&#34;&gt;0.0483&lt;/span&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Fremantle
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+34553.0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+33539.5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+36026.0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: grey !important;&#34;&gt;-0.0293&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: grey !important;&#34;&gt;0.0426&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: grey !important;&#34;&gt;0.0719&lt;/span&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Geelong
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+24857.0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+24659.0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+25078.0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: grey !important;&#34;&gt;-0.008&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: lightblue !important;&#34;&gt;0.0089&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: grey !important;&#34;&gt;0.0169&lt;/span&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Gold Coast
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+13247.5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+13080.0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+13528.0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: grey !important;&#34;&gt;-0.0126&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: grey !important;&#34;&gt;0.0212&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: grey !important;&#34;&gt;0.0338&lt;/span&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Greater Western Sydney
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10069.5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9395.5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11071.5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: grey !important;&#34;&gt;-0.0669&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: grey !important;&#34;&gt;0.0995&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: orange !important;&#34;&gt;0.1664&lt;/span&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Hawthorn
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+31925.0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+28152.5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+35202.0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: red !important;&#34;&gt;-0.1182&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: orange !important;&#34;&gt;0.1026&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: red !important;&#34;&gt;0.2208&lt;/span&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Melbourne
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+28707.0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+27266.0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+32621.0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: grey !important;&#34;&gt;-0.0502&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: red !important;&#34;&gt;0.1363&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: orange !important;&#34;&gt;0.1865&lt;/span&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+North Melbourne
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+24062.0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+22754.0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+26763.0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: grey !important;&#34;&gt;-0.0544&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: red !important;&#34;&gt;0.1123&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: orange !important;&#34;&gt;0.1667&lt;/span&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Port Adelaide
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+28206.0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+26652.0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+30197.0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: grey !important;&#34;&gt;-0.0551&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: grey !important;&#34;&gt;0.0706&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: grey !important;&#34;&gt;0.1257&lt;/span&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Richmond
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+39713.5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+36821.0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+43240.0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: grey !important;&#34;&gt;-0.0728&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: grey !important;&#34;&gt;0.0888&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: orange !important;&#34;&gt;0.1616&lt;/span&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+St Kilda
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+30497.0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+26974.0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+33944.0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: red !important;&#34;&gt;-0.1155&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: red !important;&#34;&gt;0.113&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: red !important;&#34;&gt;0.2285&lt;/span&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Sydney
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+29264.0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+27715.5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+30863.5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: grey !important;&#34;&gt;-0.0529&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: grey !important;&#34;&gt;0.0547&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: grey !important;&#34;&gt;0.1076&lt;/span&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+West Coast
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+38029.0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+36710.0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+39436.0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: grey !important;&#34;&gt;-0.0347&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: grey !important;&#34;&gt;0.037&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: grey !important;&#34;&gt;0.0717&lt;/span&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Western Bulldogs
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+27818.5
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+26301.0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+28769.0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: grey !important;&#34;&gt;-0.0546&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: grey !important;&#34;&gt;0.0342&lt;/span&gt;
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+&lt;span style=&#34;     color: grey !important;&#34;&gt;0.0888&lt;/span&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;does-a-teams-betting-odds-affect-home-attendance&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Does a team’s betting odds affect home attendance?&lt;/h1&gt;
+&lt;p&gt;To answer this question, betting data was collected from the &lt;a href=&#34;http://www.aussportsbetting.com&#34;&gt;Australian Sports Betting&lt;/a&gt; website.&lt;/p&gt;
+&lt;p&gt;Line data was available from 2013 onwards, so the crowd data for this question has been limited down to the last six seasons.&lt;/p&gt;
+&lt;p&gt;The opening game lines were used for the Home Team. Where the line was within +/- 6 points (1 goal), the game was deemed to be &lt;code&gt;Neutral&lt;/code&gt;, meaning no one was the favourite. If the line was set above 6 points, then the Home Team was the &lt;code&gt;Favourite&lt;/code&gt;. Lastly, if the line was -6 points, the Home Team was the &lt;code&gt;Underdog&lt;/code&gt;. This has also been found to be a significant predictor, also with a p-value close to zero.&lt;/p&gt;
+&lt;div id=&#34;underdog-impact&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Underdog Impact&lt;/h2&gt;
+&lt;p&gt;When the home team is the underdog, what is the impact to their home attendance?&lt;/p&gt;
+&lt;p&gt;Carlton fans appear to be the most affected by their team’s chance of victory - when they’re the underdog, Carlton’s home attendance is 8.5% lower than their overall median home attendance. Strangely, Melbourne’s home attendance actually increases when they’re the underdog, with the attendance 13.7% higher.&lt;/p&gt;
+&lt;p&gt;Hawthorn feature near the top of this list too… not a good sign.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/afl_bandwagon_analysis_files/figure-html/underdog_impact-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;favourite-impact&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Favourite Impact&lt;/h2&gt;
+&lt;p&gt;Wow… Ok this doesn’t look great. Hawthorn’s median attendance when favourite is over 45% higher than their overall home attendance since 2013. Geelong’s, just over 40%, is also abnormally high.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/afl_bandwagon_analysis_files/figure-html/fav_impact-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Well, that didn’t work out how I expected. Rather than busting the myth that Hawthorn fans are the biggest bandwagon jumpers in the league, I’ve actually added to the argument.&lt;/p&gt;
+&lt;p&gt;Stay tuned for part two of this series, where I will attempt to build a predictive model that predicts AFL attendances.&lt;/p&gt;
+&lt;p&gt;Feel free to leave any feedback / corrections / etc in the comments or get in &lt;a href=&#34;https://www.linkedin.com/in/jason-zivkovic-4a0a1926/&#34;&gt;touch&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
     </item>
     
   </channel>

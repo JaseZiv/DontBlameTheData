@@ -1,0 +1,1591 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.8.0">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Jason Zivkovic">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="Introduction This post is the first in a two-part series on AFL crowds. This analysis will be a thorough look at AFL crowd numbers over the last 20 years, and will aim to discover which team’s fans are the biggest bandwagon jumpers.">
+
+  
+  <link rel="alternate" hreflang="en-us" href="/post/using-data-to-determine-which-afl-fans-jump-onthe-bandwagon/">
+
+  
+
+
+  
+  
+  
+  <meta name="theme-color" content="#3f51b5">
+  
+
+  
+  
+  
+  <script src="/js/mathjax-config.js"></script>
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-1/css/all.min.css" integrity="sha256-4w9DunooKSr3MFXHXWyFER38WmPdm361bQS/2KUWZbU=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.css" integrity="sha256-SHMGCYmST46SoyGgo4YR/9AlK1vf3ff84Aq9yK4hdqM=" crossorigin="anonymous">
+    
+
+    
+
+    
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js" integrity="sha256-Md1qLToewPeKjfAHU1zyPwOutccPAm5tahnaw7Osw0A=" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CRoboto:400,400italic,700%7CRoboto+Mono&display=swap">
+  
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.css">
+
+  
+
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-145056765-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+      dataLayer.push(arguments);
+  }
+
+  function trackOutboundLink(url, target) {
+    gtag('event', 'click', {
+         'event_category': 'outbound',
+         'event_label': url,
+         'transport_type': 'beacon',
+         'event_callback': function () {
+           if (target !== '_blank') {
+             document.location = url;
+           }
+         }
+    });
+    console.debug("Outbound link clicked: " + url);
+  }
+
+  function onClickCallback(event) {
+    if ((event.target.tagName !== 'A') || (event.target.host === window.location.host)) {
+      return;
+    }
+    trackOutboundLink(event.target, event.target.getAttribute('target'));  
+  }
+
+  gtag('js', new Date());
+  gtag('config', 'UA-145056765-1', {});
+
+  
+  document.addEventListener('click', onClickCallback, false);
+</script>
+
+
+  
+
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
+  <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
+
+  <link rel="canonical" href="/post/using-data-to-determine-which-afl-fans-jump-onthe-bandwagon/">
+
+  
+  
+  
+  
+  
+    
+  
+  
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="twitter:site" content="@jaseziv">
+  <meta property="twitter:creator" content="@jaseziv">
+  
+  <meta property="og:site_name" content="Don&#39;t Blame the Data">
+  <meta property="og:url" content="/post/using-data-to-determine-which-afl-fans-jump-onthe-bandwagon/">
+  <meta property="og:title" content="Using Data To Determine Which AFL Fans Jump On The Bandwagon | Don&#39;t Blame the Data">
+  <meta property="og:description" content="Introduction This post is the first in a two-part series on AFL crowds. This analysis will be a thorough look at AFL crowd numbers over the last 20 years, and will aim to discover which team’s fans are the biggest bandwagon jumpers."><meta property="og:image" content="/img/logo.jpg">
+  <meta property="twitter:image" content="/img/logo.jpg"><meta property="og:locale" content="en-us">
+  
+    
+      <meta property="article:published_time" content="2019-07-15T00:00:00&#43;00:00">
+    
+    <meta property="article:modified_time" content="2019-07-15T00:00:00&#43;00:00">
+  
+
+  
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "/post/using-data-to-determine-which-afl-fans-jump-onthe-bandwagon/"
+  },
+  "headline": "Using Data To Determine Which AFL Fans Jump On The Bandwagon",
+  
+  "datePublished": "2019-07-15T00:00:00Z",
+  "dateModified": "2019-07-15T00:00:00Z",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Jason Zivkovic"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Don't Blame the Data",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png"
+    }
+  },
+  "description": "Introduction This post is the first in a two-part series on AFL crowds. This analysis will be a thorough look at AFL crowd numbers over the last 20 years, and will aim to discover which team’s fans are the biggest bandwagon jumpers."
+}
+</script>
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  <title>Using Data To Determine Which AFL Fans Jump On The Bandwagon | Don&#39;t Blame the Data</title>
+
+</head>
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" >
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+  
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/">Don&#39;t Blame the Data</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/">Don&#39;t Blame the Data</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#about"><span>Home</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#posts"><span>Posts</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#projects"><span>Projects</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#contact"><span>Contact</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+      
+      <li class="nav-item">
+        <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+      <li class="nav-item dropdown theme-dropdown">
+        <a href="#" class="nav-link js-theme-selector" data-toggle="dropdown" aria-haspopup="true">
+          <i class="fas fa-palette" aria-hidden="true"></i>
+        </a>
+        <div class="dropdown-menu">
+          <a href="#" class="dropdown-item js-set-theme-light">
+            <span>Light</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-dark">
+            <span>Dark</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-auto">
+            <span>Automatic</span>
+          </a>
+        </div>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>Using Data To Determine Which AFL Fans Jump On The Bandwagon</h1>
+
+  
+
+  
+    
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    Jul 15, 2019
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    8 min read
+  </span>
+  
+
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/categories/r/">R</a>, <a href="/categories/sport/">sport</a>, <a href="/categories/afl/">afl</a>, <a href="/categories/analytics/">analytics</a>, <a href="/categories/tidyverse/">tidyverse</a></span>
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      
+<script src="/rmarkdown-libs/kePrint/kePrint.js"></script>
+
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>This post is the first in a two-part series on AFL crowds. This analysis will be a thorough look at AFL crowd numbers over the last 20 years, and will aim to discover which team’s fans are the biggest bandwagon jumpers. <em>Bandwagon Jumpers</em> are those fans that are the loudest in the office or in your friendship group when things are going well, and the quietest when their team is losing. The analysis will use two questions to answer this:</p>
+<ol style="list-style-type: decimal">
+<li>Which team’s home attendance is affected more because of the previous week’s performance
+<ol style="list-style-type: lower-alpha">
+<li>Here I will introduce three new metrics to measure this effect</li>
+</ol></li>
+<li>Does a team’s betting odds affect home attendance</li>
+</ol>
+<p>People all have their theories on which team’s fans are the worst offending bandwagoners; this analysis will try to answer it once and for all! Also, sefishly, I’m sick of people telling me that fans of my team - the Hawthorn Hawks (a team that has experienced tremendous success over the last 10 years) are the worst offenders.</p>
+<div id="the-data" class="section level2">
+<h2>The Data</h2>
+<p>Data was collected from a few different online sources. The game and attendance data was sourced using the <a href="https://github.com/tidyverse/rvest">rvest</a> package from the amazing <a href="https://afltables.com">AFL Tables</a>, while the betting data was sourced from the <a href="http://www.aussportsbetting.com">Australian Sports Betting</a> website.</p>
+<p>All the code and data for this project is available on <a href="https://github.com/JaseZiv/AFL-Crowd-Analytics">GitHub</a>. The <a href="https://www.tidyverse.org/">Tidyverse</a> suite of packages features heavily throughout.</p>
+<p>The data is current to round 16 of the 2019 season.</p>
+<hr />
+<p>Over the last 20 years, the median (the 50% mark and a better measure than the average on skewed data) crowd to AFL games was 33,600. The data is positively skewed with a tail that extends out to 100,000.</p>
+<p><img src="/post/afl_bandwagon_analysis_files/figure-html/attendance-1.png" width="672" /></p>
+<p>As expected for the AFL, the finals series at the end of the season draws larger crowds than the premiership (regular season for non-AFL fans) season. The median attendance for the premiership season is just over 33,000, while for finals it is over 58,000. The finals series are the flagship games for the AFL - they would hope these games would draw larger crowds.</p>
+<p><img src="/post/afl_bandwagon_analysis_files/figure-html/finals_vreg-1.png" width="672" /></p>
+<p>We can’t glean a lot from finals since they’re well patronised irrespective of who’s playing, so the rest of the analysis will focus on the premiership season.</p>
+<p>The last 20 seasons have seen some peaks and throughs though, with median attendances ranging from just under 29,000 in 2012 to just over 36,800 in 2008. The low attendances in 2012-13 were no doubt fuelled by the introduction of the newest expansion teams - Gold Coast and Greater Western Sydney (GWS) - in regions that are traditionally not AFL strongholds. The last five years however have seen a rebound of sorts, as these clubs slowly build up fanbases (and in the case of GWS start to have some success).</p>
+<p><img src="/post/afl_bandwagon_analysis_files/figure-html/attendance_seasons-1.png" width="672" /></p>
+</div>
+</div>
+<div id="which-teams-draw-larger-attendances" class="section level1">
+<h1>Which teams draw larger attendances</h1>
+<p>So what about the age old question asked around the water cooler… who has more fans?</p>
+<p>Well this post won’t be able to answer that question. What it can answer is which teams’s fans attend games in greater numbers?</p>
+<p>There are seven teams that have had above average crowds since the 2000 season:</p>
+<ul>
+<li>Collingwood</li>
+<li>Essendon</li>
+<li>Richmond</li>
+<li>Adelaide</li>
+<li>Carlton</li>
+<li>West Coast</li>
+<li>Hawthorn</li>
+</ul>
+<p>Four of those clubs are Victorian clubs, with the other two from South Australia and Western Australia. This is important to note that even though the AFL is a national competition, these three states are traditionally stronghold states. Brisbane - despite their extreme success in the early part of this century and the fact that a Victorian club merged with then (Fitzroy Lions) - have the third lowest attendances. Only recent expansion teams GWS and Gold Coast have lower attendances. The north-east states are clearly a problem for the league.</p>
+<p><img src="/post/afl_bandwagon_analysis_files/figure-html/team_attendance-1.png" width="672" /></p>
+</div>
+<div id="which-teams-home-attendance-is-affected-more-because-of-the-previous-weeks-performance" class="section level1">
+<h1>Which team’s home attendance is affected more because of the previous week’s performance</h1>
+<p>To answer this question, we can look at the difference in attendance for each team the next game after a win or a loss. Three metrics have been created to help answer this question:</p>
+<ul>
+<li>Losing Impact on Attendance (LIoA)</li>
+<li>Winning Impact on Attendance (WIoA)</li>
+<li>Overall Performance Impact (OPI)</li>
+</ul>
+<p>To create the LIoA and WIoA metrics, the median home attendance (regadless if the previous game was a a win or loss) was calculated for each team. To calculate the LIoA, the median home attendance after a loss was claculated and the percentage difference between this and the overall median home attendance became the measure. The WIoA was calculated in almost the same way, but the median home attandance after a win was used instead.</p>
+<p>Finally, OPI is calculated as the difference between WIoA and LIoA.</p>
+<p>A few things to note using this method:</p>
+<ol style="list-style-type: decimal">
+<li>Round one games have been excluded as the previous game was the last season and there’s too much noise using that</li>
+<li>Only home games for each team have been used to calculate the metrics</li>
+<li>With a p-value &lt; 0.05, the team’s last result is a significant predictor</li>
+</ol>
+<p>First thing we can do is visualise the data. Using boxplots to show the team’s distribution of home attendances for games both after a win and loss, we can see that there are what appear to be considerable differences for some teams. Where the line in the middle of the box (the median) differs noticably between a win or loss the previous week is an indication that that team’s supporters may be less inclined to attend their team’s games after a loss (or more inclined after a win).</p>
+<p><img src="/post/afl_bandwagon_analysis_files/figure-html/after_win-1.png" width="1152" /></p>
+<div id="losing-impact-on-attendance-lioa" class="section level2">
+<h2>Losing Impact on Attendance (LIoA)</h2>
+<p>Hmmmm… well that certainly doesn’t help my case. Hawthorn’s Losing Impact on Attendance (LIoA) rating is -11.9% - a league worst, meaning that Hawthorn fan attendance at games after a loss is 13% lower than their season median home attendance. Another Victorian club, St Kilda, aren’t far behind, with a LIoA of -10.7%. GWS and Collingwood follow closely, with an LIoA of -7.9 and -7.6% respectively.</p>
+<p>At the other end of the spectrum, Geelong supporters appear to be unaffected by their team losing their prior game, with a 0.6% difference between their median home attendance. The Gold Coast Suns and South Australian club Adelaide are also fairly unaffected, with LIoA of -1.8% and -1.9% respectively.</p>
+</div>
+<div id="winning-impact-on-attendance-wioa" class="section level2">
+<h2>Winning Impact on Attendance (WIoA)</h2>
+<p>Conversely, we can apply the same methodology to calculate a team’s Winning Impact on Attendance (WIoA) to determine which fans respond more positively after a win. The Melbourne Football Club’s fans appear to respond the most positively after their team win, with a WIoA of 13.6%. St Kilda are second on this list too, with a WIoA of 11.3% and North Melbourn are at 11.2%. Thankfully, my Hawks don’t top this measure, however with a WIoA of 10.3%, they’re not far behind.</p>
+<p>Again, Geelong fans have the best WIoA at less than half a percent, while Gold Coast and Essendon are also both under 2%.</p>
+</div>
+<div id="overall-performance-impact" class="section level2">
+<h2>Overall Performance Impact</h2>
+<p>Calculating the difference between the two measures give an overall indicator of fan senstitvity to their team’s last performance. I hate to say it, but Hawthorn fans top this list with an OPI of 22.2%, just edging out St Kilda on 22.0%. Melbourne and GWS are at around the 18% mark, while North, Richmond, Collingwood and Carlton in the 16-17% range.</p>
+<p>This pains me to say, but Geelong fans are the most consistent set of fans with an OPI of 1.1% Gold Coast, Adelaide and Essendon supporters are also fairly consistent in their attendance.</p>
+<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Team
+</th>
+<th style="text-align:right;">
+Median Home Attendance
+</th>
+<th style="text-align:right;">
+Attendance After Loss
+</th>
+<th style="text-align:right;">
+Attendance After Win
+</th>
+<th style="text-align:left;">
+LIoA
+</th>
+<th style="text-align:left;">
+WIoA
+</th>
+<th style="text-align:left;">
+OPI
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Adelaide
+</td>
+<td style="text-align:right;">
+41897.5
+</td>
+<td style="text-align:right;">
+41095.0
+</td>
+<td style="text-align:right;">
+42415.0
+</td>
+<td style="text-align:left;">
+<span style="     color: grey !important;">-0.0192</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: lightblue !important;">0.0124</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: grey !important;">0.0316</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Brisbane Lions
+</td>
+<td style="text-align:right;">
+25403.0
+</td>
+<td style="text-align:right;">
+23943.0
+</td>
+<td style="text-align:right;">
+26872.0
+</td>
+<td style="text-align:left;">
+<span style="     color: grey !important;">-0.0575</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: grey !important;">0.0578</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: grey !important;">0.1153</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Carlton
+</td>
+<td style="text-align:right;">
+35147.5
+</td>
+<td style="text-align:right;">
+33115.5
+</td>
+<td style="text-align:right;">
+38743.5
+</td>
+<td style="text-align:left;">
+<span style="     color: grey !important;">-0.0578</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: orange !important;">0.1023</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: orange !important;">0.1601</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Collingwood
+</td>
+<td style="text-align:right;">
+48261.0
+</td>
+<td style="text-align:right;">
+44607.0
+</td>
+<td style="text-align:right;">
+52592.0
+</td>
+<td style="text-align:left;">
+<span style="     color: grey !important;">-0.0757</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: grey !important;">0.0897</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: orange !important;">0.1654</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Essendon
+</td>
+<td style="text-align:right;">
+43947.0
+</td>
+<td style="text-align:right;">
+42617.0
+</td>
+<td style="text-align:right;">
+44736.0
+</td>
+<td style="text-align:left;">
+<span style="     color: grey !important;">-0.0303</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: grey !important;">0.018</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: grey !important;">0.0483</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Fremantle
+</td>
+<td style="text-align:right;">
+34553.0
+</td>
+<td style="text-align:right;">
+33539.5
+</td>
+<td style="text-align:right;">
+36026.0
+</td>
+<td style="text-align:left;">
+<span style="     color: grey !important;">-0.0293</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: grey !important;">0.0426</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: grey !important;">0.0719</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Geelong
+</td>
+<td style="text-align:right;">
+24857.0
+</td>
+<td style="text-align:right;">
+24659.0
+</td>
+<td style="text-align:right;">
+25078.0
+</td>
+<td style="text-align:left;">
+<span style="     color: grey !important;">-0.008</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: lightblue !important;">0.0089</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: grey !important;">0.0169</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Gold Coast
+</td>
+<td style="text-align:right;">
+13247.5
+</td>
+<td style="text-align:right;">
+13080.0
+</td>
+<td style="text-align:right;">
+13528.0
+</td>
+<td style="text-align:left;">
+<span style="     color: grey !important;">-0.0126</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: grey !important;">0.0212</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: grey !important;">0.0338</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Greater Western Sydney
+</td>
+<td style="text-align:right;">
+10069.5
+</td>
+<td style="text-align:right;">
+9395.5
+</td>
+<td style="text-align:right;">
+11071.5
+</td>
+<td style="text-align:left;">
+<span style="     color: grey !important;">-0.0669</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: grey !important;">0.0995</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: orange !important;">0.1664</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Hawthorn
+</td>
+<td style="text-align:right;">
+31925.0
+</td>
+<td style="text-align:right;">
+28152.5
+</td>
+<td style="text-align:right;">
+35202.0
+</td>
+<td style="text-align:left;">
+<span style="     color: red !important;">-0.1182</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: orange !important;">0.1026</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: red !important;">0.2208</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Melbourne
+</td>
+<td style="text-align:right;">
+28707.0
+</td>
+<td style="text-align:right;">
+27266.0
+</td>
+<td style="text-align:right;">
+32621.0
+</td>
+<td style="text-align:left;">
+<span style="     color: grey !important;">-0.0502</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: red !important;">0.1363</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: orange !important;">0.1865</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+North Melbourne
+</td>
+<td style="text-align:right;">
+24062.0
+</td>
+<td style="text-align:right;">
+22754.0
+</td>
+<td style="text-align:right;">
+26763.0
+</td>
+<td style="text-align:left;">
+<span style="     color: grey !important;">-0.0544</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: red !important;">0.1123</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: orange !important;">0.1667</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Port Adelaide
+</td>
+<td style="text-align:right;">
+28206.0
+</td>
+<td style="text-align:right;">
+26652.0
+</td>
+<td style="text-align:right;">
+30197.0
+</td>
+<td style="text-align:left;">
+<span style="     color: grey !important;">-0.0551</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: grey !important;">0.0706</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: grey !important;">0.1257</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Richmond
+</td>
+<td style="text-align:right;">
+39713.5
+</td>
+<td style="text-align:right;">
+36821.0
+</td>
+<td style="text-align:right;">
+43240.0
+</td>
+<td style="text-align:left;">
+<span style="     color: grey !important;">-0.0728</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: grey !important;">0.0888</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: orange !important;">0.1616</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+St Kilda
+</td>
+<td style="text-align:right;">
+30497.0
+</td>
+<td style="text-align:right;">
+26974.0
+</td>
+<td style="text-align:right;">
+33944.0
+</td>
+<td style="text-align:left;">
+<span style="     color: red !important;">-0.1155</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: red !important;">0.113</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: red !important;">0.2285</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Sydney
+</td>
+<td style="text-align:right;">
+29264.0
+</td>
+<td style="text-align:right;">
+27715.5
+</td>
+<td style="text-align:right;">
+30863.5
+</td>
+<td style="text-align:left;">
+<span style="     color: grey !important;">-0.0529</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: grey !important;">0.0547</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: grey !important;">0.1076</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+West Coast
+</td>
+<td style="text-align:right;">
+38029.0
+</td>
+<td style="text-align:right;">
+36710.0
+</td>
+<td style="text-align:right;">
+39436.0
+</td>
+<td style="text-align:left;">
+<span style="     color: grey !important;">-0.0347</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: grey !important;">0.037</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: grey !important;">0.0717</span>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Western Bulldogs
+</td>
+<td style="text-align:right;">
+27818.5
+</td>
+<td style="text-align:right;">
+26301.0
+</td>
+<td style="text-align:right;">
+28769.0
+</td>
+<td style="text-align:left;">
+<span style="     color: grey !important;">-0.0546</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: grey !important;">0.0342</span>
+</td>
+<td style="text-align:left;">
+<span style="     color: grey !important;">0.0888</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="does-a-teams-betting-odds-affect-home-attendance" class="section level1">
+<h1>Does a team’s betting odds affect home attendance?</h1>
+<p>To answer this question, betting data was collected from the <a href="http://www.aussportsbetting.com">Australian Sports Betting</a> website.</p>
+<p>Line data was available from 2013 onwards, so the crowd data for this question has been limited down to the last six seasons.</p>
+<p>The opening game lines were used for the Home Team. Where the line was within +/- 6 points (1 goal), the game was deemed to be <code>Neutral</code>, meaning no one was the favourite. If the line was set above 6 points, then the Home Team was the <code>Favourite</code>. Lastly, if the line was -6 points, the Home Team was the <code>Underdog</code>. This has also been found to be a significant predictor, also with a p-value close to zero.</p>
+<div id="underdog-impact" class="section level2">
+<h2>Underdog Impact</h2>
+<p>When the home team is the underdog, what is the impact to their home attendance?</p>
+<p>Carlton fans appear to be the most affected by their team’s chance of victory - when they’re the underdog, Carlton’s home attendance is 8.5% lower than their overall median home attendance. Strangely, Melbourne’s home attendance actually increases when they’re the underdog, with the attendance 13.7% higher.</p>
+<p>Hawthorn feature near the top of this list too… not a good sign.</p>
+<p><img src="/post/afl_bandwagon_analysis_files/figure-html/underdog_impact-1.png" width="672" /></p>
+</div>
+<div id="favourite-impact" class="section level2">
+<h2>Favourite Impact</h2>
+<p>Wow… Ok this doesn’t look great. Hawthorn’s median attendance when favourite is over 45% higher than their overall home attendance since 2013. Geelong’s, just over 40%, is also abnormally high.</p>
+<p><img src="/post/afl_bandwagon_analysis_files/figure-html/fav_impact-1.png" width="672" /></p>
+<p>Well, that didn’t work out how I expected. Rather than busting the myth that Hawthorn fans are the biggest bandwagon jumpers in the league, I’ve actually added to the argument.</p>
+<p>Stay tuned for part two of this series, where I will attempt to build a predictive model that predicts AFL attendances.</p>
+<p>Feel free to leave any feedback / corrections / etc in the comments or get in <a href="https://www.linkedin.com/in/jason-zivkovic-4a0a1926/">touch</a>.</p>
+</div>
+</div>
+
+    </div>
+
+    
+
+
+
+
+
+
+
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=/post/using-data-to-determine-which-afl-fans-jump-onthe-bandwagon/&amp;text=Using%20Data%20To%20Determine%20Which%20AFL%20Fans%20Jump%20On%20The%20Bandwagon" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=/post/using-data-to-determine-which-afl-fans-jump-onthe-bandwagon/&amp;t=Using%20Data%20To%20Determine%20Which%20AFL%20Fans%20Jump%20On%20The%20Bandwagon" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=Using%20Data%20To%20Determine%20Which%20AFL%20Fans%20Jump%20On%20The%20Bandwagon&amp;body=/post/using-data-to-determine-which-afl-fans-jump-onthe-bandwagon/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=/post/using-data-to-determine-which-afl-fans-jump-onthe-bandwagon/&amp;title=Using%20Data%20To%20Determine%20Which%20AFL%20Fans%20Jump%20On%20The%20Bandwagon" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://web.whatsapp.com/send?text=Using%20Data%20To%20Determine%20Which%20AFL%20Fans%20Jump%20On%20The%20Bandwagon%20/post/using-data-to-determine-which-afl-fans-jump-onthe-bandwagon/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=/post/using-data-to-determine-which-afl-fans-jump-onthe-bandwagon/&amp;title=Using%20Data%20To%20Determine%20Which%20AFL%20Fans%20Jump%20On%20The%20Bandwagon" target="_blank" rel="noopener" class="share-btn-weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+  
+  
+  
+    
+  
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+      
+      <img class="avatar mr-3 avatar-square" src="/authors/admin/avatar_huf62bf21c195b8d26ab4107916de5ed56_3657782_270x270_fill_q90_lanczos_center.jpg" alt="Jason Zivkovic">
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="/">Jason Zivkovic</a></h5>
+      <h6 class="card-subtitle">Data Scientist</h6>
+      <p class="card-text">A sports mad Data Scientist just having some fun.</p>
+      <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/#contact" >
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://twitter.com/jaseziv" target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/JaseZiv" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+</ul>
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+  </div>
+</article>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js" integrity="sha256-eOgo0OtLL4cdq7RdwRUiGKLX9XsIJ7nGhWEKbohmVAQ=" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/languages/r.min.js"></script>
+        
+      
+
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.js" integrity="sha256-EErZamuLefUnbMBQbsEqu1USa+btR2oIlCpBJbyD4/g=" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script>const code_highlighting = true;</script>
+    
+
+    
+    
+    <script>const isSiteThemeDark = false;</script>
+    
+
+    
+    
+    
+    
+    
+    
+    <script>
+      const search_config = {"indexURI":"/index.json","minLength":1,"threshold":0.3};
+      const i18n = {"no_results":"No results found","placeholder":"Search...","results":"results found"};
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.37431be2d92d7fb0160054761ab79602.js"></script>
+
+    
+
+
+
+
+
+
+  
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+  <p class="powered-by">
+    
+      <a href="/privacy/">Privacy Policy</a>
+    
+    
+       &middot; 
+      <a href="/terms/">Terms</a>
+    
+  </p>
+  
+
+  <p class="powered-by">
+    ©2020 &middot; 
+
+    Powered by the
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" class="back-to-top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

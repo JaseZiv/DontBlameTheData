@@ -1,39 +1,38 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tags on Don&#39;t Blame The Data</title>
+    <title>Tags | Don&#39;t Blame the Data</title>
     <link>/tags/</link>
-    <description>Recent content in Tags on Don&#39;t Blame The Data</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 16 Dec 2019 00:00:00 +0000</lastBuildDate>
+      <atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    <description>Tags</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>©2020</copyright><lastBuildDate>Sun, 08 Mar 2020 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/img/logo.jpg</url>
+      <title>Tags</title>
+      <link>/tags/</link>
+    </image>
     
-	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
-    
+    <item>
+      <title>pythagorean expectation</title>
+      <link>/tags/pythagorean-expectation/</link>
+      <pubDate>Sun, 08 Mar 2020 00:00:00 +0000</pubDate>
+      <guid>/tags/pythagorean-expectation/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>R</title>
       <link>/tags/r/</link>
-      <pubDate>Mon, 16 Dec 2019 00:00:00 +0000</pubDate>
-      
+      <pubDate>Sun, 08 Mar 2020 00:00:00 +0000</pubDate>
       <guid>/tags/r/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>R programming</title>
-      <link>/tags/r-programming/</link>
-      <pubDate>Mon, 16 Dec 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/r-programming/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>USA</title>
-      <link>/tags/usa/</link>
-      <pubDate>Sun, 25 Aug 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/usa/</guid>
+      <title>sports analytics</title>
+      <link>/tags/sports-analytics/</link>
+      <pubDate>Sun, 08 Mar 2020 00:00:00 +0000</pubDate>
+      <guid>/tags/sports-analytics/</guid>
       <description></description>
     </item>
     
@@ -41,7 +40,6 @@
       <title>afl</title>
       <link>/tags/afl/</link>
       <pubDate>Mon, 23 Dec 2019 00:00:00 +0000</pubDate>
-      
       <guid>/tags/afl/</guid>
       <description></description>
     </item>
@@ -50,8 +48,71 @@
       <title>analytics</title>
       <link>/tags/analytics/</link>
       <pubDate>Mon, 23 Dec 2019 00:00:00 +0000</pubDate>
-      
       <guid>/tags/analytics/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>data visualisation</title>
+      <link>/tags/data-visualisation/</link>
+      <pubDate>Mon, 23 Dec 2019 00:00:00 +0000</pubDate>
+      <guid>/tags/data-visualisation/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ggplot2</title>
+      <link>/tags/ggplot2/</link>
+      <pubDate>Mon, 23 Dec 2019 00:00:00 +0000</pubDate>
+      <guid>/tags/ggplot2/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>statistics</title>
+      <link>/tags/statistics/</link>
+      <pubDate>Mon, 23 Dec 2019 00:00:00 +0000</pubDate>
+      <guid>/tags/statistics/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>fitzRoy</title>
+      <link>/tags/fitzroy/</link>
+      <pubDate>Mon, 16 Dec 2019 00:00:00 +0000</pubDate>
+      <guid>/tags/fitzroy/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>open source</title>
+      <link>/tags/open-source/</link>
+      <pubDate>Mon, 16 Dec 2019 00:00:00 +0000</pubDate>
+      <guid>/tags/open-source/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>R programming</title>
+      <link>/tags/r-programming/</link>
+      <pubDate>Mon, 16 Dec 2019 00:00:00 +0000</pubDate>
+      <guid>/tags/r-programming/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>gganimate</title>
+      <link>/tags/gganimate/</link>
+      <pubDate>Fri, 30 Aug 2019 00:00:00 +0000</pubDate>
+      <guid>/tags/gganimate/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>line chart</title>
+      <link>/tags/line-chart/</link>
+      <pubDate>Fri, 30 Aug 2019 00:00:00 +0000</pubDate>
+      <guid>/tags/line-chart/</guid>
       <description></description>
     </item>
     
@@ -59,7 +120,6 @@
       <title>basketball</title>
       <link>/tags/basketball/</link>
       <pubDate>Sun, 25 Aug 2019 00:00:00 +0000</pubDate>
-      
       <guid>/tags/basketball/</guid>
       <description></description>
     </item>
@@ -68,107 +128,7 @@
       <title>boomers</title>
       <link>/tags/boomers/</link>
       <pubDate>Sun, 25 Aug 2019 00:00:00 +0000</pubDate>
-      
       <guid>/tags/boomers/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>data analysis</title>
-      <link>/tags/data-analysis/</link>
-      <pubDate>Sat, 17 Aug 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/data-analysis/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>data visualisation</title>
-      <link>/tags/data-visualisation/</link>
-      <pubDate>Mon, 23 Dec 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/data-visualisation/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>fifa</title>
-      <link>/tags/fifa/</link>
-      <pubDate>Sat, 17 Aug 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/fifa/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>fifa19</title>
-      <link>/tags/fifa19/</link>
-      <pubDate>Sat, 17 Aug 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/fifa19/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>fitzRoy</title>
-      <link>/tags/fitzroy/</link>
-      <pubDate>Mon, 16 Dec 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/fitzroy/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>gganimate</title>
-      <link>/tags/gganimate/</link>
-      <pubDate>Fri, 30 Aug 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/gganimate/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>ggplot</title>
-      <link>/tags/ggplot/</link>
-      <pubDate>Sat, 17 Aug 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/ggplot/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>ggplot2</title>
-      <link>/tags/ggplot2/</link>
-      <pubDate>Mon, 23 Dec 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/ggplot2/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>jarryd roughead</title>
-      <link>/tags/jarryd-roughead/</link>
-      <pubDate>Wed, 14 Aug 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/jarryd-roughead/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>line chart</title>
-      <link>/tags/line-chart/</link>
-      <pubDate>Fri, 30 Aug 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/line-chart/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>open source</title>
-      <link>/tags/open-source/</link>
-      <pubDate>Mon, 16 Dec 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/open-source/</guid>
       <description></description>
     </item>
     
@@ -176,7 +136,6 @@
       <title>patty mills</title>
       <link>/tags/patty-mills/</link>
       <pubDate>Sun, 25 Aug 2019 00:00:00 +0000</pubDate>
-      
       <guid>/tags/patty-mills/</guid>
       <description></description>
     </item>
@@ -185,17 +144,7 @@
       <title>sentiment</title>
       <link>/tags/sentiment/</link>
       <pubDate>Sun, 25 Aug 2019 00:00:00 +0000</pubDate>
-      
       <guid>/tags/sentiment/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>statistics</title>
-      <link>/tags/statistics/</link>
-      <pubDate>Mon, 23 Dec 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/statistics/</guid>
       <description></description>
     </item>
     
@@ -203,17 +152,7 @@
       <title>teamusa</title>
       <link>/tags/teamusa/</link>
       <pubDate>Sun, 25 Aug 2019 00:00:00 +0000</pubDate>
-      
       <guid>/tags/teamusa/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>tidyverse</title>
-      <link>/tags/tidyverse/</link>
-      <pubDate>Sat, 17 Aug 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/tidyverse/</guid>
       <description></description>
     </item>
     
@@ -221,8 +160,63 @@
       <title>twitter</title>
       <link>/tags/twitter/</link>
       <pubDate>Sun, 25 Aug 2019 00:00:00 +0000</pubDate>
-      
       <guid>/tags/twitter/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>USA</title>
+      <link>/tags/usa/</link>
+      <pubDate>Sun, 25 Aug 2019 00:00:00 +0000</pubDate>
+      <guid>/tags/usa/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>data analysis</title>
+      <link>/tags/data-analysis/</link>
+      <pubDate>Sat, 17 Aug 2019 00:00:00 +0000</pubDate>
+      <guid>/tags/data-analysis/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>fifa</title>
+      <link>/tags/fifa/</link>
+      <pubDate>Sat, 17 Aug 2019 00:00:00 +0000</pubDate>
+      <guid>/tags/fifa/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>fifa19</title>
+      <link>/tags/fifa19/</link>
+      <pubDate>Sat, 17 Aug 2019 00:00:00 +0000</pubDate>
+      <guid>/tags/fifa19/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ggplot</title>
+      <link>/tags/ggplot/</link>
+      <pubDate>Sat, 17 Aug 2019 00:00:00 +0000</pubDate>
+      <guid>/tags/ggplot/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tidyverse</title>
+      <link>/tags/tidyverse/</link>
+      <pubDate>Sat, 17 Aug 2019 00:00:00 +0000</pubDate>
+      <guid>/tags/tidyverse/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>jarryd roughead</title>
+      <link>/tags/jarryd-roughead/</link>
+      <pubDate>Wed, 14 Aug 2019 00:00:00 +0000</pubDate>
+      <guid>/tags/jarryd-roughead/</guid>
       <description></description>
     </item>
     

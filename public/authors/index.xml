@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Authors | Don&#39;t Blame the Data</title>
+    <link>/authors/</link>
+      <atom:link href="/authors/index.xml" rel="self" type="application/rss+xml" />
+    <description>Authors</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>©2020</copyright>
+    <image>
+      <url>/img/logo.jpg</url>
+      <title>Authors</title>
+      <link>/authors/</link>
+    </image>
+    
+    <item>
+      <title></title>
+      <link>/authors/admin/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>/authors/admin/</guid>
+      <description>&lt;p&gt;My name is Jason Zivkovic and I’m a Data Scientist at the Reece Group.&lt;/p&gt;
+&lt;p&gt;Growing up as a sports-mad child and teen, statistics were always in my world. But with the love of sport blinding me, I didn’t even realise it was a love of statistics and data. Then, after meandering (much to my mother’s chagrin) through my early work life, and dabbling with different careers, I discovered edX and DataCamp and the programming-focused data analysis short courses they had available. I started taking them and my love of the data was rekindled! Life was made a lot easier in that I had two managers in a row who’s thirst for analytics was as prominent as mine and they gave me the freedom to learn, explore and discover endless possibilities. To them I will be forever greatful.&lt;/p&gt;
+&lt;p&gt;Kaggle was where I first started dabbling in small analyses - the datasets are as diverse as any wide-eyed newbie could wish for. I still have a look from time to time and think I should write another kernel. I got some great help from the Kaggle community and the code bases there are really good for any new starter. You can find my profile 
+&lt;a href=&#34;https://www.kaggle.com/jaseziv83&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

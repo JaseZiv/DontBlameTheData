@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>sports analytics | Don&#39;t Blame the Data</title>
+    <link>/tags/sports-analytics/</link>
+      <atom:link href="/tags/sports-analytics/index.xml" rel="self" type="application/rss+xml" />
+    <description>sports analytics</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>©2020</copyright><lastBuildDate>Sun, 08 Mar 2020 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/img/logo.jpg</url>
+      <title>sports analytics</title>
+      <link>/tags/sports-analytics/</link>
+    </image>
+    
+    <item>
+      <title>Applying Pythagorean Expectation to Pro Sports - An Intro</title>
+      <link>/blog/pythagorean-expectation-pro-sports/</link>
+      <pubDate>Sun, 08 Mar 2020 00:00:00 +0000</pubDate>
+      <guid>/blog/pythagorean-expectation-pro-sports/</guid>
+      <description>
+
+
+&lt;div id=&#34;introduction&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Introduction&lt;/h1&gt;
+&lt;p&gt;This piece is the first part in a series of posts I will be realeasing that will look to analyse how many wins teams should’ve won given their performances over the season and compare them to their actual wins achieved. To achieve this goal, it will apply a commonly known method in the sports analytics community called Pythagorean Expectation.&lt;/p&gt;
+&lt;div id=&#34;sports-in-the-report&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Sports in the Report:&lt;/h2&gt;
+&lt;p&gt;The the series of posts will look to analyse a number of very popular sports leagues around the globe (ie the NBA), and in some sports’ cases, the analysis will span multiple leagues (ie professional soccer has a number of “major” leagues around the globe).&lt;/p&gt;
+&lt;p&gt;The following professional sports/sporting leagues will be included in the series:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;College Basketball (Men’s and Women’s)&lt;/li&gt;
+&lt;li&gt;NBA&lt;/li&gt;
+&lt;li&gt;NFL&lt;/li&gt;
+&lt;li&gt;NHL&lt;/li&gt;
+&lt;li&gt;Soccer (Football)&lt;/li&gt;
+&lt;li&gt;Australian Rules Football (AFL)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;As they become available, you’ll be able to click the link to them.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;pythagorean-expectation&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Pythagorean Expectation&lt;/h1&gt;
+&lt;div class=&#34;figure&#34;&gt;
+&lt;img src=&#34;/img/Morey%20formula_L.jpg&#34; alt=&#34;&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;GM of the Houston Rockets Daryl Morey. Source: Northwestern.edu&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;While we are easily able to count the wins and losses a team experiences, we might want to be able to assess the number of wins they had against how many wins they should have had, given their performances during the season. This might be able to tell us something about whether any luck or other factors played a part in a team’s success (or failure).&lt;/p&gt;
+&lt;p&gt;Ok great, so how do we know how many wins our team was meant to get?&lt;/p&gt;
+&lt;p&gt;Enter, &lt;em&gt;Pythagorean Expectation&lt;/em&gt;. While many question whether he was actually the creator of the &lt;em&gt;Pythagorean Theorem&lt;/em&gt;, the famed philosopher Pythagoras (c. 570 – c. 495 BC) had nothing to do with &lt;em&gt;Pythagorean Expectation&lt;/em&gt;, rather, another legend of our time and one of the founding fathers of sports analytics, Bill James, came up with this for the sport of baseball.&lt;/p&gt;
+&lt;p&gt;Rather than explaining Pythagorean Expectation myself, why not consult wikipedia:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Pythagorean expectation is a sports analytics formula devised by Bill James to estimate the percentage of games a baseball team “should” have won based on the number of runs they scored and allowed. Comparing a team’s actual and Pythagorean winning percentage can be used to make predictions and evaluate which teams are over-performing and under-performing. The name comes from the formula’s resemblance to the Pythagorean theorem.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;James’ formula is as follows:&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(win\ ratio_{baseball} = \frac{runs\ scored^{k}}{runs\ scored^{k}\ +\ runs\ allowed^{k}}\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Note: the k-factor James came up with was 2, but has since been modified to 1.83 to better “fit”&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Using James’ formula as a blueprint, the GM of the Houston Rockets Daryl Morey too the formula and modified it for basketball, and found that the best fit occurred when &lt;code&gt;k = 13.91&lt;/code&gt;, leaving the folowing formula to calculate Pythagorean Expected wins for Basketball:&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(win\ ratio_{basketball} = \frac{points\ for^{13.91}}{points\ for^{13.91}\ +\ points\ against^{13.91}}\)&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;The output of this formula is then multiplied against games played to give the expected wins for the period analysed. This expected wins value is then compared to the teams actual wins, to determine how much lady luck played a part in the team’s season.&lt;/p&gt;
+&lt;p&gt;You must see a pattern by now. The formula remains the same, while the &lt;code&gt;k&lt;/code&gt; factor changes based on the sport.&lt;/p&gt;
+&lt;div id=&#34;different-ks&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Different K’s&lt;/h2&gt;
+&lt;p&gt;The &lt;code&gt;k&lt;/code&gt; factor changes between sports because of the nature of the sports themselves.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th&gt;Sport&lt;/th&gt;
+&lt;th&gt;K*&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;Basketball&lt;/td&gt;
+&lt;td&gt;13.91&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;NFL&lt;/td&gt;
+&lt;td&gt;2.37&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;NHL&lt;/td&gt;
+&lt;td&gt;2.15&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;EPL&lt;/td&gt;
+&lt;td&gt;1.3&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;em&gt;*k may vary based on who has derived an “optimal” k&lt;/em&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;how-can-we-use-it&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;How can we use it?&lt;/h2&gt;
+&lt;p&gt;The results have shown that winning more games than your Pythagorean Expectation tends to mean a team will decline the following season, while falling short of expectations in the current year tends to mean a team will improve the following season.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;the-formula-in-code&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;The formula in code&lt;/h1&gt;
+&lt;p&gt;The below function in R code will be used extensively throughout the series to calculate our expected wins factor, to be applied to a team’s games played during the season.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# create function to apply the formula
+calculate_expected_wins &amp;lt;- function(points_for, points_against, k) {
+  expected_wins &amp;lt;- ((points_for^k) / ((points_for^k) + (points_against^k)))
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Stay tuned for the first sport in our series, College Basketball!&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

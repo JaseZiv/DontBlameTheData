@@ -1,0 +1,104 @@
+---
+title: "Applying Pythagorean Expectation to Pro Sports - An Intro"
+date: "2020-03-08"
+slug: pythagorean-expectation-pro-sports
+categories:
+  - R
+  - sports analytics
+  - pythagorean expectation
+tags: [R, sports analytics, pythagorean expectation]
+description: "An introductory piece in a multi-part series explaining and applying Pythagorean Expectation"
+featured: ''
+featuredalt: ''
+featuredpath: ''
+linktitle: ''
+type: post
+---
+
+
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>This piece is the first part in a series of posts I will be realeasing that will look to analyse how many wins teams should’ve won given their performances over the season and compare them to their actual wins achieved. To achieve this goal, it will apply a commonly known method in the sports analytics community called Pythagorean Expectation.</p>
+<div id="sports-in-the-report" class="section level2">
+<h2>Sports in the Report:</h2>
+<p>The the series of posts will look to analyse a number of very popular sports leagues around the globe (ie the NBA), and in some sports’ cases, the analysis will span multiple leagues (ie professional soccer has a number of “major” leagues around the globe).</p>
+<p>The following professional sports/sporting leagues will be included in the series:</p>
+<ul>
+<li>College Basketball (Men’s and Women’s)</li>
+<li>NBA</li>
+<li>NFL</li>
+<li>NHL</li>
+<li>Soccer (Football)</li>
+<li>Australian Rules Football (AFL)</li>
+</ul>
+<p>As they become available, you’ll be able to click the link to them.</p>
+<hr />
+</div>
+</div>
+<div id="pythagorean-expectation" class="section level1">
+<h1>Pythagorean Expectation</h1>
+<div class="figure">
+<img src="/img/Morey%20formula_L.jpg" alt="" />
+<p class="caption">GM of the Houston Rockets Daryl Morey. Source: Northwestern.edu</p>
+</div>
+<p>While we are easily able to count the wins and losses a team experiences, we might want to be able to assess the number of wins they had against how many wins they should have had, given their performances during the season. This might be able to tell us something about whether any luck or other factors played a part in a team’s success (or failure).</p>
+<p>Ok great, so how do we know how many wins our team was meant to get?</p>
+<p>Enter, <em>Pythagorean Expectation</em>. While many question whether he was actually the creator of the <em>Pythagorean Theorem</em>, the famed philosopher Pythagoras (c. 570 – c. 495 BC) had nothing to do with <em>Pythagorean Expectation</em>, rather, another legend of our time and one of the founding fathers of sports analytics, Bill James, came up with this for the sport of baseball.</p>
+<p>Rather than explaining Pythagorean Expectation myself, why not consult wikipedia:</p>
+<blockquote>
+<p>Pythagorean expectation is a sports analytics formula devised by Bill James to estimate the percentage of games a baseball team “should” have won based on the number of runs they scored and allowed. Comparing a team’s actual and Pythagorean winning percentage can be used to make predictions and evaluate which teams are over-performing and under-performing. The name comes from the formula’s resemblance to the Pythagorean theorem.</p>
+</blockquote>
+<p>James’ formula is as follows:</p>
+<p><span class="math inline">\(win\ ratio_{baseball} = \frac{runs\ scored^{k}}{runs\ scored^{k}\ +\ runs\ allowed^{k}}\)</span></p>
+<p><em>Note: the k-factor James came up with was 2, but has since been modified to 1.83 to better “fit”</em></p>
+<p>Using James’ formula as a blueprint, the GM of the Houston Rockets Daryl Morey too the formula and modified it for basketball, and found that the best fit occurred when <code>k = 13.91</code>, leaving the folowing formula to calculate Pythagorean Expected wins for Basketball:</p>
+<p><span class="math inline">\(win\ ratio_{basketball} = \frac{points\ for^{13.91}}{points\ for^{13.91}\ +\ points\ against^{13.91}}\)</span></p>
+<p>The output of this formula is then multiplied against games played to give the expected wins for the period analysed. This expected wins value is then compared to the teams actual wins, to determine how much lady luck played a part in the team’s season.</p>
+<p>You must see a pattern by now. The formula remains the same, while the <code>k</code> factor changes based on the sport.</p>
+<div id="different-ks" class="section level2">
+<h2>Different K’s</h2>
+<p>The <code>k</code> factor changes between sports because of the nature of the sports themselves.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Sport</th>
+<th>K*</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Basketball</td>
+<td>13.91</td>
+</tr>
+<tr class="even">
+<td>NFL</td>
+<td>2.37</td>
+</tr>
+<tr class="odd">
+<td>NHL</td>
+<td>2.15</td>
+</tr>
+<tr class="even">
+<td>EPL</td>
+<td>1.3</td>
+</tr>
+</tbody>
+</table>
+<p><em>*k may vary based on who has derived an “optimal” k</em></p>
+</div>
+<div id="how-can-we-use-it" class="section level2">
+<h2>How can we use it?</h2>
+<p>The results have shown that winning more games than your Pythagorean Expectation tends to mean a team will decline the following season, while falling short of expectations in the current year tends to mean a team will improve the following season.</p>
+<hr />
+</div>
+</div>
+<div id="the-formula-in-code" class="section level1">
+<h1>The formula in code</h1>
+<p>The below function in R code will be used extensively throughout the series to calculate our expected wins factor, to be applied to a team’s games played during the season.</p>
+<pre class="r"><code># create function to apply the formula
+calculate_expected_wins &lt;- function(points_for, points_against, k) {
+  expected_wins &lt;- ((points_for^k) / ((points_for^k) + (points_against^k)))
+}</code></pre>
+<p>Stay tuned for the first sport in our series, College Basketball!</p>
+</div>

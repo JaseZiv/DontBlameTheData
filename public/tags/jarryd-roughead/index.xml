@@ -1,23 +1,128 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>jarryd roughead on Don&#39;t Blame The Data</title>
+    <title>jarryd roughead | Don&#39;t Blame the Data</title>
     <link>/tags/jarryd-roughead/</link>
-    <description>Recent content in jarryd roughead on Don&#39;t Blame The Data</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 14 Aug 2019 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="/tags/jarryd-roughead/index.xml" rel="self" type="application/rss+xml" />
-    
+      <atom:link href="/tags/jarryd-roughead/index.xml" rel="self" type="application/rss+xml" />
+    <description>jarryd roughead</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>©2020</copyright><lastBuildDate>Wed, 14 Aug 2019 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/img/logo.jpg</url>
+      <title>jarryd roughead</title>
+      <link>/tags/jarryd-roughead/</link>
+    </image>
     
     <item>
       <title>A tribute to Jarryd Roughead with some obscure data</title>
       <link>/blog/a-tribute-to-jarryd-roughead-using-data-analysis/</link>
       <pubDate>Wed, 14 Aug 2019 00:00:00 +0000</pubDate>
-      
       <guid>/blog/a-tribute-to-jarryd-roughead-using-data-analysis/</guid>
-      <description>Jarryd Roughead - four-time Hawthorn premiership player and all round great man - formally announced his retirement this week, with his last game coming over the weekend against the Gold Coast Suns.
-Not only was he a pivotal four-time premiership star for the Hawthorn Hawks, he survived a hell of a lot of adversity with some very serious cancer scares and handled himself with nothing but grace and dignity.</description>
+      <description>
+&lt;script src=&#34;/rmarkdown-libs/kePrint/kePrint.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;p&gt;Jarryd Roughead - four-time Hawthorn premiership player and all round great man - formally announced his retirement this week, with his last game coming over the weekend against the Gold Coast Suns.&lt;/p&gt;
+&lt;p&gt;Not only was he a pivotal four-time premiership star for the Hawthorn Hawks, he survived a hell of a lot of adversity with some very serious cancer scares and handled himself with nothing but grace and dignity. He came back to captain his club in 2017 and while the on-field element was tough to come back to, he was lumped with the burden of captaining the club after they parted ways with stalwarts Sam Mitchell and Jordan Lewis after the 2016 season.&lt;/p&gt;
+&lt;p&gt;He filled key posts down back during the early part of his career, then moved up forward where he played a very, very good second option, then also carved out a valuable ruck/midfielder role for the club a bit later on. He could play everywhere.&lt;/p&gt;
+&lt;p&gt;I loved him as a footballer, but the man he seems to be makes me envious I don’t know him personally. I wanted to take an in depth (but different) look at the career he had with the mighty Hawks using some frequently used data visualisations.&lt;/p&gt;
+&lt;p&gt;A lot of the articles written about this great man will focus on the more well known numbers of his career… the 282 (to be 283 after his last game), the 572 goals, the four flags, Coleman Medal in 2013 and All Australian selections in 2013-14. Rightfully so too.&lt;/p&gt;
+&lt;p&gt;This post however is going to look at some of the more obscure aspects of Roughy’s playing time so we have a full view of his time in the game.&lt;/p&gt;
+&lt;p&gt;The data for this post originally comes from AFL Tables, but through Jimmy Day’s amazing &lt;a href=&#34;https://github.com/jimmyday12/fitzRoy&#34;&gt;fitzRoy&lt;/a&gt; R package.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(fitzRoy)
+library(stringr)
+library(tidyverse)
+library(lubridate)
+
+theme_set(theme_minimal())
+
+stats_players &amp;lt;- get_afltables_stats(start_date = &amp;quot;2000-01-01&amp;quot;, end_date = &amp;quot;2019-10-01&amp;quot;)
+
+rough &amp;lt;- stats_players %&amp;gt;% 
+  filter(str_detect(First.name, &amp;quot;Jarryd&amp;quot;),
+         str_detect(Surname, &amp;quot;Roughead&amp;quot;))
+
+
+rough &amp;lt;- rough %&amp;gt;% 
+  mutate(final = ifelse(str_detect(Round, &amp;quot;F&amp;quot;), &amp;quot;Y&amp;quot;, &amp;quot;N&amp;quot;),
+         Opponent = ifelse(Home.team == Playing.for, Away.team, Home.team))
+
+
+rough &amp;lt;- rough %&amp;gt;% 
+  mutate(Date = ymd(Date),
+         Weekday = wday(Date, label = T),
+         StartingHour = substr(Local.start.time, 1,2 ),
+         TimePeriod = ifelse(as.numeric(StartingHour) &amp;lt; 17, &amp;quot;Afternoon&amp;quot;, &amp;quot;Evening&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;when-were-roughys-games-played&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;When were Roughy’s games played?&lt;/h1&gt;
+&lt;p&gt;Of Roughy’s 282 games, not one of them was played on a Wednesday - understandable given the Hawks don’t have any ANZAC Day games and no other holiday falls on a Wednesday. Every other day of the week he played. Saturdays are where he played most of his games, with 47% of his games played then.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/tribute_to_roughy_files/figure-html/weekdays-1.png&#34; width=&#34;1056&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;The most frequent starting time of games Roughy played was in the 20th hour of the day (start time between 7pm and 8pm), followed by games starting between 2pm to 3pm.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/tribute_to_roughy_files/figure-html/startTime-1.png&#34; width=&#34;1056&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;where-were-roughs-games-played&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Where were Rough’s games played?&lt;/h1&gt;
+&lt;p&gt;No surprises to see that Roughy played most of his games at either the ’G or in Tasmania.&lt;/p&gt;
+&lt;p&gt;Interestingly, the only interstate finals Rough ever played in were at Subiaco (in Western Australia), where he played three (two of those came in the same finals series - the 2015 season, where the Hawks won their third premiership in a row).&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/tribute_to_roughy_files/figure-html/venues-1.png&#34; width=&#34;1056&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;what-conditions-did-the-great-man-play-in&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;What conditions did the great man play in?&lt;/h1&gt;
+&lt;p&gt;For this section, I will use the weather data from my series on AFL crowds and the data and code for collecting the data can be found &lt;a href=&#34;https://github.com/JaseZiv/AFL-Crowd-Analytics&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# read in data
+rain_data &amp;lt;- read.csv(&amp;quot;https://raw.githubusercontent.com/JaseZiv/AFL-Crowd-Analytics/master/data/cleaned_data/afl_preprocessed.csv&amp;quot;, stringsAsFactors = F)
+
+# select just the required variables, first creating a key to join back to the &amp;#39;rough&amp;#39; df
+rain_data &amp;lt;- rain_data %&amp;gt;% 
+  select(team1, team2, date, rainfall_clean, min_temp, max_temp) %&amp;gt;% 
+  mutate(gameId = paste(team1, team2, date, sep = &amp;quot;-&amp;quot;)) %&amp;gt;% 
+  select(-team1, -team2, -date)
+
+# join data back
+rough &amp;lt;- rough %&amp;gt;% 
+  mutate(gameId = paste(Home.team, Away.team, Date, sep = &amp;quot;-&amp;quot;)) %&amp;gt;% 
+  left_join(rain_data, by = &amp;quot;gameId&amp;quot;) %&amp;gt;% 
+  select(-gameId)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The wettest game Roughy played in was a 2012 loss against Richmond at the MCG, where 28ml fell in 24 hours. In a dirty day for the Hawks, Roughy had an ok game, kicking 2 goals 1 behind and took 6 marks.&lt;/p&gt;
+&lt;p&gt;The coldest game he played in (the snow game last week in Canberra would’ve won had he played) was in Tasmania - no surprises - against the Lions in that horrible premiership hangover year in 2009. The maximum temperature was a crisp 10.8 degrees and there was even 5.2ml of rain. Roughy had a game to forget, with 7 kicks and only 1 goal. A stinker for the whole club.&lt;/p&gt;
+&lt;p&gt;On the flip side, the round three matchup in Rough’s first season against Essendon was the hottest game he played in… again the Hawks lost this one in a tight two-point loss. Rough managed to kick two goals.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;what-about-chas-brownlow&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;What about Chas Brownlow?&lt;/h1&gt;
+&lt;p&gt;Not known for his prolific Brownlow vote getting, the big Rough received 59 votes in total, at an average of 0.225 votes per game.&lt;/p&gt;
+&lt;p&gt;Roughy’s All Australian years in 2013 and 2014 saw his average votes per games peak; he received 0.59 and 0.55 votes per game respectively. Five of his 14 seasons saw zero votes awarded.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/tribute_to_roughy_files/figure-html/votes-1.png&#34; width=&#34;1056&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;who-umpired-the-big-man&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Who umpired the big man?&lt;/h1&gt;
+&lt;p&gt;Roughy has seen 99 umpires during his time in the game.&lt;/p&gt;
+&lt;p&gt;Brett Rosebury officiated 41 of Roughy’s games, with Matt Nicholls and Matt Stevic following closely behind with 37 times each. Twelve umpires officiated Roughy’s games on at least 20 occasions&lt;/p&gt;
+&lt;p&gt;Of the 41 games Rosebury officiated, 13 were in finals - by far the most finals games with Roughy than any umpire. Of the umpires with at least 20 games, only Stephen McBurney hasn’t umpired Rough in a final, while Troy Pannell has umpired him once.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/tribute_to_roughy_files/figure-html/umpires-1.png&#34; width=&#34;1056&#34; /&gt;&lt;/p&gt;
+&lt;div id=&#34;were-some-kinder-to-rough&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Were some kinder to Rough?&lt;/h2&gt;
+&lt;p&gt;We can answer this question looking at Brownlow votes and Free Kick counts… The analysis will limit itself to those 12 umpires who have officiated his games at least 20 times.&lt;/p&gt;
+&lt;p&gt;I always knew I disliked Razor Ray… now I know why. He and Michael Vozzo were the only umpires on this list to fail to award a Brownlow vote to the big man. Shaun Ryan awarded them at a rate of just over half a vote for the 23 games he officiated Roughy’s games.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/tribute_to_roughy_files/figure-html/umpVotes-1.png&#34; width=&#34;1056&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Not only did Shaun Ryan award Brownlow votes at a higher rate than any of his brethren on this list, he also didn’t discriminate between how many frees were awarded for and against the big man, though he did award 1.05 frees against, the fifth highest amount on average.&lt;/p&gt;
+&lt;p&gt;Michael Vozzo had the largest discrepancy between the number of frees, awarding less than 0.5 frees for Roughy (0.478), while penalising the big Rough at a rate of 1.09 per game.&lt;/p&gt;
+&lt;p&gt;At 1.1 frees against per game, the pest Razor and Shane McInerney penalised Rough the most, while Simon Meredith (0.75) penalised him the least (0.84).&lt;/p&gt;
+&lt;p&gt;Troy Pannell awarded Roughy the most frees on average (1.29).&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/tribute_to_roughy_files/figure-html/frees-1.png&#34; width=&#34;1056&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;finally-bouncing&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Finally, Bouncing&lt;/h1&gt;
+&lt;p&gt;Not only was Roughy a superstar footballer, he was a gun junior basketballer.&lt;/p&gt;
+&lt;p&gt;Bouncing is an important piece of the basketball puzzle… I wonder if Rough bounced the ball much?&lt;/p&gt;
+&lt;p&gt;The average number of bounces per player per game is 0.529. Throughout Roughy’s career, he bounced the ball at a rate of 0.12 per game… a fair bit off the average…&lt;/p&gt;
+&lt;p&gt;His rookie season was his best bouncing season at a rate of 0.562 bounces per game.. Clarko must have ironed that out of his game and must have been thrilled in 2009 (other than the premiership hangover) when Roughy didn’t bounce the ball once.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/tribute_to_roughy_files/figure-html/bouncing-1.png&#34; width=&#34;1056&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Well that’s all for this tribute to the great Jarryd Roughead.&lt;/p&gt;
+&lt;p&gt;Looking forward to watching his last game, and then seeing him around the media hopefully.&lt;/p&gt;
+&lt;p&gt;We love ya Rough!&lt;/p&gt;
+&lt;p&gt;As always, feel free to get in touch if there’s any feedback &lt;a href=&#34;https://www.linkedin.com/in/jason-zivkovic-4a0a1926/&#34;&gt;here&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
     </item>
     
   </channel>

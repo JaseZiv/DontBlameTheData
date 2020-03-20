@@ -1,52 +1,479 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>data visualisation on Don&#39;t Blame The Data</title>
+    <title>data visualisation | Don&#39;t Blame the Data</title>
     <link>/tags/data-visualisation/</link>
-    <description>Recent content in data visualisation on Don&#39;t Blame The Data</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 23 Dec 2019 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="/tags/data-visualisation/index.xml" rel="self" type="application/rss+xml" />
-    
+      <atom:link href="/tags/data-visualisation/index.xml" rel="self" type="application/rss+xml" />
+    <description>data visualisation</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>©2020</copyright><lastBuildDate>Mon, 23 Dec 2019 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/img/logo.jpg</url>
+      <title>data visualisation</title>
+      <link>/tags/data-visualisation/</link>
+    </image>
     
     <item>
       <title>Playing List Ages at the Pointy End</title>
       <link>/blog/age-of-best-players/</link>
       <pubDate>Mon, 23 Dec 2019 00:00:00 +0000</pubDate>
-      
       <guid>/blog/age-of-best-players/</guid>
-      <description>This is the second installment at my look at the age distributions of each AFL team for the 2020 season. The fist post (which can be found here), looked at the impact that the statistic chosen to report out the age profiles can have, specifically using the mean versus the median. Rightly so, many pointed out in feedback that some of the younger players on lists may not play as much or might not be as important as some of the older talent and as such, their age shouldn’t be given as much weighting as some of the stars of each team.</description>
+      <description>
+&lt;script src=&#34;/rmarkdown-libs/kePrint/kePrint.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;p&gt;This is the second installment at my look at the age distributions of each AFL team for the 2020 season. The fist post (which can be found &lt;a href=&#34;https://www.dontblamethedata.com/blog/analysing-afl-team-age/&#34;&gt;here&lt;/a&gt;), looked at the impact that the statistic chosen to report out the age profiles can have, specifically using the mean versus the median. Rightly so, many pointed out in feedback that some of the younger players on lists may not play as much or might not be as important as some of the older talent and as such, their age shouldn’t be given as much weighting as some of the stars of each team.&lt;/p&gt;
+&lt;p&gt;That feedback led to this post, which will look at identifying each team’s top line talent and comparing the talent age distribution.&lt;/p&gt;
+&lt;p&gt;To do this, club Best and Fairest (B&amp;amp;F) results have been analysed to identify the top players at each club. Top 10 B&amp;amp;F data comes from &lt;a href=&#34;https://www.foxsports.com.au/afl/afl-best-and-fairest-winners-2019-club-champion-awards-dates-votes-leaderboards-who-won-each-clubs-best-and-fairest/news-story/a6f87d3cadd61c24aff1ba760da5549c&#34;&gt;here&lt;/a&gt;. There are 181 players in total (Richmond have 11 players because of a tie for 10th spot). Given there has been some player movement in the offseason (six players in the list analysed, most notably Tim Kelly to West Coast finished in their team’s top 10 and then changed clubs), these players have now been placed in their new team’s distribution. Doing this has resulted in some teams having more than 10 players analysed, while others less. See below:&lt;/p&gt;
+&lt;table class=&#34;table table-striped&#34; style=&#34;width: auto !important; margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:left;&#34;&gt;
+Team
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;&#34;&gt;
+Number of Players
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Adelaide
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Brisbane Lions
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Carlton
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Collingwood
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Essendon
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Footscray
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+12
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Fremantle
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Geelong
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Gold Coast
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+GWS
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Hawthorn
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Melbourne
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+North Melbourne
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Port Adelaide
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Richmond
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+St Kilda
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Sydney
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+West Coast
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;div id=&#34;the-age-of-top-talent&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;The Age of Top Talent&lt;/h2&gt;
+&lt;p&gt;Using the age of top players at each club to measure the age profile of the club shows us that Geelong’s list is the oldest at the top end, with an average age of 29.2 years. These results highlight a concern for Kangaroos fans, as their club’s top 10 B&amp;amp;F comes in at second on this list at 28.9 years and they missed the finals last year (by a bit too, two games out and in 12th position). Adelaide fans also won’t be too happy given their results last year.&lt;/p&gt;
+&lt;p&gt;Less concerning for GWS, Essendon and the Bulldogs (who each made finals last year), their top players are in the bottom half of this age analysis. Could be some happy times ahead for these clubs?&lt;/p&gt;
+&lt;p&gt;Melbourne has the youngest list, with an average age of 24.7 years, while St Kilda may see this number rise at the start of the 2021 season after they made a decent push in free agency at the end of the 2019 season.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/age_of_best_players_files/figure-html/oldest_teams-1.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;We can also see that there is a negative relationship between the top players age distribution and ladder position at the end of a season - the younger the average age of your teams top 10 B&amp;amp;F, the lower the ladder poisition tended to be (with some exceptions of course as mentioned above).&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/age_of_best_players_files/figure-html/relationship-1.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;It would be interesting to see the impact of this for more than just the most recent season. Might be one for someone else to pick up where I’ve left off, or for a later post.&lt;/p&gt;
+&lt;p&gt;Data and code for this project can be found &lt;a href=&#34;https://github.com/JaseZiv/Dont-Blame-the-Data-Data-Files/tree/master/age_at_top_end&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+</description>
     </item>
     
     <item>
       <title>Analysing AFL Team Age... Properly!</title>
       <link>/blog/analysing-afl-team-age/</link>
       <pubDate>Wed, 04 Dec 2019 00:00:00 +0000</pubDate>
-      
       <guid>/blog/analysing-afl-team-age/</guid>
-      <description>After seeing my beloved Hawthorn Hawks tweet out an article on their website regarding player ages for each team, it got me riled up that the media love to cite Champion Data’s “average age” as their measure.
-As can be seen with the age distribution of players as at the start of the 2020 AFL Premiership Season, the figure is going to be skewed by the older players on lists, especially with guys like Shaun Burgoyne, Kade Simpson, Gary Ablett Junior…</description>
+      <description>
+
+
+&lt;p&gt;After seeing my beloved Hawthorn Hawks tweet out an &lt;a href=&#34;https://www.hawthornfc.com.au/news/2019-12-04/hawks-no-longer-the-oldest-list&#34;&gt;article&lt;/a&gt; on their website regarding player ages for each team, it got me riled up that the media love to cite Champion Data’s “average age” as their measure.&lt;/p&gt;
+&lt;p&gt;As can be seen with the age distribution of players as at the start of the 2020 AFL Premiership Season, the figure is going to be skewed by the older players on lists, especially with guys like Shaun Burgoyne, Kade Simpson, Gary Ablett Junior…&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/analysing_afl_team_age_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;864&#34; /&gt;&lt;/p&gt;
+&lt;div id=&#34;mean-medianwhat-of-it&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Mean, Median…what of it?&lt;/h2&gt;
+&lt;p&gt;The &lt;em&gt;mean&lt;/em&gt;, from &lt;a href=&#34;https://en.wikipedia.org/wiki/Mean&#34;&gt;Wikipedia&lt;/a&gt;;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;For a data set, the arithmetic mean, also called the mathematical expectation or average, is the central value of a discrete set of numbers: specifically, the sum of the values divided by the number of values.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The &lt;em&gt;median&lt;/em&gt;, also &lt;a href=&#34;https://en.wikipedia.org/wiki/Median&#34;&gt;Wikipedia&lt;/a&gt;;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The median is the value separating the higher half from the lower half of a data sample (a population or a probability distribution). For a data set, it may be thought of as the “middle” value. For example, in the data set {1, 3, 3, 6, 7, 8, 9}, the median is 6, the fourth largest, and also the fourth smallest, number in the sample. For a continuous probability distribution, the median is the value such that a number is equally likely to fall above or below it.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;When data is not normally distributed around the mean (as is the case here), using it to describe the measure of centre is misleading. In cases like this, the median provides a more representative statistic. With a positively skewed distribution like the one above, statistics 101 tells us that the median will be less than the average, while the opposite would hold true where the distribution was negatively skewed.&lt;/p&gt;
+&lt;p&gt;The average age of all players on team lists for the 2020 AFL premiership season is 24.17 years, while the median age is 23.6 years.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;div id=&#34;so-why-do-they-still-report-averages&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;So why do they still report averages?&lt;/h3&gt;
+&lt;p&gt;I suspect media outlets report the &lt;em&gt;average&lt;/em&gt; age for two reasons;&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;Who can be bothered explaining the nuances between the mean and the median; or more likely,&lt;/li&gt;
+&lt;li&gt;The average is more prone to pull this number higher for some teams, fuelling the narrative they want to run with.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;implications-of-the-different-measures&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Implications of the different measures&lt;/h3&gt;
+&lt;p&gt;When we plot both the average and median ages of each of the teams, we can see that we get some very different outcomes.&lt;/p&gt;
+&lt;p&gt;We are led to believe that the Geelong Cats have the fourth oldest list but when using the median as the statistic, they are the 11th oldest playing list, with the Kangaroos, GWS, Saints, Demons, Bombers, Bulldogs and Tigers all having older lists than them.&lt;/p&gt;
+&lt;p&gt;Some of the other implications:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The Brisbane Lions have the youngest list for the 2020 season, not the Gold Coast&lt;/li&gt;
+&lt;li&gt;The Hawks are actually the fourth oldest list, with North Melbourne being third&lt;/li&gt;
+&lt;li&gt;The Demons are the the 7th oldest list, not the 12th oldest&lt;/li&gt;
+&lt;li&gt;The Power are the equal third (with the Swans) youngest list, not the 10th oldest&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/analysing_afl_team_age_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;1056&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;why-does-any-of-this-matter&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Why does any of this matter?&lt;/h2&gt;
+&lt;p&gt;How this figure is reported probably doesn’t matter ultimately; the age of a playing list likely isn’t all that important when it comes to the ultimate glory of premiership success, as can be seen in the different age distributions of recent premiership teams in this great little analysis at &lt;a href=&#34;https://thearcfooty.com/2016/04/24/how-old-is-the-typical-premiership-team/&#34;&gt;TheArc&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;That aside, it would be nice to see this figure reported a little more accurately.&lt;/p&gt;
+&lt;p&gt;Rant. Over.&lt;/p&gt;
+&lt;p&gt;The data for this post and the code used to scrape it can be found &lt;a href=&#34;https://github.com/JaseZiv/Dont-Blame-the-Data-Data-Files/tree/master/analysing_afl_team_age&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+</description>
     </item>
     
     <item>
       <title>All roads lead to gganimate</title>
       <link>/blog/all-roads-lead-to-gganimate/</link>
       <pubDate>Fri, 30 Aug 2019 00:00:00 +0000</pubDate>
-      
       <guid>/blog/all-roads-lead-to-gganimate/</guid>
-      <description>This post aims to introduce you to animating ggplot2 visualisations in r using the gganimate package by Thomas Lin Pedersen.
-The post will visualise the theoretical winnings I would’ve had, had I followed the simple model to predict (or tip as it’s known in Australia) winners in the AFL that I explained in this post. The data used in the analysis was collected from the AFL Tables website as part of a larger series I wrote about on AFL crowds.</description>
+      <description>
+
+
+&lt;p&gt;This post aims to introduce you to animating ggplot2 visualisations in r using the &lt;a href=&#34;https://github.com/thomasp85/gganimate&#34;&gt;gganimate&lt;/a&gt; package by Thomas Lin Pedersen.&lt;/p&gt;
+&lt;p&gt;The post will visualise the theoretical winnings I would’ve had, had I followed the simple model to predict (or tip as it’s known in Australia) winners in the AFL that I explained in this &lt;a href=&#34;https://www.dontblamethedata.com/blog/simplifying-afl-tipping/&#34;&gt;post&lt;/a&gt;. The data used in the analysis was collected from the AFL Tables website as part of a larger series I wrote about on AFL crowds. The wider project can be found &lt;a href=&#34;https://github.com/JaseZiv/AFL-Crowd-Analytics&#34;&gt;here&lt;/a&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(tidyverse)
+library(lubridate)
+library(scales)
+library(gganimate)
+
+# set themes
+theme_set(theme_minimal() +
+          theme(axis.title.x = element_text(size = 16, hjust = 1), 
+                axis.title.y = element_text(size = 16), 
+                axis.text = element_text(size = 13),
+                plot.title = element_text(size = 19)))
+
+# create a colour pallette
+colours &amp;lt;- c(&amp;quot;#5EB296&amp;quot;, &amp;quot;#4E9EBA&amp;quot;, &amp;quot;#F29239&amp;quot;, &amp;quot;#C2CE46&amp;quot;, &amp;quot;#FF7A7F&amp;quot;, &amp;quot;#4D4D4D&amp;quot;)
+
+
+#----- Read in data -----#
+afl &amp;lt;- read.csv(&amp;quot;https://raw.githubusercontent.com/JaseZiv/AFL-Crowd-Analytics/master/data/cleaned_data/afl_model_data.csv&amp;quot;, stringsAsFactors = F)
+
+# Data pre-processing -----------------------------------------------------
+
+# make all variables character type to make splitting and string manipulation easier
+afl &amp;lt;- afl %&amp;gt;% 
+  mutate_if(is.factor, as.character) %&amp;gt;% 
+  mutate(team1_score = as.numeric(team1_score),
+         team2_score = as.numeric(team2_score)) %&amp;gt;% 
+  mutate(fav_team = ifelse(AwayLineClose &amp;lt; 0, team2, team1))  %&amp;gt;% 
+  mutate(winning_team = ifelse(winner == &amp;quot;Home&amp;quot;, team1, ifelse(winner == &amp;quot;Away&amp;quot;, team2, &amp;quot;Draw&amp;quot;))) %&amp;gt;% 
+  mutate(fav_win = ifelse(fav_team == winning_team, &amp;quot;Yes&amp;quot;, &amp;quot;No&amp;quot;)) %&amp;gt;% 
+  filter(season &amp;gt;= 2014,
+         !str_detect(round, &amp;quot;F&amp;quot;)) %&amp;gt;%
+  mutate(tip = ifelse(abs(AwayLineClose)  &amp;lt; 3, team1, fav_team))
+
+
+# function to calculate odds
+calculate_odds_available &amp;lt;- function(tip, winning_team, team1, team2, HomeOddsClose, AwayOddsClose) {
+  if(tip == winning_team) {
+    odds_available &amp;lt;- ifelse(tip == team1, HomeOddsClose, AwayOddsClose)
+    } else {
+      odds_available &amp;lt;- 0
+    }
+}
+
+# apply function and calculate returns
+afl &amp;lt;- afl %&amp;gt;% 
+  mutate(odds_available = mapply(calculate_odds_available, tip, winning_team, team1, team2, HomeOddsClose, AwayOddsClose),
+         game_return = odds_available * 10,
+         game_profit = game_return - 10)
+
+
+# create a df that calculates total winnings per round
+money_per_round &amp;lt;- afl %&amp;gt;% 
+  group_by(season, round) %&amp;gt;% 
+  summarise(total_profit = sum(game_profit)) %&amp;gt;% ungroup()
+
+# add a round 0, where all seasons start at $0
+zeros &amp;lt;- data.frame(season = (2014:2019), round = 0, total_profit = 0)
+
+# join zeros df on to money_per_round
+money_per_round &amp;lt;- money_per_round %&amp;gt;% rbind(zeros)
+
+# create a df that sums up winnings cumulatively
+total_money &amp;lt;- money_per_round %&amp;gt;% 
+  arrange(season, round) %&amp;gt;% 
+  group_by(season) %&amp;gt;% 
+  mutate(cumulating_winnings = cumsum(total_profit)) %&amp;gt;% ungroup()&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;lets-start&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Let’s start&lt;/h2&gt;
+&lt;p&gt;Ok, so the first step I took when writing the original post was to create a ggplot2 visual to plot the winnings (or losses) I would’ve made using my simple strategy.&lt;/p&gt;
+&lt;p&gt;This was the result:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;total_money %&amp;gt;%
+  ggplot(aes(x= round, y= cumulating_winnings, 
+             group = season, colour = as.character(season))) +
+  geom_line(size = 1) +
+  geom_point(size = 2, colour = &amp;quot;black&amp;quot;) +
+  labs(x= &amp;quot;Round&amp;quot;, y= &amp;quot;Cumulative Wins/Losses&amp;quot;, colour = &amp;quot;Season&amp;quot;) +
+  scale_x_continuous(limits = c(0, 27), 
+                     labels = c(0, 3, 6, 9, 12, 15, 18, 21, 24), 
+                     breaks = c(0, 3, 6, 9, 12, 15, 18, 21, 24)) +
+  scale_colour_manual(values = colours) +
+  ggtitle(&amp;quot;2017 WOULD&amp;#39;VE BEEN A BAD YEAR&amp;quot;) +
+  theme(legend.position = &amp;quot;bottom&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/gganimate_animation_guide_files/figure-html/static_line1-1.png&#34; width=&#34;1056&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Not bad, but certainly could be improved. To my mind, with six seasons being plotted, the legend is hard to map to the line itself. Also, other than the 2017 season, which was particularly bad, the other seasons’ variation between rounds was hard to see.&lt;/p&gt;
+&lt;p&gt;Additionally, plotting the data this way made it hard to realise without expending far too much energy focusing on where I would’ve made money, and where I would’ve lost it.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;labels-and-annotations&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Labels and Annotations&lt;/h2&gt;
+&lt;p&gt;Yuck - you can’t just simply add the season as a label - you can’t read anything!&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;total_money %&amp;gt;%
+  ggplot(aes(x= round, y= cumulating_winnings, 
+             group = season, colour = as.character(season))) +
+  geom_line(size = 1) +
+  geom_point(size = 2, colour = &amp;quot;black&amp;quot;) +
+  geom_hline(yintercept = 0, linetype = 2, size = 2) + # added in horizontal line at $0
+  geom_text(aes(label = season), hjust = -1, size = 6) + # season labels added
+  scale_colour_manual(values = colours) +
+  labs(x= &amp;quot;Round&amp;quot;, y= &amp;quot;Cumulative Wins/Losses&amp;quot;) +
+  scale_x_continuous(limits = c(0, 27), 
+                     labels = c(1, 3, 6, 9, 12, 15, 18, 21, 24), 
+                     breaks = c(1, 3, 6, 9, 12, 15, 18, 21, 24)) +
+  scale_y_continuous(labels = dollar) + # y-axis formatted to dollar format using scales
+  annotate(&amp;quot;text&amp;quot;, x= 26, y= 6, label = &amp;quot;Break Even $&amp;quot;, size = 6) + # added text to break even line
+  ggtitle(&amp;quot;2017 WOULD&amp;#39;VE BEEN A BAD YEAR&amp;quot;) +
+  theme(legend.position = &amp;quot;none&amp;quot;) # turned legend off&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/gganimate_animation_guide_files/figure-html/static_line2-1.png&#34; width=&#34;1056&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Instead, only one season label was applied, and applied at the end of each line’s run. This looks much better.&lt;/p&gt;
+&lt;p&gt;As we can see, further elements were added to our static chart, including:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Adding the break-even line;&lt;/li&gt;
+&lt;li&gt;Formatting the y-axis to a dollar format; and&lt;/li&gt;
+&lt;li&gt;Adding labels and removing the legend&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This has greatly improved the readability of the plot.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;total_money %&amp;gt;%
+  ggplot(aes(x= round, y= cumulating_winnings, 
+             group = season, colour = as.character(season))) +
+  geom_line(size = 1) +
+  geom_point(size = 2, colour = &amp;quot;black&amp;quot;) +
+  geom_hline(yintercept = 0, linetype = 2, size = 2) + # added in horizontal line at $0
+  geom_text(data = total_money %&amp;gt;% filter(round == max(round)), aes(label = season), 
+            hjust = -0.3, size = 6) + # season labels added, but only one label per season
+  scale_colour_manual(values = colours) +
+  labs(x= &amp;quot;Round&amp;quot;, y= &amp;quot;Cumulative Wins/Losses&amp;quot;) +
+  scale_x_continuous(limits = c(0, 27), 
+                     labels = c(1, 3, 6, 9, 12, 15, 18, 21, 24), 
+                     breaks = c(1, 3, 6, 9, 12, 15, 18, 21, 24)) +
+  scale_y_continuous(labels = dollar) + # y-axis formatted to dollar format using scales
+  annotate(&amp;quot;text&amp;quot;, x= 26, y= 6, label = &amp;quot;Break Even $&amp;quot;, size = 6) + # added text to break even line
+  ggtitle(&amp;quot;2017 WOULD&amp;#39;VE BEEN A BAD YEAR&amp;quot;) +
+  theme(legend.position = &amp;quot;none&amp;quot;) # turned legend off&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/gganimate_animation_guide_files/figure-html/static_line3-1.png&#34; width=&#34;1056&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;hello-animations&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Hello Animations!&lt;/h2&gt;
+&lt;p&gt;While the above chart looks a lot better, there are no theatrics!&lt;/p&gt;
+&lt;p&gt;Enter animations from gganimate!&lt;/p&gt;
+&lt;p&gt;Using an animated plot allows us to remove even more elements. With the right mix of labelling and animation, the y-axis no longer is necessary - with each round, we can follow the winnings or losses as we go, while the break-even line gives us a reference point.&lt;/p&gt;
+&lt;p&gt;The other things that were done here include the slowing down of frames using &lt;code&gt;fps&lt;/code&gt; (frames per second) and adjusting the &lt;code&gt;range&lt;/code&gt; in &lt;code&gt;transition_reveal()&lt;/code&gt; to be longer than the rounds it’s transitioning over (ie adjusting the range to &lt;code&gt;c(0,25)&lt;/code&gt;). This allows the animation to pause after it has finished its cycle.&lt;/p&gt;
+&lt;p&gt;Finally, to increase the size of the output, adjust the &lt;code&gt;width&lt;/code&gt; and &lt;code&gt;height&lt;/code&gt; arguments to your liking.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;total_money_anim &amp;lt;-  total_money %&amp;gt;%
+  ggplot(aes(x= round, y= cumulating_winnings, 
+             group = season, colour = as.character(season))) +
+  geom_line(size = 2) +
+  geom_point(size = 3, colour = &amp;quot;black&amp;quot;) +
+  geom_hline(yintercept = 0, linetype = 2, size = 2) +
+  geom_text(aes(label = paste0(season, &amp;quot;: &amp;quot;, dollar(cumulating_winnings))), 
+            hjust = -0.3, size = 6) +
+  scale_colour_manual(values = colours) +
+  labs(x= &amp;quot;Round&amp;quot;, y= &amp;quot;Cumulative Wins/Losses&amp;quot;) +
+  scale_x_continuous(limits = c(0, 27), 
+                     labels = c(1, 3, 6, 9, 12, 15, 18, 21, 24), 
+                     breaks = c(1, 3, 6, 9, 12, 15, 18, 21, 24)) +
+  scale_y_continuous(labels = dollar) +
+  annotate(&amp;quot;text&amp;quot;, x= 26, y= 6, label = &amp;quot;Break Even $&amp;quot;, size = 6) +
+  ggtitle(&amp;quot;2017 WOULD&amp;#39;VE BEEN A BAD YEAR&amp;quot;) +
+  theme(legend.position = &amp;quot;none&amp;quot;, 
+        axis.text.y = element_blank(), 
+        axis.title.y = element_blank(), 
+        panel.grid.major.y = element_blank(), 
+        panel.grid.minor.y = element_blank()) +
+  transition_reveal(round, range = c(0, 25))
+
+
+animate(total_money_anim, width = 900, height = 900, fps = 5)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/gganimate_animation_guide_files/figure-html/animation_plot-1.gif&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+&lt;p&gt;Hope this has given you some inspiration to go out and start producing some animated visualisations of your own.&lt;/p&gt;
+&lt;p&gt;Let me know in the comments if you have any questions or suggestions.&lt;/p&gt;
+&lt;/div&gt;
+</description>
     </item>
     
     <item>
       <title>Effectively Simplifying AFL Tipping</title>
       <link>/blog/simplifying-afl-tipping/</link>
       <pubDate>Fri, 30 Aug 2019 00:00:00 +0000</pubDate>
-      
       <guid>/blog/simplifying-afl-tipping/</guid>
-      <description>I feel like I always overthink footy tipping. During each round, I make myself believe I have some sort of secret sauce and conjure up visions in my head of nailing a solid roughy… and then fall flat half way through the season and give up…
-So then I thought, surely there’s an easier way. Only problem was, I thought this up last weekend (during the last season of the round)…</description>
+      <description>
+
+
+&lt;p&gt;I feel like I always overthink footy tipping. During each round, I make myself believe I have some sort of secret sauce and conjure up visions in my head of nailing a solid roughy… and then fall flat half way through the season and give up…&lt;/p&gt;
+&lt;p&gt;So then I thought, surely there’s an easier way. Only problem was, I thought this up last weekend (during the last season of the round)…&lt;/p&gt;
+&lt;p&gt;I though to myself, I wonder how many tips I would’ve gotten this year had I just picked the home team every game…&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/afl_tipping_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;1056&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Ok, so 113 winners wouldn’t have been good enough…&lt;/p&gt;
+&lt;hr /&gt;
+&lt;div id=&#34;using-the-market&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Using the Market&lt;/h1&gt;
+&lt;p&gt;Then I thought, what if I just picked the favourites in the betting market for each game, but with a twist? If the line was less than half a goal (3 points - virtually a coin flip), then I’d just go safe and pick the home team.&lt;/p&gt;
+&lt;p&gt;The betting odds data comes from the Australian Sports Betting website which uses Bet365 odds.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/afl_tipping_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;1056&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Wow!!&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Ok, so I would’ve been able to (theoretically) get my tips up to 135 for the 2019 season - a really handy result, and beating some popular machine learning models that are out there! This 135 correct tips also doesn’t count draws being awarded as a point, as some tipping competitions do (although there were no draws in 2019).&lt;/p&gt;
+&lt;p&gt;Other than 2017, this model - I’ll refer to it as &lt;em&gt;“Simple Model”&lt;/em&gt; - would’ve been fairly competitive in each season since 2014.&lt;/p&gt;
+&lt;p&gt;Maybe next year, I’ll know what I’ll employ… my &lt;em&gt;Simple Model&lt;/em&gt;!&lt;/p&gt;
+&lt;hr /&gt;
+&lt;div id=&#34;but-can-we-make-some-money&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;But can we make some money&lt;/h2&gt;
+&lt;p&gt;Ok, so now that I know that the &lt;em&gt;Simple Model&lt;/em&gt;’* performs fairly competitively in tipping comps, I want to know if I can make some money using this method?&lt;/p&gt;
+&lt;p&gt;To answer this question, I’m placing a theoretic $10 on each game and seeing how many bags of cash are left at the end.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/afl_tipping_files/figure-html/unnamed-chunk-4-1.png&#34; width=&#34;1056&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Hmmm… so using this method, I would’ve lost almost $40, even though it was good enough to win some tipping comps. Only in 2018 would this method have worked, with a net profit of $26.82… The 2017 season would’ve been the most brutal, losing just over $245 for the season.&lt;/p&gt;
+&lt;p&gt;To find out where everything went so wrong, we can use an animated line plot that tracks the overall profit throughout each round of the season. To get a rundown on how the animated plot was generated, see this post &lt;a href=&#34;https://www.dontblamethedata.com/blog/all-roads-lead-to-gganimate/&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/afl_tipping_files/figure-html/animation_plot-1.gif&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+&lt;p&gt;During the 2019 season, we can see that things would’ve started off really bleak - after round five, I would’ve been down over $120! Things started to pick up from there though, even being in the black at round 14. At no point during the 2015 and 2017 seasons would this model have been profitable.&lt;/p&gt;
+&lt;p&gt;While keeping me competitive in footy tipping comps, this model certainly isn’t going to allow me to retire anytime soon.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
     </item>
     
   </channel>

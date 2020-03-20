@@ -1,23 +1,1572 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>R programming on Don&#39;t Blame The Data</title>
+    <title>R programming | Don&#39;t Blame the Data</title>
     <link>/tags/r-programming/</link>
-    <description>Recent content in R programming on Don&#39;t Blame The Data</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 16 Dec 2019 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="/tags/r-programming/index.xml" rel="self" type="application/rss+xml" />
-    
+      <atom:link href="/tags/r-programming/index.xml" rel="self" type="application/rss+xml" />
+    <description>R programming</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>©2020</copyright><lastBuildDate>Mon, 16 Dec 2019 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/img/logo.jpg</url>
+      <title>R programming</title>
+      <link>/tags/r-programming/</link>
+    </image>
     
     <item>
       <title>The Agony and the Ecstasy of my first open source contribution</title>
       <link>/blog/first-open-source-contribution/</link>
       <pubDate>Mon, 16 Dec 2019 00:00:00 +0000</pubDate>
-      
       <guid>/blog/first-open-source-contribution/</guid>
-      <description>For the last year or so, I’ve had this desire to contribute to an open source R package, but like a lot of people, I found the thought of tackling the task frightening.
-While I work in a really dynamic and close team every day, and in the world of remote repositories (Git), I’ve had really limited exposure to collaborative working in these remote repositories… We tend more to work on projects largely on our own, so the concepts of pull requests (PRs), merging, forking… well it was all a bit daunting.</description>
+      <description>
+&lt;script src=&#34;/rmarkdown-libs/kePrint/kePrint.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;p&gt;For the last year or so, I’ve had this desire to contribute to an open source R package, but like a lot of people, I found the thought of tackling the task frightening.&lt;/p&gt;
+&lt;p&gt;While I work in a really dynamic and close team every day, and in the world of remote repositories (Git), I’ve had really limited exposure to collaborative working in these remote repositories… We tend more to work on projects largely on our own, so the concepts of pull requests (PRs), merging, forking… well it was all a bit daunting.&lt;/p&gt;
+&lt;p&gt;The following is a glimpse at the journey, and will be explained in this post:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/process.png&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;What this post won’t be is an exhaustive step-by-step guide of every touch point, rather a medium-high level summary.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;Life is not meant to be easy, my child; but take courage: it can be delightful.&lt;/em&gt;
+- George Bernard Shaw&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;With George’s words in mind, I thought time to push myself to jump in.&lt;/p&gt;
+&lt;p&gt;Scrolling through Twitter (as one does when nursing a newborn), I came across a tweet about a package I’ve used in a few analyses on &lt;em&gt;Don’t Blame the Data&lt;/em&gt; that said that the package was now live on CRAN (a great achievement).&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/twitter.png&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;This naturally led me to the repository on &lt;a href=&#34;https://github.com/jimmyday12/fitzRoy&#34;&gt;github&lt;/a&gt;, at which point I noticed there were open “Issues”, and one of these being for a function to create a ladder for any round.&lt;/p&gt;
+&lt;div id=&#34;the-fitzroy-package&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;The fitzRoy Package&lt;/h2&gt;
+&lt;p&gt;The fitzRoy package, created by &lt;a href=&#34;https://github.com/jimmyday12&#34;&gt;James Day&lt;/a&gt;, is a package designed to help R users extract and analyse Australian Football League (AFL) data for both the men’s and women’s competitions:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The goal of fitzRoy is to provide a set of functions that allows for users to easily get access to AFL data from sources such as afltables.com and footywire.com. There are also tools for processing and cleaning that data.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;While I certainly haven’t done any extensive analysis on this point, I would guess that a large proportion of all AFL data analytics projects are completed with the help of this package.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;jumping-right-in&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Jumping right in&lt;/h2&gt;
+&lt;p&gt;So rather than think about how good it would be to contribute, why not just get in touch with James and offer to address the open issue…&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/communicate.png&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;James was super easy to deal with, and boy was he helpful (and patient with this bumbling fool).&lt;/p&gt;
+&lt;p&gt;Then came the time to write the function. Well sort of write the function. Fortunately, I had already written this function for a linear regression model I built for predicting the attendance of AFL home and away games &lt;a href=&#34;https://www.dontblamethedata.com/blog/building-a-linear-regression-model-in-r-to-predict-afl-crowds/&#34;&gt;here&lt;/a&gt;. The function was aptly named &lt;code&gt;return_ladder()&lt;/code&gt;… I’m a Data Scientist, not a poet.&lt;/p&gt;
+&lt;p&gt;The function was modified somewhat though to take advantage of the &lt;code&gt;get_match_results()&lt;/code&gt; function in the package to return the starting data frame for &lt;code&gt;return_ladder&lt;/code&gt; When writing the function, I wanted to address the requirement that the ladder be returned for any round, and for it to be returned for even earlier than the 2011 season, which another API already offered.&lt;/p&gt;
+&lt;p&gt;With that in mind, the function written takes in three arguments, all of which have the option of being blank, as well as specified:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;match_results_df&lt;/code&gt; - A data frame extracted using &lt;code&gt;get_match_results()&lt;/code&gt;,&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;season_round&lt;/code&gt; - The round of the season the user wants the ladder for,&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;season&lt;/code&gt; - The season the ladder is required for.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;If these are all left blank, the function will return the ladder for every round of every season since the 1897 season.&lt;/p&gt;
+&lt;p&gt;Having the function written was one thing, it also required roxygen notes, that are returned to the user in the help docs of the function. Hadley’s &lt;a href=&#34;http://r-pkgs.had.co.nz/man.html&#34;&gt;R Packages&lt;/a&gt; book does a good job explaining these.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;im-ready-to-be-a-contributor&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;I’m ready to be a contributor&lt;/h2&gt;
+&lt;p&gt;I’ve written the function, the help docs, and have checked the package using &lt;code&gt;devtools::check()&lt;/code&gt; to make sure I haven’t made any mistakes that would cause the package to fail it’s build… Nothing looks alarming (well there are some warnings about &lt;em&gt;No visible binding for global variable&lt;/em&gt; or something but I’m sure there’s nothing to worry about), but all looked good to me.&lt;/p&gt;
+&lt;p&gt;My local changes were committed and a PR was made, I’m ready to be a contributor, and then bam! &lt;strong&gt;Failed codecov&lt;/strong&gt;!! What is that?! An email to James and I’m told it’s because there were no tests written. Ok cool, I’ll write some tests… WHAT ARE TESTS?! HOW DO I WRITE THESE TESTS?! I found this &lt;a href=&#34;https://katherinemwood.github.io/post/testthat/&#34;&gt;post&lt;/a&gt; to be really helpful, as well as Hadley’s tests in the R Packages book.&lt;/p&gt;
+&lt;p&gt;Once these tests were written, I commit my changes, I’m ready to be a contributor, and then bam! Changes have been made to the master that I haven’t got in my PR… ok so I need to merge the master in my PR - easy (for some maybe, I have no idea). A bit of googling, seems pretty easy, but after typing &lt;code&gt;git merge origin/master&lt;/code&gt;, I get this editor pop up in terminal:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/vim.png&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;My initial thoughts? What the is this?!&lt;/p&gt;
+&lt;p&gt;Bit of googling, ok, it’s a VIM editor. Easy. Write a commit message and then all should be good… WAIT?! How do I get out of this screen?! Bit more googling and after typing &lt;code&gt;:WQ&lt;/code&gt;, we’re ready to rock.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;what.-am.-i.-doing&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;What. Am. I. Doing?!!&lt;/h2&gt;
+&lt;p&gt;Ok so things were looking good. I’d committed my changes, all checks passed, happy days.&lt;/p&gt;
+&lt;p&gt;You know that line I had earlier about &lt;em&gt;well there are some warnings about ‘No visible binding for global variable’ or something but I’m sure there’s nothing to worry about&lt;/em&gt;?? Well that was nagging away at me, because as James had advised, these would cause issues when trying to include the update on CRAN. So I fixed those, and also updated the Men’s vignette. It’s at this point that I’m a bit hazy on what I did, but all I know is is that I must have spun myself into a Git web…&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;Master&lt;/code&gt; of my forked repo was two commits behind my branch &lt;code&gt;Ladder&lt;/code&gt;, which was five commit’s ahead of &lt;code&gt;Origin/Master&lt;/code&gt;. What. Am. I. Doing?! Trial and error, error and trial. After much heartache (I can’t stress enough how much heartache), eventually, I got myself all sorted, created another PR and… SUCCESS!!!&lt;/p&gt;
+&lt;p&gt;Finally I can say I have successfully made my first contribution to an open source project. I hope that users of this package find the function useful and as with everything, can find improvements to make it even better.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;a-quick-look-at-the-function&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;A quick look at the function&lt;/h2&gt;
+&lt;p&gt;The below code gives a glimpse into how the function can be used.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#----- Install and Load Package -----#
+# devtools::install_github(&amp;quot;jimmyday12/fitzRoy&amp;quot;)
+
+library(fitzRoy)
+library(tidyverse)
+library(kableExtra)
+
+# get a data frame of AFL data using get_match_results
+afl_data &amp;lt;- get_match_results()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Return the ladder for all teams, for all rounds since 1897&lt;/strong&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# apply the return_ladder function
+ladder &amp;lt;- return_ladder(match_results_df = afl_data)
+head(ladder, 16) %&amp;gt;% 
+  kable(format = &amp;quot;html&amp;quot;, escape = F) %&amp;gt;%
+  kable_styling(&amp;quot;striped&amp;quot;) %&amp;gt;% 
+  scroll_box(width = &amp;quot;750px&amp;quot;, height = &amp;quot;600px&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;div style=&#34;border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:600px; overflow-x: scroll; width:750px; &#34;&gt;
+&lt;table class=&#34;table table-striped&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+Season
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+Team
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+Round.Number
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+Season.Points
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+Score.For
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+Score.Against
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+Percentage
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+Ladder.Position
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1897
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Fitzroy
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+49
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3.0625000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1897
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Collingwood
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+41
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.5625000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1897
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Essendon
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+47
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+24
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.9583333
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1897
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Melbourne
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+44
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+27
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.6296296
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1897
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Sydney
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+27
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+44
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.6136364
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1897
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Geelong
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+24
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+47
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.5106383
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1897
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+St Kilda
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+41
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.3902439
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1897
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Carlton
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+49
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.3265306
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1897
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Fitzroy
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+115
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+42
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.7380952
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1897
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Melbourne
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+108
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+46
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.3478261
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1897
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Collingwood
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+91
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+46
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.9782609
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1897
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Essendon
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+77
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+74
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.0405405
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1897
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Sydney
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+67
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+80
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.8375000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1897
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Carlton
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+52
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+89
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.5842697
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1897
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+St Kilda
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+42
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+107
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.3925234
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1897
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Geelong
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+43
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+111
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.3873874
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;Return the ladder for round 1 for all teams since 1897&lt;/strong&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# what if we want the ladder for a specific round?
+ladder_round_1 &amp;lt;- return_ladder(match_results_df = afl_data, season_round = 1)
+tail(ladder_round_1, 18) %&amp;gt;% 
+  kable(format = &amp;quot;html&amp;quot;, escape = F) %&amp;gt;%
+  kable_styling(&amp;quot;striped&amp;quot;) %&amp;gt;% 
+  scroll_box(width = &amp;quot;750px&amp;quot;, height = &amp;quot;600px&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;div style=&#34;border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:600px; overflow-x: scroll; width:750px; &#34;&gt;
+&lt;table class=&#34;table table-striped&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+Season
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+Team
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+Round.Number
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+Season.Points
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+Score.For
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+Score.Against
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+Percentage
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+Ladder.Position
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2019
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+GWS
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+112
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+40
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.8000000
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2019
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Fremantle
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+141
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+59
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.3898305
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2019
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Brisbane Lions
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+102
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+58
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.7586207
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2019
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Hawthorn
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+87
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+55
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.5818182
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2019
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Richmond
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+97
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+64
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.5156250
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2019
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Port Adelaide
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+87
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+61
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.4262295
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2019
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Footscray
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+82
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+65
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.2615385
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2019
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Geelong
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+72
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+65
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.1076923
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2019
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+St Kilda
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+85
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+84
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.0119048
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2019
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Gold Coast
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+84
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+85
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.9882353
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2019
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Collingwood
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+65
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+72
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.9027778
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2019
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Sydney
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+65
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+82
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.7926829
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+12
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2019
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Melbourne
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+61
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+87
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.7011494
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+13
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2019
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Carlton
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+64
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+97
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.6597938
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2019
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Adelaide
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+55
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+87
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.6321839
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+15
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2019
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+West Coast
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+58
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+102
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.5686275
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2019
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+North Melbourne
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+59
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+141
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.4184397
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+17
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2019
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Essendon
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+40
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+112
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.3571429
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+18
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;Return the ladder for every round of the 2018 season&lt;/strong&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# finally, for every round in just one season
+ladder_2018 &amp;lt;- return_ladder(match_results_df = afl_data, season = 2018)
+head(ladder_2018, 18) %&amp;gt;% 
+  kable(format = &amp;quot;html&amp;quot;, escape = F) %&amp;gt;%
+  kable_styling(&amp;quot;striped&amp;quot;) %&amp;gt;% 
+  scroll_box(width = &amp;quot;750px&amp;quot;, height = &amp;quot;600px&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;div style=&#34;border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:600px; overflow-x: scroll; width:750px; &#34;&gt;
+&lt;table class=&#34;table table-striped&#34; style=&#34;margin-left: auto; margin-right: auto;&#34;&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+Season
+&lt;/th&gt;
+&lt;th style=&#34;text-align:left;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+Team
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+Round.Number
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+Season.Points
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+Score.For
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+Score.Against
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+Percentage
+&lt;/th&gt;
+&lt;th style=&#34;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&#34;&gt;
+Ladder.Position
+&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2018
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+GWS
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+133
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+51
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2.6078431
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2018
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Port Adelaide
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+110
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+60
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.8333333
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2018
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Hawthorn
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+101
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+67
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.5074627
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+3
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2018
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Gold Coast
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+55
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+39
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.4102564
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2018
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Sydney
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+115
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+86
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.3372093
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+5
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2018
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+St Kilda
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+107
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+82
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.3048780
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+6
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2018
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Richmond
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+121
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+95
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.2736842
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+7
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2018
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Essendon
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+99
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+87
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.1379310
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+8
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2018
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Geelong
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+4
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+97
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+94
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1.0319149
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+9
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2018
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Melbourne
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+94
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+97
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.9690722
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+10
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2018
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Adelaide
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+87
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+99
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.8787879
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+11
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2018
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Carlton
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+95
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+121
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.7851240
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+12
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2018
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Brisbane Lions
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+82
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+107
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.7663551
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+13
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2018
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+West Coast
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+86
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+115
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.7478261
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+14
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2018
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+North Melbourne
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+39
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+55
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.7090909
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+15
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2018
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Collingwood
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+67
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+101
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.6633663
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+16
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2018
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Fremantle
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+60
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+110
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.5454545
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+17
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+2018
+&lt;/td&gt;
+&lt;td style=&#34;text-align:left;&#34;&gt;
+Footscray
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+1
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+51
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+133
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+0.3834586
+&lt;/td&gt;
+&lt;td style=&#34;text-align:right;&#34;&gt;
+18
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;p&gt;I will be writing a follow up post analysing the AFL ladder through history to really test the function out!&lt;/p&gt;
+&lt;p&gt;Stay tuned.&lt;/p&gt;
+&lt;/div&gt;
+</description>
     </item>
     
   </channel>

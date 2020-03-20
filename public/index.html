@@ -1,709 +1,1951 @@
-<!doctype html>
-<html lang="en">
-  <head>
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+
   <meta charset="utf-8">
-<title>Don&#39;t Blame The Data</title>
-<meta name="description" content="A blog for sports and current affairs data analysis and machine learning using R programming.">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-
-
-  <meta name="generator" content="Hugo 0.54.0" />
-  
-<meta itemprop="name" content="Don&#39;t Blame The Data">
-<meta itemprop="description" content="">
-
-
-  <meta property="og:title" content="Don&#39;t Blame The Data" />
-<meta property="og:description" content="" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="/" />
-
-<meta property="og:updated_time" content="2019-12-23T00:00:00&#43;00:00"/>
-
-  <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Don&#39;t Blame The Data"/>
-<meta name="twitter:description" content=""/>
-<meta name="twitter:site" content="@jaseziv"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.8.0">
 
   
 
-  <link rel="stylesheet"
-      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
+  
+  
+  
+  
   
     
-      <link rel="stylesheet" href="/css/normalize.css">
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,800,900|Source+Sans+Pro:400,700">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.1.0/css/flag-icon.min.css">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css">
-      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.9.0/css/all.css" integrity="sha384-i1LQnF23gykqWXg6jxC2ZbCbUMxyw5gLZY6UiUS98LYV5unm8GWmfkIS6jqJfb4E" crossorigin="anonymous">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.min.css" />
-      <link rel="stylesheet" href="/css/main.min.css">
-      <link rel="stylesheet" href="/css/add-on.css">
+    
     
   
   
-  
-  
-  
-</head>
 
-  <body>
+  <meta name="author" content="Jason Zivkovic">
+
+  
+  
+  
     
-<header id="site-header">
-  <nav id="site-nav">
-    <h1 class="nav-title">
-      <a href="/">
+  
+  <meta name="description" content="Data Scientist">
+
+  
+  <link rel="alternate" hreflang="en-us" href="/">
+
+  
+
+
+  
+  
+  
+  <meta name="theme-color" content="#3f51b5">
+  
+
+  
+  
+  
+  <script src="/js/mathjax-config.js"></script>
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-1/css/all.min.css" integrity="sha256-4w9DunooKSr3MFXHXWyFER38WmPdm361bQS/2KUWZbU=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
         
-          Don&#39;t Blame the Data
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
         
-      </a>
-    </h1>
-    <menu id="site-nav-menu" class="flyout-menu">
       
-        <a href="/about/" class="link"><i class="fas fa-home">&nbsp;</i>Home</a>
-      
-        <a href="/about/" class="link"><i class="far fa-id-card">&nbsp;</i>About</a>
-      
-        <a href="/blog/" class="link"><i class="far fa-newspaper">&nbsp;</i>Blog</a>
-      
-        <a href="/projects/" class="link"><i class="far fa-clone">&nbsp;</i>Projects</a>
-      
-        <a href="/categories/" class="link"><i class="fas fa-sitemap">&nbsp;</i>Categories</a>
-      
-        <a href="/contact/" class="link"><i class="far fa-envelope">&nbsp;</i>Contact</a>
-      
-      <a href="#share-menu" class="share-toggle"><i class="fas fa-share-alt">&nbsp;</i>Share</a>
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.css" integrity="sha256-SHMGCYmST46SoyGgo4YR/9AlK1vf3ff84Aq9yK4hdqM=" crossorigin="anonymous">
+    
+
+    
+
+    
+    
       
 
-    </menu>
-    
-
-    <a href="#share-menu" class="share-toggle"><i class="fas fa-share-alt fa-2x">&nbsp;</i></a>
-    
-    <a href="#site-nav" class="nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
-  </nav>
-  
-  
-    <menu id="share-menu" class="flyout-menu">
-      <h1>Share Post</h1>
-      
-
-
-
-
-  
-    
-    <a href="//twitter.com/share?text=Don%27t%20Blame%20The%20Data&amp;url=%2f" target="_blank" rel="noopener" class="share-btn twitter">
-        <i class="fab fa-twitter"></i><p>&nbsp;Twitter</p>
-      </a>
-  
-
-  
-      <a href="//www.facebook.com/sharer/sharer.php?u=%2f" target="_blank" rel="noopener" class="share-btn facebook">
-        <i class="fab fa-facebook"></i><p>&nbsp;Facebook</p>
-        </a>
-  
-
-  
-    <a href="//www.reddit.com/submit?url=%2f&amp;title=Don%27t%20Blame%20The%20Data" target="_blank" rel="noopener" class="share-btn reddit">
-          <i class="fab fa-reddit-alien"></i><p>&nbsp;Reddit</p>
-        </a>
-  
-
-  
-        <a href="//www.linkedin.com/shareArticle?url=%2f&amp;title=Don%27t%20Blame%20The%20Data" target="_blank" rel="noopener" class="share-btn linkedin">
-            <i class="fab fa-linkedin"></i><p>&nbsp;LinkedIn</p>
-          </a>
-  
-
-  
-        <a href="//www.pinterest.com/pin/create/button/?url=%2f&amp;description=Don%27t%20Blame%20The%20Data" target="_blank" rel="noopener" class="share-btn pinterest">
-          <i class="fab fa-pinterest-p"></i><p>&nbsp;Pinterest</p>
-        </a>
-  
-
-  
-        <a href="mailto:?subject=Check out this post by %7b%20%20%20%20%20%20%20%20map%5b%5d%7d&amp;body=%2f" target="_blank" class="share-btn email" data-proofer-ignore>
-          <i class="fas fa-envelope"></i><p>&nbsp;Email</p>
-        </a>
-  
-
-
-    </menu>
-  
-</header>
-
-    <div id="wrapper">
-      <section id="site-intro">
-  <a href="/"><img src="/img/main/logo.jpg" class="circle" width="100" alt="" /></a>
-  <header>
-    <h1>Don't Blame the Data</h1>
-  </header>
-  <main>
-    <p>You can disagree with me, but don't blame the data</p>
-  </main>
-  
-    <footer>
-      <ul class="socnet-icons">
-        
-    <li><a href="/index.xml" type="application/rss+xml" target="_blank" title="RSS" class="fas fa-rss"></a></li>
-
-
-        <li><a href="//github.com/JaseZiv" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
-
-
-
-
-
-
-
-
-
-
-<li><a href="//medium.com/@jaseziv83" target="_blank" rel="noopener" title="Medium" class="fab fa-medium"></a></li>
-<li><a href="//linkedin.com/in/jason-zivkovic-4a0a1926" target="_blank" rel="noopener" title="LinkedIn" class="fab fa-linkedin"></a></li>
-
-
-
-
-
-<li><a href="//reddit.com/user/jaseziv" target="_blank" rel="noopener" title="Reddit" class="fab fa-reddit"></a></li>
-
-
-
-
-
-
-
-
-
-<li><a href="//twitter.com/jaseziv" target="_blank" rel="noopener" title="Twitter" class="fab fa-twitter"></a></li>
-
-
-
-
-
-
-
-
-
-
-<li><a href="mailto:jaseziv83@gmail.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
-
-      </ul>
-    </footer>
-  
-</section>
-
-      <main id="site-main">
-        
-        
-          <article class="post">
-  <header>
-  <div class="title">
-    
-        <h2><a href="/blog/age-of-best-players/">Playing List Ages at the Pointy End</a></h2>
-    
-    
-        <p>Measuring the 2020 season age of your AFL team&#39;s best players</p>
-    
-</div>
-  <div class="meta">
-    <time class="published" datetime="2019-12-23 00:00:00 &#43;0000 UTC">
-      December 23, 2019
-    </time>
-    <span class="author"></span>
-    
-        <p>3 minute read</p>
-    
-  </div>
-</header>
-
-  
-
-  
-  <p>This is the second installment at my look at the age distributions of each AFL team for the 2020 season. The fist post (which can be found <a href="https://www.dontblamethedata.com/blog/analysing-afl-team-age/">here</a>), looked at the impact that the statistic chosen to report out the age profiles can have, specifically using the mean versus the median. Rightly so, many pointed out in feedback that some of the younger players on lists may not play as much or might not be as important as some of the older talent and as such, their age shouldn’t be given as much&hellip;</p>
-  <footer>
-    <a href="/blog/age-of-best-players/" class="button big">Read more</a>
-    <ul class="stats">
-  
-    
-    
-      <li class="categories">
-        <ul>
-          
-            
-            <li><a class="article-category-link" href="/categories/afl">afl</a></li>
-          
-            
-            <li><a class="article-category-link" href="/categories/analytics">analytics</a></li>
-          
-        </ul>
-      </li>
-    
-  
-  
-    
-    
-      <li class="tags">
-        <ul>
-          
-            
-            <li><a class="article-category-link" href="/tags/afl">afl</a></li>
-          
-            
-            <li><a class="article-category-link" href="/tags/ggplot2">ggplot2</a></li>
-          
-            
-            <li><a class="article-category-link" href="/tags/data-visualisation">data visualisation</a></li>
-          
-            
-            <li><a class="article-category-link" href="/tags/analytics">analytics</a></li>
-          
-            
-            <li><a class="article-category-link" href="/tags/statistics">statistics</a></li>
-          
-        </ul>
-      </li>
-    
-  
-</ul>
-
-  </footer>
-</article>
-
-        
-          <article class="post">
-  <header>
-  <div class="title">
-    
-        <h2><a href="/blog/first-open-source-contribution/">The Agony and the Ecstasy of my first open source contribution</a></h2>
-    
-    
-        <p>My first open source contribution wasn&#39;t all smooth sailing, but it sure was thoroughly rewarding</p>
-    
-</div>
-  <div class="meta">
-    <time class="published" datetime="2019-12-16 00:00:00 &#43;0000 UTC">
-      December 16, 2019
-    </time>
-    <span class="author"></span>
-    
-        <p>9 minute read</p>
-    
-  </div>
-</header>
-
-  
-
-  
-  <p>For the last year or so, I’ve had this desire to contribute to an open source R package, but like a lot of people, I found the thought of tackling the task frightening.</p>
-  <footer>
-    <a href="/blog/first-open-source-contribution/" class="button big">Read more</a>
-    <ul class="stats">
-  
-    
-    
-      <li class="categories">
-        <ul>
-          
-            
-            <li><a class="article-category-link" href="/categories/r">R</a></li>
-          
-            
-            <li><a class="article-category-link" href="/categories/open-source">open source</a></li>
-          
-            
-            <li><a class="article-category-link" href="/categories/programming">programming</a></li>
-          
-            
-            <li><a class="article-category-link" href="/categories/fitzroy">fitzRoy</a></li>
-          
-        </ul>
-      </li>
-    
-  
-  
-    
-    
-      <li class="tags">
-        <ul>
-          
-            
-            <li><a class="article-category-link" href="/tags/r">R</a></li>
-          
-            
-            <li><a class="article-category-link" href="/tags/r-programming">R programming</a></li>
-          
-            
-            <li><a class="article-category-link" href="/tags/open-source">open source</a></li>
-          
-            
-            <li><a class="article-category-link" href="/tags/fitzroy">fitzRoy</a></li>
-          
-        </ul>
-      </li>
-    
-  
-</ul>
-
-  </footer>
-</article>
-
-        
-          <article class="post">
-  <header>
-  <div class="title">
-    
-        <h2><a href="/blog/analysing-afl-team-age/">Analysing AFL Team Age... Properly!</a></h2>
-    
-    
-        <p>When using the median would be a more appropriate measure of the oldest (or youngest) AFL playing lists</p>
-    
-</div>
-  <div class="meta">
-    <time class="published" datetime="2019-12-04 00:00:00 &#43;0000 UTC">
-      December 4, 2019
-    </time>
-    <span class="author"></span>
-    
-        <p>3 minute read</p>
-    
-  </div>
-</header>
-
-  
-
-  
-  <p>After seeing my beloved Hawthorn Hawks tweet out an <a href="https://www.hawthornfc.com.au/news/2019-12-04/hawks-no-longer-the-oldest-list">article</a> on their website regarding player ages for each team, it got me riled up that the media love to cite Champion Data’s “average age” as their measure.</p>
-  <footer>
-    <a href="/blog/analysing-afl-team-age/" class="button big">Read more</a>
-    <ul class="stats">
-  
-    
-    
-      <li class="categories">
-        <ul>
-          
-            
-            <li><a class="article-category-link" href="/categories/afl">afl</a></li>
-          
-            
-            <li><a class="article-category-link" href="/categories/analytics">analytics</a></li>
-          
-        </ul>
-      </li>
-    
-  
-  
-    
-    
-      <li class="tags">
-        <ul>
-          
-            
-            <li><a class="article-category-link" href="/tags/afl">afl</a></li>
-          
-            
-            <li><a class="article-category-link" href="/tags/ggplot2">ggplot2</a></li>
-          
-            
-            <li><a class="article-category-link" href="/tags/data-visualisation">data visualisation</a></li>
-          
-            
-            <li><a class="article-category-link" href="/tags/analytics">analytics</a></li>
-          
-            
-            <li><a class="article-category-link" href="/tags/statistics">statistics</a></li>
-          
-        </ul>
-      </li>
-    
-  
-</ul>
-
-  </footer>
-</article>
-
-        
-        
-<div class="pagination">
-  
-    <a href="#" class="disabled button big previous"><i class="fas fa-angle-left"></i></a>
-  
-  
-    <a href="/page/2/" class="button big next"><i class="fas fa-angle-right"></i></a>
-  
-</div>
-
-      </main>
-      <section id="site-sidebar">
-  
-    <section id="recent-posts">
-      <header>
-        <h1>Recent posts</h1>
-      </header>
-      
-      <article class="mini-post">
-        <section>
-          
-
-        </section>
-        <header>
-          <h1><a href="/blog/age-of-best-players/">Playing List Ages at the Pointy End</a></h1>
-          <time class="published" datetime="">December 23, 2019</time>
-        </header>
-      </article>
-      
-      <article class="mini-post">
-        <section>
-          
-
-        </section>
-        <header>
-          <h1><a href="/blog/first-open-source-contribution/">The Agony and the Ecstasy of my first open source contribution</a></h1>
-          <time class="published" datetime="">December 16, 2019</time>
-        </header>
-      </article>
-      
-      <article class="mini-post">
-        <section>
-          
-
-        </section>
-        <header>
-          <h1><a href="/blog/analysing-afl-team-age/">Analysing AFL Team Age... Properly!</a></h1>
-          <time class="published" datetime="">December 4, 2019</time>
-        </header>
-      </article>
-      
-      <article class="mini-post">
-        <section>
-          
-
-        </section>
-        <header>
-          <h1><a href="/blog/all-roads-lead-to-gganimate/">All roads lead to gganimate</a></h1>
-          <time class="published" datetime="">August 30, 2019</time>
-        </header>
-      </article>
-      
-      <article class="mini-post">
-        <section>
-          
-
-        </section>
-        <header>
-          <h1><a href="/blog/simplifying-afl-tipping/">Effectively Simplifying AFL Tipping</a></h1>
-          <time class="published" datetime="">August 30, 2019</time>
-        </header>
-      </article>
       
       
-        <a href="/blog/" class="button">See more</a>
+
       
-    </section>
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js" integrity="sha256-Md1qLToewPeKjfAHU1zyPwOutccPAm5tahnaw7Osw0A=" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+
   
 
+  
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CRoboto:400,400italic,700%7CRoboto+Mono&display=swap">
+  
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.css">
+
+  
+
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-145056765-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+      dataLayer.push(arguments);
+  }
+
+  function trackOutboundLink(url, target) {
+    gtag('event', 'click', {
+         'event_category': 'outbound',
+         'event_label': url,
+         'transport_type': 'beacon',
+         'event_callback': function () {
+           if (target !== '_blank') {
+             document.location = url;
+           }
+         }
+    });
+    console.debug("Outbound link clicked: " + url);
+  }
+
+  function onClickCallback(event) {
+    if ((event.target.tagName !== 'A') || (event.target.host === window.location.host)) {
+      return;
+    }
+    trackOutboundLink(event.target, event.target.getAttribute('target'));  
+  }
+
+  gtag('js', new Date());
+  gtag('config', 'UA-145056765-1', {});
+
+  
+  document.addEventListener('click', onClickCallback, false);
+</script>
+
+
+  
+
+
+  
+  <link rel="alternate" href="/index.xml" type="application/rss+xml" title="Don&#39;t Blame the Data">
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
+  <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
+
+  <link rel="canonical" href="/">
+
+  
+  
+  
+  
   
     
-      <section id="categories">
-        <header>
-          <h1><a href="/categories">Categories</a></h1>
-        </header>
-        <ul>
-          
-            
-          
-          
-          <li>
-            
-              <a href="/categories/r/">R<span class="count">8</span></a>
-            
-          
-          <li>
-            
-              <a href="/categories/analytics/">analytics<span class="count">7</span></a>
-            
-          
-          <li>
-            
-              <a href="/categories/afl/">afl<span class="count">6</span></a>
-            
-          
-          <li>
-            
-              <a href="/categories/sport/">sport<span class="count">4</span></a>
-            
-          
-          <li>
-            
-              <a href="/categories/tidyverse/">tidyverse<span class="count">4</span></a>
-            
-          
-          <li>
-            
-              <a href="/categories/ggplot2/">ggplot2<span class="count">3</span></a>
-            
-          
-          <li>
-            
-              <a href="/categories/gganimate/">gganimate<span class="count">2</span></a>
-            
-          
-          <li>
-            
-              <a href="/categories/data-visualisation/">data visualisation<span class="count">1</span></a>
-            
-          
-          <li>
-            
-              <a href="/categories/fitzroy/">fitzRoy<span class="count">1</span></a>
-            
-          
-          <li>
-            
-              <a href="/categories/gaming/">gaming<span class="count">1</span></a>
-            
-          
-          <li>
-            
-              <a href="/categories/learning/">learning<span class="count">1</span></a>
-            
-          
-          <li>
-            
-              <a href="/categories/linear-regression/">linear regression<span class="count">1</span></a>
-            
-          
-          <li>
-            
-              <a href="/categories/machine-learning/">machine learning<span class="count">1</span></a>
-            
-          
-          <li>
-            
-              <a href="/categories/open-source/">open source<span class="count">1</span></a>
-            
-          
-          <li>
-            
-              <a href="/categories/programming/">programming<span class="count">1</span></a>
-            
-          
-          <li>
-            
-              <a href="/categories/twitter/">twitter<span class="count">1</span></a>
-            
-          
-          </li>
-        </ul>
-      </section>
-    
+  
+  
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="twitter:site" content="@jaseziv">
+  <meta property="twitter:creator" content="@jaseziv">
+  
+  <meta property="og:site_name" content="Don&#39;t Blame the Data">
+  <meta property="og:url" content="/">
+  <meta property="og:title" content="Don&#39;t Blame the Data">
+  <meta property="og:description" content="Data Scientist"><meta property="og:image" content="/img/logo.jpg">
+  <meta property="twitter:image" content="/img/logo.jpg"><meta property="og:locale" content="en-us">
+  
+    <meta property="og:updated_time" content="2020-03-08T00:00:00&#43;00:00">
   
 
-  <section id="mini-bio">
-    <header>
-      <h1>About</h1>
-    </header>
-    <p>A data visualisation blog. Sports. Analytics. Sports analytics</p>
-    <footer>
-      <a href="/about" class="button">Learn More</a>
-    </footer>
-  </section>
-</section>
-
-      <footer id="site-footer">
-  
-      <ul class="socnet-icons">
-        
-    <li><a href="/index.xml" type="application/rss+xml" target="_blank" title="RSS" class="fas fa-rss"></a></li>
-
-
-        <li><a href="//github.com/JaseZiv" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
-
-
-
-
-
-
-
-
-
-
-<li><a href="//medium.com/@jaseziv83" target="_blank" rel="noopener" title="Medium" class="fab fa-medium"></a></li>
-<li><a href="//linkedin.com/in/jason-zivkovic-4a0a1926" target="_blank" rel="noopener" title="LinkedIn" class="fab fa-linkedin"></a></li>
-
-
-
-
-
-<li><a href="//reddit.com/user/jaseziv" target="_blank" rel="noopener" title="Reddit" class="fab fa-reddit"></a></li>
-
-
-
-
-
-
-
-
-
-<li><a href="//twitter.com/jaseziv" target="_blank" rel="noopener" title="Twitter" class="fab fa-twitter"></a></li>
-
-
-
-
-
-
-
-
-
-
-<li><a href="mailto:jaseziv83@gmail.com" target="_blank" title="Email" class="far fa-envelope"></a></li>
-
-      </ul>
-  
-  <p class="copyright">
-    
-      &copy; 2019
-      
-        Don&#39;t Blame The Data
-      
-    .
-    Powered by <a href="//gohugo.io" target="_blank" rel="noopener">Hugo</a>
-  </p>
-</footer>
-<a id="back-to-top" href="#" class="fas fa-arrow-up fa-2x"></a>
-
-      
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/html.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/css.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/js.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/toml.min.js"></script>
-  <script>hljs.initHighlightingOnLoad();</script>
-
-
-  
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/skel/3.0.1/skel.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.min.js"></script>
-  <script src=/js/util.js></script>
-  <script src=/js/main.js></script>
-  <script src=/js/add-on.js></script>
   
 
-
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-145056765-1', 'auto');
-	
-	ga('send', 'pageview');
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "/?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  },
+  "url": "/"
 }
 </script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
 
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  <title>Don&#39;t Blame the Data</title>
+
+</head>
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#navbar-main" >
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+  
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/">Don&#39;t Blame the Data</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/">Don&#39;t Blame the Data</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#about" data-target="#about"><span>Home</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#posts" data-target="#posts"><span>Posts</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#projects" data-target="#projects"><span>Projects</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#contact" data-target="#contact"><span>Contact</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+      
+      <li class="nav-item">
+        <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+      <li class="nav-item dropdown theme-dropdown">
+        <a href="#" class="nav-link js-theme-selector" data-toggle="dropdown" aria-haspopup="true">
+          <i class="fas fa-palette" aria-hidden="true"></i>
+        </a>
+        <div class="dropdown-menu">
+          <a href="#" class="dropdown-item js-set-theme-light">
+            <span>Light</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-dark">
+            <span>Dark</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-auto">
+            <span>Automatic</span>
+          </a>
+        </div>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  
+
+
+
+
+
+
+
+
+
+<span class="js-widget-page d-none"></span>
+
+
+
+
+  
+
+
+
+
+
+
+
+  
+  
+  
+
+  
+    
+  
+
+  
+
+  
+    
+    
+    
+    
+    
+      
+      
+    
+    
+  
+
+  
+    
+    
+  
+
+  
+
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+  
+
+  <section id="demo" class="home-section wg-blank   bg-image " style="background-color: ivory;background-image:  url(&#39;/img/background_distribution.jpg&#39;);background-size: auto;padding: 20px 0 20px 0;" >
+    <div class="container">
+      
+
+
+<div class="row">
+  
+    <div class="col-12 col-lg-4 section-heading">
+      <h1>Don't Blame the Data</h1>
+      <p>If you don’t agree with it, please, please don’t blame the data.</p>
+    </div>
+    <div class="col-12 col-lg-8">
+      <h2 id="what-you-will-find-here">What you will find here</h2>
+<p>This blog will be mainly about sport, but will touch on other parts of life also, using data visualisations to tell the story. What I can promise though is it will be filled with my own selfish pleasures. I hope they align with my readers’ interests.</p>
+<p>Some of the sports that will be included include Australian Rules Football (AFL), Basketball, American Football, World Football (Soccer) and many more.</p>
+<p>The one constant is that the data will tell the story.</p>
+<p>If you don’t agree with it, please, please don’t blame the data.</p>
 
     </div>
-  </body>
+  
+</div>
+
+    </div>
+  </section>
+
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+  
+
+  <section id="about" class="home-section wg-about   "  >
+    <div class="container">
+      
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+<div class="row">
+  <div class="col-12 col-lg-4">
+    <div id="profile">
+
+      
+      
+      <img class="avatar avatar-square" src="/authors/admin/avatar_huf62bf21c195b8d26ab4107916de5ed56_3657782_270x270_fill_q90_lanczos_center.jpg" alt="Jason Zivkovic">
+      
+
+      <div class="portrait-title">
+        <h2>Jason Zivkovic</h2>
+        <h3>Data Scientist</h3>
+
+        
+        <h3>
+          
+          <span>Reece Group</span>
+          
+        </h3>
+        
+      </div>
+
+      <ul class="network-icon" aria-hidden="true">
+        
+        
+        
+        
+          
+        
+        
+        
+        
+        
+          
+        
+        <li>
+          <a href="/#contact" >
+            <i class="fas fa-envelope big-icon"></i>
+          </a>
+        </li>
+        
+        
+        
+        
+          
+        
+        
+        
+        
+        
+          
+        
+        <li>
+          <a href="https://twitter.com/jaseziv" target="_blank" rel="noopener">
+            <i class="fab fa-twitter big-icon"></i>
+          </a>
+        </li>
+        
+        
+        
+        
+          
+        
+        
+        
+        
+        
+          
+        
+        <li>
+          <a href="https://github.com/JaseZiv" target="_blank" rel="noopener">
+            <i class="fab fa-github big-icon"></i>
+          </a>
+        </li>
+        
+      </ul>
+
+    </div>
+  </div>
+  <div class="col-12 col-lg-8">
+
+    
+    <h1>About Me</h1>
+
+    <p>My name is Jason Zivkovic and I’m a Data Scientist at the Reece Group.</p>
+<p>Growing up as a sports-mad child and teen, statistics were always in my world. But with the love of sport blinding me, I didn’t even realise it was a love of statistics and data. Then, after meandering (much to my mother’s chagrin) through my early work life, and dabbling with different careers, I discovered edX and DataCamp and the programming-focused data analysis short courses they had available. I started taking them and my love of the data was rekindled! Life was made a lot easier in that I had two managers in a row who’s thirst for analytics was as prominent as mine and they gave me the freedom to learn, explore and discover endless possibilities. To them I will be forever greatful.</p>
+<p>Kaggle was where I first started dabbling in small analyses - the datasets are as diverse as any wide-eyed newbie could wish for. I still have a look from time to time and think I should write another kernel. I got some great help from the Kaggle community and the code bases there are really good for any new starter. You can find my profile 
+<a href="https://www.kaggle.com/jaseziv83" target="_blank" rel="noopener">here</a>.</p>
+
+
+    <div class="row">
+
+      
+      <div class="col-md-5">
+        <h3>Interests</h3>
+        <ul class="ul-interests">
+          
+          <li>Data Visualisation</li>
+          
+          <li>Sports Analytics</li>
+          
+          <li>Supervised and Unsupervised Machine Learning</li>
+          
+        </ul>
+      </div>
+      
+
+      
+
+    </div>
+  </div>
+</div>
+
+    </div>
+  </section>
+
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+  
+
+  <section id="posts" class="home-section wg-pages   "  >
+    <div class="container">
+      
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+<div class="row">
+  <div class="col-12 col-lg-4 section-heading">
+    <h1>Recent Posts</h1>
+    
+  </div>
+  <div class="col-12 col-lg-8">
+
+    
+
+    
+      
+        
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<div class="media stream-item">
+  <div class="media-body">
+
+    <h3 class="article-title mb-0 mt-0">
+      <a href="/blog/pythagorean-expectation-pro-sports/" >Applying Pythagorean Expectation to Pro Sports - An Intro</a>
+    </h3>
+
+    
+    <div class="article-style">
+      Introduction This piece is the first part in a series of posts I will be realeasing that will look to analyse how many wins teams should’ve won given their performances over the season and compare them to their actual wins achieved.
+    </div>
+    
+
+    <div class="stream-meta article-metadata">
+
+      
+
+      
+        
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    Mar 8, 2020
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    4 min read
+  </span>
+  
+
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/categories/r/">R</a>, <a href="/categories/sports-analytics/">sports analytics</a>, <a href="/categories/pythagorean-expectation/">pythagorean expectation</a></span>
+  
+
+</div>
+
+      
+    </div>
+
+    
+
+  </div>
+  <div class="ml-3">
+    
+    
+  </div>
+</div>
+
+      
+    
+      
+        
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<div class="media stream-item">
+  <div class="media-body">
+
+    <h3 class="article-title mb-0 mt-0">
+      <a href="/blog/age-of-best-players/" >Playing List Ages at the Pointy End</a>
+    </h3>
+
+    
+    <div class="article-style">
+      This is the second installment at my look at the age distributions of each AFL team for the 2020 season. The fist post (which can be found here), looked at the impact that the statistic chosen to report out the age profiles can have, specifically using the mean versus the median.
+    </div>
+    
+
+    <div class="stream-meta article-metadata">
+
+      
+
+      
+        
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    Dec 23, 2019
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    3 min read
+  </span>
+  
+
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/categories/afl/">afl</a>, <a href="/categories/analytics/">analytics</a></span>
+  
+
+</div>
+
+      
+    </div>
+
+    
+
+  </div>
+  <div class="ml-3">
+    
+    
+  </div>
+</div>
+
+      
+    
+      
+        
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<div class="media stream-item">
+  <div class="media-body">
+
+    <h3 class="article-title mb-0 mt-0">
+      <a href="/blog/first-open-source-contribution/" >The Agony and the Ecstasy of my first open source contribution</a>
+    </h3>
+
+    
+    <div class="article-style">
+      For the last year or so, I’ve had this desire to contribute to an open source R package, but like a lot of people, I found the thought of tackling the task frightening.
+    </div>
+    
+
+    <div class="stream-meta article-metadata">
+
+      
+
+      
+        
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    Dec 16, 2019
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    9 min read
+  </span>
+  
+
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/categories/r/">R</a>, <a href="/categories/open-source/">open source</a>, <a href="/categories/programming/">programming</a>, <a href="/categories/fitzroy/">fitzRoy</a></span>
+  
+
+</div>
+
+      
+    </div>
+
+    
+
+  </div>
+  <div class="ml-3">
+    
+    
+  </div>
+</div>
+
+      
+    
+      
+        
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<div class="media stream-item">
+  <div class="media-body">
+
+    <h3 class="article-title mb-0 mt-0">
+      <a href="/blog/analysing-afl-team-age/" >Analysing AFL Team Age... Properly!</a>
+    </h3>
+
+    
+    <div class="article-style">
+      After seeing my beloved Hawthorn Hawks tweet out an article on their website regarding player ages for each team, it got me riled up that the media love to cite Champion Data’s “average age” as their measure.
+    </div>
+    
+
+    <div class="stream-meta article-metadata">
+
+      
+
+      
+        
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    Dec 4, 2019
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    3 min read
+  </span>
+  
+
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/categories/afl/">afl</a>, <a href="/categories/analytics/">analytics</a></span>
+  
+
+</div>
+
+      
+    </div>
+
+    
+
+  </div>
+  <div class="ml-3">
+    
+    
+  </div>
+</div>
+
+      
+    
+      
+        
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<div class="media stream-item">
+  <div class="media-body">
+
+    <h3 class="article-title mb-0 mt-0">
+      <a href="/blog/all-roads-lead-to-gganimate/" >All roads lead to gganimate</a>
+    </h3>
+
+    
+    <div class="article-style">
+      This post aims to introduce you to animating ggplot2 visualisations in r using the gganimate package by Thomas Lin Pedersen.
+The post will visualise the theoretical winnings I would’ve had, had I followed the simple model to predict (or tip as it’s known in Australia) winners in the AFL that I explained in this post.
+    </div>
+    
+
+    <div class="stream-meta article-metadata">
+
+      
+
+      
+        
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    Aug 30, 2019
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    6 min read
+  </span>
+  
+
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/categories/r/">R</a>, <a href="/categories/gganimate/">gganimate</a>, <a href="/categories/ggplot2/">ggplot2</a>, <a href="/categories/data-visualisation/">data visualisation</a>, <a href="/categories/learning/">learning</a></span>
+  
+
+</div>
+
+      
+    </div>
+
+    
+
+  </div>
+  <div class="ml-3">
+    
+    
+  </div>
+</div>
+
+      
+    
+
+    
+    <div class="see-all">
+      <a href="/post/">
+        See all posts
+        <i class="fas fa-angle-right"></i>
+      </a>
+    </div>
+    
+
+  </div>
+</div>
+
+    </div>
+  </section>
+
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+  
+
+  <section id="projects" class="home-section wg-portfolio   "  >
+    <div class="container">
+      
+
+
+
+
+
+
+
+
+
+
+<div class="row">
+  <div class="col-12 col-lg-4 section-heading">
+
+    <h1>Projects</h1>
+    
+
+  </div>
+  <div class="col-12 col-lg-8">
+
+
+
+    
+
+    
+
+    <div class="isotope projects-container js-layout-masonry ">
+      
+    </div>
+
+  </div>
+</div>
+
+    </div>
+  </section>
+
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+  
+
+  <section id="tags" class="home-section wg-tag-cloud   "  >
+    <div class="container">
+      
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+<div class="row">
+  <div class="col-12 col-lg-4 section-heading">
+    <h1>Popular Topics</h1>
+    
+  </div>
+  <div class="col-12 col-lg-8">
+    
+
+    
+
+      
+      
+      
+      
+      
+      
+
+      <div class="tag-cloud">
+        
+          
+          
+          
+          <a href="/tags/afl/" style="font-size:1.775213717950991rem">afl</a>
+        
+          
+          
+          
+          <a href="/tags/analytics/" style="font-size:1.4339475442696534rem">analytics</a>
+        
+          
+          
+          
+          <a href="/tags/basketball/" style="font-size:0.7rem">basketball</a>
+        
+          
+          
+          
+          <a href="/tags/boomers/" style="font-size:0.7rem">boomers</a>
+        
+          
+          
+          
+          <a href="/tags/data-analysis/" style="font-size:0.7rem">data analysis</a>
+        
+          
+          
+          
+          <a href="/tags/data-visualisation/" style="font-size:1.6261386864808576rem">data visualisation</a>
+        
+          
+          
+          
+          <a href="/tags/fifa/" style="font-size:0.7rem">fifa</a>
+        
+          
+          
+          
+          <a href="/tags/fifa19/" style="font-size:0.7rem">fifa19</a>
+        
+          
+          
+          
+          <a href="/tags/fitzroy/" style="font-size:0.7rem">fitzRoy</a>
+        
+          
+          
+          
+          <a href="/tags/gganimate/" style="font-size:1.1630693432404289rem">gganimate</a>
+        
+          
+          
+          
+          <a href="/tags/ggplot/" style="font-size:1.1630693432404289rem">ggplot</a>
+        
+          
+          
+          
+          <a href="/tags/ggplot2/" style="font-size:1.6261386864808576rem">ggplot2</a>
+        
+          
+          
+          
+          <a href="/tags/jarryd-roughead/" style="font-size:0.7rem">jarryd roughead</a>
+        
+          
+          
+          
+          <a href="/tags/line-chart/" style="font-size:0.7rem">line chart</a>
+        
+          
+          
+          
+          <a href="/tags/open-source/" style="font-size:0.7rem">open source</a>
+        
+          
+          
+          
+          <a href="/tags/patty-mills/" style="font-size:0.7rem">patty mills</a>
+        
+          
+          
+          
+          <a href="/tags/pythagorean-expectation/" style="font-size:0.7rem">pythagorean expectation</a>
+        
+          
+          
+          
+          <a href="/tags/r/" style="font-size:1.8970168875100824rem">R</a>
+        
+          
+          
+          
+          <a href="/tags/statistics/" style="font-size:1.1630693432404289rem">statistics</a>
+        
+          
+          
+          
+          <a href="/tags/tidyverse/" style="font-size:1.1630693432404289rem">tidyverse</a>
+        
+      </div>
+    
+
+  </div>
+</div>
+
+    </div>
+  </section>
+
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+  
+
+  <section id="contact" class="home-section wg-contact   "  >
+    <div class="container">
+      
+
+
+
+
+
+<div class="row contact-widget">
+  <div class="col-12 col-lg-4 section-heading">
+    <h1>Contact</h1>
+    
+  </div>
+  <div class="col-12 col-lg-8">
+    
+
+    
+
+    
+    
+      
+      
+    
+
+    <div class="mb-3">
+      <form name="contact" method="POST" action="https://formspree.io/jaseziv83@gmail.com">
+        <div class="form-group form-inline">
+          <label class="sr-only" for="inputName">Name</label>
+          <input type="text" name="name" class="form-control w-100" id="inputName" placeholder="Name" required>
+        </div>
+        <div class="form-group form-inline">
+          <label class="sr-only" for="inputEmail">Email</label>
+          <input type="email" name="email" class="form-control w-100" id="inputEmail" placeholder="Email" required>
+        </div>
+        <div class="form-group">
+          <label class="sr-only" for="inputMessage">Message</label>
+          <textarea name="message" class="form-control" id="inputMessage" rows="5" placeholder="Message" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-outline-primary px-3 py-2">Send</button>
+      </form>
+    </div>
+    
+
+    <ul class="fa-ul">
+
+      
+
+      
+
+      
+      
+
+      
+
+      
+
+      
+
+      
+      
+      
+      
+      
+        
+      
+      
+      
+      
+      
+        
+      
+      <li>
+        <i class="fa-li fab fa-twitter fa-2x" aria-hidden="true"></i>
+        <a href="https://twitter.com/jaseziv" target="_blank" rel="noopener">DM Me</a>
+      </li>
+      
+      
+      
+      
+        
+      
+      
+      
+      
+      
+        
+      
+      <li>
+        <i class="fa-li fab fa-linkedin fa-2x" aria-hidden="true"></i>
+        <a href="https://linkedin.com/in/jason-zivkovic-4a0a1926/" target="_blank" rel="noopener">DM Me</a>
+      </li>
+      
+      
+      
+      
+        
+      
+      
+      
+      
+      
+        
+      
+      <li>
+        <i class="fa-li fab fa-github fa-2x" aria-hidden="true"></i>
+        <a href="https://github.com/JaseZiv" target="_blank" rel="noopener">Follow Me</a>
+      </li>
+      
+      
+      
+      
+        
+      
+      
+      
+      
+      
+        
+      
+      <li>
+        <i class="fa-li fab fa-reddit fa-2x" aria-hidden="true"></i>
+        <a href="https://www.reddit.com/user/jaseziv" target="_blank" rel="noopener">Follow Me</a>
+      </li>
+      
+      
+      
+      
+        
+      
+      
+      
+      
+      
+        
+      
+      <li>
+        <i class="fa-li fas fa-comments fa-2x" aria-hidden="true"></i>
+        <a href="https://discourse.gohugo.io" target="_blank" rel="noopener">Discuss on Forum</a>
+      </li>
+      
+
+    </ul>
+
+    
+
+  </div>
+</div>
+
+    </div>
+  </section>
+
+
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js" integrity="sha256-eOgo0OtLL4cdq7RdwRUiGKLX9XsIJ7nGhWEKbohmVAQ=" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/languages/r.min.js"></script>
+        
+      
+
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.js" integrity="sha256-EErZamuLefUnbMBQbsEqu1USa+btR2oIlCpBJbyD4/g=" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script>const code_highlighting = true;</script>
+    
+
+    
+    
+    <script>const isSiteThemeDark = false;</script>
+    
+
+    
+    
+    
+    
+    
+    
+    <script>
+      const search_config = {"indexURI":"/index.json","minLength":1,"threshold":0.3};
+      const i18n = {"no_results":"No results found","placeholder":"Search...","results":"results found"};
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.37431be2d92d7fb0160054761ab79602.js"></script>
+
+    
+
+
+
+
+
+
+  
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+  <p class="powered-by">
+    
+      <a href="/privacy/">Privacy Policy</a>
+    
+    
+       &middot; 
+      <a href="/terms/">Terms</a>
+    
+  </p>
+  
+
+  <p class="powered-by">
+    ©2020 &middot; 
+
+    Powered by the
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" class="back-to-top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
 </html>

@@ -1,0 +1,303 @@
+---
+title: "How the narrative changed after the Boomers' win"
+date: '2019-08-25'
+slug: how-the-narrative-changed-after-the-boomers-win
+categories:
+  - R
+  - sport
+  - analytics
+  - twitter
+tags: [boomers, USA, teamusa, twitter, sentiment, patty mills, basketball]
+description: 'A look at how our perception and feelings changes after the Boomers historic win against Team USA'
+featured: ''
+featuredalt: ''
+featuredpath: ''
+linktitle: ''
+type: post
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+On the 24th of August, 2019, the Australian Men's Basketball team, the Boomers, created history when they were able to enact their own David and Golliath moment, taking down Team USA for the first time ever. More impressively was the fact that the US hadn't lost a game in 13 years. It was a marvelous moment in Australian basketball history, and while the US fielded what is widely considered one of their weaker teams, it was a moment for us to all savour. The fact that we were able to bring the best country in the world to play some exhibition games should have been celebrated, regardless of the result. 
+
+That was not to be the case...
+
+After the historic first men's basketball game at Marvel Stadium, the narrative from the media appeared to be full of negativity, predominantly focusing on the expensive seating with poor views for fans.
+
+I suspect that this happens everywhere, but we Aussies seem to let our opinions swing more than most - we're more than happy to rag on individuals or teams when things aren't tracking so well, but flip pretty quickly when the are (Nick Kyrgios says hi).
+
+This analysis will look at the Twitter activity around the time of both games in an attempt to prove or disprove the narrative change.
+
+To collect tweet data, the `rtweet` and `ROAuth` packages were used. Tweets between the 22nd August and 2pm on the 25th of August were collected and analysed in the blow analysis. Tweets using the official hashtag - `#BoomersUSA` are referencing `@BasketballAus` were scraped.
+
+The full code base and data for this project can be found [here](https://github.com/JaseZiv/Boomers-vs-USA-Tweets)
+
+```{r, include=FALSE, warning=FALSE, message=FALSE, echo=FALSE}
+# load libraries
+library(rtweet) # for tweets
+library(ROAuth) # for twitter authorisation
+library(tidyverse) # data munging and visualisations
+library(lubridate) # working with dates
+library(scales) # plotting axis in a formatted way
+library(zoo) # working with mm-yyyy dates
+library(tidytext) # text analysis
+
+
+theme_set(theme_minimal() +
+            theme(plot.title = element_text(colour = "darkgreen", size = 18), 
+                  plot.subtitle = element_text(colour = "darkgreen", size = 14),
+                  axis.text.x = element_text(colour = "darkgreen", size = 12),
+                  axis.text.y = element_text(colour = "darkgreen", size = 12),
+                  axis.title.x = element_text(colour = "darkgreen", size = 12),
+                  axis.title.y = element_text(colour = "darkgreen", size = 12)))
+
+
+
+# reading in rds from web
+file_url <- "https://github.com/JaseZiv/Boomers-vs-USA-Tweets/blob/master/data/boomers_usa_tweets.rds?raw=true"
+bball_tweets <- readRDS(url(file_url))
+
+
+
+# separate created_at variable into date and time variables
+bball_tweets <- bball_tweets %>% separate(col = created_at, into = c("created_date", "created_time"), sep = "\\s", remove = FALSE)
+
+bball_tweets <- bball_tweets %>% 
+  mutate(created_at = as.POSIXct(created_at, format="%m/%d/%Y %H:%M:%S", tz = "Australia/Melbourne"))
+
+
+# I found this to be the only thing that worked to convert to Melbourne timezone
+attr(bball_tweets$created_at, "tzone") <- "Australia/Melbourne" 
+
+bball_tweets <- bball_tweets %>% 
+  mutate(created_date = ymd(created_date))
+
+
+bball_tweets <- bball_tweets %>% 
+  filter(created_date >= '2019-08-22')
+```
+
+***
+
+If the tweet was recorded after `2019-08-24 04:00:00 UTC` (tip-off time for game 2), it was classed as a tweet in `Game2 Starts`. This allows us to compare tweets leading in to the historic second game with those that occurred during and after the magical night.
+
+```{r, include=FALSE, warning=FALSE, message=FALSE, echo=FALSE}
+# create a variable for the two games
+bball_tweets <- bball_tweets %>% 
+  mutate(which_game = ifelse(created_date == '2019-08-22', "Game1", ifelse(created_date == '2019-08-24', "Game2", "Non Game Day"))) %>% 
+  mutate(after_win = ifelse(created_at > '2019-08-24 04:00:00', "Game2 Starts", "Before Game2 Starts"))
+
+```
+
+***
+
+## Tweet Analysis 
+
+Looking at all tweets since game 1, we can see that game 2 had more tweets per hour. No doubt the shock result played a massive part in this.
+
+```{r, tweets_time, warning=FALSE, message=FALSE, fig.height=8, fig.width=11, echo=FALSE}
+## with default timezone (UTC)
+ts_plot(bball_tweets, "hours", colour = "darkgoldenrod2") + ggtitle("Tweets per Hour") + labs(y= "Number of tweets") + theme(axis.title.x = element_blank())
+
+# ts_plot(bball_tweets%>% filter(which_game == "Game1"), "minutes") + ggtitle("Tweets per Hour On Game Day 1")
+# 
+# ts_plot(bball_tweets%>% filter(which_game == "Game2"), "minutes", tz = "Australia/Melbourne") + ggtitle("Tweets per Hour On Game Day 2")
+
+```
+
+
+With `r max(bball_tweets$favorite_count)` 'favourites', the following tweet  from `r bball_tweets %>% filter(favorite_count == max(bball_tweets$favorite_count)) %>% pull(screen_name)` was the most favoured tweet:
+
+> It feels awesome. … I hope we can all build on this.”
+@Patty_Mills describes his emotions after leading @BasketballAus to its first ever win over the U.S.
+
+
+The most retweeted tweet from the period analysed came from `r bball_tweets %>% filter(retweet_count == max(bball_tweets$retweet_count)) %>% pull(screen_name)` and had `r bball_tweets %>% filter(retweet_count == max(bball_tweets$retweet_count)) %>% pull(retweet_count)` retweets. The tweet was:
+
+>Patty Mills in the 4th quarter is a piece of art 🔥\n\n#BoomersUSA @SBSVICELAND @SBSOnDemand
+
+
+## Tweet Words Used
+
+Before we can measure the sentiments of tweets, the tweet strings need to be split into 'tokens' (or individual words).
+
+Once these tokens have been unnested (split out), we can plot the most frequently used words. Importantly, stop-words and other words we don't want in our analysis have been omitted. Stop-words include "and", "the", "a", etc - words that don't add a lot to a sentiment analysis. Additionally, "BoomersUSA" was removed, as this was the hashtag for the game and was mentioned in almost all tweets.
+
+The 20 most frequently used words for tweets that occured before and after game 2 are plotted below.
+
+As expected, "seats", "plastic", "seating" were words that frequently appeared in tweets before Game 2, where only "seats" appeared in tweets after Game 2 started. For tweets after game 2 started, "history", "Patty Mills", "awesome" and "love" all appeared in tweets frequently - very soft and mushy hey?
+
+```{r, top_tokens, warning=FALSE, message=FALSE, fig.height=8, fig.width=11, echo=FALSE}
+# function to expand contractions in an English-language source
+fix.contractions <- function(doc) {
+  # "won't" is a special case as it does not expand to "wo not"
+  doc <- gsub("won’t", "will not", doc)
+  doc <- gsub("can’t", "can not", doc)
+  doc <- gsub("n’t", " not", doc)
+  doc <- gsub("’ll", " will", doc)
+  doc <- gsub("’re", " are", doc)
+  doc <- gsub("’ve", " have", doc)
+  doc <- gsub("’m", " am", doc)
+  doc <- gsub("’d", " would", doc)
+  # 's could be 'is' or could be possessive: it has no expansion
+  doc <- gsub("’s", "", doc)
+  return(doc)
+}
+# fix (expand) contractions
+bball_tweets$text <- sapply(bball_tweets$text, fix.contractions)
+
+# create a df of unested words (tokens)
+tweets_words <- bball_tweets %>%
+  mutate(text = gsub("https.*$", "", text),
+         text = gsub("\\@.*$", "", text),
+         text = str_remove_all(text, "[:digit:]")) %>%
+  select(status_id, screen_name, created_date, text, which_game, after_win) %>%
+  unnest_tokens(word, text, drop = F) %>%
+  anti_join(stop_words, by = "word") %>% 
+  filter(word != "boomersusa")
+
+# create a df to calculate the proportion (term-frequency) words are used
+word_proportion <- tweets_words %>%
+  group_by(after_win, word) %>%
+  summarise(n_words = n()) %>% ungroup() %>%
+  mutate(word_prop = n_words / sum(n_words))
+
+# function to plot top 30 words
+a <- word_proportion %>%
+    filter(after_win == "Game2 Starts") %>%
+    arrange(desc(word_prop)) %>%
+    head(30) %>%
+    ggplot(aes(x= reorder(word, word_prop), y= word_prop)) +
+    geom_col(fill = "darkgoldenrod2", colour = "darkgreen") +
+    ggtitle(paste0("Words After Game 2 Starts")) +
+    geom_text(aes(label = n_words), hjust = 1, colour = "white") +
+  labs(y= "Porportion Tweets") +
+    scale_y_continuous(labels = percent) +
+    coord_flip() +
+    theme(panel.grid = element_blank(), panel.grid.major.x = element_line(linetype =2)) +
+  theme(axis.title.y = element_blank())
+
+
+b <- word_proportion %>%
+    filter(after_win == "Before Game2 Starts") %>%
+    arrange(desc(word_prop)) %>%
+    head(30) %>%
+    ggplot(aes(x= reorder(word, word_prop), y= word_prop)) +
+    geom_col(fill = "darkgoldenrod2", colour = "darkgreen") +
+    ggtitle(paste0("Words Before Game 2 Starts")) +
+    geom_text(aes(label = n_words), hjust = 1, colour = "white") +
+  labs(y= "Porportion Tweets") +
+    scale_y_continuous(labels = percent) +
+    coord_flip() +
+    theme(panel.grid = element_blank(), panel.grid.major.x = element_line(linetype =2)) +
+  theme(axis.title.y = element_blank())
+
+
+gridExtra::grid.arrange(a, b, ncol = 2)
+
+```
+
+The plot below allows us to get an even better look at the differences between the words used before and after Game 2. Words to the bottom right of the diagonal line running through the plot indicate words more frequently used in tweets before game two, while words above the line were more frequently used during and after Game 2.
+
+Looks like we were a happy bunch finally...
+
+```{r, above_below_words, warning=FALSE, message=FALSE, fig.height=8, fig.width=11, echo=FALSE}
+
+tweet_words_counts <- tweets_words %>%
+  count(after_win, word) %>%
+  group_by(after_win) %>%
+  mutate(proportion = n / sum(n)) %>%
+  select(-n) %>%
+  spread(after_win, proportion)
+
+tweet_words_counts %>%
+  ggplot(aes(x= `Before Game2 Starts`, y= `Game2 Starts`, colour =  abs(`Before Game2 Starts` - `Game2 Starts`))) +
+  geom_abline(color = "gray40", lty = 2) +
+  geom_jitter(alpha = 0.1, size = 2.5, width = 0.3, height = 0.3, colour = "darkgoldenrod2") +
+  geom_text(aes(label = word), check_overlap = TRUE, vjust = 1.5, colour = "darkgoldenrod2") +
+  scale_x_log10(labels = percent_format()) +
+  scale_y_log10(labels = percent_format()) +
+  scale_color_gradient(limits = c(0, 0.001), low = "darkslategray4", high = "darkgreen") +
+  labs(x= "Before Game2 Starts", y= "Game2 Starts", title = "Tweets Were Far Happier After the Win!") +
+  theme(legend.position = "none") 
+
+```
+
+
+## Tweet Sentiment Analysis
+Once the tokens have been separated, a sentiment score can be calculated.
+
+The method that will be used is the common lexicon for sentiment analysis created by Finn Årup Nielsen (http://www2.imm.dtu.dk/pubdb/views/publication_details.php?id=6010), called the *AFINN* lexicon. Words that are more positive (say, "awesome" for example) are given positive score further from zero than more negative words (like "devastated"), which are given socres further below zero.
+
+
+
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+# join on to the afinn lexicon to be able to get a  
+tweet_sentiment <- tweets_words %>%
+  inner_join(get_sentiments("afinn"), by = "word")
+```
+
+To get a feel for the power of sentiment analysis, the following tweet was the most positive tweet, with a positivity index of 17:
+
+> Totally thrilled with the Boomers win today, and Patty Mills was just brilliant when it counted. Really wonderful team effort.  Bring on the World Cup! #BoomersUSA
+
+At the (complete) opposite end of the spectrum, the following tweet was the most negative, with a score of -18 (sorry for the profanities, I've done my best to clean them out):
+
+> Who the f!&% hired these people to organise this event, what a f!&%ing bs stich up. $ chairs from Bunnings does that come with a forking snag c!&%. Like WTF surely the company who funding to set up the stadium is not that broke.\n#BoomersUSA
+
+No surprises, the most positive tweet was after we won, the most negative after Game 1.
+
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+# tweet_sentiment %>% 
+#   group_by(status_id, text, created_date) %>% 
+#   summarise(total_score = sum(score)) %>% arrange(desc(total_score)) %>% head(1) %>% pull(text)
+# 
+# 
+# 
+# tweet_sentiment %>% 
+#   group_by(status_id, text, created_date) %>% 
+#   summarise(total_score = sum(score)) %>% arrange(desc(total_score)) %>% tail(1) %>% pull(text)
+```
+
+
+
+Plotting the distribution of sentiment scores for each tweet, we can clearly see that the tweets after game 2 started became considerably more positive - the median positivity score (the ratio of positive to negative words) for these tweets was 0.95, over doube the 0.43 median for tweets prior to game 2.
+
+
+```{r, sentiment_plot, warning=FALSE, message=FALSE, fig.height=8, fig.width=11, echo=FALSE}
+tweet_medians <- tweet_sentiment %>% 
+  group_by(after_win, status_id) %>% 
+  summarise(positivity_index = mean(value)) %>% 
+  group_by(after_win) %>% 
+  summarise(positivity_index = mean(positivity_index))
+
+set.seed(1234)
+
+tweet_sentiment %>%
+  group_by(after_win, status_id) %>%
+  summarise(positivity_index = sum(value)) %>%
+  ggplot(aes(x= after_win, y= positivity_index)) +
+  # geom_boxplot() +
+  geom_point(position = "jitter", alpha = 0.3, colour = "darkgoldenrod2") +
+  geom_point(data = tweet_medians, colour = "darkgreen", size = 4) +
+  geom_text(data = tweet_medians, aes(label = round(positivity_index, 2)), hjust = -.5, colour = "darkgreen", size = 8) +
+  geom_hline(yintercept = 0, linetype = 4, colour = "darkgreen", size = 1) +
+  labs(title = "Tweets Turned Positive After Game 2 Started", subtitle = "Median Positivity Index Increased to 0.95", y= "Positivity Score") +
+  annotate(geom = "text", x= 1.5, y= -10, label = "Each point represents the average\npositivity score of each tweet", colour = "darkgreen") +
+  annotate(geom = "text", x= 1.7, y= 22, label = "Most positive tweets came after\ngame 2 started", colour = "darkgreen") +
+  annotate(geom = "rect", xmin= 1.5, xmax = 2.5, ymin= 10, ymax = 20, alpha = 0.1, fill = "darkgreen", colour = "darkgreen") +
+  theme(legend.position = "none", axis.title.x = element_blank(), panel.grid = element_line(linetype = 2), panel.grid.major.x = element_blank())
+```
+
+
+
+As I suspected, we became much happier after our historic win... almost to the point where we'd forgotten about the seating "debacle", even though the second game was played at the exact venue, with the exact seating arrangement... very strange.
+
+
+I might put this theory of us Aussies to the ultimate test one day and see how we respond to Kyrgios' success... if he ever tastes the ultimate success!
+
+Feel free to leave some feedback if you like in the comments below.
