@@ -264,8 +264,7 @@ West Coast
 
 
 &lt;p&gt;I feel like I always overthink footy tipping. During each round, I make myself believe I have some sort of secret sauce and conjure up visions in my head of nailing a solid roughy… and then fall flat half way through the season and give up…&lt;/p&gt;
-&lt;p&gt;So then I thought, surely there’s an easier way. Only problem was, I thought this up last weekend (during the last season of the round)…&lt;/p&gt;
-&lt;p&gt;I though to myself, I wonder how many tips I would’ve gotten this year had I just picked the home team every game…&lt;/p&gt;
+&lt;p&gt;So then I thought, surely there’s an easier way. Only problem was, I thought this up last weekend (during the last season of the round)…I wonder how many tips I would’ve gotten this year had I just picked the home team every game…&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;/post/afl_tipping_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;1056&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Ok, so 113 winners wouldn’t have been good enough…&lt;/p&gt;
 &lt;hr /&gt;
@@ -284,7 +283,9 @@ West Coast
 &lt;p&gt;Ok, so now that I know that the &lt;em&gt;Simple Model&lt;/em&gt;’* performs fairly competitively in tipping comps, I want to know if I can make some money using this method?&lt;/p&gt;
 &lt;p&gt;To answer this question, I’m placing a theoretic $10 on each game and seeing how many bags of cash are left at the end.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;/post/afl_tipping_files/figure-html/unnamed-chunk-4-1.png&#34; width=&#34;1056&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;Hmmm… so using this method, I would’ve lost almost $40, even though it was good enough to win some tipping comps. Only in 2018 would this method have worked, with a net profit of $26.82… The 2017 season would’ve been the most brutal, losing just over $245 for the season.&lt;/p&gt;
+&lt;p&gt;Hmmm… so using this method, I would’ve lost almost $40, even though it was good enough to win some tipping comps.&lt;/p&gt;
+&lt;p&gt;Only in 2018 would this method have worked, with a net profit of $26.82…&lt;/p&gt;
+&lt;p&gt;The 2017 season would’ve been the most brutal, losing just over $245 for the season.&lt;/p&gt;
 &lt;p&gt;To find out where everything went so wrong, we can use an animated line plot that tracks the overall profit throughout each round of the season. To get a rundown on how the animated plot was generated, see this post &lt;a href=&#34;https://www.dontblamethedata.com/blog/all-roads-lead-to-gganimate/&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;/post/afl_tipping_files/figure-html/animation_plot-1.gif&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
 &lt;p&gt;During the 2019 season, we can see that things would’ve started off really bleak - after round five, I would’ve been down over $120! Things started to pick up from there though, even being in the black at round 14. At no point during the 2015 and 2017 seasons would this model have been profitable.&lt;/p&gt;
