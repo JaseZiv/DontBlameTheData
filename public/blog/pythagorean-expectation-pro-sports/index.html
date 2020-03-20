@@ -28,7 +28,7 @@
   
     
   
-  <meta name="description" content="Introduction This piece is the first part in a series of posts I will be realeasing that will look to analyse how many wins teams should’ve won given their performances over the season and compare them to their actual wins achieved.">
+  <meta name="description" content="Introduction This piece is the first part in a series of posts I will be releasing that will look to analyse how many wins teams should’ve won given their performances over the season and compare them to their actual wins achieved.">
 
   
   <link rel="alternate" hreflang="en-us" href="/blog/pythagorean-expectation-pro-sports/">
@@ -274,7 +274,7 @@
   <meta property="og:site_name" content="Don&#39;t Blame the Data">
   <meta property="og:url" content="/blog/pythagorean-expectation-pro-sports/">
   <meta property="og:title" content="Applying Pythagorean Expectation to Pro Sports - An Intro | Don&#39;t Blame the Data">
-  <meta property="og:description" content="Introduction This piece is the first part in a series of posts I will be realeasing that will look to analyse how many wins teams should’ve won given their performances over the season and compare them to their actual wins achieved."><meta property="og:image" content="/img/logo.jpg">
+  <meta property="og:description" content="Introduction This piece is the first part in a series of posts I will be releasing that will look to analyse how many wins teams should’ve won given their performances over the season and compare them to their actual wins achieved."><meta property="og:image" content="/img/logo.jpg">
   <meta property="twitter:image" content="/img/logo.jpg"><meta property="og:locale" content="en-us">
   
     
@@ -324,7 +324,7 @@
       "url": "/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png"
     }
   },
-  "description": "Introduction This piece is the first part in a series of posts I will be realeasing that will look to analyse how many wins teams should’ve won given their performances over the season and compare them to their actual wins achieved."
+  "description": "Introduction This piece is the first part in a series of posts I will be releasing that will look to analyse how many wins teams should’ve won given their performances over the season and compare them to their actual wins achieved."
 }
 </script>
 
@@ -668,10 +668,10 @@
 
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
-<p>This piece is the first part in a series of posts I will be realeasing that will look to analyse how many wins teams should’ve won given their performances over the season and compare them to their actual wins achieved. To achieve this goal, it will apply a commonly known method in the sports analytics community called Pythagorean Expectation.</p>
+<p>This piece is the first part in a series of posts I will be releasing that will look to analyse how many wins teams should’ve won given their performances over the season and compare them to their actual wins achieved. To achieve this goal, it will apply a commonly known method in the sports analytics community called <em>Pythagorean Expectation</em>.</p>
 <div id="sports-in-the-report" class="section level2">
 <h2>Sports in the Report:</h2>
-<p>The the series of posts will look to analyse a number of very popular sports leagues around the globe (ie the NBA), and in some sports’ cases, the analysis will span multiple leagues (ie professional soccer has a number of “major” leagues around the globe).</p>
+<p>The series of posts will look to analyse a number of very popular sports leagues around the globe (ie the NBA), and in some sports’ cases, the analysis will span multiple leagues (ie professional soccer has a number of “major” leagues around the globe).</p>
 <p>The following professional sports/sporting leagues will be included in the series:</p>
 <ul>
 <li>College Basketball (Men’s and Women’s)</li>
@@ -691,10 +691,10 @@
 <img src="/img/Morey%20formula_L.jpg" alt="" />
 <p class="caption">GM of the Houston Rockets Daryl Morey. Source: Northwestern.edu</p>
 </div>
-<p>While we are easily able to count the wins and losses a team experiences, we might want to be able to assess the number of wins they had against how many wins they should have had, given their performances during the season. This might be able to tell us something about whether any luck or other factors played a part in a team’s success (or failure).</p>
-<p>Ok great, so how do we know how many wins our team was meant to get?</p>
-<p>Enter, <em>Pythagorean Expectation</em>. While many question whether he was actually the creator of the <em>Pythagorean Theorem</em>, the famed philosopher Pythagoras (c. 570 – c. 495 BC) had nothing to do with <em>Pythagorean Expectation</em>, rather, another legend of our time and one of the founding fathers of sports analytics, Bill James, came up with this for the sport of baseball.</p>
-<p>Rather than explaining Pythagorean Expectation myself, why not consult wikipedia:</p>
+<p>While we are effortlessly able to count the wins and losses a team experiences, we might want to be able to assess the number of wins they had, versus how many wins they should have had, given their performances during the season. This might be able to tell us something about whether any luck or other factors played a part in a team’s success (or failure).</p>
+<p>Ok great, so how do we know how many wins our team was supposed to get?</p>
+<p>Enter, <em>Pythagorean Expectation</em>. While many question whether he was actually the creator of the <em>Pythagorean Theorem</em>, the famed philosopher Pythagoras (c. 570 – c. 495 BC) had nothing to do with <em>Pythagorean Expectation</em>. Rather, another legend of our time and one of the founding fathers of sports analytics, Bill James, came up with this for the sport of baseball.</p>
+<p>Rather than explaining Pythagorean Expectation myself, why not consult Wikipedia:</p>
 <blockquote>
 <p>Pythagorean expectation is a sports analytics formula devised by Bill James to estimate the percentage of games a baseball team “should” have won based on the number of runs they scored and allowed. Comparing a team’s actual and Pythagorean winning percentage can be used to make predictions and evaluate which teams are over-performing and under-performing. The name comes from the formula’s resemblance to the Pythagorean theorem.</p>
 </blockquote>
@@ -705,9 +705,9 @@
 <p><span class="math inline">\(win\ ratio_{basketball} = \frac{points\ for^{13.91}}{points\ for^{13.91}\ +\ points\ against^{13.91}}\)</span></p>
 <p>The output of this formula is then multiplied against games played to give the expected wins for the period analysed. This expected wins value is then compared to the teams actual wins, to determine how much lady luck played a part in the team’s season.</p>
 <p>You must see a pattern by now. The formula remains the same, while the <code>k</code> factor changes based on the sport.</p>
-<div id="different-ks" class="section level2">
-<h2>Different K’s</h2>
-<p>The <code>k</code> factor changes between sports because of the nature of the sports themselves.</p>
+<div id="different-k-factors" class="section level2">
+<h2>Different <code>k</code> Factors</h2>
+<p>The <code>k</code> factor changes between sports because of the nature of the sports themselves. Some sports, like basketball, are higher scoring and less likely to be decided by chance, hence a higher <code>k</code> factor.</p>
 <table>
 <thead>
 <tr class="header">
@@ -738,7 +738,7 @@
 </div>
 <div id="how-can-we-use-it" class="section level2">
 <h2>How can we use it?</h2>
-<p>The results have shown that winning more games than your Pythagorean Expectation tends to mean a team will decline the following season, while falling short of expectations in the current year tends to mean a team will improve the following season.</p>
+<p>Studies have shown that winning more games than your Pythagorean Expectation tends to mean a team will decline the following season, while falling short of expectations in the current year tends to mean a team will improve the following season.</p>
 <hr />
 </div>
 </div>
@@ -884,7 +884,7 @@ calculate_expected_wins &lt;- function(points_for, points_against, k) {
   <div class="media author-card content-widget-hr">
     
       
-      <img class="avatar mr-3 avatar-square" src="/authors/admin/avatar_huf62bf21c195b8d26ab4107916de5ed56_3657782_270x270_fill_q90_lanczos_center.jpg" alt="Jason Zivkovic">
+      <img class="avatar mr-3 avatar-circle" src="/authors/admin/avatar_huf62bf21c195b8d26ab4107916de5ed56_4844513_270x270_fill_q90_lanczos_center.jpg" alt="Jason Zivkovic">
     
 
     <div class="media-body">

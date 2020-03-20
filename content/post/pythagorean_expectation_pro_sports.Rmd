@@ -22,12 +22,12 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Introduction
 
-This piece is the first part in a series of posts I will be realeasing that will look to analyse how many wins teams should've won given their performances over the season and compare them to their actual wins achieved. To achieve this goal, it will apply a commonly known method in the sports analytics community called Pythagorean Expectation.
+This piece is the first part in a series of posts I will be releasing that will look to analyse how many wins teams should've won given their performances over the season and compare them to their actual wins achieved. To achieve this goal, it will apply a commonly known method in the sports analytics community called *Pythagorean Expectation*.
 
 
 ## Sports in the Report:
 
-The the series of posts will look to analyse a number of very popular sports leagues around the globe (ie the NBA), and in some sports' cases, the analysis will span multiple leagues (ie professional soccer has a number of "major" leagues around the globe).
+The series of posts will look to analyse a number of very popular sports leagues around the globe (ie the NBA), and in some sports' cases, the analysis will span multiple leagues (ie professional soccer has a number of "major" leagues around the globe).
 
 The following professional sports/sporting leagues will be included in the series:
 
@@ -46,13 +46,13 @@ As they become available, you'll be able to click the link to them.
 
 ![GM of the Houston Rockets Daryl Morey. Source: Northwestern.edu](/img/Morey formula_L.jpg)
 
-While we are easily able to count the wins and losses a team experiences, we might want to be able to assess the number of wins they had against how many wins they should have had, given their performances during the season. This might be able to tell us something about whether any luck or other factors played a part in a team's success (or failure).
+While we are effortlessly able to count the wins and losses a team experiences, we might want to be able to assess the number of wins they had, versus how many wins they should have had, given their performances during the season. This might be able to tell us something about whether any luck or other factors played a part in a team's success (or failure).
 
-Ok great, so how do we know how many wins our team was meant to get?
+Ok great, so how do we know how many wins our team was supposed to get?
 
-Enter, *Pythagorean Expectation*. While many question whether he was actually the creator of the *Pythagorean Theorem*, the famed philosopher Pythagoras (c. 570 – c. 495 BC) had nothing to do with *Pythagorean Expectation*, rather, another legend of our time and one of the founding fathers of sports analytics, Bill James, came up with this for the sport of baseball.
+Enter, *Pythagorean Expectation*. While many question whether he was actually the creator of the *Pythagorean Theorem*, the famed philosopher Pythagoras (c. 570 – c. 495 BC) had nothing to do with *Pythagorean Expectation*. Rather, another legend of our time and one of the founding fathers of sports analytics, Bill James, came up with this for the sport of baseball.
 
-Rather than explaining Pythagorean Expectation myself, why not consult wikipedia:
+Rather than explaining Pythagorean Expectation myself, why not consult Wikipedia:
 
 > Pythagorean expectation is a sports analytics formula devised by Bill James to estimate the percentage of games a baseball team "should" have won based on the number of runs they scored and allowed. Comparing a team's actual and Pythagorean winning percentage can be used to make predictions and evaluate which teams are over-performing and under-performing. The name comes from the formula's resemblance to the Pythagorean theorem.
 
@@ -71,9 +71,9 @@ The output of this formula is then multiplied against games played to give the e
 
 You must see a pattern by now. The formula remains the same, while the `k` factor changes based on the sport.
 
-## Different K's
+## Different `k` Factors
 
-The `k` factor changes between sports because of the nature of the sports themselves. 
+The `k` factor changes between sports because of the nature of the sports themselves. Some sports, like basketball, are higher scoring and less likely to be decided by chance, hence a higher `k` factor.
 
 
 |Sport|K*    |
@@ -88,7 +88,7 @@ The `k` factor changes between sports because of the nature of the sports themse
 
 ## How can we use it?
 
-The results have shown that winning more games than your Pythagorean Expectation tends to mean a team will decline the following season, while falling short of expectations in the current year tends to mean a team will improve the following season.
+Studies have shown that winning more games than your Pythagorean Expectation tends to mean a team will decline the following season, while falling short of expectations in the current year tends to mean a team will improve the following season.
 
 ***
 

@@ -22,10 +22,10 @@
 
 &lt;div id=&#34;introduction&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;Introduction&lt;/h1&gt;
-&lt;p&gt;This piece is the first part in a series of posts I will be realeasing that will look to analyse how many wins teams should’ve won given their performances over the season and compare them to their actual wins achieved. To achieve this goal, it will apply a commonly known method in the sports analytics community called Pythagorean Expectation.&lt;/p&gt;
+&lt;p&gt;This piece is the first part in a series of posts I will be releasing that will look to analyse how many wins teams should’ve won given their performances over the season and compare them to their actual wins achieved. To achieve this goal, it will apply a commonly known method in the sports analytics community called &lt;em&gt;Pythagorean Expectation&lt;/em&gt;.&lt;/p&gt;
 &lt;div id=&#34;sports-in-the-report&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Sports in the Report:&lt;/h2&gt;
-&lt;p&gt;The the series of posts will look to analyse a number of very popular sports leagues around the globe (ie the NBA), and in some sports’ cases, the analysis will span multiple leagues (ie professional soccer has a number of “major” leagues around the globe).&lt;/p&gt;
+&lt;p&gt;The series of posts will look to analyse a number of very popular sports leagues around the globe (ie the NBA), and in some sports’ cases, the analysis will span multiple leagues (ie professional soccer has a number of “major” leagues around the globe).&lt;/p&gt;
 &lt;p&gt;The following professional sports/sporting leagues will be included in the series:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;College Basketball (Men’s and Women’s)&lt;/li&gt;
@@ -45,10 +45,10 @@
 &lt;img src=&#34;/img/Morey%20formula_L.jpg&#34; alt=&#34;&#34; /&gt;
 &lt;p class=&#34;caption&#34;&gt;GM of the Houston Rockets Daryl Morey. Source: Northwestern.edu&lt;/p&gt;
 &lt;/div&gt;
-&lt;p&gt;While we are easily able to count the wins and losses a team experiences, we might want to be able to assess the number of wins they had against how many wins they should have had, given their performances during the season. This might be able to tell us something about whether any luck or other factors played a part in a team’s success (or failure).&lt;/p&gt;
-&lt;p&gt;Ok great, so how do we know how many wins our team was meant to get?&lt;/p&gt;
-&lt;p&gt;Enter, &lt;em&gt;Pythagorean Expectation&lt;/em&gt;. While many question whether he was actually the creator of the &lt;em&gt;Pythagorean Theorem&lt;/em&gt;, the famed philosopher Pythagoras (c. 570 – c. 495 BC) had nothing to do with &lt;em&gt;Pythagorean Expectation&lt;/em&gt;, rather, another legend of our time and one of the founding fathers of sports analytics, Bill James, came up with this for the sport of baseball.&lt;/p&gt;
-&lt;p&gt;Rather than explaining Pythagorean Expectation myself, why not consult wikipedia:&lt;/p&gt;
+&lt;p&gt;While we are effortlessly able to count the wins and losses a team experiences, we might want to be able to assess the number of wins they had, versus how many wins they should have had, given their performances during the season. This might be able to tell us something about whether any luck or other factors played a part in a team’s success (or failure).&lt;/p&gt;
+&lt;p&gt;Ok great, so how do we know how many wins our team was supposed to get?&lt;/p&gt;
+&lt;p&gt;Enter, &lt;em&gt;Pythagorean Expectation&lt;/em&gt;. While many question whether he was actually the creator of the &lt;em&gt;Pythagorean Theorem&lt;/em&gt;, the famed philosopher Pythagoras (c. 570 – c. 495 BC) had nothing to do with &lt;em&gt;Pythagorean Expectation&lt;/em&gt;. Rather, another legend of our time and one of the founding fathers of sports analytics, Bill James, came up with this for the sport of baseball.&lt;/p&gt;
+&lt;p&gt;Rather than explaining Pythagorean Expectation myself, why not consult Wikipedia:&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Pythagorean expectation is a sports analytics formula devised by Bill James to estimate the percentage of games a baseball team “should” have won based on the number of runs they scored and allowed. Comparing a team’s actual and Pythagorean winning percentage can be used to make predictions and evaluate which teams are over-performing and under-performing. The name comes from the formula’s resemblance to the Pythagorean theorem.&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -59,9 +59,9 @@
 &lt;p&gt;&lt;span class=&#34;math inline&#34;&gt;\(win\ ratio_{basketball} = \frac{points\ for^{13.91}}{points\ for^{13.91}\ +\ points\ against^{13.91}}\)&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;The output of this formula is then multiplied against games played to give the expected wins for the period analysed. This expected wins value is then compared to the teams actual wins, to determine how much lady luck played a part in the team’s season.&lt;/p&gt;
 &lt;p&gt;You must see a pattern by now. The formula remains the same, while the &lt;code&gt;k&lt;/code&gt; factor changes based on the sport.&lt;/p&gt;
-&lt;div id=&#34;different-ks&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Different K’s&lt;/h2&gt;
-&lt;p&gt;The &lt;code&gt;k&lt;/code&gt; factor changes between sports because of the nature of the sports themselves.&lt;/p&gt;
+&lt;div id=&#34;different-k-factors&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Different &lt;code&gt;k&lt;/code&gt; Factors&lt;/h2&gt;
+&lt;p&gt;The &lt;code&gt;k&lt;/code&gt; factor changes between sports because of the nature of the sports themselves. Some sports, like basketball, are higher scoring and less likely to be decided by chance, hence a higher &lt;code&gt;k&lt;/code&gt; factor.&lt;/p&gt;
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr class=&#34;header&#34;&gt;
@@ -92,7 +92,7 @@
 &lt;/div&gt;
 &lt;div id=&#34;how-can-we-use-it&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;How can we use it?&lt;/h2&gt;
-&lt;p&gt;The results have shown that winning more games than your Pythagorean Expectation tends to mean a team will decline the following season, while falling short of expectations in the current year tends to mean a team will improve the following season.&lt;/p&gt;
+&lt;p&gt;Studies have shown that winning more games than your Pythagorean Expectation tends to mean a team will decline the following season, while falling short of expectations in the current year tends to mean a team will improve the following season.&lt;/p&gt;
 &lt;hr /&gt;
 &lt;/div&gt;
 &lt;/div&gt;
