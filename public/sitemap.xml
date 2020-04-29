@@ -3,6 +3,31 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/project/chessr/</loc>
+    <lastmod>2020-04-28T00:00:00+10:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/</loc>
+    <lastmod>2020-04-28T00:00:00+10:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/project/</loc>
+    <lastmod>2020-04-28T00:00:00+10:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/r-package/</loc>
+    <lastmod>2020-04-28T00:00:00+10:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/</loc>
+    <lastmod>2020-04-28T00:00:00+10:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/blog/pythagorean-expectation-pro-sports/</loc>
     <lastmod>2020-03-08T00:00:00+00:00</lastmod>
   </url>
@@ -13,22 +38,17 @@
   </url>
   
   <url>
-    <loc>/</loc>
-    <lastmod>2020-03-08T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/post/</loc>
     <lastmod>2020-03-08T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/categories/pythagorean-expectation/</loc>
+    <loc>/tags/pythagorean-expectation/</loc>
     <lastmod>2020-03-08T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/tags/pythagorean-expectation/</loc>
+    <loc>/categories/pythagorean-expectation/</loc>
     <lastmod>2020-03-08T00:00:00+00:00</lastmod>
   </url>
   
@@ -53,11 +73,6 @@
   </url>
   
   <url>
-    <loc>/tags/</loc>
-    <lastmod>2020-03-08T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/tags/afl/</loc>
     <lastmod>2019-12-23T00:00:00+00:00</lastmod>
   </url>
@@ -68,12 +83,12 @@
   </url>
   
   <url>
-    <loc>/categories/analytics/</loc>
+    <loc>/tags/analytics/</loc>
     <lastmod>2019-12-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/tags/analytics/</loc>
+    <loc>/categories/analytics/</loc>
     <lastmod>2019-12-23T00:00:00+00:00</lastmod>
   </url>
   
@@ -98,12 +113,12 @@
   </url>
   
   <url>
-    <loc>/tags/fitzroy/</loc>
+    <loc>/categories/fitzroy/</loc>
     <lastmod>2019-12-16T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/categories/fitzroy/</loc>
+    <loc>/tags/fitzroy/</loc>
     <lastmod>2019-12-16T00:00:00+00:00</lastmod>
   </url>
   
@@ -258,12 +273,12 @@
   </url>
   
   <url>
-    <loc>/tags/tidyverse/</loc>
+    <loc>/categories/tidyverse/</loc>
     <lastmod>2019-08-17T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/categories/tidyverse/</loc>
+    <loc>/tags/tidyverse/</loc>
     <lastmod>2019-08-17T00:00:00+00:00</lastmod>
   </url>
   

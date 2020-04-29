@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Projects | Don&#39;t Blame the Data</title>
+    <link>/project/</link>
+      <atom:link href="/project/index.xml" rel="self" type="application/rss+xml" />
+    <description>Projects</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>©2020</copyright><lastBuildDate>Tue, 28 Apr 2020 00:00:00 +1000</lastBuildDate>
+    <image>
+      <url>/img/logo.jpg</url>
+      <title>Projects</title>
+      <link>/project/</link>
+    </image>
+    
+    <item>
+      <title>chessR R Package</title>
+      <link>/project/chessr/</link>
+      <pubDate>Tue, 28 Apr 2020 00:00:00 +1000</pubDate>
+      <guid>/project/chessr/</guid>
+      <description>&lt;p&gt;The &lt;code&gt;chessR&lt;/code&gt; package is designed to allow users to extract their game data from the popular online chess platform 
+&lt;a href=&#34;www.chess.com&#34;&gt;chess.com&lt;/a&gt;. The website offers a very convenient set of APIs to be able to access.&lt;/p&gt;
+&lt;p&gt;The vignette for the package offers a full description of the package and the functions available, and can be found 
+&lt;a href=&#34;https://jaseziv.github.io/chessR/articles/using_chessR_package.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

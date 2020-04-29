@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Electronic Health Records | Don&#39;t Blame the Data</title>
+    <link>/tags/electronic-health-records/</link>
+      <atom:link href="/tags/electronic-health-records/index.xml" rel="self" type="application/rss+xml" />
+    <description>Electronic Health Records</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>©2020</copyright><lastBuildDate>Sun, 06 Jan 2019 00:00:00 +1100</lastBuildDate>
+    <image>
+      <url>/img/logo.jpg</url>
+      <title>Electronic Health Records</title>
+      <link>/tags/electronic-health-records/</link>
+    </image>
+    
+    <item>
+      <title>Interveneable predictions using Electronic Health Records</title>
+      <link>/project/chessr/</link>
+      <pubDate>Sun, 06 Jan 2019 00:00:00 +1100</pubDate>
+      <guid>/project/chessr/</guid>
+      <description>&lt;p&gt;Many models can make accurate predictions using temporal data, such as classic time series models including ARIMA, and deep learning methods including recurrent neural networks. Such models are usually seen as blackboxes as we have limited insights on which inputs are important to produce the outcome, and if the outcome is unwanted what interventions can be done to change it. In this paper we introduce an interveneable prediction framework applied to time lagged regression. It is a two step approach: in the first step important time series covariates are selected using a hierarchical lasso penalty, and in the second step we use the residuals and the historical lags of the response to improve the prediction made in the first step. We illustrate our model with both a simulation study and a real data example, using Electronic Health Records data to predict Hospital Acquired Infection.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
