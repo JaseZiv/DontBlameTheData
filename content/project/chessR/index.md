@@ -6,7 +6,7 @@ title = "chessR R Package"
 date = 2020-04-28T00:00:00
 
 # Project summary to display on homepage.
-summary = "An R package developed to aid in the extraction and analysis of chess.com player game data"
+summary = "An R package developed to aid in the extraction and analysis of data from popular online chess platforms"
 
 # Tags: can be used for filtering projects.
 # Example: `tags = ["machine-learning", "deep-learning"]`
@@ -43,6 +43,6 @@ url_code = ""
 
 
 
-The `chessR` package is designed to allow users to extract their game data from the popular online chess platform [chess.com](www.chess.com). The website offers a very convenient set of APIs to be able to access.
+The `chessR` package is designed to allow users to extract their game data and other data from popular online chess platforms, including [chess.com](www.chess.com) and [Lichess](www.lichess.org). The websites offer a very convenient set of APIs to be able to access date through.
 
 The vignette for the package offers a full description of the package and the functions available, and can be found [here](https://jaseziv.github.io/chessR/articles/using_chessR_package.html).
