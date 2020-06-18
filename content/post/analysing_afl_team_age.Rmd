@@ -22,6 +22,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(scales)
 library(ggridges)
+library(ggtext)
 
 # set up plotting theme
 theme_jason <- function(legend_pos="top", base_size=12, font=NA){
@@ -137,6 +138,9 @@ player_age_summary <- player_age %>%
   summarise(avg_age = round(mean(age_start_season, na.rm = T),2),
             med_age = round(median(age_start_season, na.rm = T), 2)) %>% ungroup()
 
+orange <- "orange"
+steelblue <- "steelblue"
+
 # plot data
 player_age_summary %>% 
   ggplot(aes(x= reorder(team, avg_age))) +
@@ -150,11 +154,11 @@ player_age_summary %>%
   annotate("text", x= 13, y= 25, label = "...yet 4th oldest using\nthe 'average'", colour = "orange", size = 5) +
   geom_curve(x=13.4, xend=15, y=25, yend= 24.8, arrow = arrow(length = unit(0.2,"cm")), size =1, colour = "orange") +
   scale_y_continuous(breaks = c(22.0, 22.5, 23.0, 23.5, 24.0, 24.5, 25.0), labels = c("22.0", "22.5", "23.0", "23.5", "24.0", "24.5", "25 years"), limits = c(22.0,25.3)) +
-  ggtitle("UNDERSTANDING THE IMPLICATIONS OF\nMEAN VS MEDIAN", subtitle = "Plotting the mean and median ages produces different results,\nespecially for Geelong") +
+  ggtitle(glue::glue("UNDERSTANDING THE IMPLICATIONS OF<br><span style='color:{orange}'>MEAN</span> VS <span style='color:{steelblue}'>MEDIAN</span>"), subtitle = "Plotting the mean and median ages produces different results,\nespecially for Geelong") +
   labs(caption = "Data: footywire.com") +
   coord_flip() +
   theme_jason() +
-  theme(axis.title = element_blank(), plot.caption = element_text(face = "italic", colour = "grey"))
+  theme(axis.title.x = element_blank(), axis.title.y = element_blank(), plot.caption = element_text(face = "italic", colour = "grey"), plot.title = element_markdown())
 ```
 
 

@@ -63,18 +63,13 @@
   </url>
   
   <url>
-    <loc>/categories/sports-analytics/</loc>
-    <lastmod>2020-03-08T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/tags/sports-analytics/</loc>
     <lastmod>2020-03-08T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/categories/afl/</loc>
-    <lastmod>2019-12-23T00:00:00+00:00</lastmod>
+    <loc>/categories/sports-analytics/</loc>
+    <lastmod>2020-03-08T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -83,12 +78,17 @@
   </url>
   
   <url>
-    <loc>/categories/analytics/</loc>
+    <loc>/categories/afl/</loc>
     <lastmod>2019-12-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/tags/analytics/</loc>
+    <lastmod>2019-12-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/analytics/</loc>
     <lastmod>2019-12-23T00:00:00+00:00</lastmod>
   </url>
   
@@ -123,12 +123,12 @@
   </url>
   
   <url>
-    <loc>/categories/open-source/</loc>
+    <loc>/tags/open-source/</loc>
     <lastmod>2019-12-16T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/tags/open-source/</loc>
+    <loc>/categories/open-source/</loc>
     <lastmod>2019-12-16T00:00:00+00:00</lastmod>
   </url>
   
