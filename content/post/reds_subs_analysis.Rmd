@@ -1,0 +1,369 @@
+---
+title: "Liverpool's Earlier Subsititutions - an Introduction to worldfootballR"
+date: '2021-01-10'
+slug: liverpools-early-substitutions-worldfootballR
+categories:
+  - R
+  - worldfootballR
+tags: [worldfootballR, R, soccer, soccer analytics, ggplot2, gt]
+description: 'Using the worldfootballR R package to analyse Premier League substitutions'
+featured: ''
+featuredalt: ''
+featuredpath: ''
+linktitle: ''
+type: post
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, fig.width = 10, fig.height = 8)
+```
+
+```{r}
+# install.packages("devtools")
+# devtools::install_github("JaseZiv/worldfootballR")
+
+library(tidyverse)
+library(lubridate)
+library(worldfootballR)
+library(gt)
+```
+
+
+```{r, eval=FALSE}
+match_urls <- get_match_urls(country = "ENG", gender = "M", season_end_year = c(2019:2021))
+
+match_summaries <- get_match_summary(match_url = match_urls)
+
+saveRDS(match_summaries, here::here("match_summaries_epl_2019-2021.rds"))
+```
+
+
+```{r}
+match_summaries <- readRDS(url("https://github.com/JaseZiv/Dont-Blame-the-Data-Data-Files/blob/master/liverpool_subs/match_summaries_epl_2019-2021.rds?raw=true"))
+
+# Got to clean up some of the event data (this doesn't need to be done any more as been fixed in package):
+match_summaries <- match_summaries %>% 
+  mutate(event_type = ifelse(str_detect(tolower(event_type), "penalty"), "Penalty", ifelse(str_detect(tolower(event_type), "own goal"), "Own Goal", event_type)))
+```
+
+With the creation of the [`worldfootballR`](https://github.com/JaseZiv/worldfootballR) R package (a new R package to aid in the extraction of Football (Soccer) data from [fbref](fbref.com)), I will be trying to highlight ways the package can be used.
+
+
+In this piece, I will analyse Liverpool's use of substitutions in the English Premier League (EPL) over the last three seasons to understand whether there has been a change in behaviour in the currrent season, and whether there was a change around the COVID outbreak and subsequent pause taken during the 2019-2020 season.
+
+Data was extracted for the last two and a half seasons, up to the end of matchweek 17 in the 2020/21 EPL season.
+
+
+## Extract Data Using `worldfootballR`
+
+The package has a function called `get_match_summary` which extracts match summary (goals, subs, red/yellow cards) data for a match URLs. 
+
+To get the match URLs, another function - `get_match_urls` - can be used, which accepts a country code ("ENG" for England), gender and the year the season(s) ended, and returns a vector of match URLs.
+
+```
+devtools::install_github("JaseZiv/worldfootballR")
+library(worldfootballR)
+
+match_urls <- get_match_urls(country = "ENG", gender = "M", season_end_year = c(2019:2021))
+
+match_summaries <- get_match_summary(match_url = match_urls)
+```
+***
+
+## Teams making their first sub
+
+Now that the package instructions are out of the way, we turn our attention to the analysis of substitution data in the Premier League, and specifically ask the question, has there been a change in Liverpool's substitution behaviour.
+
+The analysis was loosely inspired by a piece done by FiveThirtyEight on [Bundesliga team susbstitutions before and after the league restart](https://fivethirtyeight.com/features/bundesliga-teams-could-be-using-more-substitutions-but-they-arent/).
+
+```{r}
+subs_data <- match_summaries %>% 
+  filter(str_detect(tolower(event_type), "substitut")) %>% 
+  mutate(in_first_half = ifelse(event_time <= 45, "yes", "no"),
+         in_first_60 = ifelse(event_time <= 60, "yes", "no")) %>% 
+  separate(., Match_Date, into = c("Wday", "Month", "Day", "Year"), sep = " ", remove = F) %>% 
+  mutate(Day = gsub(",", "", Day) %>% as.numeric(),
+         Year = as.numeric(Year),
+         Month = match(Month, month.name),
+         Match_Date_Clean = lubridate::ymd(paste(Year, Month, Day, sep = "-")))
+```
+
+
+```{r}
+sub_analysis <- subs_data %>% 
+  mutate(restart_state = case_when(
+    Match_Date_Clean <= ymd("2020-03-09") ~ "Before Restart",
+    Match_Date_Clean > ymd("2020-03-09") ~ "After Restart"
+  )) %>% 
+  group_by(Game_URL) %>% mutate(earliest_sub_game = min(event_time, na.rm = T)) %>% ungroup() %>%
+  group_by(Season, Team, restart_state) %>% 
+  mutate(GP = n_distinct(Game_URL),
+         n_sub = n(),
+         sub_first_half = sum(in_first_half == "yes"),
+         sub_first_60 = sum(in_first_60 == "yes"),
+         avg_earliest_sub = mean(earliest_sub_game, na.rm = T)) %>% 
+  ungroup() %>% 
+  select(Season, Team, restart_state, GP, n_sub, sub_first_half, sub_first_60, avg_earliest_sub) %>% 
+  distinct(.keep_all = T) %>% 
+  mutate(avg_subs_game = n_sub / GP) %>% 
+  mutate(share_subs_45 = sub_first_half / n_sub,
+         share_subs_60 = sub_first_60 / n_sub)
+```
+
+```{r, eval=FALSE, include=FALSE, echo=FALSE}
+subs_data %>% 
+  mutate(restart_state = case_when(
+    Match_Date_Clean <= ymd("2020-03-09") ~ "Before Restart",
+    Match_Date_Clean > ymd("2020-03-09") ~ "After Restart"
+  )) %>% 
+  mutate(season_display = factor(ifelse(Season == "2019-2020", paste(Season, restart_state, sep = " - "), Season), levels = c("2018-2019", "2019-2020 - Before Restart", "2019-2020 - After Restart", "2020-2021"))) %>% 
+  group_by(Game_URL) %>% mutate(earliest_sub_game = min(event_time, na.rm = T)) %>% ungroup() %>%
+  group_by(season_display) %>% 
+  summarise(med_early = median(earliest_sub_game))
+```
+
+### All Teams
+
+When the COVID-19 pandemic swept across the nation, some of the major leagues were forced to pause their seasons while cases became manageable.
+
+During the 2019-20 season before the virus halted play, teams were typically making their first sub at the 56th minute, which was consistent with that of the 2018-19 season, however once play resumed (and teams were allowed to make more subs), that number dropped to 46 minutes (half-time typically).
+
+This current season has seen the teams' behaviour revert back to the pre-restarted season numbers (54 minutes).
+
+
+```{r, leauge_times, fig.width=8, fig.height=6}
+sysfonts::font_add_google(name = "Chivo", family = "chivo")
+showtext::showtext_auto()
+
+subs_data %>% 
+  mutate(restart_state = case_when(
+    Match_Date_Clean <= ymd("2020-03-09") ~ "Before Restart",
+    Match_Date_Clean > ymd("2020-03-09") ~ "After Restart"
+  )) %>%
+  mutate(season_display = factor(ifelse(Season == "2019-2020", paste(Season, restart_state, sep = " - "), Season), levels = c("2018-2019", "2019-2020 - Before Restart", "2019-2020 - After Restart", "2020-2021"))) %>%
+  group_by(Game_URL) %>% mutate(earliest_sub_game = min(event_time, na.rm = T)) %>% ungroup() %>%
+  ggplot(aes(x= earliest_sub_game, y= season_display)) +
+  geom_boxplot() +
+  scale_x_continuous(breaks = c(0,15,30,45,60,75,90), name = "Time of first sub") +
+  ggtitle("TIME OF FIRST SUB BACK TO PRE-COVID LEVELS", subtitle = "Teams were making their first sub a lot earlier after the restart in the 19/20 season,\nbut have since reverted back to pre-restart times*") +
+  labs(caption = "*Data current to 11/01/2021\nSource: worldfootballR  ||  Table: @jase_ziv") +
+  theme_minimal() +
+  theme(axis.title.y = element_blank(), axis.title.x = element_text(hjust = 1, family = "chivo", size = 14, colour = "grey20"),
+        axis.text.x = element_text(size=13, colour = "grey40"), axis.text.y = element_text(size = 13, colour = "grey40"),
+        plot.title = element_text(size = 20, face = "bold", colour = "grey30", hjust = 1), plot.subtitle = element_text(size=14, colour = "grey50", hjust = 1),
+        plot.caption = element_text(size=12, hjust = -0.2, colour = "grey40"),
+        text = element_text(family = "chivo"),
+        panel.grid.minor.x = element_blank(), panel.grid.major.x = element_line(linetype = 2), panel.grid.major.y = element_blank())
+
+showtext::showtext_end()  
+```
+
+***
+
+### What about Liverpool; where do they sit?
+
+In all seasons analysed, Liverpool make slightly more subs in a season compared to the league average, with the average number of subs in a season peaking after the restart last season to 4.67 subs per game. The current season has seen this revert to pre-COVID levels.
+
+Interestingly, while Liverpool's first sub typically comes slightly later than the league average (56 minutes compared to 52 minutes), the Reds have stuck close to their first sub time after the season restart, while the league average has reverted back to pre-COVID levels, reversing the league-wide trend.
+
+### And the first hour?
+
+The Reds made 12% of their substitutions in the first hour during the combined 2019-20 season (double that of their 2018-19 season), and this season has seen this percentage again double through the first 16 games. The league however has experienced a direct reversal of this trend, spiking to 24% during the restarted part of the 19/20 season, and settling back down at the league average for the previous seasons.
+
+It will be interesting to see how this trend continues throughout the latter parts of this season.
+
+```{r, liverpool_analysis}
+liverpool_seasons <- subs_data %>% filter(Team == "Liverpool") %>% 
+  mutate(restart_state = case_when(
+    Match_Date_Clean <= ymd("2020-03-09") ~ "Before Restart",
+    Match_Date_Clean > ymd("2020-03-09") ~ "After Restart"
+  )) %>% 
+  group_by(Game_URL) %>% mutate(earliest_sub_game = min(event_time, na.rm = T)) %>% ungroup() %>% 
+  group_by(Season, restart_state) %>% 
+  mutate(GP_reds = n_distinct(Game_URL),
+         n_sub_reds = n(),
+         sub_first_half_reds = sum(in_first_half == "yes"),
+         sub_first_60_reds = sum(in_first_60 == "yes"),
+         avg_earliest_sub_reds = mean(earliest_sub_game, na.rm = T)) %>% 
+  ungroup() %>% 
+  select(Season, restart_state, GP_reds, n_sub_reds, sub_first_half_reds, sub_first_60_reds, avg_earliest_sub_reds) %>% 
+  distinct(.keep_all = T) %>% 
+  mutate(avg_subs_game_reds = n_sub_reds / GP_reds) %>% 
+  mutate(share_subs_45_reds = sub_first_half_reds / n_sub_reds,
+         share_subs_60_reds = sub_first_60_reds / n_sub_reds) %>% 
+  select(Season, restart_state, n_sub_reds, avg_earliest_sub_reds, avg_subs_game_reds, share_subs_60_reds) %>% 
+  mutate(team = "Liverpool")
+
+
+all_other_seasons <- sub_analysis %>% 
+  filter(Team != "Liverpool") %>% 
+  group_by(Season, restart_state) %>% 
+  summarise(avg_team_subs_season = round(mean(n_sub, na.rm = T),4),
+            avg_sub_first_half = round(mean(sub_first_half, na.rm = T), 4),
+            avg_sub_first_60 = round(mean(sub_first_60, na.rm = T), 4),
+            avg_earliest_sub_teams = round(mean(avg_earliest_sub, na.rm = T),4),
+            avg_subs_game_team = round(mean(avg_subs_game, na.rm = T),4),
+            avg_share_subs_45 = round(mean(share_subs_45, na.rm = T),4),
+            avg_share_subs_60 = round(mean(share_subs_60, na.rm = T),4)) %>% 
+  ungroup() %>% 
+  select(Season, restart_state, avg_team_subs_season, avg_earliest_sub_teams, avg_subs_game_team, avg_share_subs_60) %>% 
+  mutate(team = "Rest of League")
+
+
+combined <- left_join(liverpool_seasons, all_other_seasons, by = c("Season", "restart_state")) %>% 
+  mutate(season_display = ifelse(Season == "2019-2020", paste(Season, restart_state, sep = " - "), Season))
+
+
+
+final_table <- combined %>% 
+  mutate(avg_team_subs_season = round(avg_team_subs_season),
+         avg_earliest_sub_reds = round(avg_earliest_sub_reds), 
+         avg_earliest_sub_teams = round(avg_earliest_sub_teams),
+         avg_subs_game_reds = round(avg_subs_game_reds,2), 
+         avg_subs_game_team = round(avg_subs_game_team, 2),
+         share_subs_60_reds = scales::percent(share_subs_60_reds, accuracy = 6), 
+         avg_share_subs_60 = scales::percent(avg_share_subs_60, accuracy = 6)) %>% 
+  select(-Season, -restart_state) %>% 
+  select(-team.x, -team.y) %>% 
+  gt(rowname_col = "season_display") %>% 
+  tab_spanner(
+    label = "Number of Subs",
+    columns = vars(n_sub_reds, avg_team_subs_season)
+  ) %>%
+  tab_spanner(
+    label = "Avg Time to 1st Sub",
+    columns = vars(avg_earliest_sub_reds, avg_earliest_sub_teams)
+  ) %>%
+  tab_spanner(
+    label = "Subs/Game",
+    columns = vars(avg_subs_game_reds, avg_subs_game_team)
+  ) %>% 
+  tab_style(
+    style = list(
+      cell_fill(color = "darkred"),
+      cell_text(weight = "bold", color = "white")
+      ),
+    locations = cells_body(
+      columns = vars(share_subs_60_reds, avg_share_subs_60),
+      rows = "2020-2021")
+  ) %>%
+  tab_spanner(
+    label = "Share Subs in 1st 60",
+    columns = vars(share_subs_60_reds, avg_share_subs_60)
+  ) %>%
+  cols_label(
+    n_sub_reds = "Liverpool",
+    avg_team_subs_season = "Rest of League",
+    avg_earliest_sub_reds = "Liverpool", 
+    avg_earliest_sub_teams = "Rest of League",
+    avg_subs_game_reds = "Liverpool", 
+    avg_subs_game_team = "Rest of League",
+    share_subs_60_reds = "Liverpool", 
+    avg_share_subs_60 = "Rest of League"
+  ) %>% 
+  tab_style(
+    style = list(
+      cell_text(weight = "bold", align = "center")
+    ),
+    locations = list(
+      cells_column_labels(gt::everything()),
+      cells_column_spanners(gt::everything())
+    )
+  ) %>%
+  tab_style(
+    style = list(
+      cell_text(align = "center")
+    ),
+    locations = list(
+      cells_body(gt::everything()),
+      cells_row_groups(gt::everything())
+    )
+  ) %>%
+  tab_header(
+    title = md("**LIVERPOOL SUBBING MORE IN THE FIRST 60 MINUTES**"),
+    # title = md("**RATE OF SUB IN THE FIRST 60 MINUTES HAS DOUBLED THIS SEASON FOR LIVERPOOL**"),
+    subtitle = md("*The rate that Liverpool are subbing in the first 60 minutes has doubled from last season, with 1 in 4 subs coming in this time period - double last season's rate*")
+    # subtitle = md("'Rest of the League' refers to all other teams that season, excluding Liverpool.<br>*Note: 2019-2020 season split into before and after the COVID-forced restart*")
+    ) %>%
+  tab_style(
+    style = list(
+      cell_text(font = "Chivo", size = "xx-large", align = "center")
+    ),
+    locations = list(
+      cells_title(groups = "title")
+    )
+  ) %>% 
+  tab_style(
+    style = list(
+      cell_text(font = "Chivo", size = "x-large", align = "center")
+    ),
+    locations = list(
+      cells_title(groups = "subtitle")
+    )
+  ) %>%
+  tab_source_note(
+    source_note = md("SOURCE: [worldfootballR](https://github.com/JaseZiv/worldfootballR)<br>TABLE: [@jase_ziv](https://twitter.com/jaseziv)")
+  ) %>% 
+  tab_footnote(
+    footnote = md("*All clubs excluding Liverpool*"), 
+    locations = cells_column_labels(
+      columns = c(2, 4, 6, 8) # note
+      )
+    ) %>%
+  tab_footnote(
+    footnote = md("*COVID-interrupted Season*"), 
+    locations = cells_stub(
+      rows = c(2, 3) # note
+      )
+    ) %>% 
+  cols_align(
+    align = "center"
+  ) %>% 
+  tab_style(
+      style = cell_borders(
+        sides = "bottom", color = "lightgrey", weight = px(1)
+      ),
+      locations = cells_body(
+        columns = TRUE
+      )
+    )  %>% 
+  tab_options(
+    column_labels.background.color = "white",
+    table.border.top.width = px(3),
+    table.border.top.color = "transparent",
+    table.border.bottom.color = "transparent",
+    table.border.bottom.width = px(3),
+    column_labels.border.top.width = px(3),
+    column_labels.border.top.color = "transparent",
+    column_labels.border.bottom.width = px(3),
+    column_labels.border.bottom.color = "black",
+    data_row.padding = px(3),
+    source_notes.font.size = 12,
+    table.font.size = 16,
+    heading.align = "left"
+  ) %>% 
+  opt_table_font(
+      font = c(
+        google_font(name = "Chivo"),
+        default_fonts()
+      )
+    ) 
+
+final_table
+
+# gtsave(final_table, "liverpool_subs.html")
+
+```
+
+***
+
+## Wrap Up
+
+This was the first in a series of analyses that will make use of various data extraction functions in the `worldfootballR` package.
+
+Here we saw that Liverpool are making their first substitution earlier than their previous trends, and are deviating from the league averages. I will follow this analysis to see if this trend has continued.
+
+As always, any questions/comments about the piece or the R package, feel free to reach out through the regular channels.
+
+GO REDS!!
+

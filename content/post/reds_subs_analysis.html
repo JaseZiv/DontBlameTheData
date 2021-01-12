@@ -1,0 +1,511 @@
+---
+title: "Liverpool's Earlier Subsititutions - an Introduction to worldfootballR"
+date: '2021-01-10'
+slug: liverpools-early-substitutions-worldfootballR
+categories:
+  - R
+  - worldfootballR
+tags: [worldfootballR, R, soccer, soccer analytics, ggplot2, gt]
+description: 'Using the worldfootballR R package to analyse Premier League substitutions'
+featured: ''
+featuredalt: ''
+featuredpath: ''
+linktitle: ''
+type: post
+---
+
+
+
+<p>With the creation of the <a href="https://github.com/JaseZiv/worldfootballR"><code>worldfootballR</code></a> R package (a new R package to aid in the extraction of Football (Soccer) data from <a href="fbref.com">fbref</a>), I will be trying to highlight ways the package can be used.</p>
+<p>In this piece, I will analyse Liverpool’s use of substitutions in the English Premier League (EPL) over the last three seasons to understand whether there has been a change in behaviour in the currrent season, and whether there was a change around the COVID outbreak and subsequent pause taken during the 2019-2020 season.</p>
+<p>Data was extracted for the last two and a half seasons, up to the end of matchweek 17 in the 2020/21 EPL season.</p>
+<div id="extract-data-using-worldfootballr" class="section level2">
+<h2>Extract Data Using <code>worldfootballR</code></h2>
+<p>The package has a function called <code>get_match_summary</code> which extracts match summary (goals, subs, red/yellow cards) data for a match URLs.</p>
+<p>To get the match URLs, another function - <code>get_match_urls</code> - can be used, which accepts a country code (“ENG” for England), gender and the year the season(s) ended, and returns a vector of match URLs.</p>
+<pre><code>devtools::install_github(&quot;JaseZiv/worldfootballR&quot;)
+library(worldfootballR)
+
+match_urls &lt;- get_match_urls(country = &quot;ENG&quot;, gender = &quot;M&quot;, season_end_year = c(2019:2021))
+
+match_summaries &lt;- get_match_summary(match_url = match_urls)</code></pre>
+<hr />
+</div>
+<div id="teams-making-their-first-sub" class="section level2">
+<h2>Teams making their first sub</h2>
+<p>Now that the package instructions are out of the way, we turn our attention to the analysis of substitution data in the Premier League, and specifically ask the question, has there been a change in Liverpool’s substitution behaviour.</p>
+<p>The analysis was loosely inspired by a piece done by FiveThirtyEight on <a href="https://fivethirtyeight.com/features/bundesliga-teams-could-be-using-more-substitutions-but-they-arent/">Bundesliga team susbstitutions before and after the league restart</a>.</p>
+<div id="all-teams" class="section level3">
+<h3>All Teams</h3>
+<p>When the COVID-19 pandemic swept across the nation, some of the major leagues were forced to pause their seasons while cases became manageable.</p>
+<p>During the 2019-20 season before the virus halted play, teams were typically making their first sub at the 56th minute, which was consistent with that of the 2018-19 season, however once play resumed (and teams were allowed to make more subs), that number dropped to 46 minutes (half-time typically).</p>
+<p>This current season has seen the teams’ behaviour revert back to the pre-restarted season numbers (54 minutes).</p>
+<p><img src="/post/reds_subs_analysis_files/figure-html/leauge_times-1.png" width="768" /></p>
+<hr />
+</div>
+<div id="what-about-liverpool-where-do-they-sit" class="section level3">
+<h3>What about Liverpool; where do they sit?</h3>
+<p>In all seasons analysed, Liverpool make slightly more subs in a season compared to the league average, with the average number of subs in a season peaking after the restart last season to 4.67 subs per game. The current season has seen this revert to pre-COVID levels.</p>
+<p>Interestingly, while Liverpool’s first sub typically comes slightly later than the league average (56 minutes compared to 52 minutes), the Reds have stuck close to their first sub time after the season restart, while the league average has reverted back to pre-COVID levels, reversing the league-wide trend.</p>
+</div>
+<div id="and-the-first-hour" class="section level3">
+<h3>And the first hour?</h3>
+<p>The Reds made 12% of their substitutions in the first hour during the combined 2019-20 season (double that of their 2018-19 season), and this season has seen this percentage again double through the first 16 games. The league however has experienced a direct reversal of this trend, spiking to 24% during the restarted part of the 19/20 season, and settling back down at the league average for the previous seasons.</p>
+<p>It will be interesting to see how this trend continues throughout the latter parts of this season.</p>
+<style>@import url("https://fonts.googleapis.com/css2?family=Chivo:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+html {
+  font-family: Chivo, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#kbcypgyzgc .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 3px;
+  border-top-color: transparent;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 3px;
+  border-bottom-color: transparent;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#kbcypgyzgc .gt_heading {
+  background-color: #FFFFFF;
+  text-align: left;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#kbcypgyzgc .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#kbcypgyzgc .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 4px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#kbcypgyzgc .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#kbcypgyzgc .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 3px;
+  border-top-color: transparent;
+  border-bottom-style: solid;
+  border-bottom-width: 3px;
+  border-bottom-color: black;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#kbcypgyzgc .gt_col_heading {
+  color: #333333;
+  background-color: white;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#kbcypgyzgc .gt_column_spanner_outer {
+  color: #333333;
+  background-color: white;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#kbcypgyzgc .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#kbcypgyzgc .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#kbcypgyzgc .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 3px;
+  border-bottom-color: black;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#kbcypgyzgc .gt_group_heading {
+  padding: 8px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#kbcypgyzgc .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#kbcypgyzgc .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#kbcypgyzgc .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#kbcypgyzgc .gt_row {
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#kbcypgyzgc .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 12px;
+}
+
+#kbcypgyzgc .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#kbcypgyzgc .gt_first_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+}
+
+#kbcypgyzgc .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#kbcypgyzgc .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#kbcypgyzgc .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#kbcypgyzgc .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#kbcypgyzgc .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#kbcypgyzgc .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding: 4px;
+}
+
+#kbcypgyzgc .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#kbcypgyzgc .gt_sourcenote {
+  font-size: 12px;
+  padding: 4px;
+}
+
+#kbcypgyzgc .gt_left {
+  text-align: left;
+}
+
+#kbcypgyzgc .gt_center {
+  text-align: center;
+}
+
+#kbcypgyzgc .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#kbcypgyzgc .gt_font_normal {
+  font-weight: normal;
+}
+
+#kbcypgyzgc .gt_font_bold {
+  font-weight: bold;
+}
+
+#kbcypgyzgc .gt_font_italic {
+  font-style: italic;
+}
+
+#kbcypgyzgc .gt_super {
+  font-size: 65%;
+}
+
+#kbcypgyzgc .gt_footnote_marks {
+  font-style: italic;
+  font-size: 65%;
+}
+</style>
+<div id="kbcypgyzgc" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+  <thead class="gt_header">
+    <tr>
+      <th colspan="9" class="gt_heading gt_title gt_font_normal" style="font-family: Chivo; font-size: xx-large; text-align: center;"><strong>LIVERPOOL SUBBING MORE IN THE FIRST 60 MINUTES</strong></th>
+    </tr>
+    <tr>
+      <th colspan="9" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border" style="font-family: Chivo; font-size: x-large; text-align: center;"><em>The rate that Liverpool are subbing in the first 60 minutes has doubled from last season, with 1 in 4 subs coming in this time period - double last season's rate</em></th>
+    </tr>
+  </thead>
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1"></th>
+      <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" style="text-align: center; font-weight: bold;">
+        <span class="gt_column_spanner">Number of Subs</span>
+      </th>
+      <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" style="text-align: center; font-weight: bold;">
+        <span class="gt_column_spanner">Avg Time to 1st Sub</span>
+      </th>
+      <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" style="text-align: center; font-weight: bold;">
+        <span class="gt_column_spanner">Subs/Game</span>
+      </th>
+      <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" style="text-align: center; font-weight: bold;">
+        <span class="gt_column_spanner">Share Subs in 1st 60</span>
+      </th>
+    </tr>
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" style="text-align: center; font-weight: bold;">Liverpool</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" style="text-align: center; font-weight: bold;">Rest of League<sup class="gt_footnote_marks">1</sup></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" style="text-align: center; font-weight: bold;">Liverpool</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" style="text-align: center; font-weight: bold;">Rest of League<sup class="gt_footnote_marks">1</sup></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" style="text-align: center; font-weight: bold;">Liverpool</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" style="text-align: center; font-weight: bold;">Rest of League<sup class="gt_footnote_marks">1</sup></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" style="text-align: center; font-weight: bold;">Liverpool</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" style="text-align: center; font-weight: bold;">Rest of League<sup class="gt_footnote_marks">1</sup></th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr>
+      <td class="gt_row gt_left gt_stub">2018-2019</td>
+      <td class="gt_row gt_center" style="text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;">112</td>
+      <td class="gt_row gt_center" style="text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;">108</td>
+      <td class="gt_row gt_center" style="text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;">64</td>
+      <td class="gt_row gt_center" style="text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;">51</td>
+      <td class="gt_row gt_center" style="text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;">2.95</td>
+      <td class="gt_row gt_center" style="text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;">2.85</td>
+      <td class="gt_row gt_center" style="text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;">6%</td>
+      <td class="gt_row gt_center" style="text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;">18%</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_stub">2019-2020 - Before Restart<sup class="gt_footnote_marks">2</sup></td>
+      <td class="gt_row gt_center" style="text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;">87</td>
+      <td class="gt_row gt_center" style="text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;">79</td>
+      <td class="gt_row gt_center" style="text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;">64</td>
+      <td class="gt_row gt_center" style="text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;">50</td>
+      <td class="gt_row gt_center" style="text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;">3.00</td>
+      <td class="gt_row gt_center" style="text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;">2.77</td>
+      <td class="gt_row gt_center" style="text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;">12%</td>
+      <td class="gt_row gt_center" style="text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;">18%</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_stub">2019-2020 - After Restart<sup class="gt_footnote_marks">2</sup></td>
+      <td class="gt_row gt_center" style="text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;">42</td>
+      <td class="gt_row gt_center" style="text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;">35</td>
+      <td class="gt_row gt_center" style="text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;">57</td>
+      <td class="gt_row gt_center" style="text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;">49</td>
+      <td class="gt_row gt_center" style="text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;">4.67</td>
+      <td class="gt_row gt_center" style="text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;">3.77</td>
+      <td class="gt_row gt_center" style="text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;">12%</td>
+      <td class="gt_row gt_center" style="text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;">24%</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_stub">2020-2021</td>
+      <td class="gt_row gt_center" style="text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;">47</td>
+      <td class="gt_row gt_center" style="text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;">45</td>
+      <td class="gt_row gt_center" style="text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;">56</td>
+      <td class="gt_row gt_center" style="text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;">52</td>
+      <td class="gt_row gt_center" style="text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;">2.94</td>
+      <td class="gt_row gt_center" style="text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;">2.74</td>
+      <td class="gt_row gt_center" style="background-color: #8B0000; color: white; font-weight: bold; text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;">24%</td>
+      <td class="gt_row gt_center" style="background-color: #8B0000; color: white; font-weight: bold; text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;">18%</td>
+    </tr>
+  </tbody>
+  <tfoot class="gt_sourcenotes">
+    <tr>
+      <td class="gt_sourcenote" colspan="9">SOURCE: <a href="https://github.com/JaseZiv/worldfootballR">worldfootballR</a><br>TABLE: <a href="https://twitter.com/jaseziv">@jase_ziv</a></td>
+    </tr>
+  </tfoot>
+  <tfoot>
+    <tr class="gt_footnotes">
+      <td colspan="9">
+        <p class="gt_footnote">
+          <sup class="gt_footnote_marks">
+            <em>1</em>
+          </sup>
+           
+          <em>All clubs excluding Liverpool</em>
+          <br />
+        </p>
+        <p class="gt_footnote">
+          <sup class="gt_footnote_marks">
+            <em>2</em>
+          </sup>
+           
+          <em>COVID-interrupted Season</em>
+          <br />
+        </p>
+      </td>
+    </tr>
+  </tfoot>
+</table></div>
+<hr />
+</div>
+</div>
+<div id="wrap-up" class="section level2">
+<h2>Wrap Up</h2>
+<p>This was the first in a series of analyses that will make use of various data extraction functions in the <code>worldfootballR</code> package.</p>
+<p>Here we saw that Liverpool are making their first substitution earlier than their previous trends, and are deviating from the league averages. I will follow this analysis to see if this trend has continued.</p>
+<p>As always, any questions/comments about the piece or the R package, feel free to reach out through the regular channels.</p>
+<p>GO REDS!!</p>
+</div>
