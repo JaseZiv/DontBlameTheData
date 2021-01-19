@@ -5,7 +5,7 @@
     <link>/tags/</link>
       <atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     <description>Tags</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>©2021</copyright><lastBuildDate>Tue, 28 Apr 2020 00:00:00 +1000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>©2021</copyright><lastBuildDate>Sun, 10 Jan 2021 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/img/logo.jpg</url>
       <title>Tags</title>
@@ -13,9 +13,57 @@
     </image>
     
     <item>
+      <title>ggplot2</title>
+      <link>/tags/ggplot2/</link>
+      <pubDate>Sun, 10 Jan 2021 00:00:00 +0000</pubDate>
+      <guid>/tags/ggplot2/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>gt</title>
+      <link>/tags/gt/</link>
+      <pubDate>Sun, 10 Jan 2021 00:00:00 +0000</pubDate>
+      <guid>/tags/gt/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>R</title>
+      <link>/tags/r/</link>
+      <pubDate>Sun, 10 Jan 2021 00:00:00 +0000</pubDate>
+      <guid>/tags/r/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>soccer</title>
+      <link>/tags/soccer/</link>
+      <pubDate>Sun, 10 Jan 2021 00:00:00 +0000</pubDate>
+      <guid>/tags/soccer/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>soccer analytics</title>
+      <link>/tags/soccer-analytics/</link>
+      <pubDate>Sun, 10 Jan 2021 00:00:00 +0000</pubDate>
+      <guid>/tags/soccer-analytics/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>worldfootballR</title>
+      <link>/tags/worldfootballr/</link>
+      <pubDate>Sun, 10 Jan 2021 00:00:00 +0000</pubDate>
+      <guid>/tags/worldfootballr/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>R Package</title>
       <link>/tags/r-package/</link>
-      <pubDate>Tue, 28 Apr 2020 00:00:00 +1000</pubDate>
+      <pubDate>Sun, 10 Jan 2021 00:00:00 +1100</pubDate>
       <guid>/tags/r-package/</guid>
       <description></description>
     </item>
@@ -25,14 +73,6 @@
       <link>/tags/pythagorean-expectation/</link>
       <pubDate>Sun, 08 Mar 2020 00:00:00 +0000</pubDate>
       <guid>/tags/pythagorean-expectation/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>R</title>
-      <link>/tags/r/</link>
-      <pubDate>Sun, 08 Mar 2020 00:00:00 +0000</pubDate>
-      <guid>/tags/r/</guid>
       <description></description>
     </item>
     
@@ -65,14 +105,6 @@
       <link>/tags/data-visualisation/</link>
       <pubDate>Mon, 23 Dec 2019 00:00:00 +0000</pubDate>
       <guid>/tags/data-visualisation/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>ggplot2</title>
-      <link>/tags/ggplot2/</link>
-      <pubDate>Mon, 23 Dec 2019 00:00:00 +0000</pubDate>
-      <guid>/tags/ggplot2/</guid>
       <description></description>
     </item>
     

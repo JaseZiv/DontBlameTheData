@@ -3,27 +3,87 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/project/chessr/</loc>
-    <lastmod>2020-04-28T00:00:00+10:00</lastmod>
+    <loc>/categories/</loc>
+    <lastmod>2021-01-10T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/</loc>
-    <lastmod>2020-04-28T00:00:00+10:00</lastmod>
+    <lastmod>2021-01-10T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/project/</loc>
-    <lastmod>2020-04-28T00:00:00+10:00</lastmod>
+    <loc>/tags/ggplot2/</loc>
+    <lastmod>2021-01-10T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/tags/r-package/</loc>
-    <lastmod>2020-04-28T00:00:00+10:00</lastmod>
+    <loc>/tags/gt/</loc>
+    <lastmod>2021-01-10T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/blog/liverpools-early-substitutions-worldfootballr/</loc>
+    <lastmod>2021-01-10T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/</loc>
+    <lastmod>2021-01-10T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/r/</loc>
+    <lastmod>2021-01-10T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/r/</loc>
+    <lastmod>2021-01-10T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/soccer/</loc>
+    <lastmod>2021-01-10T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/soccer-analytics/</loc>
+    <lastmod>2021-01-10T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/tags/</loc>
+    <lastmod>2021-01-10T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/worldfootballr/</loc>
+    <lastmod>2021-01-10T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/worldfootballr/</loc>
+    <lastmod>2021-01-10T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/project/</loc>
+    <lastmod>2021-01-10T00:00:00+11:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/r-package/</loc>
+    <lastmod>2021-01-10T00:00:00+11:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/project/worldfootballr/</loc>
+    <lastmod>2021-01-10T00:00:00+11:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/project/chessr/</loc>
     <lastmod>2020-04-28T00:00:00+10:00</lastmod>
   </url>
   
@@ -33,32 +93,12 @@
   </url>
   
   <url>
-    <loc>/categories/</loc>
-    <lastmod>2020-03-08T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/post/</loc>
-    <lastmod>2020-03-08T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/categories/pythagorean-expectation/</loc>
-    <lastmod>2020-03-08T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/tags/pythagorean-expectation/</loc>
     <lastmod>2020-03-08T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/categories/r/</loc>
-    <lastmod>2020-03-08T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/r/</loc>
+    <loc>/categories/pythagorean-expectation/</loc>
     <lastmod>2020-03-08T00:00:00+00:00</lastmod>
   </url>
   
@@ -73,12 +113,12 @@
   </url>
   
   <url>
-    <loc>/categories/afl/</loc>
+    <loc>/tags/afl/</loc>
     <lastmod>2019-12-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/tags/afl/</loc>
+    <loc>/categories/afl/</loc>
     <lastmod>2019-12-23T00:00:00+00:00</lastmod>
   </url>
   
@@ -94,11 +134,6 @@
   
   <url>
     <loc>/tags/data-visualisation/</loc>
-    <lastmod>2019-12-23T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/ggplot2/</loc>
     <lastmod>2019-12-23T00:00:00+00:00</lastmod>
   </url>
   
@@ -123,12 +158,12 @@
   </url>
   
   <url>
-    <loc>/tags/open-source/</loc>
+    <loc>/categories/open-source/</loc>
     <lastmod>2019-12-16T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/categories/open-source/</loc>
+    <loc>/tags/open-source/</loc>
     <lastmod>2019-12-16T00:00:00+00:00</lastmod>
   </url>
   
@@ -228,12 +263,12 @@
   </url>
   
   <url>
-    <loc>/categories/twitter/</loc>
+    <loc>/tags/twitter/</loc>
     <lastmod>2019-08-25T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/tags/twitter/</loc>
+    <loc>/categories/twitter/</loc>
     <lastmod>2019-08-25T00:00:00+00:00</lastmod>
   </url>
   

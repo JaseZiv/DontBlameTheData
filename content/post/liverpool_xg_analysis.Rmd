@@ -1,0 +1,185 @@
+---
+title: "Expected Goals and Liverpool - An Intro to worldfootballR"
+date: '2021-01-10'
+slug: liverpool-expected-goals-worldfootballR
+categories:
+  - R
+  - worldfootballR
+  - soccer
+tags: [worldfootballR, R, soccer, soccer analytics, ggplot2, gt]
+description: 'Using the worldfootballR R package to analyse Liverpool expected goals in the EPL'
+featured: ''
+featuredalt: ''
+featuredpath: ''
+linktitle: ''
+type: post
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, fig.width = 10, fig.height = 8)
+```
+
+This post continues a series of posts that aims to showcase the new [`worldfootballR`](https://github.com/JaseZiv/worldfootballR) R package for extracting world football (soccer) data from popular data site fbref.com.
+
+```{r}
+img_url <- url("https://github.com/JaseZiv/worldfootballR/blob/main/man/figures/logo.png")
+```
+
+<center><img src= `r img_url`></center>
+
+This post will aim to analyse expected goals and actual goals, primarily focusing on Liverpool.
+
+This season sees Liverpool in a struggle with a few teams in the hope of going back-to-back. I want to see if there is a difference in how the Reds are scoring this season as opposed to the last few seasons.
+
+***
+
+# Extract Data Using `worldfootballR`
+
+As always, we first start by installing the package if you haven't already done so and loading any libraries necessary for the analysis.
+
+```
+devtools::install_github("JaseZiv/worldfootballR")
+library(tidyverse)
+library(worldfootballR)
+```
+
+```{r}
+# devtools::install_github("JaseZiv/worldfootballR")
+library(tidyverse)
+library(worldfootballR)
+
+sysfonts::font_add_google(name = "Chivo", family = "chivo")
+showtext::showtext_auto()
+
+theme_set(theme_minimal() +
+            theme(plot.title = element_text(colour = "black", size = 22, family = "chivo"), 
+                  plot.subtitle = element_text(colour = "grey20", size = 16, family = "chivo"),
+                  axis.text.x = element_text(colour = "grey20", size = 12, family = "chivo"),
+                  axis.text.y = element_text(colour = "grey20", size = 12, family = "chivo"),
+                  axis.title.x = element_text(colour = "grey20", size = 12, family = "chivo"),
+                  axis.title.y = element_text(colour = "grey20", size = 12, family = "chivo"),
+                  plot.caption = element_text(colour = "grey20", size = 10, family = "chivo"),
+                  strip.text = element_text(colour = "grey30", size = 12, face = "bold", family = "chivo")))
+```
+
+
+To get match results, including goals and xG data, we can use the function `get_match_results()`. Because we want it for the Men's Premier League, we pass the following values to the function's arguments:
+
+```
+xg_data <- get_match_results(country = "ENG", gender = "M", season_end_year = c(2018:2021))
+```
+
+```{r, eval=FALSE}
+xg_data <- get_match_results(country = "ENG", gender = "M", season_end_year = c(2018:2021))
+saveRDS(xg_data, here::here("liverpool-xg", "xg_data.rds"))
+```
+
+We can also see what the data looks like:
+
+```{r}
+xg_data <- readRDS(url("https://github.com/JaseZiv/Dont-Blame-the-Data-Data-Files/blob/master/liverpool_xg/xg_data.rds?raw=true"))
+glimpse(xg_data)
+```
+
+
+To get season league tables (which contains goals scored for and against, and expected goals), we can use the `get_season_team_stats()` functions, and pass the following values to the function arguments:
+
+```
+end_season_summary <- get_season_team_stats(country = "ENG", gender = "M", season_end_year = c(2018:2021), stat_type = "league_table")
+```
+
+```{r, eval=FALSE}
+end_season_summary <- get_season_team_stats(country = "ENG", gender = "M", season_end_year = c(2018:2021), stat_type = "league_table")
+saveRDS(end_season_summary, here::here("liverpool-xg", "season_summary.rds"))
+```
+
+And inspect the data:
+
+```{r}
+end_season_summary <- readRDS(url("https://github.com/JaseZiv/Dont-Blame-the-Data-Data-Files/blob/master/liverpool_xg/season_summary.rds?raw=true"))
+glimpse(end_season_summary)
+```
+
+
+***
+
+# The Analysis
+
+So what are expected goals? From [Opta Sports](https://www.optasports.com/services/analytics/advanced-metrics/);
+
+> EXPECTED GOALS (XG) MEASURES THE QUALITY OF A SHOT BASED ON SEVERAL VARIABLES SUCH AS ASSIST TYPE, SHOT ANGLE AND DISTANCE FROM GOAL, WHETHER IT WAS A HEADED SHOT AND WHETHER IT WAS DEFINED AS A BIG CHANCE. <br><br>ADDING UP A PLAYER OR TEAM’S EXPECTED GOALS CAN GIVE US AN INDICATION OF HOW MANY GOALS A PLAYER OR TEAM SHOULD HAVE SCORED ON AVERAGE, GIVEN THE SHOTS THEY HAVE TAKEN.
+
+Why are we focusing on expected goals in this post?
+
+Well it can be seen below that for the 2017/18 to 2019/20 seasons, the more teams scored above their expected goals tally, the more points they tended to finish the season on, indicating a fairly strong positive relationship.
+
+```{r, xg_wins_cor}
+end_season_summary %>% 
+  filter(Season_End_Year != 2021) %>% 
+  mutate(goals_above_expected = GF - xG) %>%
+  ggplot(aes(x= goals_above_expected, y= Pts)) +
+  geom_point(colour = "black", fill = "orange", shape=21, size=3) +
+  labs(x= "Goals above expected", y= "Season Points",
+       caption = "\n*Data current to 18/01/2021\nSource: worldfootballR  ||  Table: @jase_ziv") +
+  ggtitle("EXCEEDING EXPECTED GOALS AND MORE POINTS",
+          subtitle = "For the 2017/18 to 2019/20 seasons, teams tended to earn more points the more\nthey outperformed their expected goals tally") +
+  annotate("text", x=24, y=96, label = "Man City 2017/18", family = "chivo")
+```
+
+
+## How are the Reds tracking?
+
+Which leads us to Liverpool. Below we can chart Liverpool's cumulative progress after each match played for the last four seasons and can see that in each of the three seasons before the current season, the Reds outperformed their expected goals tally, with last season's championship team exceeding their expected goals total for the whole season.
+
+```{r, liv_xg}
+liv_cum_totals <- xg_data %>% 
+  select(Season_End_Year, Date, Team=Home, Goals=HomeGoals, xG=Home_xG) %>% 
+  mutate(HomeAway = "Home",
+         goals_above_expected = Goals - xG) %>% 
+  bind_rows( xg_data %>% 
+               select(Season_End_Year, Date, Team=Away, Goals=AwayGoals, xG=Away_xG) %>%
+               mutate(HomeAway = "Away",
+                      goals_above_expected = Goals - xG)) %>%
+  filter(Team == "Liverpool") %>%
+  arrange(Season_End_Year, Date) %>% 
+  group_by(Season_End_Year) %>% mutate(game_num = row_number()) %>% 
+  filter(!is.na(Goals)) %>% 
+  group_by(Season_End_Year, game_num) %>% 
+  summarise(Goals = sum(Goals, na.rm = T),
+            xG = sum(xG, na.rm = T)) %>% ungroup() %>% 
+  mutate(goal_above_expected = Goals - xG) %>% 
+  group_by(Season_End_Year) %>% 
+  mutate(cum_total_goals = cumsum(Goals),
+         cum_total_xg = cumsum(xG)) %>% 
+  select(Season_End_Year, game_num, Goals=cum_total_goals, xG=cum_total_xg) %>% 
+  pivot_longer(cols = c(Goals:xG), names_to = "GoalType", values_to = "Goals")
+
+
+
+lab_df <- liv_cum_totals %>% filter(Season_End_Year == 2018) %>% arrange(desc(game_num)) %>% distinct(Season_End_Year, GoalType, .keep_all = T)
+
+
+liv_cum_totals %>%
+  ggplot(aes(x= game_num, y= Goals, group = GoalType, colour=GoalType)) +
+  geom_line(size=1) +
+  geom_text(data = lab_df, aes(x=game_num, y= Goals, label = GoalType, colour = GoalType), vjust=0, family = "chivo") +
+  scale_colour_manual(values = c("#C31014", alpha("#C31014", 0.4))) +
+  ggtitle("LIVERPOOL SCORING AS EXPECTED THIS SEASON",
+          subtitle = glue::glue("The gap between actual goals and expected goals remained consistently positive during\nLiverpool's championship run in 19/20, while this season sees them tracking xG closely")) +
+  labs(x= "Match Number", y= "Cumulative Goals",
+       caption = "\n*Data current to 18/01/2021\nSource: worldfootballR  ||  Table: @jase_ziv") +
+  facet_wrap(~ Season_End_Year) +
+  theme(legend.position = "none")
+```
+
+This current season, other than the 7-0 drubbing (xG of 2.2) against Crystal Palace at Selhurst Park, Liverpool's goals tally has closely tracked the expected goals. The Reds marksmen just aren't able to convert those guilt edge chances this season, which might explain the struggle at the top.
+
+
+# Wrap Up
+
+This was the second post in a series of analyses that will make use of various data extraction functions in the worldfootballR package.
+
+Here we saw that Liverpool appeared to have regressed to the mean somewhat and are struggling to score much higher than they're expected, based on their shots taken. This is in contrast to the previous three seasons, where the goals scored outpaced the expected goals.
+
+As always, any questions/comments about the piece or the R package, feel free to reach out through the regular channels.
+

@@ -1,0 +1,520 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>worldfootballR | Don&#39;t Blame the Data</title>
+    <link>/categories/worldfootballr/</link>
+      <atom:link href="/categories/worldfootballr/index.xml" rel="self" type="application/rss+xml" />
+    <description>worldfootballR</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>©2021</copyright><lastBuildDate>Sun, 10 Jan 2021 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/img/logo.jpg</url>
+      <title>worldfootballR</title>
+      <link>/categories/worldfootballr/</link>
+    </image>
+    
+    <item>
+      <title>Liverpool&#39;s Earlier Subsititutions - an Introduction to worldfootballR</title>
+      <link>/blog/liverpools-early-substitutions-worldfootballr/</link>
+      <pubDate>Sun, 10 Jan 2021 00:00:00 +0000</pubDate>
+      <guid>/blog/liverpools-early-substitutions-worldfootballr/</guid>
+      <description>
+
+
+&lt;p&gt;With the creation of the &lt;a href=&#34;https://github.com/JaseZiv/worldfootballR&#34;&gt;&lt;code&gt;worldfootballR&lt;/code&gt;&lt;/a&gt; R package (a new R package to aid in the extraction of Football (Soccer) data from &lt;a href=&#34;fbref.com&#34;&gt;fbref&lt;/a&gt;), I will be trying to highlight ways the package can be used.&lt;/p&gt;
+&lt;p&gt;In this piece, I will analyse Liverpool’s use of substitutions in the English Premier League (EPL) over the last three seasons to understand whether there has been a change in behaviour in the currrent season, and whether there was a change around the COVID outbreak and subsequent pause taken during the 2019-2020 season.&lt;/p&gt;
+&lt;p&gt;Data was extracted for the last two and a half seasons, up to the end of matchweek 17 in the 2020/21 EPL season.&lt;/p&gt;
+&lt;div id=&#34;extract-data-using-worldfootballr&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Extract Data Using &lt;code&gt;worldfootballR&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;The package has a function called &lt;code&gt;get_match_summary&lt;/code&gt; which extracts match summary (goals, subs, red/yellow cards) data for a match URLs.&lt;/p&gt;
+&lt;p&gt;To get the match URLs, another function - &lt;code&gt;get_match_urls&lt;/code&gt; - can be used, which accepts a country code (“ENG” for England), gender and the year the season(s) ended, and returns a vector of match URLs.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;devtools::install_github(&amp;quot;JaseZiv/worldfootballR&amp;quot;)
+library(worldfootballR)
+
+match_urls &amp;lt;- get_match_urls(country = &amp;quot;ENG&amp;quot;, gender = &amp;quot;M&amp;quot;, season_end_year = c(2019:2021))
+
+match_summaries &amp;lt;- get_match_summary(match_url = match_urls)&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;teams-making-their-first-sub&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Teams making their first sub&lt;/h2&gt;
+&lt;p&gt;Now that the package instructions are out of the way, we turn our attention to the analysis of substitution data in the Premier League, and specifically ask the question, has there been a change in Liverpool’s substitution behaviour.&lt;/p&gt;
+&lt;p&gt;The analysis was loosely inspired by a piece done by FiveThirtyEight on &lt;a href=&#34;https://fivethirtyeight.com/features/bundesliga-teams-could-be-using-more-substitutions-but-they-arent/&#34;&gt;Bundesliga team susbstitutions before and after the league restart&lt;/a&gt;.&lt;/p&gt;
+&lt;div id=&#34;all-teams&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;All Teams&lt;/h3&gt;
+&lt;p&gt;When the COVID-19 pandemic swept across the nation, some of the major leagues were forced to pause their seasons while cases became manageable.&lt;/p&gt;
+&lt;p&gt;During the 2019-20 season before the virus halted play, teams were typically making their first sub at the 56th minute, which was consistent with that of the 2018-19 season, however once play resumed (and teams were allowed to make more subs), that number dropped to 46 minutes (half-time typically).&lt;/p&gt;
+&lt;p&gt;This current season has seen the teams’ behaviour revert back to the pre-restarted season numbers (54 minutes).&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/reds_subs_analysis_files/figure-html/leauge_times-1.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;what-about-liverpool-where-do-they-sit&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;What about Liverpool; where do they sit?&lt;/h3&gt;
+&lt;p&gt;In all seasons analysed, Liverpool make slightly more subs in a season compared to the league average, with the average number of subs in a season peaking after the restart last season to 4.67 subs per game. The current season has seen this revert to pre-COVID levels.&lt;/p&gt;
+&lt;p&gt;Interestingly, while Liverpool’s first sub typically comes slightly later than the league average (56 minutes compared to 52 minutes), the Reds have stuck close to their first sub time after the season restart, while the league average has reverted back to pre-COVID levels, reversing the league-wide trend.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;and-the-first-hour&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;And the first hour?&lt;/h3&gt;
+&lt;p&gt;The Reds made 12% of their substitutions in the first hour during the combined 2019-20 season (double that of their 2018-19 season), and this season has seen this percentage again double through the first 16 games. The league however has experienced a direct reversal of this trend, spiking to 24% during the restarted part of the 19/20 season, and settling back down at the league average for the previous seasons.&lt;/p&gt;
+&lt;p&gt;It will be interesting to see how this trend continues throughout the latter parts of this season.&lt;/p&gt;
+&lt;style&gt;@import url(&#34;https://fonts.googleapis.com/css2?family=Chivo:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap&#34;);
+html {
+  font-family: Chivo, -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;, Roboto, Oxygen, Ubuntu, Cantarell, &#39;Helvetica Neue&#39;, &#39;Fira Sans&#39;, &#39;Droid Sans&#39;, Arial, sans-serif;
+}
+
+#kbcypgyzgc .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 3px;
+  border-top-color: transparent;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 3px;
+  border-bottom-color: transparent;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#kbcypgyzgc .gt_heading {
+  background-color: #FFFFFF;
+  text-align: left;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#kbcypgyzgc .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#kbcypgyzgc .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 4px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#kbcypgyzgc .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#kbcypgyzgc .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 3px;
+  border-top-color: transparent;
+  border-bottom-style: solid;
+  border-bottom-width: 3px;
+  border-bottom-color: black;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#kbcypgyzgc .gt_col_heading {
+  color: #333333;
+  background-color: white;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#kbcypgyzgc .gt_column_spanner_outer {
+  color: #333333;
+  background-color: white;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#kbcypgyzgc .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#kbcypgyzgc .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#kbcypgyzgc .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 3px;
+  border-bottom-color: black;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#kbcypgyzgc .gt_group_heading {
+  padding: 8px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#kbcypgyzgc .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#kbcypgyzgc .gt_from_md &gt; :first-child {
+  margin-top: 0;
+}
+
+#kbcypgyzgc .gt_from_md &gt; :last-child {
+  margin-bottom: 0;
+}
+
+#kbcypgyzgc .gt_row {
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#kbcypgyzgc .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 12px;
+}
+
+#kbcypgyzgc .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#kbcypgyzgc .gt_first_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+}
+
+#kbcypgyzgc .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#kbcypgyzgc .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#kbcypgyzgc .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#kbcypgyzgc .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#kbcypgyzgc .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#kbcypgyzgc .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding: 4px;
+}
+
+#kbcypgyzgc .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#kbcypgyzgc .gt_sourcenote {
+  font-size: 12px;
+  padding: 4px;
+}
+
+#kbcypgyzgc .gt_left {
+  text-align: left;
+}
+
+#kbcypgyzgc .gt_center {
+  text-align: center;
+}
+
+#kbcypgyzgc .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#kbcypgyzgc .gt_font_normal {
+  font-weight: normal;
+}
+
+#kbcypgyzgc .gt_font_bold {
+  font-weight: bold;
+}
+
+#kbcypgyzgc .gt_font_italic {
+  font-style: italic;
+}
+
+#kbcypgyzgc .gt_super {
+  font-size: 65%;
+}
+
+#kbcypgyzgc .gt_footnote_marks {
+  font-style: italic;
+  font-size: 65%;
+}
+&lt;/style&gt;
+&lt;div id=&#34;kbcypgyzgc&#34; style=&#34;overflow-x:auto;overflow-y:auto;width:auto;height:auto;&#34;&gt;&lt;table class=&#34;gt_table&#34;&gt;
+  &lt;thead class=&#34;gt_header&#34;&gt;
+    &lt;tr&gt;
+      &lt;th colspan=&#34;9&#34; class=&#34;gt_heading gt_title gt_font_normal&#34; style=&#34;font-family: Chivo; font-size: xx-large; text-align: center;&#34;&gt;&lt;strong&gt;LIVERPOOL SUBBING MORE IN THE FIRST 60 MINUTES&lt;/strong&gt;&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th colspan=&#34;9&#34; class=&#34;gt_heading gt_subtitle gt_font_normal gt_bottom_border&#34; style=&#34;font-family: Chivo; font-size: x-large; text-align: center;&#34;&gt;&lt;em&gt;The rate that Liverpool are subbing in the first 60 minutes has doubled from last season, with 1 in 4 subs coming in this time period - double last season&#39;s rate&lt;/em&gt;&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;thead class=&#34;gt_col_headings&#34;&gt;
+    &lt;tr&gt;
+      &lt;th class=&#34;gt_col_heading gt_columns_bottom_border gt_left&#34; rowspan=&#34;2&#34; colspan=&#34;1&#34;&gt;&lt;/th&gt;
+      &lt;th class=&#34;gt_center gt_columns_top_border gt_column_spanner_outer&#34; rowspan=&#34;1&#34; colspan=&#34;2&#34; style=&#34;text-align: center; font-weight: bold;&#34;&gt;
+        &lt;span class=&#34;gt_column_spanner&#34;&gt;Number of Subs&lt;/span&gt;
+      &lt;/th&gt;
+      &lt;th class=&#34;gt_center gt_columns_top_border gt_column_spanner_outer&#34; rowspan=&#34;1&#34; colspan=&#34;2&#34; style=&#34;text-align: center; font-weight: bold;&#34;&gt;
+        &lt;span class=&#34;gt_column_spanner&#34;&gt;Avg Time to 1st Sub&lt;/span&gt;
+      &lt;/th&gt;
+      &lt;th class=&#34;gt_center gt_columns_top_border gt_column_spanner_outer&#34; rowspan=&#34;1&#34; colspan=&#34;2&#34; style=&#34;text-align: center; font-weight: bold;&#34;&gt;
+        &lt;span class=&#34;gt_column_spanner&#34;&gt;Subs/Game&lt;/span&gt;
+      &lt;/th&gt;
+      &lt;th class=&#34;gt_center gt_columns_top_border gt_column_spanner_outer&#34; rowspan=&#34;1&#34; colspan=&#34;2&#34; style=&#34;text-align: center; font-weight: bold;&#34;&gt;
+        &lt;span class=&#34;gt_column_spanner&#34;&gt;Share Subs in 1st 60&lt;/span&gt;
+      &lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th class=&#34;gt_col_heading gt_columns_bottom_border gt_center&#34; rowspan=&#34;1&#34; colspan=&#34;1&#34; style=&#34;text-align: center; font-weight: bold;&#34;&gt;Liverpool&lt;/th&gt;
+      &lt;th class=&#34;gt_col_heading gt_columns_bottom_border gt_center&#34; rowspan=&#34;1&#34; colspan=&#34;1&#34; style=&#34;text-align: center; font-weight: bold;&#34;&gt;Rest of League&lt;sup class=&#34;gt_footnote_marks&#34;&gt;1&lt;/sup&gt;&lt;/th&gt;
+      &lt;th class=&#34;gt_col_heading gt_columns_bottom_border gt_center&#34; rowspan=&#34;1&#34; colspan=&#34;1&#34; style=&#34;text-align: center; font-weight: bold;&#34;&gt;Liverpool&lt;/th&gt;
+      &lt;th class=&#34;gt_col_heading gt_columns_bottom_border gt_center&#34; rowspan=&#34;1&#34; colspan=&#34;1&#34; style=&#34;text-align: center; font-weight: bold;&#34;&gt;Rest of League&lt;sup class=&#34;gt_footnote_marks&#34;&gt;1&lt;/sup&gt;&lt;/th&gt;
+      &lt;th class=&#34;gt_col_heading gt_columns_bottom_border gt_center&#34; rowspan=&#34;1&#34; colspan=&#34;1&#34; style=&#34;text-align: center; font-weight: bold;&#34;&gt;Liverpool&lt;/th&gt;
+      &lt;th class=&#34;gt_col_heading gt_columns_bottom_border gt_center&#34; rowspan=&#34;1&#34; colspan=&#34;1&#34; style=&#34;text-align: center; font-weight: bold;&#34;&gt;Rest of League&lt;sup class=&#34;gt_footnote_marks&#34;&gt;1&lt;/sup&gt;&lt;/th&gt;
+      &lt;th class=&#34;gt_col_heading gt_columns_bottom_border gt_center&#34; rowspan=&#34;1&#34; colspan=&#34;1&#34; style=&#34;text-align: center; font-weight: bold;&#34;&gt;Liverpool&lt;/th&gt;
+      &lt;th class=&#34;gt_col_heading gt_columns_bottom_border gt_center&#34; rowspan=&#34;1&#34; colspan=&#34;1&#34; style=&#34;text-align: center; font-weight: bold;&#34;&gt;Rest of League&lt;sup class=&#34;gt_footnote_marks&#34;&gt;1&lt;/sup&gt;&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody class=&#34;gt_table_body&#34;&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left gt_stub&#34;&gt;2018-2019&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34; style=&#34;text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;&#34;&gt;112&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34; style=&#34;text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;&#34;&gt;108&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34; style=&#34;text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;&#34;&gt;64&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34; style=&#34;text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;&#34;&gt;51&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34; style=&#34;text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;&#34;&gt;2.95&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34; style=&#34;text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;&#34;&gt;2.85&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34; style=&#34;text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;&#34;&gt;6%&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34; style=&#34;text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;&#34;&gt;18%&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left gt_stub&#34;&gt;2019-2020 - Before Restart&lt;sup class=&#34;gt_footnote_marks&#34;&gt;2&lt;/sup&gt;&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34; style=&#34;text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;&#34;&gt;87&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34; style=&#34;text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;&#34;&gt;79&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34; style=&#34;text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;&#34;&gt;64&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34; style=&#34;text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;&#34;&gt;50&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34; style=&#34;text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;&#34;&gt;3.00&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34; style=&#34;text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;&#34;&gt;2.77&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34; style=&#34;text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;&#34;&gt;12%&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34; style=&#34;text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;&#34;&gt;18%&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left gt_stub&#34;&gt;2019-2020 - After Restart&lt;sup class=&#34;gt_footnote_marks&#34;&gt;2&lt;/sup&gt;&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34; style=&#34;text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;&#34;&gt;42&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34; style=&#34;text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;&#34;&gt;35&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34; style=&#34;text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;&#34;&gt;57&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34; style=&#34;text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;&#34;&gt;49&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34; style=&#34;text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;&#34;&gt;4.67&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34; style=&#34;text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;&#34;&gt;3.77&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34; style=&#34;text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;&#34;&gt;12%&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34; style=&#34;text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;&#34;&gt;24%&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left gt_stub&#34;&gt;2020-2021&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34; style=&#34;text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;&#34;&gt;47&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34; style=&#34;text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;&#34;&gt;45&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34; style=&#34;text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;&#34;&gt;56&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34; style=&#34;text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;&#34;&gt;52&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34; style=&#34;text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;&#34;&gt;2.94&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34; style=&#34;text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;&#34;&gt;2.74&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34; style=&#34;background-color: #8B0000; color: white; font-weight: bold; text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;&#34;&gt;24%&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34; style=&#34;background-color: #8B0000; color: white; font-weight: bold; text-align: center; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: lightgrey;&#34;&gt;18%&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+  &lt;tfoot class=&#34;gt_sourcenotes&#34;&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_sourcenote&#34; colspan=&#34;9&#34;&gt;SOURCE: &lt;a href=&#34;https://github.com/JaseZiv/worldfootballR&#34;&gt;worldfootballR&lt;/a&gt;&lt;br&gt;TABLE: &lt;a href=&#34;https://twitter.com/jaseziv&#34;&gt;@jase_ziv&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tfoot&gt;
+  &lt;tfoot&gt;
+    &lt;tr class=&#34;gt_footnotes&#34;&gt;
+      &lt;td colspan=&#34;9&#34;&gt;
+        &lt;p class=&#34;gt_footnote&#34;&gt;
+          &lt;sup class=&#34;gt_footnote_marks&#34;&gt;
+            &lt;em&gt;1&lt;/em&gt;
+          &lt;/sup&gt;
+           
+          &lt;em&gt;All clubs excluding Liverpool&lt;/em&gt;
+          &lt;br /&gt;
+        &lt;/p&gt;
+        &lt;p class=&#34;gt_footnote&#34;&gt;
+          &lt;sup class=&#34;gt_footnote_marks&#34;&gt;
+            &lt;em&gt;2&lt;/em&gt;
+          &lt;/sup&gt;
+           
+          &lt;em&gt;COVID-interrupted Season&lt;/em&gt;
+          &lt;br /&gt;
+        &lt;/p&gt;
+      &lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tfoot&gt;
+&lt;/table&gt;&lt;/div&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;wrap-up&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Wrap Up&lt;/h2&gt;
+&lt;p&gt;This was the first in a series of analyses that will make use of various data extraction functions in the &lt;code&gt;worldfootballR&lt;/code&gt; package.&lt;/p&gt;
+&lt;p&gt;Here we saw that Liverpool are making their first substitution earlier than their previous trends, and are deviating from the league averages. I will follow this analysis to see if this trend has continued.&lt;/p&gt;
+&lt;p&gt;As always, any questions/comments about the piece or the R package, feel free to reach out through the regular channels.&lt;/p&gt;
+&lt;p&gt;GO REDS!!&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
