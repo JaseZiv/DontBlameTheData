@@ -25,7 +25,8 @@ This post continues a series of posts that aims to showcase the new [`worldfootb
 img_url <- url("https://github.com/JaseZiv/worldfootballR/blob/main/man/figures/logo.png")
 ```
 
-<center><img src= `r img_url`></center>
+![](/img/worldfootballR.png)
+
 
 This post will aim to analyse expected goals and actual goals, primarily focusing on Liverpool.
 
