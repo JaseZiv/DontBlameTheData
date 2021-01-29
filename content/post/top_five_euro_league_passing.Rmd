@@ -326,7 +326,7 @@ directness_df %>%
   labs(x= "Season End", y= "Directness (Yards)",
        caption = paste0("\n*Data current to ", lubridate::today(), "\nSource: worldfootballR/fbref.com  ||  Table: @jaseziv")) +
   ggtitle("PASSING BECOMING LESS DIRECT IN ALL LEAGUES",
-          subtitle = "'Directness' is measured by the progressive yards (yards the ball travelled for completed\npasses *towards* the opponent's goal). It can be seen that all leagues are experiencing a decline\nin the progressive yards per pass completed yards") +
+          subtitle = "'Directness' is measured by the progressive yards (yards the ball travelled for completed\npasses *towards* the opponent's goal). It can be seen that all leagues are experiencing\na decline in the progressive yards per pass completed yards") +
   theme(legend.position = "none")
 ```
 
