@@ -1,0 +1,439 @@
+---
+title: "Passing in the Top Five European Domestic Leagues"
+date: '2021-01-29'
+slug: top-domestic-soccer-leagues-passing
+categories:
+  - R
+  - worldfootballR
+  - soccer
+tags: [worldfootballR, R, soccer, soccer analytics, ggplot2, gt]
+description: 'Using the worldfootballR R package to analyse different passing behaviour in the top five domestic European Soccer leagues'
+featured: ''
+featuredalt: ''
+featuredpath: ''
+linktitle: ''
+type: post
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, fig.width = 10, fig.height = 8)
+```
+
+```{r}
+library(worldfootballR)
+library(tidyverse)
+library(gt)
+
+# load fonts
+sysfonts::font_add_google(name = "Chivo", family = "chivo")
+showtext::showtext_auto()
+
+# set theme
+theme_set(theme_minimal() +
+            theme(plot.title = element_text(colour = "black", size = 22, family = "chivo", face = "bold"), 
+                  plot.subtitle = element_text(colour = "grey20", size = 16, family = "chivo"),
+                  axis.text.x = element_text(colour = "grey20", size = 12, family = "chivo"),
+                  axis.text.y = element_text(colour = "grey20", size = 12, family = "chivo"),
+                  axis.title.x = element_text(colour = "grey20", size = 14, family = "chivo"),
+                  axis.title.y = element_text(colour = "grey20", size = 14, family = "chivo"),
+                  plot.caption = element_text(colour = "grey20", size = 10, family = "chivo"),
+                  legend.text = element_text(colour = "grey20", size = 12, family = "chivo"),
+                  strip.text = element_text(colour = "grey30", size = 12, face = "bold", family = "chivo")))
+
+
+gt_theme_538 <- function(data,...) {
+  data %>%
+    opt_all_caps()  %>%
+    opt_table_font(
+      font = list(
+        google_font("Chivo"),
+        default_fonts()
+      )
+    ) %>%
+    tab_style(
+      style = cell_borders(
+        sides = "bottom", color = "transparent", weight = px(2)
+      ),
+      locations = cells_body(
+        columns = TRUE,
+        # This is a relatively sneaky way of changing the bottom border
+        # Regardless of data size
+        rows = nrow(data$`_data`)
+      )
+    )  %>% 
+    tab_options(
+      column_labels.background.color = "white",
+      table.border.top.width = px(3),
+      table.border.top.color = "transparent",
+      table.border.bottom.color = "transparent",
+      table.border.bottom.width = px(3),
+      column_labels.border.top.width = px(3),
+      column_labels.border.top.color = "transparent",
+      column_labels.border.bottom.width = px(3),
+      column_labels.border.bottom.color = "black",
+      data_row.padding = px(3),
+      source_notes.font.size = 12,
+      table.font.size = 16,
+      heading.align = "left",
+      heading.title.font.size = "x-large",
+      heading.subtitle.font.size = "large",
+      ...
+    ) 
+}
+
+# colours:
+# serie A #008fd7
+# PL: #3d195b
+# Bundesliga: #d10214
+# Ligue 1: #cdfb0a OR: #091c3e
+# La Liga: #ee8707 OR: #119541 OR: #ee8707 OR: #1e1e1c
+
+# league_cols <- c("#d10214", "#ee8707", "#cdfb0a", "#3d195b", "#008fd7")
+
+
+
+# colours:
+# serie A "#C3CBD2"
+# PL: "#355B94"
+# Bundesliga: "#AA3B45"
+# Ligue 1: "#8EA05D"
+# La Liga: "#EDC382"
+league_cols <- c("#AA3B45", "#EDC382", "#8EA05D", "#355B94", "#C3CBD2")
+
+
+```
+
+
+```{r, eval=FALSE}
+# Get Data ----------------------------------------------------------------
+countries <- c("ENG", "ITA", "FRA", "GER", "ESP")
+# get league table
+league_table <- get_season_team_stats(country = countries, gender = "M", season_end_year = c(2018:2021), stat_type = "league_table")
+# gets season passing stats
+passing <- get_season_team_stats(country = countries, gender = "M", season_end_year = c(2018:2021), stat_type = "passing")
+```
+
+
+```{r}
+# Read in Data ------------------------------------------------------------
+league_table <- readRDS(url("https://github.com/JaseZiv/Dont-Blame-the-Data-Data-Files/blob/master/top_5_leagues_passing/league_table.rds?raw=true"))
+passing <- readRDS(url("https://github.com/JaseZiv/Dont-Blame-the-Data-Data-Files/blob/master/top_5_leagues_passing/passing.rds?raw=true"))
+
+relevant_leage_data <- league_table %>% 
+  select(Competition_Name, Country, Season_End_Year, Squad, MP, W, D, L, Pts)
+
+season_league_names <- league_table %>% select(Season_End_Year, Competition_Name) %>% 
+  arrange(desc(Season_End_Year), Competition_Name) %>% distinct(Competition_Name, .keep_all = T)
+```
+
+
+Football (soccer) as often referred to as "the beautiful game", is made all the more beautiful because of the intricacies of playing styles between different nations.
+
+This piece aims to begin exploring some of these differences in the playing style of the top five European domestic leagues. For reference, when we refer to the top five, we're referring to the following domestic leagues:
+
+* Fußball-Bundesliga (Germany)
+* La Liga (Spain)
+* Ligue 1 (France)
+* Premier League (England)
+* Serie A (Italy)
+
+Specifically, this piece will focus on passing and analyse whether there are any differences in how teams in these leagues move the ball around the pitch.
+
+Data for this piece comes from [fbref](fbref.com), from the `worldfootballR` R package. This package can currently be installed from GitHub, with the repository [here](https://github.com/JaseZiv/worldfootballR).
+
+As usual, a quick demo of the package... to get the data you're after, all you need to do is run the following lines of code:
+
+```
+devtools::install_github("JaseZiv/worldfootballR")
+library(worldfootballR)
+
+countries <- c("ENG", "ITA", "FRA", "GER", "ESP")
+# get league table
+league_table <- get_season_team_stats(country = countries, gender = "M", season_end_year = c(2018:2021), stat_type = "league_table")
+# get season passing stats
+passing <- get_season_team_stats(country = countries, gender = "M", season_end_year = c(2018:2021), stat_type = "passing")
+```
+
+
+# Attempting and Completing Passes
+
+```{r}
+p1_data <- passing %>%
+  filter(Team_or_Opponent == "team") %>%
+  mutate(passess_attempted_90 = Att_Total / Mins_Per_90) %>%
+  group_by(Competition_Name, Country, Season_End_Year) %>%
+  summarise(total_passes = sum(Att_Total),
+            total_games = sum(Mins_Per_90),
+            min_passes_per_90 = min(passess_attempted_90),
+            max_passes_per_90 = max(passess_attempted_90),
+            avg_passes_attempted_90 = mean(passess_attempted_90)) %>%
+  mutate(passess_attempted_90_league = total_passes / total_games) %>% 
+  mutate(is_focus_league = ifelse(Competition_Name == "La Liga", "La Liga", ifelse(Competition_Name == "Ligue 1", "Ligue 1", "Other"))) %>% ungroup()
+```
+
+First, we turn our attention to the leagues that attempt the most number of passes per 90 minutes of football.
+
+Other than when Serie A had the highest passing attempts in the 2017-18 season, the German Bundesliga has reigned supreme when it comes to the number of passes attempted, with the current season the highest number of passes attempted (`r round(p1_data$passess_attempted_90_league[p1_data$Competition_Name == 'Fußball-Bundesliga' & p1_data$Season_End_Year == 2021])`).
+
+Teams in France's League 1 have continued to increase their passing attempts, overtaking The EPL and Serie A for the first time this season. Interestingly, in the 2017-18 season, League 1 and La Liga were equally the lowest passing leagues, and in three short years, the respective leagues have diverged in their passing attempts.
+
+```{r att_passing}
+p1_data %>%
+  ggplot(aes(x= Season_End_Year, y= passess_attempted_90_league, group = Competition_Name, colour = is_focus_league)) +
+  geom_line(size=1) +
+  ggrepel::geom_text_repel(aes(x=Season_End_Year, y= passess_attempted_90_league, label = Competition_Name),
+                            data = p1_data %>%
+                                          select(Competition_Name, Season_End_Year, is_focus_league, passess_attempted_90_league) %>%
+                                          # filter(is_focus_league != "Other") %>%
+                                          arrange(desc(Season_End_Year)) %>% distinct(Competition_Name, .keep_all = T),
+                           hjust=3, family = "chivo", fontface="bold") +
+  scale_colour_manual(values = c("#EDC382", "#8EA05D", "grey80")) +
+  labs(x= "Season End", y= "Passes per 90 mins",
+       caption = paste0("\n*Data current to ", lubridate::today(), "\nSource: worldfootballR/fbref.com  ||  Table: @jaseziv")) +
+  ggtitle("NOT AS MUCH PASSING IN LA LIGA GAMES",
+          subtitle = "La Liga teams on average attempt almost 40 passes less per 90 minutes than\nthe other top 5 European Leagues. Interestingly, Ligue 1 had the same\npassing rate per 90 mins as La Liga in the 2017-2018 season") +
+  theme(legend.position = "none")
+
+```
+
+
+Drilling down further and analysing individual teams within league seasons, it can be seen below that while the Bundesliga and EPL have some of the highest passing rates, they also have some of the highest variability, with the discrepancy being greatest between the highest and lowest passing teams within each league (although La Liga has the greatest variability of all).
+
+
+```{r teams_att_passing}
+passing %>% 
+  filter(Team_or_Opponent == "team") %>% 
+  mutate(Att_per_90 = Att_Total / Mins_Per_90) %>%  
+  ggplot(aes(x= factor(Season_End_Year), y= Att_per_90, colour = Competition_Name, fill = Competition_Name)) +
+  geom_boxplot(alpha=0.5) +
+  labs(x= "Season End", y= "Passes Attempted",
+       caption = paste0("\n*Data current to ", lubridate::today(), "\nSource: worldfootballR/fbref.com  ||  Table: @jaseziv")) +
+  ggtitle("NOT ALL TEAMS IN THE LEAGUE ARE CREATED EQUAL",
+          subtitle = "Teams in Serie A and Ligue 1 have the least variability in passes per 90 minutes\nfor teams, while La Liga has the greatest variability") +
+  scale_colour_manual(values = league_cols) +
+  scale_fill_manual(values = league_cols) +
+  theme(legend.position = "top", legend.title = element_blank())
+```
+
+
+## Completion Rates
+
+Attempting passes is no doubt important to the game, but one could argue that completing those passes is more vital.
+
+The boxplot below shows that generally speaking, teams in each of the leagues have increased their passing completion rates over the last four years (although the Bundesliga has somewhat plateaued).
+
+Serie A teams have consistently had higher passing accuracy than teams in the other leagues, while La Liga has had the greatest completion rate variability of all the leagues - no doubt driven by the vast differences in quality between The Madrid teams and Barca, and the rest of the league.
+
+```{r league_completion}
+league_completions <- passing %>% 
+  filter(Team_or_Opponent == "team") %>% 
+  group_by(Competition_Name, Country, Season_End_Year) %>%
+  summarise(total_att = sum(Att_Total),
+            total_cmp = sum(Cmp_Total)) %>%
+  mutate(comp_rate = total_cmp / total_att) %>% 
+  select(-total_att, -total_cmp) %>%
+  pivot_wider(names_from = Season_End_Year, values_from = comp_rate) %>% ungroup()
+
+# boxplot:
+passing %>% 
+  filter(Team_or_Opponent == "team") %>% 
+  # group_by(Competition_Name, Country, Season_End_Year) %>% 
+  # summarise(avg_completion = mean(Cmp_percent_Total)) %>% 
+  ggplot(aes(x= factor(Season_End_Year), y= Cmp_percent_Total, colour = Competition_Name, fill = Competition_Name)) +
+  geom_boxplot(alpha=0.5) +
+  labs(x= "Season End", y= "Completion %",
+       caption = paste0("\n*Data current to ", lubridate::today(), "\nSource: worldfootballR/fbref.com  ||  Table: @jaseziv")) +
+  ggtitle("ALL LEAGUES COMPLETING MORE PASSES",
+          subtitle = "Passing completions rates continue to rise for the top 5 European Leagues.\nInterestingly, there is almost a 4% difference in completion rates between\nLa Liga and Serie A") +
+  scale_colour_manual(values = league_cols) +
+  scale_fill_manual(values = league_cols) +
+  theme(legend.position = "top", legend.title = element_blank())
+```
+
+***
+
+## Why does this matter?
+
+It can be seen below that teams that attempt more passes during a season tend to accumulate more league points, with a fairly strong positive correlation between the variables. The below data does not include the current season.
+
+```{r}
+passing_cor <- passing %>% 
+  filter(Team_or_Opponent == "team") %>% 
+  mutate(att_per_90 = Att_Total / Mins_Per_90) %>% 
+  left_join(relevant_leage_data) %>% 
+  filter(Season_End_Year != 2021) %>% 
+  group_by(Competition_Name) %>% 
+  summarise(cors = cor(att_per_90, Pts)) %>% ungroup()
+```
+
+This holds more true for the EPL correlation of (`r round(passing_cor$cors[passing_cor$Competition_Name == "Premier League"], 3)`), Bundesliga (`r round(passing_cor$cors[passing_cor$Competition_Name == "Fußball-Bundesliga"], 3)`) and Serie A (`r round(passing_cor$cors[passing_cor$Competition_Name == "Serie A"], 3)`), while the relationship is not as strong for La Liga and Ligue 1.
+
+```{r passing_cor}
+passing %>% 
+  filter(Team_or_Opponent == "team") %>% 
+  mutate(att_per_90 = Att_Total / Mins_Per_90) %>% 
+  left_join(relevant_leage_data) %>% 
+  filter(Season_End_Year != 2021) %>% 
+  ggplot(aes(x= att_per_90, y= Pts, colour = Competition_Name)) +
+  geom_smooth(method = "lm", se=F, linetype=2, colour = "grey60") +
+  geom_point() +
+  geom_text(data = passing_cor, aes(label = paste0("Correlation: ", round(cors, 3))), x=480, y=98, colour = "grey60", family = "chivo") +
+  scale_colour_manual(values = league_cols) +
+  labs(x= "Passes Attempted", y= "League Points",
+       caption = paste0("\n*Data current to ", lubridate::today(), "\nSource: worldfootballR/fbref.com  ||  Table: @jaseziv")) +
+  ggtitle("THE BETTER TEAMS ALSO ATTEMPT MORE PASSES",
+          subtitle = "While correlation does not imply causation, it can be seen that teams that earn\nmore league points, also tend to attempt more passes per 90 minutes of football,\nand more so for the EPL, Bundesliga and Serie A") +
+  facet_wrap(~ Competition_Name, nrow=1) +
+  theme(legend.position = "none")
+```
+
+
+## Which Direction are the Passes Heading?
+
+So, we have seen that there are some differences between the leagues with regards to how often, and how successfully they move the ball to teammates. What about the direction that the ball travels in when their making passes?
+
+For this, we can look at the progressive distances (in yards) of completed passes and compare this to the total yardage of all passes completed. Progressive yards are defined by fbref as:
+
+> *Total distance, in yards, that completed passes have travelled towards the opponent's goal. Note: Passes away from opponent's goal are counted as zero progressive yards*
+
+The resulting figure indicates how many *progressive* yards a ball has travelled per yard of completed passes. A higher number indicates a team moves the ball more directly, while a lower figure indicates a greater share of a teams completed passing yards are not as direct to the opponent's goal.
+
+
+### Leagues Passing Less Directly?
+
+```{r}
+directness_df <- passing %>% 
+  filter(Team_or_Opponent == "team") %>% 
+  group_by(Competition_Name, Country, Season_End_Year) %>%
+  summarise(total_dist = sum(TotDist_Total),
+            total_prg_dist = sum(PrgDist_Total)) %>%
+  mutate(directness = total_prg_dist / total_dist) %>% ungroup()
+```
+
+Leagues have progressively been moving away from more direct passing routes, with the EPL leading the way (`r round(directness_df$directness[directness_df$Competition_Name == "Premier League" & directness_df$Season_End_Year == 2021], 3)` progressive yards per total yards completed), while La Liga are the least direct with `r round(directness_df$directness[directness_df$Competition_Name == "La Liga" & directness_df$Season_End_Year == 2021], 3)` progressive yards per total yards completed.
+
+```{r directness}
+directness_df %>% 
+  ggplot(aes(x= Season_End_Year, y= directness, group = Competition_Name, colour = Competition_Name)) +
+  geom_line() +
+  geom_point() +
+  ggrepel::geom_text_repel(aes(x=Season_End_Year, y= directness, label = Competition_Name),
+                            data = directness_df %>%
+                                          select(Competition_Name, Season_End_Year, directness) %>%
+                                          arrange(desc(Season_End_Year)) %>% distinct(Competition_Name, .keep_all = T),
+                           hjust = 1, family = "chivo", fontface="bold") +
+  scale_colour_manual(values = league_cols) +
+  labs(x= "Season End", y= "Directness (Yards)",
+       caption = paste0("\n*Data current to ", lubridate::today(), "\nSource: worldfootballR/fbref.com  ||  Table: @jaseziv")) +
+  ggtitle("PASSING BECOMING LESS DIRECT IN ALL LEAGUES",
+          subtitle = "'Directness' is measured by the progressive yards (yards the ball travelled for completed\npasses *towards* the opponent's goal). It can be seen that all leagues are experiencing a decline\nin the progressive yards per pass completed yards") +
+  theme(legend.position = "none")
+```
+
+
+```{r}
+directness_cor <- passing %>% 
+  filter(Team_or_Opponent == "team") %>%
+  mutate(team_directness = PrgDist_Total /TotDist_Total) %>% 
+  left_join(relevant_leage_data) %>% 
+  filter(Season_End_Year != 2021) %>% 
+  group_by(Competition_Name) %>% 
+  summarise(cors = cor(team_directness, Pts)) %>% ungroup()
+```
+
+
+Like with the correlation between league points and passes attempted, there also appears to be a relationship between *directness* and league points, however the relationship is negative, meaning that teams that are less direct with their passing also tend to earn more league points at the end of a season.
+
+Additionally, this relationship isn't as strong for all leagues. The relationship is fairly strong for the EPL (correlation of `r round(directness_cor$cors[directness_cor$Competition_Name == "Premier League"], 3)`) and Serie A (`r round(directness_cor$cors[directness_cor$Competition_Name == "Serie A"], 3)`), while the weakest in La Liga (`r round(directness_cor$cors[directness_cor$Competition_Name == "La Liga"], 3)`).
+
+```{r directness_cor}
+passing %>% 
+  filter(Team_or_Opponent == "team") %>%
+  mutate(team_directness = PrgDist_Total /TotDist_Total) %>% 
+  left_join(relevant_leage_data) %>% 
+  filter(Season_End_Year != 2021) %>%
+  ggplot(aes(x=team_directness, y= Pts, colour = Competition_Name)) +
+  geom_smooth(method = "lm", se=F, linetype=2, colour = "grey60") +
+  geom_point() +
+  geom_text(data = directness_cor, aes(label = paste0("Correlation: ", round(cors, 3))), x=0.40, y=95, colour = "grey60", family = "chivo") +
+  scale_colour_manual(values = league_cols) + 
+  labs(x= "Directness", y= "League Points",
+       caption = paste0("\n*Data current to ", lubridate::today(), "\nSource: worldfootballR/fbref.com  ||  Table: @jaseziv")) +
+  ggtitle("BETTER TO NOT BE AS DIRECT?",
+          subtitle = "The is a negative relationship between passing 'directness' and league points,\nindicating the better teams don't tend to bomb the ball long towards the opponent's\ngoals as much. The relationship holds more true for the EPL and Serie A") +
+  facet_wrap(~ Competition_Name, nrow=1) +
+  theme(legend.position = "none")
+```
+
+
+We can also look at the individual team seasons that have been the most and least direct passing seasons.
+
+The 20 least direct teams over the last four seasons are listed below, with the top of the list dominated by EPL clubs, specifically Man City, which hold four of the top six places.
+
+Interesting to note, it appears that teams on this list have also finished nearer the top of the table `RK` that the bottom of the table, reinforcing our correlation above.
+
+```{r least_direct}
+passing %>% 
+  filter(Team_or_Opponent == "team") %>%
+  left_join(league_table) %>%
+  mutate(team_directness = PrgDist_Total /TotDist_Total) %>% 
+  arrange(team_directness) %>% head(20) %>% 
+  mutate(team_directness = round(team_directness, 3)) %>% 
+  select(Competition_Name, Squad, Season_End_Year, Rk, team_directness) %>% 
+  gt() %>% 
+  data_color(
+    columns = vars(team_directness),
+    colors = scales::col_numeric(
+      palette = c("#3fc1c9", "white"),
+      domain = NULL
+    )
+  ) %>% 
+  tab_source_note(
+    source_note = md("SOURCE: [worldfootballR](https://github.com/JaseZiv/worldfootballR)<br>TABLE: [@jaseziv](https://twitter.com/jaseziv)")
+  ) %>% 
+  cols_label(Competition_Name = "League",
+             Season_End_Year = "Season End",
+             team_directness = "Directness (yards)") %>%
+  tab_header(title = md("**PREMIER LEAGUE DOMINATES LEAST DIRECT PASSING**"),
+             subtitle = "A Man City feature in four of the top six seasons of least direct passing, with the other two sides in the top 6 also being EPL teams.") %>% 
+  gt_theme_538()
+```
+
+
+Similarly, we can also look at the 20 most direct passing teams of the last four seasons. 
+
+The finishing positions of these clubs looks to be somewhat closer to the bottom of their league tables (Getafe in La Liga 2018-19 and RP Leipzig in Bundesliga 2018-19 the notable exceptions).
+
+Cardiff City's lone Premier League season was the most direct passing season, with 0.464 progressive yards per passing yards completed.
+
+```{r most_direct}
+passing %>% 
+  filter(Team_or_Opponent == "team") %>%
+  left_join(league_table) %>%
+  mutate(team_directness = PrgDist_Total /TotDist_Total) %>% 
+  arrange(desc(team_directness)) %>% head(20) %>%
+  mutate(team_directness = round(team_directness, 3)) %>% 
+  select(Competition_Name, Squad, Season_End_Year, Rk, team_directness) %>% 
+  gt() %>% 
+  data_color(
+    columns = vars(team_directness),
+    colors = scales::col_numeric(
+      palette = c("white", "#3fc1c9"),
+      domain = NULL
+    )
+  ) %>% 
+  tab_source_note(
+    source_note = md("SOURCE: [worldfootballR](https://github.com/JaseZiv/worldfootballR)<br>TABLE: [@jaseziv](https://twitter.com/jaseziv)")
+  ) %>% 
+  cols_label(Competition_Name = "League",
+             Season_End_Year = "Season End",
+             team_directness = "Directness (yards)") %>%
+  tab_header(title = md("**MORE DIRECT PASSING TEAMS GENERALLY WEAKER TEAMS?**"),
+             subtitle = "At first glance, it appears that the clubs who have the highest progressive yards per passing completed yards tend to finish lower on the table than those teams who are the least direct. Cardiff City's lone EPL season in 2019 tops the chart for most direct towards goal passing season") %>% 
+  gt_theme_538()
+```
+
+
+While not a considerable difference in the passing activities between the top five European domestic leagues, there is still some differences that will be interesting to see how their leagues evolve over the coming years.
+
+As always, any feedback or opinions would be valued in the comments sections, or feel free to get in touch on Twitter [@jaseziv](https://twitter.com/jaseziv).
