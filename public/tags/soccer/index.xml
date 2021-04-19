@@ -5,12 +5,1767 @@
     <link>/tags/soccer/</link>
       <atom:link href="/tags/soccer/index.xml" rel="self" type="application/rss+xml" />
     <description>soccer</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>©2021</copyright><lastBuildDate>Sun, 10 Jan 2021 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>©2021</copyright><lastBuildDate>Mon, 19 Apr 2021 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/img/logo.jpg</url>
       <title>soccer</title>
       <link>/tags/soccer/</link>
     </image>
+    
+    <item>
+      <title>Historically Bad Melbourne Victory</title>
+      <link>/blog/historically-bad-melbourne-victory/</link>
+      <pubDate>Mon, 19 Apr 2021 00:00:00 +0000</pubDate>
+      <guid>/blog/historically-bad-melbourne-victory/</guid>
+      <description>
+
+
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(worldfootballR)
+library(tidyverse)
+library(gt)
+library(elo)
+
+
+# load fonts
+sysfonts::font_add_google(name = &amp;quot;Chivo&amp;quot;, family = &amp;quot;chivo&amp;quot;)
+showtext::showtext_auto()
+
+# set theme
+theme_set(theme_minimal() +
+            theme(plot.title = element_text(colour = &amp;quot;midnightblue&amp;quot;, size = 26, family = &amp;quot;chivo&amp;quot;, face = &amp;quot;bold&amp;quot;), 
+                  plot.subtitle = element_text(colour = &amp;quot;grey20&amp;quot;, size = 19, family = &amp;quot;chivo&amp;quot;, face = &amp;quot;italic&amp;quot;),
+                  axis.text.x = element_text(colour = &amp;quot;grey20&amp;quot;, size = 14, family = &amp;quot;chivo&amp;quot;),
+                  axis.text.y = element_text(colour = &amp;quot;grey20&amp;quot;, size = 14, family = &amp;quot;chivo&amp;quot;),
+                  axis.title.x = element_text(colour = &amp;quot;grey20&amp;quot;, size = 16, family = &amp;quot;chivo&amp;quot;),
+                  axis.title.y = element_text(colour = &amp;quot;grey20&amp;quot;, size = 16, family = &amp;quot;chivo&amp;quot;),
+                  plot.caption = element_text(colour = &amp;quot;grey20&amp;quot;, size = 12, family = &amp;quot;chivo&amp;quot;),
+                  strip.text = element_text(colour = &amp;quot;grey30&amp;quot;, size = 12, face = &amp;quot;bold&amp;quot;, family = &amp;quot;chivo&amp;quot;)))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The data for this post has been extracted from fbref.com, using the &lt;a href=&#34;jaseziv.github.io/worldfootballr/&#34;&gt;&lt;code&gt;worldfootballR&lt;/code&gt;&lt;/a&gt; R stats package. To install the package, run &lt;code&gt;devtools::install_github(&#34;JaseZiv/worldfootballR&#34;)&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;To extract the data for the post, the below code was run on Monday the 19th of April.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# code to get data using worldfootballR
+aleague &amp;lt;- get_match_results(country = &amp;quot;AUS&amp;quot;, gender = &amp;quot;M&amp;quot;, season_end_year = c(2014:2021))
+
+# remove any games not yet played
+aleague &amp;lt;- aleague %&amp;gt;% 
+  filter(!is.na(HomeGoals)) %&amp;gt;% 
+  arrange(Season_End_Year, Date) %&amp;gt;% 
+  distinct(Date, Home, Away, .keep_all = T)
+
+# save data to minimise requests on fbref
+saveRDS(aleague, here::here(&amp;quot;elo&amp;quot;, &amp;quot;bad-melb-victory&amp;quot;, &amp;quot;aleague_results.rds&amp;quot;))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# read in data
+aleague &amp;lt;- readRDS(url(&amp;quot;https://github.com/JaseZiv/Dont-Blame-the-Data-Data-Files/blob/master/bad-melb-victory/aleague_results.rds?raw=true&amp;quot;))
+
+# filter to keep only regular season games
+aleague &amp;lt;- aleague %&amp;gt;% 
+  filter(Round == &amp;quot;Regular Season&amp;quot; | is.na(Round)) %&amp;gt;% 
+  filter(!is.na(HomeGoals)) %&amp;gt;% 
+  arrange(Date)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To say the A-League’s Melbourne Victory in Australia are having a bad season is a gross understatement. Football Twitter, whatever publication wishes to cover football (soccer) in Australia (funnily enough more coverage when things are bad), almost anyone with an opinion, all are in agreement that this is a sh$t show this season - from the board all the way down. This culminated in the recent 7-0 drubbing at the hands of cross-town (and City Group cashed up) rival Melbourne City and subsequent sacking of coach and former player Grant Brebner. Add to this a 6-0 loss to City just a few weeks back and it didn’t take a genius to know Brebner was in trouble.&lt;/p&gt;
+&lt;p&gt;Just how bad is this season? Well that’s somewhat of a subjective statement - there are many ways to define measures of success (or failure in this case), including ladder position, points earned, wins, etc, but these don’t give us the whole picture.&lt;/p&gt;
+&lt;div id=&#34;hello-elo&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Hello Elo&lt;/h2&gt;
+&lt;p&gt;The Elo rating system should not be foreign to football fans worldwide - FIFA have used Elo as a way of ranking the Women’s national teams since their introduction in 2003 and have used it as the basis of calculating Men’s rankings since 2018.&lt;/p&gt;
+&lt;p&gt;Elo was created by Arpad Elo, a Hungarian-American physics professor who wanted to design a rating system for chess players. The beauty of the method lies in its zero-sum notion, meaning that one team’s gains come at the expense of their opponent. Draws are also handled for - the lower ranked team/player would typically gain ranking points from the higher ranked opponent. Importantly for the purposes of this piece, Elo is calculated after every match played, meaning we can continue to get updated rankings. The real value in these ranking comes the ability to calculate the predicted outcome of a contest. General implementations of the model would suggest that an opponent with a rating 100 points greater than their opponent would lead to a predicted win probability of 64%.&lt;/p&gt;
+&lt;div id=&#34;applying-elo&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Applying Elo&lt;/h3&gt;
+&lt;p&gt;Now for the casual fan, the following may be a tad dreary, so feel free to skip along to the analysis, but for those wishing to understand the application of Elo here, read ahead.&lt;/p&gt;
+&lt;p&gt;Teams typically start the season with an Elo rating of 1500 and given the zero-sum condition of the calculation, it can be said that an “average” team has an Elo of 1500. So while the team starts the season (or any period of time you want to have the “starting” point for Elo) on 1500, the ranking updates after every game. If you win, you are rewarded, and even more handsomely for big wins and/or wins against higher ranked opponents.&lt;/p&gt;
+&lt;p&gt;The very popular website &lt;a href=&#34;https://fivethirtyeight.com/&#34;&gt;FiveThirtyEight&lt;/a&gt; website uses Elo ratings as the basis for a number of their sports prediction models, with a lot of these models using a running Elo ranking that began its calculation for teams a long time ago, making tweaks to handle starting ratings of teams in new seasons vs carrying forward the previous season’s ranking. &lt;em&gt;Note, this analysis calculates a team’s Elo rating for each single season analysed, not carrying over the team’s previous season rating, nor carrying them forward to the next season.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;There are a number of approaches to calculating Elo, however there are two main areas where decisions need to be made.&lt;/p&gt;
+&lt;p&gt;The first is deciding whether to include a “home advantage”, meaning should the home team be expected to win more often than not on average… The answer to this is yes in my opinion. What this rating should be is oft debated by analysts all over the globe, but I have settled for a 40 point advantage for the home team.&lt;/p&gt;
+&lt;p&gt;The other factor for consideration is how much weight to place on the margin of victory. It has been argued that once a team has a big win, say by over a three goal margin, then the additional rating points you earn shouldn’t have a perfectly linear relationship with ranking points earned. Smoothing has been applied to the goal index with the following formula for wins of a margin of three goals or more:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;G = (11+N)/8
+* Where N is the goal difference&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# calculate goal margin index:
+calc_goal_index &amp;lt;- function(home_goals, away_goals) {
+  if(abs(home_goals - away_goals) &amp;lt;= 1) {
+    G &amp;lt;- 1
+  } else if (abs(home_goals - away_goals) == 2) {
+    G &amp;lt;- 1.5
+  } else {
+    G &amp;lt;- (11 + abs(home_goals - away_goals))/8
+  }
+}
+
+# apply the goal margin calculation
+aleague &amp;lt;- aleague %&amp;gt;% 
+  mutate(goal_index = mapply(calc_goal_index, HomeGoals, AwayGoals))
+
+
+# Start Elo ---------------------------------------------------------------
+all_elo &amp;lt;- data.frame()
+
+# loop through each season and calculate Elos
+for(each_season in unique(aleague$Season_End_Year)) {
+  
+  df &amp;lt;- aleague %&amp;gt;% filter(Season_End_Year == each_season) %&amp;gt;% 
+    elo.run(score(HomeGoals, AwayGoals) ~ adjust(Home, 40) + Away +
+              k(20*goal_index), data = .) %&amp;gt;% data.frame()
+  
+  df &amp;lt;- bind_cols(
+    aleague %&amp;gt;% filter(Season_End_Year == each_season) %&amp;gt;% select(Season_End_Year, Date, HomeGoals, AwayGoals),
+    df
+  )
+  
+  all_elo &amp;lt;- rbind(all_elo, df)
+}
+
+# create a tidy (long) dataframe
+all_elo_cleaned &amp;lt;- all_elo %&amp;gt;% 
+  select(Season_End_Year, Date, Team=team.A, GF=HomeGoals, Opponent=team.B, GA=AwayGoals, pWin=p.A, Elo=elo.A, Opp_Elo=elo.B, TeamUpdate=update.A) %&amp;gt;% mutate(home_away=&amp;quot;Home&amp;quot;) %&amp;gt;% 
+  bind_rows(
+    all_elo %&amp;gt;% 
+      mutate(home_away=&amp;quot;Away&amp;quot;, pWin = (1-p.A)) %&amp;gt;% 
+      select(Season_End_Year, Date, Team=team.B, GF=AwayGoals, Opponent=team.A, GA=HomeGoals, pWin, Elo=elo.B, Opp_Elo=elo.A, home_away, , TeamUpdate=update.B)
+  )&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;worst-a-league-season-elo-rankings&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Worst A-League Season Elo Rankings&lt;/h2&gt;
+&lt;p&gt;Ok, enough of the very high level math and theory. Let’s get in to seeing just how bad things are looking for the Victory…&lt;/p&gt;
+&lt;p&gt;Data has been extracted from fbref.com using the &lt;a href=&#34;jaseziv.github.io/worldfootballr/&#34;&gt;&lt;code&gt;worldfootballR&lt;/code&gt;&lt;/a&gt; R package. Data contains all A-League regular season matches from the 2013/14 season up to and including matches up to the 18th April, 2021.&lt;/p&gt;
+&lt;p&gt;It can be seen below that when it comes to bad seasons, Central Coast have a monopoly, owning the three worst Elo seasons, with the three-win 2015/16 side the worst of the bunch (they also only won three matches in the 18/19 season).&lt;/p&gt;
+&lt;p&gt;The Victory’s position on this table could be seen through either a half-full, or half-empty glass. Currently, they’re on track for the eighth worst season, however with eleven games yet to play, anything could happen.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# add a match number as &amp;#39;gameweek&amp;#39; isn&amp;#39;t always accurate
+all_elo_cleaned &amp;lt;- all_elo_cleaned %&amp;gt;% 
+  arrange(Team, Season_End_Year, Date) %&amp;gt;% 
+  group_by(Team, Season_End_Year) %&amp;gt;% 
+  mutate(match_num = row_number()) %&amp;gt;% ungroup()
+
+
+# get the max matches played per each team season
+num_matches &amp;lt;- all_elo_cleaned %&amp;gt;% group_by(Team, Season_End_Year) %&amp;gt;% summarise(n_matches = max(match_num)) %&amp;gt;% ungroup()
+
+# get a df of the 10 worst Elo seasons
+worst_seasons &amp;lt;- num_matches %&amp;gt;% 
+  left_join(all_elo_cleaned, by = c(&amp;quot;Team&amp;quot;, &amp;quot;Season_End_Year&amp;quot;, &amp;quot;n_matches&amp;quot; = &amp;quot;match_num&amp;quot;)) %&amp;gt;% 
+  arrange(Elo) %&amp;gt;% head(10)
+
+###########################################################################
+# Create worst teams table ------------------------------------------------
+
+# theme, thanks to @thomas_mock at https://themockup.blog/
+gt_theme_538 &amp;lt;- function(data,...) {
+  data %&amp;gt;%
+    opt_all_caps()  %&amp;gt;%
+    opt_table_font(
+      font = list(
+        google_font(&amp;quot;Chivo&amp;quot;),
+        default_fonts()
+      )
+    ) %&amp;gt;%
+    tab_style(
+      style = cell_borders(
+        sides = &amp;quot;bottom&amp;quot;, color = &amp;quot;transparent&amp;quot;, weight = px(2)
+      ),
+      locations = cells_body(
+        columns = TRUE,
+        # This is a relatively sneaky way of changing the bottom border
+        # Regardless of data size
+        rows = nrow(data$`_data`)
+      )
+    )  %&amp;gt;% 
+    tab_options(
+      column_labels.background.color = &amp;quot;white&amp;quot;,
+      table.border.top.width = px(3),
+      table.border.top.color = &amp;quot;transparent&amp;quot;,
+      table.border.bottom.color = &amp;quot;transparent&amp;quot;,
+      table.border.bottom.width = px(3),
+      column_labels.border.top.width = px(3),
+      column_labels.border.top.color = &amp;quot;transparent&amp;quot;,
+      column_labels.border.bottom.width = px(3),
+      column_labels.border.bottom.color = &amp;quot;black&amp;quot;,
+      data_row.padding = px(3),
+      source_notes.font.size = 12,
+      table.font.size = 16,
+      heading.align = &amp;quot;left&amp;quot;,
+      heading.title.font.size = &amp;quot;x-large&amp;quot;,
+      heading.subtitle.font.size = &amp;quot;large&amp;quot;,
+      ...
+    ) 
+}
+
+############################
+#----- Generate Table -----#
+############################
+
+worst_seasons %&amp;gt;% 
+  mutate(Season = paste0(Season_End_Year-1, &amp;quot;/&amp;quot;, substr(Season_End_Year, 3, 4))) %&amp;gt;%
+  select(Team, Season, Played=n_matches, Elo) %&amp;gt;% 
+  mutate(Elo = round(Elo, 1)) %&amp;gt;% 
+  gt() %&amp;gt;% 
+  cols_align(columns = 1,
+             align = &amp;quot;left&amp;quot;) %&amp;gt;%
+  cols_align(columns = c(2:4),
+             align = &amp;quot;center&amp;quot;) %&amp;gt;%
+  tab_style(
+    style = list(
+      cell_fill(color = alpha(&amp;quot;midnightblue&amp;quot;, 0.2))
+    ),
+    locations = cells_body(
+      # columns = vars(Team, Season, n_matches, Elo), # not needed if coloring all columns
+      rows = c(8))
+  ) %&amp;gt;%
+  tab_header(md(&amp;quot;**THE WORST A-LEAGUE SEASONS ACCORDING TO ELO**&amp;quot;),
+             subtitle = &amp;quot;Central Cost have the three worst ending season Elo ratings since the 2013/14 season. This season&amp;#39;s Melbourne Victory currently hold the 8th worst Elo ranking, however there are still 11 games to be played.&amp;quot;) %&amp;gt;% 
+  tab_source_note(
+    source_note = md(&amp;quot;SOURCE: [transfermarkt](transfermarkt.com) || [worldfootballR](https://github.com/JaseZiv/worldfootballR)&amp;lt;br&amp;gt;TABLE: [@jaseziv](https://twitter.com/jaseziv)&amp;quot;)
+  ) %&amp;gt;% 
+  gt_theme_538()&lt;/code&gt;&lt;/pre&gt;
+&lt;style&gt;@import url(&#34;https://fonts.googleapis.com/css2?family=Chivo:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap&#34;);
+html {
+  font-family: Chivo, -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;, Roboto, Oxygen, Ubuntu, Cantarell, &#39;Helvetica Neue&#39;, &#39;Fira Sans&#39;, &#39;Droid Sans&#39;, Arial, sans-serif;
+}
+
+#zokzabpzsh .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 3px;
+  border-top-color: transparent;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 3px;
+  border-bottom-color: transparent;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#zokzabpzsh .gt_heading {
+  background-color: #FFFFFF;
+  text-align: left;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#zokzabpzsh .gt_title {
+  color: #333333;
+  font-size: x-large;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#zokzabpzsh .gt_subtitle {
+  color: #333333;
+  font-size: large;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 4px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#zokzabpzsh .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#zokzabpzsh .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 3px;
+  border-top-color: transparent;
+  border-bottom-style: solid;
+  border-bottom-width: 3px;
+  border-bottom-color: black;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#zokzabpzsh .gt_col_heading {
+  color: #333333;
+  background-color: white;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#zokzabpzsh .gt_column_spanner_outer {
+  color: #333333;
+  background-color: white;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#zokzabpzsh .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#zokzabpzsh .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#zokzabpzsh .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 3px;
+  border-bottom-color: black;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#zokzabpzsh .gt_group_heading {
+  padding: 8px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#zokzabpzsh .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#zokzabpzsh .gt_from_md &gt; :first-child {
+  margin-top: 0;
+}
+
+#zokzabpzsh .gt_from_md &gt; :last-child {
+  margin-bottom: 0;
+}
+
+#zokzabpzsh .gt_row {
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#zokzabpzsh .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 12px;
+}
+
+#zokzabpzsh .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#zokzabpzsh .gt_first_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+}
+
+#zokzabpzsh .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#zokzabpzsh .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#zokzabpzsh .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#zokzabpzsh .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#zokzabpzsh .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#zokzabpzsh .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding: 4px;
+}
+
+#zokzabpzsh .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#zokzabpzsh .gt_sourcenote {
+  font-size: 12px;
+  padding: 4px;
+}
+
+#zokzabpzsh .gt_left {
+  text-align: left;
+}
+
+#zokzabpzsh .gt_center {
+  text-align: center;
+}
+
+#zokzabpzsh .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#zokzabpzsh .gt_font_normal {
+  font-weight: normal;
+}
+
+#zokzabpzsh .gt_font_bold {
+  font-weight: bold;
+}
+
+#zokzabpzsh .gt_font_italic {
+  font-style: italic;
+}
+
+#zokzabpzsh .gt_super {
+  font-size: 65%;
+}
+
+#zokzabpzsh .gt_footnote_marks {
+  font-style: italic;
+  font-size: 65%;
+}
+&lt;/style&gt;
+&lt;div id=&#34;zokzabpzsh&#34; style=&#34;overflow-x:auto;overflow-y:auto;width:auto;height:auto;&#34;&gt;&lt;table class=&#34;gt_table&#34;&gt;
+  &lt;thead class=&#34;gt_header&#34;&gt;
+    &lt;tr&gt;
+      &lt;th colspan=&#34;4&#34; class=&#34;gt_heading gt_title gt_font_normal&#34; style&gt;&lt;strong&gt;THE WORST A-LEAGUE SEASONS ACCORDING TO ELO&lt;/strong&gt;&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th colspan=&#34;4&#34; class=&#34;gt_heading gt_subtitle gt_font_normal gt_bottom_border&#34; style&gt;Central Cost have the three worst ending season Elo ratings since the 2013/14 season. This season&#39;s Melbourne Victory currently hold the 8th worst Elo ranking, however there are still 11 games to be played.&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;thead class=&#34;gt_col_headings&#34;&gt;
+    &lt;tr&gt;
+      &lt;th class=&#34;gt_col_heading gt_columns_bottom_border gt_left&#34; rowspan=&#34;1&#34; colspan=&#34;1&#34;&gt;Team&lt;/th&gt;
+      &lt;th class=&#34;gt_col_heading gt_columns_bottom_border gt_center&#34; rowspan=&#34;1&#34; colspan=&#34;1&#34;&gt;Season&lt;/th&gt;
+      &lt;th class=&#34;gt_col_heading gt_columns_bottom_border gt_center&#34; rowspan=&#34;1&#34; colspan=&#34;1&#34;&gt;Played&lt;/th&gt;
+      &lt;th class=&#34;gt_col_heading gt_columns_bottom_border gt_center&#34; rowspan=&#34;1&#34; colspan=&#34;1&#34;&gt;Elo&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody class=&#34;gt_table_body&#34;&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Central Coast&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;2015/16&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;27&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;1341.2&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Central Coast&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;2018/19&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;27&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;1350.3&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Central Coast&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;2019/20&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;26&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;1369.4&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Brisbane&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;2018/19&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;27&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;1370.6&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Newcastle&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;2016/17&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;27&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;1378.0&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Newcastle&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;2014/15&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;27&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;1381.0&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Central Coast&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;2017/18&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;27&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;1394.7&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left&#34; style=&#34;background-color: rgba(25,25,112,0.2);&#34;&gt;Melb Victory&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34; style=&#34;background-color: rgba(25,25,112,0.2);&#34;&gt;2020/21&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34; style=&#34;background-color: rgba(25,25,112,0.2);&#34;&gt;16&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34; style=&#34;background-color: rgba(25,25,112,0.2);&#34;&gt;1398.3&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Wellington&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;2017/18&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;27&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;1404.0&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left&#34; style=&#34;border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: transparent;&#34;&gt;Wellington&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34; style=&#34;border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: transparent;&#34;&gt;2015/16&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34; style=&#34;border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: transparent;&#34;&gt;27&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34; style=&#34;border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: transparent;&#34;&gt;1408.0&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+  &lt;tfoot class=&#34;gt_sourcenotes&#34;&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_sourcenote&#34; colspan=&#34;4&#34;&gt;SOURCE: &lt;a href=&#34;transfermarkt.com&#34;&gt;transfermarkt&lt;/a&gt; || &lt;a href=&#34;https://github.com/JaseZiv/worldfootballR&#34;&gt;worldfootballR&lt;/a&gt;&lt;br&gt;TABLE: &lt;a href=&#34;https://twitter.com/jaseziv&#34;&gt;@jaseziv&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tfoot&gt;
+  
+&lt;/table&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;look-away-victory-fans&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Look Away Victory Fans&lt;/h2&gt;
+&lt;p&gt;If we take the glass half-empty view of the current season, the Victory have the second worst record after 16 games played with only the 2018/19 Mariners worse at this stage of the season. More worryingly, that season’s Mariners were able to pull themselves together to “recover” somewhat. If we take them out of the equation, the Victory have the worst record after 16 games and are 10 points lower than the worst every 2015/16 Mariners.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;worst_aleague_seasons &amp;lt;- worst_seasons %&amp;gt;%
+  select(Team, Season_End_Year) %&amp;gt;% 
+  left_join(all_elo_cleaned, by = c(&amp;quot;Team&amp;quot;, &amp;quot;Season_End_Year&amp;quot;)) %&amp;gt;% 
+  mutate(team_season = paste0(Team, &amp;quot;-&amp;quot;, Season_End_Year)) 
+
+team_labels &amp;lt;- worst_aleague_seasons %&amp;gt;% 
+  filter((Team == &amp;quot;Melb Victory&amp;quot; &amp;amp; Season_End_Year == 2021) | Team == &amp;quot;Central Coast&amp;quot; &amp;amp; Season_End_Year == 2016) %&amp;gt;% 
+  arrange(Team, desc(match_num)) %&amp;gt;% 
+  distinct(Team, .keep_all = T) %&amp;gt;% 
+  mutate(shortened_season = ifelse(Team == &amp;quot;Melb Victory&amp;quot;, &amp;quot;2020/21&amp;quot;, &amp;quot;2015/16&amp;quot;))
+
+
+worst_aleague_seasons %&amp;gt;% 
+  mutate(Melb_Vict = str_detect(Team, &amp;quot;Melb Victory&amp;quot;)) %&amp;gt;% 
+  ggplot() +
+  geom_line(aes(x= match_num, y= Elo, group = team_season), colour = &amp;quot;lightgrey&amp;quot;, size=1, alpha = 0.3) +
+  geom_line(data = worst_aleague_seasons %&amp;gt;% filter(Team == &amp;quot;Central Coast&amp;quot;, Season_End_Year == 2016), aes(x=match_num, y= Elo), colour = &amp;quot;#f6c644&amp;quot;, size=1.5) +
+  geom_line(data = worst_aleague_seasons %&amp;gt;% filter(Team == &amp;quot;Melb Victory&amp;quot;), aes(x=match_num, y= Elo), colour = &amp;quot;midnightblue&amp;quot;, size=1.5) +
+  geom_hline(yintercept = 1500, linetype=2, colour=&amp;quot;grey&amp;quot;, size=1) +
+  scale_x_continuous(breaks = c(0, 5, 10, 15, 20, 25, 30), limits = c(0,32), name = &amp;quot;Matches played&amp;quot;) +
+  geom_label(x=26, y=1500, label = &amp;quot;Average&amp;quot;, colour = &amp;quot;grey&amp;quot;, label.size = NA, size=6, fontface=2) +
+  geom_text(data = team_labels, aes(x=match_num, y= Elo, label = paste0(Team, &amp;quot;\n&amp;quot;, shortened_season), colour = Team), vjust=1, nudge_x = 1.9, size=5, fontface=2) +
+  scale_colour_manual(values = c(&amp;quot;#f6c644&amp;quot;, &amp;quot;midnightblue&amp;quot;)) +
+  scale_y_continuous(limits = c(1300, 1550), name = &amp;quot;ELO Rating&amp;quot;) +
+  ggtitle(&amp;quot;MELBOURNE VICTORY HISTORICALLY BAD THIS SEASON&amp;quot;,
+          subtitle = &amp;quot;Using data since the 2013/14 A-League season and calculating in-season Elo ratings, the\nVictory currently have a lower Elo rating after 16 games played than the 2015/16 Mariners,\nwho finished the A-Leage season with the worst Elo.&amp;quot;) +
+  labs(caption = paste0(&amp;quot;\n*Data current to &amp;quot;, lubridate::today(), &amp;quot;\nSource: fbref.com through worldfootballR  ||  Table: @jase_ziv&amp;quot;)) +
+  theme(legend.position = &amp;quot;none&amp;quot;,
+        plot.title.position = &amp;quot;plot&amp;quot;,
+        legend.text.align = 0.5)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/historically-bad-victory-elo_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;1344&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;fingers-crossed&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Fingers Crossed&lt;/h2&gt;
+&lt;p&gt;Hopefully for the Victory fans interim Head Coach Steve Kean can turn this woefully dreadful season around and salvage some pride over the remainder of the season. If not, history beckons.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Passing in the Top Five European Domestic Leagues</title>
+      <link>/blog/top-domestic-soccer-leagues-passing/</link>
+      <pubDate>Fri, 29 Jan 2021 00:00:00 +0000</pubDate>
+      <guid>/blog/top-domestic-soccer-leagues-passing/</guid>
+      <description>
+
+
+&lt;p&gt;Football (soccer) as often referred to as “the beautiful game”, is made all the more beautiful because of the intricacies of playing styles between different nations.&lt;/p&gt;
+&lt;p&gt;This piece aims to begin exploring some of these differences in the playing style of the top five European domestic leagues. For reference, when we refer to the top five, we’re referring to the following domestic leagues:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Fußball-Bundesliga (Germany)&lt;/li&gt;
+&lt;li&gt;La Liga (Spain)&lt;/li&gt;
+&lt;li&gt;Ligue 1 (France)&lt;/li&gt;
+&lt;li&gt;Premier League (England)&lt;/li&gt;
+&lt;li&gt;Serie A (Italy)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Specifically, this piece will focus on passing and analyse whether there are any differences in how teams in these leagues move the ball around the pitch.&lt;/p&gt;
+&lt;p&gt;Data for this piece comes from &lt;a href=&#34;fbref.com&#34;&gt;fbref&lt;/a&gt;, from the &lt;code&gt;worldfootballR&lt;/code&gt; R package. This package can currently be installed from GitHub, with the repository &lt;a href=&#34;https://github.com/JaseZiv/worldfootballR&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;As usual, a quick demo of the package… to get the data you’re after, all you need to do is run the following lines of code:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;devtools::install_github(&amp;quot;JaseZiv/worldfootballR&amp;quot;)
+library(worldfootballR)
+
+countries &amp;lt;- c(&amp;quot;ENG&amp;quot;, &amp;quot;ITA&amp;quot;, &amp;quot;FRA&amp;quot;, &amp;quot;GER&amp;quot;, &amp;quot;ESP&amp;quot;)
+# get league table
+league_table &amp;lt;- get_season_team_stats(country = countries, gender = &amp;quot;M&amp;quot;, season_end_year = c(2018:2021), stat_type = &amp;quot;league_table&amp;quot;)
+# get season passing stats
+passing &amp;lt;- get_season_team_stats(country = countries, gender = &amp;quot;M&amp;quot;, season_end_year = c(2018:2021), stat_type = &amp;quot;passing&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;attempting-and-completing-passes&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Attempting and Completing Passes&lt;/h1&gt;
+&lt;p&gt;First, we turn our attention to the leagues that attempt the most number of passes per 90 minutes of football.&lt;/p&gt;
+&lt;p&gt;Other than when Serie A had the highest passing attempts in the 2017-18 season, the German Bundesliga has reigned supreme when it comes to the number of passes attempted, with the current season the highest number of passes attempted (514).&lt;/p&gt;
+&lt;p&gt;Teams in France’s League 1 have continued to increase their passing attempts, overtaking The EPL and Serie A for the first time this season. Interestingly, in the 2017-18 season, League 1 and La Liga were equally the lowest passing leagues, and in three short years, the respective leagues have diverged in their passing attempts.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/top_five_euro_league_passing_files/figure-html/att_passing-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Drilling down further and analysing individual teams within league seasons, it can be seen below that while the Bundesliga and EPL have some of the highest passing rates, they also have some of the highest variability, with the discrepancy being greatest between the highest and lowest passing teams within each league (although La Liga has the greatest variability of all).&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/top_five_euro_league_passing_files/figure-html/teams_att_passing-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
+&lt;div id=&#34;completion-rates&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Completion Rates&lt;/h2&gt;
+&lt;p&gt;Attempting passes is no doubt important to the game, but one could argue that completing those passes is more vital.&lt;/p&gt;
+&lt;p&gt;The boxplot below shows that generally speaking, teams in each of the leagues have increased their passing completion rates over the last four years (although the Bundesliga has somewhat plateaued).&lt;/p&gt;
+&lt;p&gt;Serie A teams have consistently had higher passing accuracy than teams in the other leagues, while La Liga has had the greatest completion rate variability of all the leagues - no doubt driven by the vast differences in quality between The Madrid teams and Barca, and the rest of the league.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/top_five_euro_league_passing_files/figure-html/league_completion-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;why-does-this-matter&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Why does this matter?&lt;/h2&gt;
+&lt;p&gt;It can be seen below that teams that attempt more passes during a season tend to accumulate more league points, with a fairly strong positive correlation between the variables. The below data does not include the current season.&lt;/p&gt;
+&lt;p&gt;This holds more true for the EPL correlation of (0.829), Bundesliga (0.805) and Serie A (0.796), while the relationship is not as strong for La Liga and Ligue 1.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/top_five_euro_league_passing_files/figure-html/passing_cor-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;which-direction-are-the-passes-heading&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Which Direction are the Passes Heading?&lt;/h2&gt;
+&lt;p&gt;So, we have seen that there are some differences between the leagues with regards to how often, and how successfully they move the ball to teammates. What about the direction that the ball travels in when their making passes?&lt;/p&gt;
+&lt;p&gt;For this, we can look at the progressive distances (in yards) of completed passes and compare this to the total yardage of all passes completed. Progressive yards are defined by fbref as:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;Total distance, in yards, that completed passes have travelled towards the opponent’s goal. Note: Passes away from opponent’s goal are counted as zero progressive yards&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The resulting figure indicates how many &lt;em&gt;progressive&lt;/em&gt; yards a ball has travelled per yard of completed passes. A higher number indicates a team moves the ball more directly, while a lower figure indicates a greater share of a teams completed passing yards are not as direct to the opponent’s goal.&lt;/p&gt;
+&lt;div id=&#34;leagues-passing-less-directly&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Leagues Passing Less Directly?&lt;/h3&gt;
+&lt;p&gt;Leagues have progressively been moving away from more direct passing routes, with the EPL leading the way (0.319 progressive yards per total yards completed), while La Liga are the least direct with 0.339 progressive yards per total yards completed.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/top_five_euro_league_passing_files/figure-html/directness-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Like with the correlation between league points and passes attempted, there also appears to be a relationship between &lt;em&gt;directness&lt;/em&gt; and league points, however the relationship is negative, meaning that teams that are less direct with their passing also tend to earn more league points at the end of a season.&lt;/p&gt;
+&lt;p&gt;Additionally, this relationship isn’t as strong for all leagues. The relationship is fairly strong for the EPL (correlation of -0.711) and Serie A (-0.706), while the weakest in La Liga (-0.402).&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/top_five_euro_league_passing_files/figure-html/directness_cor-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;We can also look at the individual team seasons that have been the most and least direct passing seasons.&lt;/p&gt;
+&lt;p&gt;The 20 least direct teams over the last four seasons are listed below, with the top of the list dominated by EPL clubs, specifically Man City, which hold four of the top six places.&lt;/p&gt;
+&lt;p&gt;Interesting to note, it appears that teams on this list have also finished nearer the top of the table &lt;code&gt;RK&lt;/code&gt; that the bottom of the table, reinforcing our correlation above.&lt;/p&gt;
+&lt;style&gt;@import url(&#34;https://fonts.googleapis.com/css2?family=Chivo:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap&#34;);
+html {
+  font-family: Chivo, -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;, Roboto, Oxygen, Ubuntu, Cantarell, &#39;Helvetica Neue&#39;, &#39;Fira Sans&#39;, &#39;Droid Sans&#39;, Arial, sans-serif;
+}
+
+#xrirlnuumg .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 3px;
+  border-top-color: transparent;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 3px;
+  border-bottom-color: transparent;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#xrirlnuumg .gt_heading {
+  background-color: #FFFFFF;
+  text-align: left;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#xrirlnuumg .gt_title {
+  color: #333333;
+  font-size: x-large;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#xrirlnuumg .gt_subtitle {
+  color: #333333;
+  font-size: large;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 4px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#xrirlnuumg .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#xrirlnuumg .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 3px;
+  border-top-color: transparent;
+  border-bottom-style: solid;
+  border-bottom-width: 3px;
+  border-bottom-color: black;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#xrirlnuumg .gt_col_heading {
+  color: #333333;
+  background-color: white;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#xrirlnuumg .gt_column_spanner_outer {
+  color: #333333;
+  background-color: white;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#xrirlnuumg .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#xrirlnuumg .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#xrirlnuumg .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 3px;
+  border-bottom-color: black;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#xrirlnuumg .gt_group_heading {
+  padding: 8px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#xrirlnuumg .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#xrirlnuumg .gt_from_md &gt; :first-child {
+  margin-top: 0;
+}
+
+#xrirlnuumg .gt_from_md &gt; :last-child {
+  margin-bottom: 0;
+}
+
+#xrirlnuumg .gt_row {
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#xrirlnuumg .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 12px;
+}
+
+#xrirlnuumg .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#xrirlnuumg .gt_first_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+}
+
+#xrirlnuumg .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#xrirlnuumg .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#xrirlnuumg .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#xrirlnuumg .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#xrirlnuumg .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#xrirlnuumg .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding: 4px;
+}
+
+#xrirlnuumg .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#xrirlnuumg .gt_sourcenote {
+  font-size: 12px;
+  padding: 4px;
+}
+
+#xrirlnuumg .gt_left {
+  text-align: left;
+}
+
+#xrirlnuumg .gt_center {
+  text-align: center;
+}
+
+#xrirlnuumg .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#xrirlnuumg .gt_font_normal {
+  font-weight: normal;
+}
+
+#xrirlnuumg .gt_font_bold {
+  font-weight: bold;
+}
+
+#xrirlnuumg .gt_font_italic {
+  font-style: italic;
+}
+
+#xrirlnuumg .gt_super {
+  font-size: 65%;
+}
+
+#xrirlnuumg .gt_footnote_marks {
+  font-style: italic;
+  font-size: 65%;
+}
+&lt;/style&gt;
+&lt;div id=&#34;xrirlnuumg&#34; style=&#34;overflow-x:auto;overflow-y:auto;width:auto;height:auto;&#34;&gt;&lt;table class=&#34;gt_table&#34;&gt;
+  &lt;thead class=&#34;gt_header&#34;&gt;
+    &lt;tr&gt;
+      &lt;th colspan=&#34;5&#34; class=&#34;gt_heading gt_title gt_font_normal&#34; style&gt;&lt;strong&gt;PREMIER LEAGUE DOMINATES LEAST DIRECT PASSING&lt;/strong&gt;&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th colspan=&#34;5&#34; class=&#34;gt_heading gt_subtitle gt_font_normal gt_bottom_border&#34; style&gt;A Man City feature in four of the top six seasons of least direct passing, with the other two sides in the top 6 also being EPL teams.&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;thead class=&#34;gt_col_headings&#34;&gt;
+    &lt;tr&gt;
+      &lt;th class=&#34;gt_col_heading gt_columns_bottom_border gt_left&#34; rowspan=&#34;1&#34; colspan=&#34;1&#34;&gt;League&lt;/th&gt;
+      &lt;th class=&#34;gt_col_heading gt_columns_bottom_border gt_left&#34; rowspan=&#34;1&#34; colspan=&#34;1&#34;&gt;Squad&lt;/th&gt;
+      &lt;th class=&#34;gt_col_heading gt_columns_bottom_border gt_center&#34; rowspan=&#34;1&#34; colspan=&#34;1&#34;&gt;Season End&lt;/th&gt;
+      &lt;th class=&#34;gt_col_heading gt_columns_bottom_border gt_center&#34; rowspan=&#34;1&#34; colspan=&#34;1&#34;&gt;Rk&lt;/th&gt;
+      &lt;th class=&#34;gt_col_heading gt_columns_bottom_border gt_right&#34; rowspan=&#34;1&#34; colspan=&#34;1&#34;&gt;Directness (yards)&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody class=&#34;gt_table_body&#34;&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Premier League&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Manchester City&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;2020&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;2&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_right&#34; style=&#34;background-color: #3FC1C9; color: #000000;&#34;&gt;0.267&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Premier League&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Manchester City&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;2021&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;1&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_right&#34; style=&#34;background-color: #3FC1C9; color: #000000;&#34;&gt;0.267&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Premier League&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Arsenal&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;2021&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;9&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_right&#34; style=&#34;background-color: #3FC1C9; color: #000000;&#34;&gt;0.267&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Premier League&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Chelsea&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;2021&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;8&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_right&#34; style=&#34;background-color: #8BD5DA; color: #000000;&#34;&gt;0.276&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Premier League&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Manchester City&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;2019&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;1&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_right&#34; style=&#34;background-color: #92D7DC; color: #000000;&#34;&gt;0.277&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Premier League&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Manchester City&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;2018&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;1&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_right&#34; style=&#34;background-color: #ACE0E4; color: #000000;&#34;&gt;0.281&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Serie A&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Juventus&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;2018&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;1&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_right&#34; style=&#34;background-color: #B2E3E6; color: #000000;&#34;&gt;0.282&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Premier League&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Chelsea&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;2020&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;4&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_right&#34; style=&#34;background-color: #B8E5E8; color: #000000;&#34;&gt;0.283&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;La Liga&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Barcelona&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;2020&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;2&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_right&#34; style=&#34;background-color: #BEE7EA; color: #000000;&#34;&gt;0.284&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;La Liga&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Real Madrid&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;2021&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;2&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_right&#34; style=&#34;background-color: #DCF2F3; color: #000000;&#34;&gt;0.289&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Fußball-Bundesliga&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Dortmund&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;2020&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;2&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_right&#34; style=&#34;background-color: #E2F4F5; color: #000000;&#34;&gt;0.290&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Fußball-Bundesliga&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Dortmund&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;2021&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;7&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_right&#34; style=&#34;background-color: #E8F6F7; color: #000000;&#34;&gt;0.291&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Premier League&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Liverpool&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;2021&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;4&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_right&#34; style=&#34;background-color: #EEF8F9; color: #000000;&#34;&gt;0.292&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Ligue 1&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Nice&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;2021&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;12&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_right&#34; style=&#34;background-color: #F3FBFB; color: #000000;&#34;&gt;0.293&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Fußball-Bundesliga&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Bayern Munich&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;2019&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;1&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_right&#34; style=&#34;background-color: #F3FBFB; color: #000000;&#34;&gt;0.293&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Fußball-Bundesliga&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Leverkusen&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;2021&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;3&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_right&#34; style=&#34;background-color: #F9FDFD; color: #000000;&#34;&gt;0.294&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Serie A&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Inter&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;2021&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;2&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_right&#34; style=&#34;background-color: #F9FDFD; color: #000000;&#34;&gt;0.294&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;La Liga&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Sevilla&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;2021&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;4&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_right&#34; style=&#34;background-color: #F9FDFD; color: #000000;&#34;&gt;0.294&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;La Liga&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Real Madrid&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;2020&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;1&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_right&#34; style=&#34;background-color: #FFFFFF; color: #000000;&#34;&gt;0.295&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left&#34; style=&#34;border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: transparent;&#34;&gt;Serie A&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_left&#34; style=&#34;border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: transparent;&#34;&gt;Napoli&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34; style=&#34;border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: transparent;&#34;&gt;2020&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34; style=&#34;border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: transparent;&#34;&gt;7&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_right&#34; style=&#34;background-color: #FFFFFF; color: #000000; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: transparent;&#34;&gt;0.295&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+  &lt;tfoot class=&#34;gt_sourcenotes&#34;&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_sourcenote&#34; colspan=&#34;5&#34;&gt;SOURCE: &lt;a href=&#34;https://github.com/JaseZiv/worldfootballR&#34;&gt;worldfootballR&lt;/a&gt;&lt;br&gt;TABLE: &lt;a href=&#34;https://twitter.com/jaseziv&#34;&gt;@jaseziv&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tfoot&gt;
+  
+&lt;/table&gt;&lt;/div&gt;
+&lt;p&gt;Similarly, we can also look at the 20 most direct passing teams of the last four seasons.&lt;/p&gt;
+&lt;p&gt;The finishing positions of these clubs looks to be somewhat closer to the bottom of their league tables (Getafe in La Liga 2018-19 and RP Leipzig in Bundesliga 2018-19 the notable exceptions).&lt;/p&gt;
+&lt;p&gt;Cardiff City’s lone Premier League season was the most direct passing season, with 0.464 progressive yards per passing yards completed.&lt;/p&gt;
+&lt;style&gt;@import url(&#34;https://fonts.googleapis.com/css2?family=Chivo:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap&#34;);
+html {
+  font-family: Chivo, -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;, Roboto, Oxygen, Ubuntu, Cantarell, &#39;Helvetica Neue&#39;, &#39;Fira Sans&#39;, &#39;Droid Sans&#39;, Arial, sans-serif;
+}
+
+#rbqrlbgtld .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 3px;
+  border-top-color: transparent;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 3px;
+  border-bottom-color: transparent;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#rbqrlbgtld .gt_heading {
+  background-color: #FFFFFF;
+  text-align: left;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#rbqrlbgtld .gt_title {
+  color: #333333;
+  font-size: x-large;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#rbqrlbgtld .gt_subtitle {
+  color: #333333;
+  font-size: large;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 4px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#rbqrlbgtld .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#rbqrlbgtld .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 3px;
+  border-top-color: transparent;
+  border-bottom-style: solid;
+  border-bottom-width: 3px;
+  border-bottom-color: black;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#rbqrlbgtld .gt_col_heading {
+  color: #333333;
+  background-color: white;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#rbqrlbgtld .gt_column_spanner_outer {
+  color: #333333;
+  background-color: white;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#rbqrlbgtld .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#rbqrlbgtld .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#rbqrlbgtld .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 3px;
+  border-bottom-color: black;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#rbqrlbgtld .gt_group_heading {
+  padding: 8px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#rbqrlbgtld .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#rbqrlbgtld .gt_from_md &gt; :first-child {
+  margin-top: 0;
+}
+
+#rbqrlbgtld .gt_from_md &gt; :last-child {
+  margin-bottom: 0;
+}
+
+#rbqrlbgtld .gt_row {
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#rbqrlbgtld .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 12px;
+}
+
+#rbqrlbgtld .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#rbqrlbgtld .gt_first_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+}
+
+#rbqrlbgtld .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#rbqrlbgtld .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#rbqrlbgtld .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#rbqrlbgtld .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#rbqrlbgtld .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#rbqrlbgtld .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding: 4px;
+}
+
+#rbqrlbgtld .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#rbqrlbgtld .gt_sourcenote {
+  font-size: 12px;
+  padding: 4px;
+}
+
+#rbqrlbgtld .gt_left {
+  text-align: left;
+}
+
+#rbqrlbgtld .gt_center {
+  text-align: center;
+}
+
+#rbqrlbgtld .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#rbqrlbgtld .gt_font_normal {
+  font-weight: normal;
+}
+
+#rbqrlbgtld .gt_font_bold {
+  font-weight: bold;
+}
+
+#rbqrlbgtld .gt_font_italic {
+  font-style: italic;
+}
+
+#rbqrlbgtld .gt_super {
+  font-size: 65%;
+}
+
+#rbqrlbgtld .gt_footnote_marks {
+  font-style: italic;
+  font-size: 65%;
+}
+&lt;/style&gt;
+&lt;div id=&#34;rbqrlbgtld&#34; style=&#34;overflow-x:auto;overflow-y:auto;width:auto;height:auto;&#34;&gt;&lt;table class=&#34;gt_table&#34;&gt;
+  &lt;thead class=&#34;gt_header&#34;&gt;
+    &lt;tr&gt;
+      &lt;th colspan=&#34;5&#34; class=&#34;gt_heading gt_title gt_font_normal&#34; style&gt;&lt;strong&gt;MORE DIRECT PASSING TEAMS GENERALLY WEAKER TEAMS?&lt;/strong&gt;&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th colspan=&#34;5&#34; class=&#34;gt_heading gt_subtitle gt_font_normal gt_bottom_border&#34; style&gt;At first glance, it appears that the clubs who have the highest progressive yards per passing completed yards tend to finish lower on the table than those teams who are the least direct. Cardiff City&#39;s lone EPL season in 2019 tops the chart for most direct towards goal passing season&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;thead class=&#34;gt_col_headings&#34;&gt;
+    &lt;tr&gt;
+      &lt;th class=&#34;gt_col_heading gt_columns_bottom_border gt_left&#34; rowspan=&#34;1&#34; colspan=&#34;1&#34;&gt;League&lt;/th&gt;
+      &lt;th class=&#34;gt_col_heading gt_columns_bottom_border gt_left&#34; rowspan=&#34;1&#34; colspan=&#34;1&#34;&gt;Squad&lt;/th&gt;
+      &lt;th class=&#34;gt_col_heading gt_columns_bottom_border gt_center&#34; rowspan=&#34;1&#34; colspan=&#34;1&#34;&gt;Season End&lt;/th&gt;
+      &lt;th class=&#34;gt_col_heading gt_columns_bottom_border gt_center&#34; rowspan=&#34;1&#34; colspan=&#34;1&#34;&gt;Rk&lt;/th&gt;
+      &lt;th class=&#34;gt_col_heading gt_columns_bottom_border gt_right&#34; rowspan=&#34;1&#34; colspan=&#34;1&#34;&gt;Directness (yards)&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody class=&#34;gt_table_body&#34;&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Premier League&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Cardiff City&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;2019&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;18&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_right&#34; style=&#34;background-color: #3FC1C9; color: #000000;&#34;&gt;0.464&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;La Liga&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Getafe&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;2019&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;5&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_right&#34; style=&#34;background-color: #62C9D0; color: #000000;&#34;&gt;0.457&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;La Liga&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Osasuna&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;2021&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;17&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_right&#34; style=&#34;background-color: #8CD6DA; color: #000000;&#34;&gt;0.446&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;La Liga&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Getafe&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;2020&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;8&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_right&#34; style=&#34;background-color: #93D8DC; color: #000000;&#34;&gt;0.444&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Fußball-Bundesliga&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Union Berlin&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;2020&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;11&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_right&#34; style=&#34;background-color: #B7E4E7; color: #000000;&#34;&gt;0.433&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;La Liga&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Getafe&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;2018&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;8&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_right&#34; style=&#34;background-color: #BAE5E8; color: #000000;&#34;&gt;0.432&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;La Liga&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Alavés&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;2019&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;11&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_right&#34; style=&#34;background-color: #BDE7E9; color: #000000;&#34;&gt;0.431&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;La Liga&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Cádiz&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;2021&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;11&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_right&#34; style=&#34;background-color: #DFF3F4; color: #000000;&#34;&gt;0.420&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Fußball-Bundesliga&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Eint Frankfurt&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;2019&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;7&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_right&#34; style=&#34;background-color: #E1F4F5; color: #000000;&#34;&gt;0.419&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Premier League&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Stoke City&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;2018&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;19&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_right&#34; style=&#34;background-color: #E1F4F5; color: #000000;&#34;&gt;0.419&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;La Liga&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Alavés&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;2020&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;16&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_right&#34; style=&#34;background-color: #E4F5F6; color: #000000;&#34;&gt;0.418&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Serie A&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Crotone&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;2018&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;18&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_right&#34; style=&#34;background-color: #E7F6F7; color: #000000;&#34;&gt;0.417&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Ligue 1&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Nantes&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;2018&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;9&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_right&#34; style=&#34;background-color: #EAF7F8; color: #000000;&#34;&gt;0.416&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Ligue 1&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Toulouse&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;2018&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;18&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_right&#34; style=&#34;background-color: #EAF7F8; color: #000000;&#34;&gt;0.416&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Premier League&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Burnley&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;2019&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;15&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_right&#34; style=&#34;background-color: #F3FBFB; color: #000000;&#34;&gt;0.413&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Fußball-Bundesliga&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Hannover 96&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;2018&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;13&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_right&#34; style=&#34;background-color: #F6FCFC; color: #000000;&#34;&gt;0.412&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;La Liga&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Alavés&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;2018&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;14&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_right&#34; style=&#34;background-color: #F6FCFC; color: #000000;&#34;&gt;0.412&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Ligue 1&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Amiens&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;2018&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;13&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_right&#34; style=&#34;background-color: #F9FDFD; color: #000000;&#34;&gt;0.411&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;Fußball-Bundesliga&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_left&#34;&gt;RB Leipzig&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;2019&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34;&gt;3&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_right&#34; style=&#34;background-color: #F9FDFD; color: #000000;&#34;&gt;0.411&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_row gt_left&#34; style=&#34;border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: transparent;&#34;&gt;La Liga&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_left&#34; style=&#34;border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: transparent;&#34;&gt;Leganés&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34; style=&#34;border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: transparent;&#34;&gt;2018&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_center&#34; style=&#34;border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: transparent;&#34;&gt;17&lt;/td&gt;
+      &lt;td class=&#34;gt_row gt_right&#34; style=&#34;background-color: #FFFFFF; color: #000000; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: transparent;&#34;&gt;0.409&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+  &lt;tfoot class=&#34;gt_sourcenotes&#34;&gt;
+    &lt;tr&gt;
+      &lt;td class=&#34;gt_sourcenote&#34; colspan=&#34;5&#34;&gt;SOURCE: &lt;a href=&#34;https://github.com/JaseZiv/worldfootballR&#34;&gt;worldfootballR&lt;/a&gt;&lt;br&gt;TABLE: &lt;a href=&#34;https://twitter.com/jaseziv&#34;&gt;@jaseziv&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tfoot&gt;
+  
+&lt;/table&gt;&lt;/div&gt;
+&lt;p&gt;While not a considerable difference in the passing activities between the top five European domestic leagues, there is still some differences that will be interesting to see how their leagues evolve over the coming years.&lt;/p&gt;
+&lt;p&gt;As always, any feedback or opinions would be valued in the comments sections, or feel free to get in touch on Twitter &lt;span class=&#34;citation&#34;&gt;[@jaseziv]&lt;/span&gt;(&lt;a href=&#34;https://twitter.com/jaseziv&#34; class=&#34;uri&#34;&gt;https://twitter.com/jaseziv&lt;/a&gt;).&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
     
     <item>
       <title>Expected Goals and Liverpool - An Intro to worldfootballR</title>

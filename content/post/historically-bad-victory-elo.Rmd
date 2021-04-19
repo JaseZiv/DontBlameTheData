@@ -1,0 +1,299 @@
+---
+title: "Historically Bad Melbourne Victory"
+date: '2021-04-19'
+slug: historically-bad-melbourne-victory
+categories:
+  - R
+  - worldfootballR
+  - soccer
+tags: [worldfootballR, R, soccer, soccer analytics, ggplot2, gt]
+description: 'Using the worldfootballR R package to analyse the worst A-League seasons using Elo'
+featured: ''
+featuredalt: ''
+featuredpath: ''
+linktitle: ''
+type: post
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, fig.width = 14, fig.height = 12, warning = FALSE, message = FALSE)
+```
+
+The data for this post has been extracted from fbref.com, using the [`worldfootballR`](jaseziv.github.io/worldfootballr/) R stats package. To install the package, run `devtools::install_github("JaseZiv/worldfootballR")`.
+
+To extract the data for the post, the below code was run on Monday the 19th of April.
+
+
+```
+# code to get data using worldfootballR
+aleague <- get_match_results(country = "AUS", gender = "M", season_end_year = c(2014:2021))
+
+# remove any games not yet played
+aleague <- aleague %>% 
+  filter(!is.na(HomeGoals)) %>% 
+  arrange(Season_End_Year, Date) %>% 
+  distinct(Date, Home, Away, .keep_all = T)
+
+# save data to minimise requests on fbref
+saveRDS(aleague, here::here("elo", "bad-melb-victory", "aleague_results.rds"))
+
+```
+
+```{r libs_themes}
+library(worldfootballR)
+library(tidyverse)
+library(gt)
+library(elo)
+
+
+# load fonts
+sysfonts::font_add_google(name = "Chivo", family = "chivo")
+showtext::showtext_auto()
+
+# set theme
+theme_set(theme_minimal() +
+            theme(plot.title = element_text(colour = "midnightblue", size = 26, family = "chivo", face = "bold"), 
+                  plot.subtitle = element_text(colour = "grey20", size = 19, family = "chivo", face = "italic"),
+                  axis.text.x = element_text(colour = "grey20", size = 14, family = "chivo"),
+                  axis.text.y = element_text(colour = "grey20", size = 14, family = "chivo"),
+                  axis.title.x = element_text(colour = "grey20", size = 16, family = "chivo"),
+                  axis.title.y = element_text(colour = "grey20", size = 16, family = "chivo"),
+                  plot.caption = element_text(colour = "grey20", size = 12, family = "chivo"),
+                  strip.text = element_text(colour = "grey30", size = 12, face = "bold", family = "chivo")))
+```
+
+
+
+```{r read_data}
+# read in data
+aleague <- readRDS(url("https://github.com/JaseZiv/Dont-Blame-the-Data-Data-Files/blob/master/bad-melb-victory/aleague_results.rds?raw=true"))
+
+# filter to keep only regular season games
+aleague <- aleague %>% 
+  filter(Round == "Regular Season" | is.na(Round)) %>% 
+  filter(!is.na(HomeGoals)) %>% 
+  arrange(Date)
+```
+
+
+To say the A-League's Melbourne Victory in Australia are having a bad season is a gross understatement. Football Twitter, whatever publication wishes to cover football (soccer) in Australia (funnily enough more coverage when things are bad), almost anyone with an opinion, all are in agreement that this is a sh$t show this season - from the board all the way down. This culminated in the recent 7-0 drubbing at the hands of cross-town (and City Group cashed up) rival Melbourne City and subsequent sacking of coach and former player Grant Brebner. Add to this a 6-0 loss to City just a few weeks back and it didn't take a genius to know Brebner was in trouble.
+
+Just how bad is this season? Well that's somewhat of a subjective statement - there are many ways to define measures of success (or failure in this case), including ladder position, points earned, wins, etc, but these don't give us the whole picture. 
+
+## Hello Elo
+
+The Elo rating system should not be foreign to football fans worldwide - FIFA have used Elo as a way of ranking the Women's national teams since their introduction in 2003 and have used it as the basis of calculating Men's rankings since 2018.
+
+Elo was created by Arpad Elo, a Hungarian-American physics professor who wanted to design a rating system for chess players. The beauty of the method lies in its zero-sum notion, meaning that one team's gains come at the expense of their opponent. Draws are also handled for - the lower ranked team/player would typically gain ranking points from the higher ranked opponent. Importantly for the purposes of this piece, Elo is calculated after every match played, meaning we can continue to get updated rankings. The real value in these ranking comes the ability to calculate the predicted outcome of a contest. General implementations of the model would suggest that an opponent with a rating 100 points greater than their opponent would lead to a predicted win probability of 64%.
+
+### Applying Elo
+
+Now for the casual fan, the following may be a tad dreary, so feel free to skip along to the analysis, but for those wishing to understand the application of Elo here, read ahead.
+
+Teams typically start the season with an Elo rating of 1500 and given the zero-sum condition of the calculation, it can be said that an "average" team has an Elo of 1500. So while the team starts the season (or any period of time you want to have the "starting" point for Elo) on 1500, the ranking updates after every game. If you win, you are rewarded, and even more handsomely for big wins and/or wins against higher ranked opponents.
+
+The very popular website [FiveThirtyEight](https://fivethirtyeight.com/) website uses Elo ratings as the basis for a number of their sports prediction models, with a lot of these models using a running Elo ranking that began its calculation for teams a long time ago, making tweaks to handle starting ratings of teams in new seasons vs carrying forward the previous season's ranking. *Note, this analysis calculates a team's Elo rating for each single season analysed, not carrying over the team's previous season rating, nor carrying them forward to the next season.*
+
+There are a number of approaches to calculating Elo, however there are two main areas where decisions need to be made.
+
+The first is deciding whether to include a "home advantage", meaning should the home team be expected to win more often than not on average... The answer to this is yes in my opinion. What this rating should be is oft debated by analysts all over the globe, but I have settled for a 40 point advantage for the home team.
+
+The other factor for consideration is how much weight to place on the margin of victory. It has been argued that once a team has a big win, say by over a three goal margin, then the additional rating points you earn shouldn't have a perfectly linear relationship with ranking points earned. Smoothing has been applied to the goal index with the following formula for wins of a margin of three goals or more:
+
+```
+G = (11+N)/8
+* Where N is the goal difference
+```
+
+```{r elo_calculation}
+# calculate goal margin index:
+calc_goal_index <- function(home_goals, away_goals) {
+  if(abs(home_goals - away_goals) <= 1) {
+    G <- 1
+  } else if (abs(home_goals - away_goals) == 2) {
+    G <- 1.5
+  } else {
+    G <- (11 + abs(home_goals - away_goals))/8
+  }
+}
+
+# apply the goal margin calculation
+aleague <- aleague %>% 
+  mutate(goal_index = mapply(calc_goal_index, HomeGoals, AwayGoals))
+
+
+# Start Elo ---------------------------------------------------------------
+all_elo <- data.frame()
+
+# loop through each season and calculate Elos
+for(each_season in unique(aleague$Season_End_Year)) {
+  
+  df <- aleague %>% filter(Season_End_Year == each_season) %>% 
+    elo.run(score(HomeGoals, AwayGoals) ~ adjust(Home, 40) + Away +
+              k(20*goal_index), data = .) %>% data.frame()
+  
+  df <- bind_cols(
+    aleague %>% filter(Season_End_Year == each_season) %>% select(Season_End_Year, Date, HomeGoals, AwayGoals),
+    df
+  )
+  
+  all_elo <- rbind(all_elo, df)
+}
+
+# create a tidy (long) dataframe
+all_elo_cleaned <- all_elo %>% 
+  select(Season_End_Year, Date, Team=team.A, GF=HomeGoals, Opponent=team.B, GA=AwayGoals, pWin=p.A, Elo=elo.A, Opp_Elo=elo.B, TeamUpdate=update.A) %>% mutate(home_away="Home") %>% 
+  bind_rows(
+    all_elo %>% 
+      mutate(home_away="Away", pWin = (1-p.A)) %>% 
+      select(Season_End_Year, Date, Team=team.B, GF=AwayGoals, Opponent=team.A, GA=HomeGoals, pWin, Elo=elo.B, Opp_Elo=elo.A, home_away, , TeamUpdate=update.B)
+  )
+
+```
+
+
+
+## Worst A-League Season Elo Rankings
+
+Ok, enough of the very high level math and theory. Let's get in to seeing just how bad things are looking for the Victory...
+
+Data has been extracted from fbref.com using the [`worldfootballR`](jaseziv.github.io/worldfootballr/) R package. Data contains all A-League regular season matches from the 2013/14 season up to and including matches up to the 18th April, 2021.
+
+
+It can be seen below that when it comes to bad seasons, Central Coast have a monopoly, owning the three worst Elo seasons, with the three-win 2015/16 side the worst of the bunch (they also only won three matches in the 18/19 season).
+
+The Victory's position on this table could be seen through either a half-full, or half-empty glass. Currently, they're on track for the eighth worst season, however with eleven games yet to play, anything could happen.
+
+```{r worst_season_table}
+# add a match number as 'gameweek' isn't always accurate
+all_elo_cleaned <- all_elo_cleaned %>% 
+  arrange(Team, Season_End_Year, Date) %>% 
+  group_by(Team, Season_End_Year) %>% 
+  mutate(match_num = row_number()) %>% ungroup()
+
+
+# get the max matches played per each team season
+num_matches <- all_elo_cleaned %>% group_by(Team, Season_End_Year) %>% summarise(n_matches = max(match_num)) %>% ungroup()
+
+# get a df of the 10 worst Elo seasons
+worst_seasons <- num_matches %>% 
+  left_join(all_elo_cleaned, by = c("Team", "Season_End_Year", "n_matches" = "match_num")) %>% 
+  arrange(Elo) %>% head(10)
+
+###########################################################################
+# Create worst teams table ------------------------------------------------
+
+# theme, thanks to @thomas_mock at https://themockup.blog/
+gt_theme_538 <- function(data,...) {
+  data %>%
+    opt_all_caps()  %>%
+    opt_table_font(
+      font = list(
+        google_font("Chivo"),
+        default_fonts()
+      )
+    ) %>%
+    tab_style(
+      style = cell_borders(
+        sides = "bottom", color = "transparent", weight = px(2)
+      ),
+      locations = cells_body(
+        columns = TRUE,
+        # This is a relatively sneaky way of changing the bottom border
+        # Regardless of data size
+        rows = nrow(data$`_data`)
+      )
+    )  %>% 
+    tab_options(
+      column_labels.background.color = "white",
+      table.border.top.width = px(3),
+      table.border.top.color = "transparent",
+      table.border.bottom.color = "transparent",
+      table.border.bottom.width = px(3),
+      column_labels.border.top.width = px(3),
+      column_labels.border.top.color = "transparent",
+      column_labels.border.bottom.width = px(3),
+      column_labels.border.bottom.color = "black",
+      data_row.padding = px(3),
+      source_notes.font.size = 12,
+      table.font.size = 16,
+      heading.align = "left",
+      heading.title.font.size = "x-large",
+      heading.subtitle.font.size = "large",
+      ...
+    ) 
+}
+
+############################
+#----- Generate Table -----#
+############################
+
+worst_seasons %>% 
+  mutate(Season = paste0(Season_End_Year-1, "/", substr(Season_End_Year, 3, 4))) %>%
+  select(Team, Season, Played=n_matches, Elo) %>% 
+  mutate(Elo = round(Elo, 1)) %>% 
+  gt() %>% 
+  cols_align(columns = 1,
+             align = "left") %>%
+  cols_align(columns = c(2:4),
+             align = "center") %>%
+  tab_style(
+    style = list(
+      cell_fill(color = alpha("midnightblue", 0.2))
+    ),
+    locations = cells_body(
+      # columns = vars(Team, Season, n_matches, Elo), # not needed if coloring all columns
+      rows = c(8))
+  ) %>%
+  tab_header(md("**THE WORST A-LEAGUE SEASONS ACCORDING TO ELO**"),
+             subtitle = "Central Cost have the three worst ending season Elo ratings since the 2013/14 season. This season's Melbourne Victory currently hold the 8th worst Elo ranking, however there are still 11 games to be played.") %>% 
+  tab_source_note(
+    source_note = md("SOURCE: [fbref](fbref.com) || [worldfootballR](https://github.com/JaseZiv/worldfootballR)<br>TABLE: [@jaseziv](https://twitter.com/jaseziv)")
+  ) %>% 
+  gt_theme_538()
+
+```
+
+
+## Look Away Victory Fans
+
+
+If we take the glass half-empty view of the current season, the Victory have the second worst record after 16 games played with only the 2018/19 Mariners worse at this stage of the season. More worryingly, that season's Mariners were able to pull themselves together to "recover" somewhat. If we take them out of the equation, the Victory have the worst record after 16 games and are 10 points lower than the worst every 2015/16 Mariners.
+
+```{r victory_on_track}
+worst_aleague_seasons <- worst_seasons %>%
+  select(Team, Season_End_Year) %>% 
+  left_join(all_elo_cleaned, by = c("Team", "Season_End_Year")) %>% 
+  mutate(team_season = paste0(Team, "-", Season_End_Year)) 
+
+team_labels <- worst_aleague_seasons %>% 
+  filter((Team == "Melb Victory" & Season_End_Year == 2021) | Team == "Central Coast" & Season_End_Year == 2016) %>% 
+  arrange(Team, desc(match_num)) %>% 
+  distinct(Team, .keep_all = T) %>% 
+  mutate(shortened_season = ifelse(Team == "Melb Victory", "2020/21", "2015/16"))
+
+
+worst_aleague_seasons %>% 
+  mutate(Melb_Vict = str_detect(Team, "Melb Victory")) %>% 
+  ggplot() +
+  geom_line(aes(x= match_num, y= Elo, group = team_season), colour = "lightgrey", size=1, alpha = 0.3) +
+  geom_line(data = worst_aleague_seasons %>% filter(Team == "Central Coast", Season_End_Year == 2016), aes(x=match_num, y= Elo), colour = "#f6c644", size=1.5) +
+  geom_line(data = worst_aleague_seasons %>% filter(Team == "Melb Victory"), aes(x=match_num, y= Elo), colour = "midnightblue", size=1.5) +
+  geom_hline(yintercept = 1500, linetype=2, colour="grey", size=1) +
+  scale_x_continuous(breaks = c(0, 5, 10, 15, 20, 25, 30), limits = c(0,32), name = "Matches played") +
+  geom_label(x=26, y=1500, label = "Average", colour = "grey", label.size = NA, size=6, fontface=2) +
+  geom_text(data = team_labels, aes(x=match_num, y= Elo, label = paste0(Team, "\n", shortened_season), colour = Team), vjust=1, nudge_x = 1.9, size=5, fontface=2) +
+  scale_colour_manual(values = c("#f6c644", "midnightblue")) +
+  scale_y_continuous(limits = c(1300, 1550), name = "ELO Rating") +
+  ggtitle("MELBOURNE VICTORY HISTORICALLY BAD THIS SEASON",
+          subtitle = "Using data since the 2013/14 A-League season and calculating in-season Elo ratings, the\nVictory currently have a lower Elo rating after 16 games played than the 2015/16 Mariners,\nwho finished the A-Leage season with the worst Elo.") +
+  labs(caption = paste0("\n*Data current to ", lubridate::today(), "\nSource: fbref.com through worldfootballR  ||  Table: @jase_ziv")) +
+  theme(legend.position = "none",
+        plot.title.position = "plot",
+        legend.text.align = 0.5)
+```
+
+
+## Fingers Crossed
+
+Hopefully for the Victory fans interim Head Coach Steve Kean can turn this woefully dreadful season around and salvage some pride over the remainder of the season. If not, history beckons.

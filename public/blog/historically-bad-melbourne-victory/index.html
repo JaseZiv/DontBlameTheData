@@ -1,0 +1,1729 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.8.0">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Jason Zivkovic">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="library(worldfootballR) library(tidyverse) library(gt) library(elo) # load fonts sysfonts::font_add_google(name = &quot;Chivo&quot;, family = &quot;chivo&quot;) showtext::showtext_auto() # set theme theme_set(theme_minimal() &#43; theme(plot.title = element_text(colour = &quot;midnightblue&quot;, size = 26, family = &quot;chivo&quot;, face = &quot;bold&quot;), plot.">
+
+  
+  <link rel="alternate" hreflang="en-us" href="/blog/historically-bad-melbourne-victory/">
+
+  
+
+
+  
+  
+  
+  <meta name="theme-color" content="#3f51b5">
+  
+
+  
+  
+  
+  <script src="/js/mathjax-config.js"></script>
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-1/css/all.min.css" integrity="sha256-4w9DunooKSr3MFXHXWyFER38WmPdm361bQS/2KUWZbU=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.css" integrity="sha256-SHMGCYmST46SoyGgo4YR/9AlK1vf3ff84Aq9yK4hdqM=" crossorigin="anonymous">
+    
+
+    
+
+    
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js" integrity="sha256-Md1qLToewPeKjfAHU1zyPwOutccPAm5tahnaw7Osw0A=" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CRoboto:400,400italic,700%7CRoboto+Mono&display=swap">
+  
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.css">
+
+  
+
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-145056765-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+      dataLayer.push(arguments);
+  }
+
+  function trackOutboundLink(url, target) {
+    gtag('event', 'click', {
+         'event_category': 'outbound',
+         'event_label': url,
+         'transport_type': 'beacon',
+         'event_callback': function () {
+           if (target !== '_blank') {
+             document.location = url;
+           }
+         }
+    });
+    console.debug("Outbound link clicked: " + url);
+  }
+
+  function onClickCallback(event) {
+    if ((event.target.tagName !== 'A') || (event.target.host === window.location.host)) {
+      return;
+    }
+    trackOutboundLink(event.target, event.target.getAttribute('target'));  
+  }
+
+  gtag('js', new Date());
+  gtag('config', 'UA-145056765-1', {});
+
+  
+  document.addEventListener('click', onClickCallback, false);
+</script>
+
+
+  
+
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/images/icon_hu9239b206d2a30ff868108ce7e1f7c1c7_75288_32x32_fill_lanczos_center_2.png">
+  <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu9239b206d2a30ff868108ce7e1f7c1c7_75288_192x192_fill_lanczos_center_2.png">
+
+  <link rel="canonical" href="/blog/historically-bad-melbourne-victory/">
+
+  
+  
+  
+  
+  
+    
+  
+  
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="twitter:site" content="@jaseziv">
+  <meta property="twitter:creator" content="@jaseziv">
+  
+  <meta property="og:site_name" content="Don&#39;t Blame the Data">
+  <meta property="og:url" content="/blog/historically-bad-melbourne-victory/">
+  <meta property="og:title" content="Historically Bad Melbourne Victory | Don&#39;t Blame the Data">
+  <meta property="og:description" content="library(worldfootballR) library(tidyverse) library(gt) library(elo) # load fonts sysfonts::font_add_google(name = &quot;Chivo&quot;, family = &quot;chivo&quot;) showtext::showtext_auto() # set theme theme_set(theme_minimal() &#43; theme(plot.title = element_text(colour = &quot;midnightblue&quot;, size = 26, family = &quot;chivo&quot;, face = &quot;bold&quot;), plot."><meta property="og:image" content="/img/logo.jpg">
+  <meta property="twitter:image" content="/img/logo.jpg"><meta property="og:locale" content="en-us">
+  
+    
+      <meta property="article:published_time" content="2021-04-19T00:00:00&#43;00:00">
+    
+    <meta property="article:modified_time" content="2021-04-19T00:00:00&#43;00:00">
+  
+
+  
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "/blog/historically-bad-melbourne-victory/"
+  },
+  "headline": "Historically Bad Melbourne Victory",
+  
+  "datePublished": "2021-04-19T00:00:00Z",
+  "dateModified": "2021-04-19T00:00:00Z",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Jason Zivkovic"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Don't Blame the Data",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "/images/icon_hu9239b206d2a30ff868108ce7e1f7c1c7_75288_192x192_fill_lanczos_center_2.png"
+    }
+  },
+  "description": "library(worldfootballR) library(tidyverse) library(gt) library(elo) # load fonts sysfonts::font_add_google(name = \u0026quot;Chivo\u0026quot;, family = \u0026quot;chivo\u0026quot;) showtext::showtext_auto() # set theme theme_set(theme_minimal() + theme(plot.title = element_text(colour = \u0026quot;midnightblue\u0026quot;, size = 26, family = \u0026quot;chivo\u0026quot;, face = \u0026quot;bold\u0026quot;), plot."
+}
+</script>
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  <title>Historically Bad Melbourne Victory | Don&#39;t Blame the Data</title>
+
+</head>
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" >
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+  
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/">Don&#39;t Blame the Data</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/">Don&#39;t Blame the Data</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#about"><span>Home</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#posts"><span>Posts</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#projects"><span>Projects</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#contact"><span>Contact</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+      
+      <li class="nav-item">
+        <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+      <li class="nav-item dropdown theme-dropdown">
+        <a href="#" class="nav-link js-theme-selector" data-toggle="dropdown" aria-haspopup="true">
+          <i class="fas fa-palette" aria-hidden="true"></i>
+        </a>
+        <div class="dropdown-menu">
+          <a href="#" class="dropdown-item js-set-theme-light">
+            <span>Light</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-dark">
+            <span>Dark</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-auto">
+            <span>Automatic</span>
+          </a>
+        </div>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>Historically Bad Melbourne Victory</h1>
+
+  
+
+  
+    
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    Apr 19, 2021
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    13 min read
+  </span>
+  
+
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/categories/r/">R</a>, <a href="/categories/worldfootballr/">worldfootballR</a>, <a href="/categories/soccer/">soccer</a></span>
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      
+
+
+<pre class="r"><code>library(worldfootballR)
+library(tidyverse)
+library(gt)
+library(elo)
+
+
+# load fonts
+sysfonts::font_add_google(name = &quot;Chivo&quot;, family = &quot;chivo&quot;)
+showtext::showtext_auto()
+
+# set theme
+theme_set(theme_minimal() +
+            theme(plot.title = element_text(colour = &quot;midnightblue&quot;, size = 26, family = &quot;chivo&quot;, face = &quot;bold&quot;), 
+                  plot.subtitle = element_text(colour = &quot;grey20&quot;, size = 19, family = &quot;chivo&quot;, face = &quot;italic&quot;),
+                  axis.text.x = element_text(colour = &quot;grey20&quot;, size = 14, family = &quot;chivo&quot;),
+                  axis.text.y = element_text(colour = &quot;grey20&quot;, size = 14, family = &quot;chivo&quot;),
+                  axis.title.x = element_text(colour = &quot;grey20&quot;, size = 16, family = &quot;chivo&quot;),
+                  axis.title.y = element_text(colour = &quot;grey20&quot;, size = 16, family = &quot;chivo&quot;),
+                  plot.caption = element_text(colour = &quot;grey20&quot;, size = 12, family = &quot;chivo&quot;),
+                  strip.text = element_text(colour = &quot;grey30&quot;, size = 12, face = &quot;bold&quot;, family = &quot;chivo&quot;)))</code></pre>
+<p>The data for this post has been extracted from fbref.com, using the <a href="jaseziv.github.io/worldfootballr/"><code>worldfootballR</code></a> R stats package. To install the package, run <code>devtools::install_github("JaseZiv/worldfootballR")</code>.</p>
+<p>To extract the data for the post, the below code was run on Monday the 19th of April.</p>
+<pre><code># code to get data using worldfootballR
+aleague &lt;- get_match_results(country = &quot;AUS&quot;, gender = &quot;M&quot;, season_end_year = c(2014:2021))
+
+# remove any games not yet played
+aleague &lt;- aleague %&gt;% 
+  filter(!is.na(HomeGoals)) %&gt;% 
+  arrange(Season_End_Year, Date) %&gt;% 
+  distinct(Date, Home, Away, .keep_all = T)
+
+# save data to minimise requests on fbref
+saveRDS(aleague, here::here(&quot;elo&quot;, &quot;bad-melb-victory&quot;, &quot;aleague_results.rds&quot;))
+</code></pre>
+<pre class="r"><code># read in data
+aleague &lt;- readRDS(url(&quot;https://github.com/JaseZiv/Dont-Blame-the-Data-Data-Files/blob/master/bad-melb-victory/aleague_results.rds?raw=true&quot;))
+
+# filter to keep only regular season games
+aleague &lt;- aleague %&gt;% 
+  filter(Round == &quot;Regular Season&quot; | is.na(Round)) %&gt;% 
+  filter(!is.na(HomeGoals)) %&gt;% 
+  arrange(Date)</code></pre>
+<p>To say the A-League’s Melbourne Victory in Australia are having a bad season is a gross understatement. Football Twitter, whatever publication wishes to cover football (soccer) in Australia (funnily enough more coverage when things are bad), almost anyone with an opinion, all are in agreement that this is a sh$t show this season - from the board all the way down. This culminated in the recent 7-0 drubbing at the hands of cross-town (and City Group cashed up) rival Melbourne City and subsequent sacking of coach and former player Grant Brebner. Add to this a 6-0 loss to City just a few weeks back and it didn’t take a genius to know Brebner was in trouble.</p>
+<p>Just how bad is this season? Well that’s somewhat of a subjective statement - there are many ways to define measures of success (or failure in this case), including ladder position, points earned, wins, etc, but these don’t give us the whole picture.</p>
+<div id="hello-elo" class="section level2">
+<h2>Hello Elo</h2>
+<p>The Elo rating system should not be foreign to football fans worldwide - FIFA have used Elo as a way of ranking the Women’s national teams since their introduction in 2003 and have used it as the basis of calculating Men’s rankings since 2018.</p>
+<p>Elo was created by Arpad Elo, a Hungarian-American physics professor who wanted to design a rating system for chess players. The beauty of the method lies in its zero-sum notion, meaning that one team’s gains come at the expense of their opponent. Draws are also handled for - the lower ranked team/player would typically gain ranking points from the higher ranked opponent. Importantly for the purposes of this piece, Elo is calculated after every match played, meaning we can continue to get updated rankings. The real value in these ranking comes the ability to calculate the predicted outcome of a contest. General implementations of the model would suggest that an opponent with a rating 100 points greater than their opponent would lead to a predicted win probability of 64%.</p>
+<div id="applying-elo" class="section level3">
+<h3>Applying Elo</h3>
+<p>Now for the casual fan, the following may be a tad dreary, so feel free to skip along to the analysis, but for those wishing to understand the application of Elo here, read ahead.</p>
+<p>Teams typically start the season with an Elo rating of 1500 and given the zero-sum condition of the calculation, it can be said that an “average” team has an Elo of 1500. So while the team starts the season (or any period of time you want to have the “starting” point for Elo) on 1500, the ranking updates after every game. If you win, you are rewarded, and even more handsomely for big wins and/or wins against higher ranked opponents.</p>
+<p>The very popular website <a href="https://fivethirtyeight.com/">FiveThirtyEight</a> website uses Elo ratings as the basis for a number of their sports prediction models, with a lot of these models using a running Elo ranking that began its calculation for teams a long time ago, making tweaks to handle starting ratings of teams in new seasons vs carrying forward the previous season’s ranking. <em>Note, this analysis calculates a team’s Elo rating for each single season analysed, not carrying over the team’s previous season rating, nor carrying them forward to the next season.</em></p>
+<p>There are a number of approaches to calculating Elo, however there are two main areas where decisions need to be made.</p>
+<p>The first is deciding whether to include a “home advantage”, meaning should the home team be expected to win more often than not on average… The answer to this is yes in my opinion. What this rating should be is oft debated by analysts all over the globe, but I have settled for a 40 point advantage for the home team.</p>
+<p>The other factor for consideration is how much weight to place on the margin of victory. It has been argued that once a team has a big win, say by over a three goal margin, then the additional rating points you earn shouldn’t have a perfectly linear relationship with ranking points earned. Smoothing has been applied to the goal index with the following formula for wins of a margin of three goals or more:</p>
+<pre><code>G = (11+N)/8
+* Where N is the goal difference</code></pre>
+<pre class="r"><code># calculate goal margin index:
+calc_goal_index &lt;- function(home_goals, away_goals) {
+  if(abs(home_goals - away_goals) &lt;= 1) {
+    G &lt;- 1
+  } else if (abs(home_goals - away_goals) == 2) {
+    G &lt;- 1.5
+  } else {
+    G &lt;- (11 + abs(home_goals - away_goals))/8
+  }
+}
+
+# apply the goal margin calculation
+aleague &lt;- aleague %&gt;% 
+  mutate(goal_index = mapply(calc_goal_index, HomeGoals, AwayGoals))
+
+
+# Start Elo ---------------------------------------------------------------
+all_elo &lt;- data.frame()
+
+# loop through each season and calculate Elos
+for(each_season in unique(aleague$Season_End_Year)) {
+  
+  df &lt;- aleague %&gt;% filter(Season_End_Year == each_season) %&gt;% 
+    elo.run(score(HomeGoals, AwayGoals) ~ adjust(Home, 40) + Away +
+              k(20*goal_index), data = .) %&gt;% data.frame()
+  
+  df &lt;- bind_cols(
+    aleague %&gt;% filter(Season_End_Year == each_season) %&gt;% select(Season_End_Year, Date, HomeGoals, AwayGoals),
+    df
+  )
+  
+  all_elo &lt;- rbind(all_elo, df)
+}
+
+# create a tidy (long) dataframe
+all_elo_cleaned &lt;- all_elo %&gt;% 
+  select(Season_End_Year, Date, Team=team.A, GF=HomeGoals, Opponent=team.B, GA=AwayGoals, pWin=p.A, Elo=elo.A, Opp_Elo=elo.B, TeamUpdate=update.A) %&gt;% mutate(home_away=&quot;Home&quot;) %&gt;% 
+  bind_rows(
+    all_elo %&gt;% 
+      mutate(home_away=&quot;Away&quot;, pWin = (1-p.A)) %&gt;% 
+      select(Season_End_Year, Date, Team=team.B, GF=AwayGoals, Opponent=team.A, GA=HomeGoals, pWin, Elo=elo.B, Opp_Elo=elo.A, home_away, , TeamUpdate=update.B)
+  )</code></pre>
+</div>
+</div>
+<div id="worst-a-league-season-elo-rankings" class="section level2">
+<h2>Worst A-League Season Elo Rankings</h2>
+<p>Ok, enough of the very high level math and theory. Let’s get in to seeing just how bad things are looking for the Victory…</p>
+<p>Data has been extracted from fbref.com using the <a href="jaseziv.github.io/worldfootballr/"><code>worldfootballR</code></a> R package. Data contains all A-League regular season matches from the 2013/14 season up to and including matches up to the 18th April, 2021.</p>
+<p>It can be seen below that when it comes to bad seasons, Central Coast have a monopoly, owning the three worst Elo seasons, with the three-win 2015/16 side the worst of the bunch (they also only won three matches in the 18/19 season).</p>
+<p>The Victory’s position on this table could be seen through either a half-full, or half-empty glass. Currently, they’re on track for the eighth worst season, however with eleven games yet to play, anything could happen.</p>
+<pre class="r"><code># add a match number as &#39;gameweek&#39; isn&#39;t always accurate
+all_elo_cleaned &lt;- all_elo_cleaned %&gt;% 
+  arrange(Team, Season_End_Year, Date) %&gt;% 
+  group_by(Team, Season_End_Year) %&gt;% 
+  mutate(match_num = row_number()) %&gt;% ungroup()
+
+
+# get the max matches played per each team season
+num_matches &lt;- all_elo_cleaned %&gt;% group_by(Team, Season_End_Year) %&gt;% summarise(n_matches = max(match_num)) %&gt;% ungroup()
+
+# get a df of the 10 worst Elo seasons
+worst_seasons &lt;- num_matches %&gt;% 
+  left_join(all_elo_cleaned, by = c(&quot;Team&quot;, &quot;Season_End_Year&quot;, &quot;n_matches&quot; = &quot;match_num&quot;)) %&gt;% 
+  arrange(Elo) %&gt;% head(10)
+
+###########################################################################
+# Create worst teams table ------------------------------------------------
+
+# theme, thanks to @thomas_mock at https://themockup.blog/
+gt_theme_538 &lt;- function(data,...) {
+  data %&gt;%
+    opt_all_caps()  %&gt;%
+    opt_table_font(
+      font = list(
+        google_font(&quot;Chivo&quot;),
+        default_fonts()
+      )
+    ) %&gt;%
+    tab_style(
+      style = cell_borders(
+        sides = &quot;bottom&quot;, color = &quot;transparent&quot;, weight = px(2)
+      ),
+      locations = cells_body(
+        columns = TRUE,
+        # This is a relatively sneaky way of changing the bottom border
+        # Regardless of data size
+        rows = nrow(data$`_data`)
+      )
+    )  %&gt;% 
+    tab_options(
+      column_labels.background.color = &quot;white&quot;,
+      table.border.top.width = px(3),
+      table.border.top.color = &quot;transparent&quot;,
+      table.border.bottom.color = &quot;transparent&quot;,
+      table.border.bottom.width = px(3),
+      column_labels.border.top.width = px(3),
+      column_labels.border.top.color = &quot;transparent&quot;,
+      column_labels.border.bottom.width = px(3),
+      column_labels.border.bottom.color = &quot;black&quot;,
+      data_row.padding = px(3),
+      source_notes.font.size = 12,
+      table.font.size = 16,
+      heading.align = &quot;left&quot;,
+      heading.title.font.size = &quot;x-large&quot;,
+      heading.subtitle.font.size = &quot;large&quot;,
+      ...
+    ) 
+}
+
+############################
+#----- Generate Table -----#
+############################
+
+worst_seasons %&gt;% 
+  mutate(Season = paste0(Season_End_Year-1, &quot;/&quot;, substr(Season_End_Year, 3, 4))) %&gt;%
+  select(Team, Season, Played=n_matches, Elo) %&gt;% 
+  mutate(Elo = round(Elo, 1)) %&gt;% 
+  gt() %&gt;% 
+  cols_align(columns = 1,
+             align = &quot;left&quot;) %&gt;%
+  cols_align(columns = c(2:4),
+             align = &quot;center&quot;) %&gt;%
+  tab_style(
+    style = list(
+      cell_fill(color = alpha(&quot;midnightblue&quot;, 0.2))
+    ),
+    locations = cells_body(
+      # columns = vars(Team, Season, n_matches, Elo), # not needed if coloring all columns
+      rows = c(8))
+  ) %&gt;%
+  tab_header(md(&quot;**THE WORST A-LEAGUE SEASONS ACCORDING TO ELO**&quot;),
+             subtitle = &quot;Central Cost have the three worst ending season Elo ratings since the 2013/14 season. This season&#39;s Melbourne Victory currently hold the 8th worst Elo ranking, however there are still 11 games to be played.&quot;) %&gt;% 
+  tab_source_note(
+    source_note = md(&quot;SOURCE: [transfermarkt](transfermarkt.com) || [worldfootballR](https://github.com/JaseZiv/worldfootballR)&lt;br&gt;TABLE: [@jaseziv](https://twitter.com/jaseziv)&quot;)
+  ) %&gt;% 
+  gt_theme_538()</code></pre>
+<style>@import url("https://fonts.googleapis.com/css2?family=Chivo:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+html {
+  font-family: Chivo, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#zokzabpzsh .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 3px;
+  border-top-color: transparent;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 3px;
+  border-bottom-color: transparent;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#zokzabpzsh .gt_heading {
+  background-color: #FFFFFF;
+  text-align: left;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#zokzabpzsh .gt_title {
+  color: #333333;
+  font-size: x-large;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#zokzabpzsh .gt_subtitle {
+  color: #333333;
+  font-size: large;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 4px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#zokzabpzsh .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#zokzabpzsh .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 3px;
+  border-top-color: transparent;
+  border-bottom-style: solid;
+  border-bottom-width: 3px;
+  border-bottom-color: black;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#zokzabpzsh .gt_col_heading {
+  color: #333333;
+  background-color: white;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#zokzabpzsh .gt_column_spanner_outer {
+  color: #333333;
+  background-color: white;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#zokzabpzsh .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#zokzabpzsh .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#zokzabpzsh .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 3px;
+  border-bottom-color: black;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#zokzabpzsh .gt_group_heading {
+  padding: 8px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#zokzabpzsh .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#zokzabpzsh .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#zokzabpzsh .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#zokzabpzsh .gt_row {
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#zokzabpzsh .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 12px;
+}
+
+#zokzabpzsh .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#zokzabpzsh .gt_first_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+}
+
+#zokzabpzsh .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#zokzabpzsh .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#zokzabpzsh .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#zokzabpzsh .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#zokzabpzsh .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#zokzabpzsh .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding: 4px;
+}
+
+#zokzabpzsh .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#zokzabpzsh .gt_sourcenote {
+  font-size: 12px;
+  padding: 4px;
+}
+
+#zokzabpzsh .gt_left {
+  text-align: left;
+}
+
+#zokzabpzsh .gt_center {
+  text-align: center;
+}
+
+#zokzabpzsh .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#zokzabpzsh .gt_font_normal {
+  font-weight: normal;
+}
+
+#zokzabpzsh .gt_font_bold {
+  font-weight: bold;
+}
+
+#zokzabpzsh .gt_font_italic {
+  font-style: italic;
+}
+
+#zokzabpzsh .gt_super {
+  font-size: 65%;
+}
+
+#zokzabpzsh .gt_footnote_marks {
+  font-style: italic;
+  font-size: 65%;
+}
+</style>
+<div id="zokzabpzsh" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+  <thead class="gt_header">
+    <tr>
+      <th colspan="4" class="gt_heading gt_title gt_font_normal" style><strong>THE WORST A-LEAGUE SEASONS ACCORDING TO ELO</strong></th>
+    </tr>
+    <tr>
+      <th colspan="4" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border" style>Central Cost have the three worst ending season Elo ratings since the 2013/14 season. This season's Melbourne Victory currently hold the 8th worst Elo ranking, however there are still 11 games to be played.</th>
+    </tr>
+  </thead>
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1">Team</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">Season</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">Played</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">Elo</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr>
+      <td class="gt_row gt_left">Central Coast</td>
+      <td class="gt_row gt_center">2015/16</td>
+      <td class="gt_row gt_center">27</td>
+      <td class="gt_row gt_center">1341.2</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Central Coast</td>
+      <td class="gt_row gt_center">2018/19</td>
+      <td class="gt_row gt_center">27</td>
+      <td class="gt_row gt_center">1350.3</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Central Coast</td>
+      <td class="gt_row gt_center">2019/20</td>
+      <td class="gt_row gt_center">26</td>
+      <td class="gt_row gt_center">1369.4</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Brisbane</td>
+      <td class="gt_row gt_center">2018/19</td>
+      <td class="gt_row gt_center">27</td>
+      <td class="gt_row gt_center">1370.6</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Newcastle</td>
+      <td class="gt_row gt_center">2016/17</td>
+      <td class="gt_row gt_center">27</td>
+      <td class="gt_row gt_center">1378.0</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Newcastle</td>
+      <td class="gt_row gt_center">2014/15</td>
+      <td class="gt_row gt_center">27</td>
+      <td class="gt_row gt_center">1381.0</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Central Coast</td>
+      <td class="gt_row gt_center">2017/18</td>
+      <td class="gt_row gt_center">27</td>
+      <td class="gt_row gt_center">1394.7</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="background-color: rgba(25,25,112,0.2);">Melb Victory</td>
+      <td class="gt_row gt_center" style="background-color: rgba(25,25,112,0.2);">2020/21</td>
+      <td class="gt_row gt_center" style="background-color: rgba(25,25,112,0.2);">16</td>
+      <td class="gt_row gt_center" style="background-color: rgba(25,25,112,0.2);">1398.3</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">Wellington</td>
+      <td class="gt_row gt_center">2017/18</td>
+      <td class="gt_row gt_center">27</td>
+      <td class="gt_row gt_center">1404.0</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: transparent;">Wellington</td>
+      <td class="gt_row gt_center" style="border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: transparent;">2015/16</td>
+      <td class="gt_row gt_center" style="border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: transparent;">27</td>
+      <td class="gt_row gt_center" style="border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: transparent;">1408.0</td>
+    </tr>
+  </tbody>
+  <tfoot class="gt_sourcenotes">
+    <tr>
+      <td class="gt_sourcenote" colspan="4">SOURCE: <a href="transfermarkt.com">transfermarkt</a> || <a href="https://github.com/JaseZiv/worldfootballR">worldfootballR</a><br>TABLE: <a href="https://twitter.com/jaseziv">@jaseziv</a></td>
+    </tr>
+  </tfoot>
+  
+</table></div>
+</div>
+<div id="look-away-victory-fans" class="section level2">
+<h2>Look Away Victory Fans</h2>
+<p>If we take the glass half-empty view of the current season, the Victory have the second worst record after 16 games played with only the 2018/19 Mariners worse at this stage of the season. More worryingly, that season’s Mariners were able to pull themselves together to “recover” somewhat. If we take them out of the equation, the Victory have the worst record after 16 games and are 10 points lower than the worst every 2015/16 Mariners.</p>
+<pre class="r"><code>worst_aleague_seasons &lt;- worst_seasons %&gt;%
+  select(Team, Season_End_Year) %&gt;% 
+  left_join(all_elo_cleaned, by = c(&quot;Team&quot;, &quot;Season_End_Year&quot;)) %&gt;% 
+  mutate(team_season = paste0(Team, &quot;-&quot;, Season_End_Year)) 
+
+team_labels &lt;- worst_aleague_seasons %&gt;% 
+  filter((Team == &quot;Melb Victory&quot; &amp; Season_End_Year == 2021) | Team == &quot;Central Coast&quot; &amp; Season_End_Year == 2016) %&gt;% 
+  arrange(Team, desc(match_num)) %&gt;% 
+  distinct(Team, .keep_all = T) %&gt;% 
+  mutate(shortened_season = ifelse(Team == &quot;Melb Victory&quot;, &quot;2020/21&quot;, &quot;2015/16&quot;))
+
+
+worst_aleague_seasons %&gt;% 
+  mutate(Melb_Vict = str_detect(Team, &quot;Melb Victory&quot;)) %&gt;% 
+  ggplot() +
+  geom_line(aes(x= match_num, y= Elo, group = team_season), colour = &quot;lightgrey&quot;, size=1, alpha = 0.3) +
+  geom_line(data = worst_aleague_seasons %&gt;% filter(Team == &quot;Central Coast&quot;, Season_End_Year == 2016), aes(x=match_num, y= Elo), colour = &quot;#f6c644&quot;, size=1.5) +
+  geom_line(data = worst_aleague_seasons %&gt;% filter(Team == &quot;Melb Victory&quot;), aes(x=match_num, y= Elo), colour = &quot;midnightblue&quot;, size=1.5) +
+  geom_hline(yintercept = 1500, linetype=2, colour=&quot;grey&quot;, size=1) +
+  scale_x_continuous(breaks = c(0, 5, 10, 15, 20, 25, 30), limits = c(0,32), name = &quot;Matches played&quot;) +
+  geom_label(x=26, y=1500, label = &quot;Average&quot;, colour = &quot;grey&quot;, label.size = NA, size=6, fontface=2) +
+  geom_text(data = team_labels, aes(x=match_num, y= Elo, label = paste0(Team, &quot;\n&quot;, shortened_season), colour = Team), vjust=1, nudge_x = 1.9, size=5, fontface=2) +
+  scale_colour_manual(values = c(&quot;#f6c644&quot;, &quot;midnightblue&quot;)) +
+  scale_y_continuous(limits = c(1300, 1550), name = &quot;ELO Rating&quot;) +
+  ggtitle(&quot;MELBOURNE VICTORY HISTORICALLY BAD THIS SEASON&quot;,
+          subtitle = &quot;Using data since the 2013/14 A-League season and calculating in-season Elo ratings, the\nVictory currently have a lower Elo rating after 16 games played than the 2015/16 Mariners,\nwho finished the A-Leage season with the worst Elo.&quot;) +
+  labs(caption = paste0(&quot;\n*Data current to &quot;, lubridate::today(), &quot;\nSource: fbref.com through worldfootballR  ||  Table: @jase_ziv&quot;)) +
+  theme(legend.position = &quot;none&quot;,
+        plot.title.position = &quot;plot&quot;,
+        legend.text.align = 0.5)</code></pre>
+<p><img src="/post/historically-bad-victory-elo_files/figure-html/unnamed-chunk-2-1.png" width="1344" /></p>
+</div>
+<div id="fingers-crossed" class="section level2">
+<h2>Fingers Crossed</h2>
+<p>Hopefully for the Victory fans interim Head Coach Steve Kean can turn this woefully dreadful season around and salvage some pride over the remainder of the season. If not, history beckons.</p>
+</div>
+
+    </div>
+
+    
+
+
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/worldfootballr/">worldfootballR</a>
+  
+  <a class="badge badge-light" href="/tags/r/">R</a>
+  
+  <a class="badge badge-light" href="/tags/soccer/">soccer</a>
+  
+  <a class="badge badge-light" href="/tags/soccer-analytics/">soccer analytics</a>
+  
+  <a class="badge badge-light" href="/tags/ggplot2/">ggplot2</a>
+  
+  <a class="badge badge-light" href="/tags/gt/">gt</a>
+  
+</div>
+
+
+
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://twitter.com/intent/tweet?url=/blog/historically-bad-melbourne-victory/&amp;text=Historically%20Bad%20Melbourne%20Victory" target="_blank" rel="noopener" class="share-btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.facebook.com/sharer.php?u=/blog/historically-bad-melbourne-victory/&amp;t=Historically%20Bad%20Melbourne%20Victory" target="_blank" rel="noopener" class="share-btn-facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="mailto:?subject=Historically%20Bad%20Melbourne%20Victory&amp;body=/blog/historically-bad-melbourne-victory/" target="_blank" rel="noopener" class="share-btn-email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://www.linkedin.com/shareArticle?url=/blog/historically-bad-melbourne-victory/&amp;title=Historically%20Bad%20Melbourne%20Victory" target="_blank" rel="noopener" class="share-btn-linkedin">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://web.whatsapp.com/send?text=Historically%20Bad%20Melbourne%20Victory%20/blog/historically-bad-melbourne-victory/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </li>
+    
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a href="https://service.weibo.com/share/share.php?url=/blog/historically-bad-melbourne-victory/&amp;title=Historically%20Bad%20Melbourne%20Victory" target="_blank" rel="noopener" class="share-btn-weibo">
+          <i class="fab fa-weibo"></i>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+  
+  
+  
+    
+  
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+      
+      <img class="avatar mr-3 avatar-circle" src="/authors/admin/avatar_huf62bf21c195b8d26ab4107916de5ed56_4844513_270x270_fill_q90_lanczos_center.jpg" alt="Jason Zivkovic">
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="/">Jason Zivkovic</a></h5>
+      <h6 class="card-subtitle">Data Scientist</h6>
+      <p class="card-text">A sports mad Data Scientist just having some fun.</p>
+      <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/#contact" >
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://twitter.com/jaseziv" target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/JaseZiv" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+</ul>
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <div class="article-widget content-widget-hr">
+    <h3>Related</h3>
+    <ul>
+      
+      <li><a href="/blog/top-domestic-soccer-leagues-passing/">Passing in the Top Five European Domestic Leagues</a></li>
+      
+      <li><a href="/blog/liverpool-expected-goals-worldfootballr/">Expected Goals and Liverpool - An Intro to worldfootballR</a></li>
+      
+      <li><a href="/blog/liverpools-early-substitutions-worldfootballr/">Liverpool&#39;s Earlier Subsititutions - an Introduction to worldfootballR</a></li>
+      
+      <li><a href="/blog/all-roads-lead-to-gganimate/">All roads lead to gganimate</a></li>
+      
+      <li><a href="/blog/simplifying-afl-tipping/">Effectively Simplifying AFL Tipping</a></li>
+      
+    </ul>
+  </div>
+  
+
+
+
+  </div>
+</article>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js" integrity="sha256-eOgo0OtLL4cdq7RdwRUiGKLX9XsIJ7nGhWEKbohmVAQ=" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/languages/r.min.js"></script>
+        
+      
+
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.js" integrity="sha256-EErZamuLefUnbMBQbsEqu1USa+btR2oIlCpBJbyD4/g=" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script>const code_highlighting = true;</script>
+    
+
+    
+    
+    <script>const isSiteThemeDark = false;</script>
+    
+
+    
+    
+    
+    
+    
+    
+    <script>
+      const search_config = {"indexURI":"/index.json","minLength":1,"threshold":0.3};
+      const i18n = {"no_results":"No results found","placeholder":"Search...","results":"results found"};
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.37431be2d92d7fb0160054761ab79602.js"></script>
+
+    
+
+
+
+
+
+
+  
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    ©2021 &middot; 
+
+    Powered by the
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" class="back-to-top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
