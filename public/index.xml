@@ -20,6 +20,20 @@
       <description>
 
 
+&lt;p&gt;The data for this post has been extracted from fbref.com, using the &lt;a href=&#34;jaseziv.github.io/worldfootballr/&#34;&gt;&lt;code&gt;worldfootballR&lt;/code&gt;&lt;/a&gt; R stats package. To install the package, run &lt;code&gt;devtools::install_github(&#34;JaseZiv/worldfootballR&#34;)&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;To extract the data for the post, the below code was run on Monday the 19th of April.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# code to get data using worldfootballR
+aleague &amp;lt;- get_match_results(country = &amp;quot;AUS&amp;quot;, gender = &amp;quot;M&amp;quot;, season_end_year = c(2014:2021))
+
+# remove any games not yet played
+aleague &amp;lt;- aleague %&amp;gt;% 
+  filter(!is.na(HomeGoals)) %&amp;gt;% 
+  arrange(Season_End_Year, Date) %&amp;gt;% 
+  distinct(Date, Home, Away, .keep_all = T)
+
+# save data to minimise requests on fbref
+saveRDS(aleague, here::here(&amp;quot;elo&amp;quot;, &amp;quot;bad-melb-victory&amp;quot;, &amp;quot;aleague_results.rds&amp;quot;))
+&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(worldfootballR)
 library(tidyverse)
 library(gt)
@@ -40,20 +54,6 @@ theme_set(theme_minimal() +
                   axis.title.y = element_text(colour = &amp;quot;grey20&amp;quot;, size = 16, family = &amp;quot;chivo&amp;quot;),
                   plot.caption = element_text(colour = &amp;quot;grey20&amp;quot;, size = 12, family = &amp;quot;chivo&amp;quot;),
                   strip.text = element_text(colour = &amp;quot;grey30&amp;quot;, size = 12, face = &amp;quot;bold&amp;quot;, family = &amp;quot;chivo&amp;quot;)))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The data for this post has been extracted from fbref.com, using the &lt;a href=&#34;jaseziv.github.io/worldfootballr/&#34;&gt;&lt;code&gt;worldfootballR&lt;/code&gt;&lt;/a&gt; R stats package. To install the package, run &lt;code&gt;devtools::install_github(&#34;JaseZiv/worldfootballR&#34;)&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;To extract the data for the post, the below code was run on Monday the 19th of April.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;# code to get data using worldfootballR
-aleague &amp;lt;- get_match_results(country = &amp;quot;AUS&amp;quot;, gender = &amp;quot;M&amp;quot;, season_end_year = c(2014:2021))
-
-# remove any games not yet played
-aleague &amp;lt;- aleague %&amp;gt;% 
-  filter(!is.na(HomeGoals)) %&amp;gt;% 
-  arrange(Season_End_Year, Date) %&amp;gt;% 
-  distinct(Date, Home, Away, .keep_all = T)
-
-# save data to minimise requests on fbref
-saveRDS(aleague, here::here(&amp;quot;elo&amp;quot;, &amp;quot;bad-melb-victory&amp;quot;, &amp;quot;aleague_results.rds&amp;quot;))
-&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# read in data
 aleague &amp;lt;- readRDS(url(&amp;quot;https://github.com/JaseZiv/Dont-Blame-the-Data-Data-Files/blob/master/bad-melb-victory/aleague_results.rds?raw=true&amp;quot;))
 
@@ -211,7 +211,7 @@ worst_seasons %&amp;gt;%
   tab_header(md(&amp;quot;**THE WORST A-LEAGUE SEASONS ACCORDING TO ELO**&amp;quot;),
              subtitle = &amp;quot;Central Cost have the three worst ending season Elo ratings since the 2013/14 season. This season&amp;#39;s Melbourne Victory currently hold the 8th worst Elo ranking, however there are still 11 games to be played.&amp;quot;) %&amp;gt;% 
   tab_source_note(
-    source_note = md(&amp;quot;SOURCE: [transfermarkt](transfermarkt.com) || [worldfootballR](https://github.com/JaseZiv/worldfootballR)&amp;lt;br&amp;gt;TABLE: [@jaseziv](https://twitter.com/jaseziv)&amp;quot;)
+    source_note = md(&amp;quot;SOURCE: [fbref](fbref.com) || [worldfootballR](https://github.com/JaseZiv/worldfootballR)&amp;lt;br&amp;gt;TABLE: [@jaseziv](https://twitter.com/jaseziv)&amp;quot;)
   ) %&amp;gt;% 
   gt_theme_538()&lt;/code&gt;&lt;/pre&gt;
 &lt;style&gt;@import url(&#34;https://fonts.googleapis.com/css2?family=Chivo:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap&#34;);
@@ -219,7 +219,7 @@ html {
   font-family: Chivo, -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;, Roboto, Oxygen, Ubuntu, Cantarell, &#39;Helvetica Neue&#39;, &#39;Fira Sans&#39;, &#39;Droid Sans&#39;, Arial, sans-serif;
 }
 
-#zokzabpzsh .gt_table {
+#pcogkrrmzj .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -244,7 +244,7 @@ html {
   border-left-color: #D3D3D3;
 }
 
-#zokzabpzsh .gt_heading {
+#pcogkrrmzj .gt_heading {
   background-color: #FFFFFF;
   text-align: left;
   border-bottom-color: #FFFFFF;
@@ -256,7 +256,7 @@ html {
   border-right-color: #D3D3D3;
 }
 
-#zokzabpzsh .gt_title {
+#pcogkrrmzj .gt_title {
   color: #333333;
   font-size: x-large;
   font-weight: initial;
@@ -266,7 +266,7 @@ html {
   border-bottom-width: 0;
 }
 
-#zokzabpzsh .gt_subtitle {
+#pcogkrrmzj .gt_subtitle {
   color: #333333;
   font-size: large;
   font-weight: initial;
@@ -276,13 +276,13 @@ html {
   border-top-width: 0;
 }
 
-#zokzabpzsh .gt_bottom_border {
+#pcogkrrmzj .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#zokzabpzsh .gt_col_headings {
+#pcogkrrmzj .gt_col_headings {
   border-top-style: solid;
   border-top-width: 3px;
   border-top-color: transparent;
@@ -297,7 +297,7 @@ html {
   border-right-color: #D3D3D3;
 }
 
-#zokzabpzsh .gt_col_heading {
+#pcogkrrmzj .gt_col_heading {
   color: #333333;
   background-color: white;
   font-size: 80%;
@@ -317,7 +317,7 @@ html {
   overflow-x: hidden;
 }
 
-#zokzabpzsh .gt_column_spanner_outer {
+#pcogkrrmzj .gt_column_spanner_outer {
   color: #333333;
   background-color: white;
   font-size: 80%;
@@ -329,15 +329,15 @@ html {
   padding-right: 4px;
 }
 
-#zokzabpzsh .gt_column_spanner_outer:first-child {
+#pcogkrrmzj .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#zokzabpzsh .gt_column_spanner_outer:last-child {
+#pcogkrrmzj .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#zokzabpzsh .gt_column_spanner {
+#pcogkrrmzj .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 3px;
   border-bottom-color: black;
@@ -349,7 +349,7 @@ html {
   width: 100%;
 }
 
-#zokzabpzsh .gt_group_heading {
+#pcogkrrmzj .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -371,7 +371,7 @@ html {
   vertical-align: middle;
 }
 
-#zokzabpzsh .gt_empty_group_heading {
+#pcogkrrmzj .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -386,15 +386,15 @@ html {
   vertical-align: middle;
 }
 
-#zokzabpzsh .gt_from_md &gt; :first-child {
+#pcogkrrmzj .gt_from_md &gt; :first-child {
   margin-top: 0;
 }
 
-#zokzabpzsh .gt_from_md &gt; :last-child {
+#pcogkrrmzj .gt_from_md &gt; :last-child {
   margin-bottom: 0;
 }
 
-#zokzabpzsh .gt_row {
+#pcogkrrmzj .gt_row {
   padding-top: 3px;
   padding-bottom: 3px;
   padding-left: 5px;
@@ -413,7 +413,7 @@ html {
   overflow-x: hidden;
 }
 
-#zokzabpzsh .gt_stub {
+#pcogkrrmzj .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -425,7 +425,7 @@ html {
   padding-left: 12px;
 }
 
-#zokzabpzsh .gt_summary_row {
+#pcogkrrmzj .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -435,7 +435,7 @@ html {
   padding-right: 5px;
 }
 
-#zokzabpzsh .gt_first_summary_row {
+#pcogkrrmzj .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -445,7 +445,7 @@ html {
   border-top-color: #D3D3D3;
 }
 
-#zokzabpzsh .gt_grand_summary_row {
+#pcogkrrmzj .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -455,7 +455,7 @@ html {
   padding-right: 5px;
 }
 
-#zokzabpzsh .gt_first_grand_summary_row {
+#pcogkrrmzj .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -465,11 +465,11 @@ html {
   border-top-color: #D3D3D3;
 }
 
-#zokzabpzsh .gt_striped {
+#pcogkrrmzj .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#zokzabpzsh .gt_table_body {
+#pcogkrrmzj .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -478,7 +478,7 @@ html {
   border-bottom-color: #D3D3D3;
 }
 
-#zokzabpzsh .gt_footnotes {
+#pcogkrrmzj .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -492,13 +492,13 @@ html {
   border-right-color: #D3D3D3;
 }
 
-#zokzabpzsh .gt_footnote {
+#pcogkrrmzj .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#zokzabpzsh .gt_sourcenotes {
+#pcogkrrmzj .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -512,46 +512,46 @@ html {
   border-right-color: #D3D3D3;
 }
 
-#zokzabpzsh .gt_sourcenote {
+#pcogkrrmzj .gt_sourcenote {
   font-size: 12px;
   padding: 4px;
 }
 
-#zokzabpzsh .gt_left {
+#pcogkrrmzj .gt_left {
   text-align: left;
 }
 
-#zokzabpzsh .gt_center {
+#pcogkrrmzj .gt_center {
   text-align: center;
 }
 
-#zokzabpzsh .gt_right {
+#pcogkrrmzj .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#zokzabpzsh .gt_font_normal {
+#pcogkrrmzj .gt_font_normal {
   font-weight: normal;
 }
 
-#zokzabpzsh .gt_font_bold {
+#pcogkrrmzj .gt_font_bold {
   font-weight: bold;
 }
 
-#zokzabpzsh .gt_font_italic {
+#pcogkrrmzj .gt_font_italic {
   font-style: italic;
 }
 
-#zokzabpzsh .gt_super {
+#pcogkrrmzj .gt_super {
   font-size: 65%;
 }
 
-#zokzabpzsh .gt_footnote_marks {
+#pcogkrrmzj .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 &lt;/style&gt;
-&lt;div id=&#34;zokzabpzsh&#34; style=&#34;overflow-x:auto;overflow-y:auto;width:auto;height:auto;&#34;&gt;&lt;table class=&#34;gt_table&#34;&gt;
+&lt;div id=&#34;pcogkrrmzj&#34; style=&#34;overflow-x:auto;overflow-y:auto;width:auto;height:auto;&#34;&gt;&lt;table class=&#34;gt_table&#34;&gt;
   &lt;thead class=&#34;gt_header&#34;&gt;
     &lt;tr&gt;
       &lt;th colspan=&#34;4&#34; class=&#34;gt_heading gt_title gt_font_normal&#34; style&gt;&lt;strong&gt;THE WORST A-LEAGUE SEASONS ACCORDING TO ELO&lt;/strong&gt;&lt;/th&gt;
@@ -632,7 +632,7 @@ html {
   &lt;/tbody&gt;
   &lt;tfoot class=&#34;gt_sourcenotes&#34;&gt;
     &lt;tr&gt;
-      &lt;td class=&#34;gt_sourcenote&#34; colspan=&#34;4&#34;&gt;SOURCE: &lt;a href=&#34;transfermarkt.com&#34;&gt;transfermarkt&lt;/a&gt; || &lt;a href=&#34;https://github.com/JaseZiv/worldfootballR&#34;&gt;worldfootballR&lt;/a&gt;&lt;br&gt;TABLE: &lt;a href=&#34;https://twitter.com/jaseziv&#34;&gt;@jaseziv&lt;/a&gt;&lt;/td&gt;
+      &lt;td class=&#34;gt_sourcenote&#34; colspan=&#34;4&#34;&gt;SOURCE: &lt;a href=&#34;fbref.com&#34;&gt;fbref&lt;/a&gt; || &lt;a href=&#34;https://github.com/JaseZiv/worldfootballR&#34;&gt;worldfootballR&lt;/a&gt;&lt;br&gt;TABLE: &lt;a href=&#34;https://twitter.com/jaseziv&#34;&gt;@jaseziv&lt;/a&gt;&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tfoot&gt;
   
@@ -671,7 +671,7 @@ worst_aleague_seasons %&amp;gt;%
   theme(legend.position = &amp;quot;none&amp;quot;,
         plot.title.position = &amp;quot;plot&amp;quot;,
         legend.text.align = 0.5)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/historically-bad-victory-elo_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;1344&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/historically-bad-victory-elo_files/figure-html/victory_on_track-1.png&#34; width=&#34;1344&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;fingers-crossed&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Fingers Crossed&lt;/h2&gt;
@@ -2375,7 +2375,7 @@ html {
       <link>/project/worldfootballr/</link>
       <pubDate>Sun, 10 Jan 2021 00:00:00 +1100</pubDate>
       <guid>/project/worldfootballr/</guid>
-      <description>&lt;p&gt;The &lt;code&gt;worldfootballR&lt;/code&gt; package is designed to allow users to extract world football (soccer) data from the very popular and thorough website fbref.com.&lt;/p&gt;
+      <description>&lt;p&gt;The &lt;code&gt;worldfootballR&lt;/code&gt; package is designed to allow users to extract world football (soccer) data from very popular and thorough websites fbref.com, transfermarkt.com and understat.com.&lt;/p&gt;
 &lt;p&gt;The vignette for the package offers a full description of the package and the functions available, and can be found 
 &lt;a href=&#34;https://jaseziv.github.io/worldfootballR/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
 </description>

@@ -33,22 +33,22 @@
   </url>
   
   <url>
-    <loc>/tags/r/</loc>
-    <lastmod>2021-04-19T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/categories/r/</loc>
     <lastmod>2021-04-19T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/tags/soccer/</loc>
+    <loc>/tags/r/</loc>
     <lastmod>2021-04-19T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/categories/soccer/</loc>
+    <lastmod>2021-04-19T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/soccer/</loc>
     <lastmod>2021-04-19T00:00:00+00:00</lastmod>
   </url>
   
@@ -113,17 +113,12 @@
   </url>
   
   <url>
-    <loc>/tags/pythagorean-expectation/</loc>
-    <lastmod>2020-03-08T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/categories/pythagorean-expectation/</loc>
     <lastmod>2020-03-08T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/categories/sports-analytics/</loc>
+    <loc>/tags/pythagorean-expectation/</loc>
     <lastmod>2020-03-08T00:00:00+00:00</lastmod>
   </url>
   
@@ -133,12 +128,17 @@
   </url>
   
   <url>
-    <loc>/categories/afl/</loc>
-    <lastmod>2019-12-23T00:00:00+00:00</lastmod>
+    <loc>/categories/sports-analytics/</loc>
+    <lastmod>2020-03-08T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/tags/afl/</loc>
+    <lastmod>2019-12-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/afl/</loc>
     <lastmod>2019-12-23T00:00:00+00:00</lastmod>
   </url>
   
@@ -223,12 +223,12 @@
   </url>
   
   <url>
-    <loc>/tags/gganimate/</loc>
+    <loc>/categories/gganimate/</loc>
     <lastmod>2019-08-30T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/categories/gganimate/</loc>
+    <loc>/tags/gganimate/</loc>
     <lastmod>2019-08-30T00:00:00+00:00</lastmod>
   </url>
   
@@ -283,12 +283,12 @@
   </url>
   
   <url>
-    <loc>/categories/twitter/</loc>
+    <loc>/tags/twitter/</loc>
     <lastmod>2019-08-25T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/tags/twitter/</loc>
+    <loc>/categories/twitter/</loc>
     <lastmod>2019-08-25T00:00:00+00:00</lastmod>
   </url>
   
@@ -328,12 +328,12 @@
   </url>
   
   <url>
-    <loc>/categories/tidyverse/</loc>
+    <loc>/tags/tidyverse/</loc>
     <lastmod>2019-08-17T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/tags/tidyverse/</loc>
+    <loc>/categories/tidyverse/</loc>
     <lastmod>2019-08-17T00:00:00+00:00</lastmod>
   </url>
   

@@ -6,7 +6,7 @@ title = "worldfootballR R Package"
 date = 2021-01-10T00:00:00
 
 # Project summary to display on homepage.
-summary = "An R package developed to aid in the extraction of world football (soccer) data from fbref.com"
+summary = "An R package developed to aid in the extraction of world football (soccer) data"
 
 # Tags: can be used for filtering projects.
 # Example: `tags = ["machine-learning", "deep-learning"]`
@@ -43,6 +43,6 @@ url_code = ""
 
 
 
-The `worldfootballR` package is designed to allow users to extract world football (soccer) data from the very popular and thorough website fbref.com.
+The `worldfootballR` package is designed to allow users to extract world football (soccer) data from very popular and thorough websites fbref.com, transfermarkt.com and understat.com.
 
 The vignette for the package offers a full description of the package and the functions available, and can be found [here](https://jaseziv.github.io/worldfootballR/).
