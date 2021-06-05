@@ -1,5 +1,5 @@
 ---
-title: "EXTRACT FOOTBALL (SOCCER) DATA IN R WITH ZERO R EXPERIENCE"
+title: "ANALYSE FOOTBALL (SOCCER) DATA IN R WITH ZERO R EXPERIENCE"
 date: "2021-06-05"
 slug: extract-data-using-worldfootballR
 categories:
@@ -48,7 +48,7 @@ These three sites are regularly used by analysts the world over, however the pac
 
 To my knowledge, only FBref provide the ability to export data to a file - the other two don't, so you'd need to find some other way to get your data (painfully slow copy and paste), and that's where `worldfootballR` come in.
 
-## Prerequisits
+## Prerequisites
 
 The only prerequisites to this post are that you have a computer, internet connection and the desire to analyse world football data. This post is designed to take any aspiring analyst with absolutely no R coding experience to being able to extract data programmatically using the `worldfootballR` R library.
 
