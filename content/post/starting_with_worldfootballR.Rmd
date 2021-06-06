@@ -20,7 +20,7 @@ type: post
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 ```
 
-![](/img/worldfootballR.png)
+![](/img/r_worldfootballR_post_hero.png)
 
 # Introduction
 
