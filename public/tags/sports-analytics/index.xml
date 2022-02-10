@@ -5,12 +5,327 @@
     <link>/tags/sports-analytics/</link>
       <atom:link href="/tags/sports-analytics/index.xml" rel="self" type="application/rss+xml" />
     <description>sports analytics</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>©2021</copyright><lastBuildDate>Sun, 08 Mar 2020 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>©2022</copyright><lastBuildDate>Sat, 05 Jun 2021 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/img/logo.jpg</url>
       <title>sports analytics</title>
       <link>/tags/sports-analytics/</link>
     </image>
+    
+    <item>
+      <title>ANALYSE FOOTBALL (SOCCER) DATA IN R WITH ZERO R EXPERIENCE</title>
+      <link>/blog/extract-data-using-worldfootballr/</link>
+      <pubDate>Sat, 05 Jun 2021 00:00:00 +0000</pubDate>
+      <guid>/blog/extract-data-using-worldfootballr/</guid>
+      <description>
+&lt;script src=&#34;/rmarkdown-libs/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;p&gt;&lt;img src=&#34;/img/r_worldfootballR_post_hero.png&#34; /&gt;&lt;/p&gt;
+&lt;div id=&#34;introduction&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Introduction&lt;/h1&gt;
+&lt;p&gt;Do you find your love of football and curious mind converging to the point where you want to dig a little into the data to confirm if what your eyes are seeing is in fact what’s happening, but you just don’t know how to get started, or where to get data from? Or maybe you have already started doing some analysis in visualisation software, including PowerBI, Tableau, Excel, etc, or know enough about statistics to want to perform some statistical modelling, but you just need to know how to get access to more data, quicker and easier? Then this post will be for you.&lt;/p&gt;
+&lt;p&gt;This post will hopefully teach you how to use worldfootballR - an R package built to aid in the extraction of world football data from a number of popular websites (with their consent).&lt;/p&gt;
+&lt;p&gt;The post will demonstrate how to use the package to extract your data programmatically and save it in a suitable file format that your report ingests, saving you the manual steps of extracting data from popular websites listed below.&lt;/p&gt;
+&lt;p&gt;Additionally, I will also aim to demonstrate the visualisation tools available in R, if you so choose to invest the time into learning R.&lt;/p&gt;
+&lt;p&gt;A final aim of the post is to highlight what’s possible in R for those new to R programming in the hope that it stokes enough interest to get you started on your R learning journey.&lt;/p&gt;
+&lt;p&gt;What this post won’t be is an in depth how-to-code-in-R post - there are plenty of online resources, including MOOCs, posts, screencasts, etc to do that. This post will focus on getting you up and running with data in your hands… or on your screens.&lt;/p&gt;
+&lt;div id=&#34;what-data-can-i-get&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;What data can I get?&lt;/h2&gt;
+&lt;p&gt;The package as at version 0.3.2 provides access to data from the following data sites:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;FBref.com (a whole host of data to analyse, including results, match stats, season long stats, player and team stats, etc);&lt;/li&gt;
+&lt;li&gt;Transfermarkt.com (player market values, team transfer history, player transfer history); and,&lt;/li&gt;
+&lt;li&gt;Understat.com (shot locations data for matches played in the major leagues)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;These three sites are regularly used by analysts the world over, however the package is constantly evolving and may include data from additional sites in the future.&lt;/p&gt;
+&lt;p&gt;To my knowledge, only FBref provide the ability to export data to a file - the other two don’t, so you’d need to find some other way to get your data (painfully slow copy and paste), and that’s where &lt;code&gt;worldfootballR&lt;/code&gt; come in.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;prerequisites&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Prerequisites&lt;/h2&gt;
+&lt;p&gt;The only prerequisites to this post are that you have a computer, internet connection and the desire to analyse world football data. This post is designed to take any aspiring analyst with absolutely no R coding experience to being able to extract data programmatically using the &lt;code&gt;worldfootballR&lt;/code&gt; R library.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;what-is-r-why-would-i-use-r&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;What is R / Why would I use R?&lt;/h2&gt;
+&lt;p&gt;From R’s official site (&lt;a href=&#34;https://www.r-project.org/about.html&#34; class=&#34;uri&#34;&gt;https://www.r-project.org/about.html&lt;/a&gt;);&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;R is a language and environment for statistical computing and graphics.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;You can find out a lot more about R as you get more experienced with the language on the home page, but all you need to know for now is that R will be another tool in your toolkit to perform the analyses you want to do. R is an amazing programming framework that allows you to do a number of things, including data cleaning, performing statistical analysis and modeling and building fully customisable visualisations using the R programming language.&lt;/p&gt;
+&lt;p&gt;Importantly, anything programmed means it’s repeatable. Set up your code upfront, then simply rerun it to get consistent results.&lt;/p&gt;
+&lt;p&gt;The world is your oyster if you have the drive to learn.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;installing-r-and-rstudio&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Installing R and RStudio&lt;/h1&gt;
+&lt;p&gt;This first section will detail the steps required to install R and RStudio, before you can get started with pulling data using &lt;code&gt;worldfootballR&lt;/code&gt;.&lt;/p&gt;
+&lt;div id=&#34;getting-started&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Getting started&lt;/h2&gt;
+&lt;p&gt;Ok so a few things before we dive right in… this is in layman’s terms (because I myself am a layman). R is the engine, the coding language driving everything you want to do, and RStudio is the pretty graphical user interface (GUI pronounced “gooey”) that gives you additional functionality when writing code in it. I am going to propose installing both R and RStudio in this post, but if you don’t want RStudio (I advise you to go with RStudio), you could still run the code to get the data you need (I will assume here everything is done in RStudio).&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;install-r&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Install R&lt;/h2&gt;
+&lt;p&gt;You remember how I said I’m a layman? It’ll extend itself here. We’re going to install R and we’re going to use all of the default options (just keep clicking “&lt;em&gt;accept&lt;/em&gt;” or “&lt;em&gt;agree&lt;/em&gt;”, or “&lt;em&gt;continue&lt;/em&gt;”, and nothing else until R has been successfully installed. You can customise the installation when you’re better versed in R, but for now, just show me the data!&lt;/p&gt;
+&lt;p&gt;So how to find R to install R you ask? Well, you have to type into Google some really sophisticated stuff… “&lt;em&gt;download r windows&lt;/em&gt;” or on Mac OS… yep, you guessed it, “&lt;em&gt;download r mac&lt;/em&gt;”.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/download_r.jpg&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;If you can’t be bothered doing that, here are the links:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;For Windows OS: &lt;a href=&#34;https://cran.r-project.org/bin/windows/base/&#34; class=&#34;uri&#34;&gt;https://cran.r-project.org/bin/windows/base/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Select “Download R X.X.X for Windows”, with “X.X.X” being for whatever is the most recent version of R:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/download_r_win.jpg&#34; /&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;For Mac OS: &lt;a href=&#34;https://cran.r-project.org/bin/macosx/&#34; class=&#34;uri&#34;&gt;https://cran.r-project.org/bin/macosx/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Depending on what version of Mac OS you’re running will determine which version to install, but generally speaking it’ll only be one of the highlighted options below:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/download_r_mac.jpg&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Once you have selected either of the Windows or Mac OS versions, install as you would any software, remembering my one special rule at the start of this section… default options all the way.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;now-for-rstudio&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Now for RStudio&lt;/h2&gt;
+&lt;p&gt;Once R has been installed, we can now go ahead and install RStudio, remember, the GUI that will allow you to code in and provide additional functionality.&lt;/p&gt;
+&lt;p&gt;Back to our intricate Google search query… “&lt;em&gt;download rstudio&lt;/em&gt;”, and select the first result:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/download_r_studio.jpg&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Or for the URL: &lt;a href=&#34;https://www.rstudio.com/products/rstudio/download/&#34; class=&#34;uri&#34;&gt;https://www.rstudio.com/products/rstudio/download/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Once we’ve opened the page, we’re presented with a few pricing options, but if you’re like almost all amateur analysts (let’s be honest, even professional analysts), you’re probably only going to need the free version:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/rstudio_options.jpg&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;were-almost-ready-to-start-coding&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;We’re (almost) ready to start coding!&lt;/h2&gt;
+&lt;p&gt;Well, we’re almost ready to start coding, but first we’ll do a bit of a tour of RStudio (again, for those that have forgotten, RStudio is the software where we type and execute our R code).&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/rstudio_display.jpg&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;The console pane is where we will be able to see our code running (or run our code in here if we’re not using the scripts), whether there are any “errors” or “warnings” and printed outputs.&lt;/p&gt;
+&lt;p&gt;The environment is the sections where we will see the objects that we’ve imported, or created, including data frames (think of something similar to an Excel table).&lt;/p&gt;
+&lt;p&gt;In the viewers pane, there are a few tabs, including being able to navigate through the file system (‘Files’ tab), any visualisations we’ve created (‘Plots’ tab), the libraries/packages we have loaded on our machines and have available to us “locally” (‘Packages’ tab), a help section, where we can get additional details on what we need to provide the functions to work and a ‘Viewer’ tab to see HTML outputs.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;now-were-ready-to-start-coding&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Now we’re ready to start coding&lt;/h2&gt;
+&lt;p&gt;Open up an R script (there are a number of different options to code in, but a .R script is the best place to start.&lt;/p&gt;
+&lt;p&gt;To open up a script, you can either press &lt;code&gt;control+shift+n&lt;/code&gt; on a Windows machine, or &lt;code&gt;command+shift+n&lt;/code&gt; on a Mac, or you can select a new script with the drop down in the top-left corner:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/open_r_script.jpg&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Changing the layout as such:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/rstudio_full_layout.jpg&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;We will start writing code in the top-left quadrant.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;worldfootballr&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;worldfootballR&lt;/h1&gt;
+&lt;p&gt;So now we’re here, ready to start coding right? Well we’ve just got one more thing to cover off. What is &lt;a href=&#34;https://jaseziv.github.io/worldfootballR/&#34;&gt;&lt;code&gt;worldfootballR&lt;/code&gt;&lt;/a&gt;?&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;worldfootballR&lt;/code&gt; is a package made up of functions that aid in the extraction of data from popular football sites.&lt;/p&gt;
+&lt;p&gt;I know what you’re thinking - what are functions??&lt;/p&gt;
+&lt;p&gt;From &lt;a href=&#34;https://www.datacamp.com/community/tutorials/functions-in-r-a-tutorial&#34;&gt;DataCamp&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;In programming, you use functions to incorporate sets of instructions that you want to use repeatedly or that, because of their complexity, are better self-contained in a sub program and called when needed. A function is a piece of code written to carry out a specified task; it can or can not accept arguments or parameters and it can or can not return one or more values.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Crystal clear right? Well all you need to know is that worldfootballR has taken lines and lines of code to extract data and essentially condensed it down to a line (and more importantly for you, no web scraping knowledge by you).&lt;/p&gt;
+&lt;p&gt;Say for instance, you wanted to get match summary information for a particular match(es) from FBref.com… rather than learning about R programming and web scraping to be able to write this code:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/function_code.jpg&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;All you needed to do was run this line of code:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;get_match_summary(match_url)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Ok, so now I think we’re ready to start you writing code to extract and save data in a form you need.&lt;/p&gt;
+&lt;div id=&#34;writing-code&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Writing code&lt;/h2&gt;
+&lt;p&gt;Before I fully get in to the nuts and bolts of the code, I just want to point you to some resources.&lt;/p&gt;
+&lt;p&gt;A website has been created for the worldfootballR package that will give you a full run down of all the functions available and the arguments you need to pass to those functions to get the data you want. The website can be found &lt;a href=&#34;https://jaseziv.github.io/worldfootballR/&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Now we can really start writing code.&lt;/p&gt;
+&lt;p&gt;As we’ve already established, packages contain functions (code to do something). To use these packages they need to be installed (downloaded onto our laptops) first.&lt;/p&gt;
+&lt;p&gt;Packages will typically (but not limited to) either be housed on CRAN (a central repository for all packages) or on GitHub. &lt;code&gt;worldfootballR&lt;/code&gt; is housed on GitHub, so the instructions for installing this package are slightly different to the packages housed on CRAN. Before we can install &lt;code&gt;worldfootballR&lt;/code&gt;, we need to install the &lt;code&gt;devtools&lt;/code&gt; package to enable the installation of &lt;code&gt;worldfootballR&lt;/code&gt;. We will also install another package, &lt;code&gt;xlsx&lt;/code&gt; that will enable us to save files in ‘.xlsx’ format.&lt;/p&gt;
+&lt;p&gt;We type (just copy and paste) these lines of code into our R script the first time we use R &lt;strong&gt;OR&lt;/strong&gt; when we update our version of R &lt;strong&gt;OR&lt;/strong&gt; the package updates its functionality:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# to allow us to install packages from github:
+install.packages(&amp;quot;devtools&amp;quot;)
+
+# a meta package that contains packages for data cleaning, analysis and visualisation
+install.packages(&amp;quot;tidyverse&amp;quot;)
+
+# to save xlsx files
+install.packages(&amp;quot;xlsx&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You’ll know that they have successfully installed if there are no error messages and you can see the you see the “&amp;gt;” symbol and a blinking cursor in the console section.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/install_devtools.jpg&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Then we will install &lt;code&gt;worldfootballR&lt;/code&gt; (it’s what we’re all here for) and importantly load the library - it’s not enough to just install the package, we need to load it to make the functions easily available in our current session.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; We only need to install the package the first time we install R &lt;strong&gt;OR&lt;/strong&gt; if we update our version of R, &lt;strong&gt;OR&lt;/strong&gt; if there is a update to a newer version of the package.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;devtools::install_github(&amp;quot;JaseZiv/worldfootballR&amp;quot;, ref = &amp;quot;main&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;Note 2:&lt;/strong&gt; While we only need to install it very infrequently, we need to load the package &lt;strong&gt;every time&lt;/strong&gt; we want to use the package.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;library(worldfootballR)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;the-world-is-your-oyster&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;The world is your oyster&lt;/h2&gt;
+&lt;p&gt;There are a number of functions in &lt;code&gt;worldfootballR&lt;/code&gt; to enable you to get all the data you need.&lt;/p&gt;
+&lt;p&gt;To find these functions, you can visit the reference page on the package website &lt;a href=&#34;https://jaseziv.github.io/worldfootballR/reference/index.html&#34;&gt;here&lt;/a&gt;. The reference page will give you a brief summary of what the function does - for more detailed info, click on the function and it’ll take you to the function page.&lt;/p&gt;
+&lt;p&gt;Additionally, there are instructions and example code on the website for each of the sites data is collected from:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Click &lt;a href=&#34;https://jaseziv.github.io/worldfootballR/articles/extract-fbref-data.html&#34;&gt;here&lt;/a&gt; for &lt;strong&gt;FBref&lt;/strong&gt; data&lt;/li&gt;
+&lt;li&gt;Click &lt;a href=&#34;https://jaseziv.github.io/worldfootballR/articles/extract-transfermarkt-data.html&#34;&gt;here&lt;/a&gt; for &lt;strong&gt;Transfermarkt&lt;/strong&gt; data&lt;/li&gt;
+&lt;li&gt;Click &lt;a href=&#34;https://jaseziv.github.io/worldfootballR/articles/extract-understat-data.html&#34;&gt;here&lt;/a&gt; for &lt;strong&gt;Understat&lt;/strong&gt; data&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;lets-get-some-data&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Let’s get some data&lt;/h2&gt;
+&lt;p&gt;Now the fun part - getting data!&lt;/p&gt;
+&lt;p&gt;Before we get started, in the code below, when we see a “#” at the beginning of text, that is a comment, not executable code, and it’s how R programmers write notes to themselves, or others who use the code to give an overview of what is being done.&lt;/p&gt;
+&lt;p&gt;At the start of every script, it is best practise to include all the packages you’re going to be using/needing in your analysis. Installing packages only needs to be done the first time you start using R, when installing new versions or R, or when newer versions of the package become available and you want the updates that have been created.&lt;/p&gt;
+&lt;p&gt;The code we would run is below. A few things to remember:&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;To ‘run’ code we’ve typed out, there are two main ways;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ol style=&#34;list-style-type: lower-alpha&#34;&gt;
+&lt;li&gt;Highlight the code you want to run and press &lt;code&gt;control+enter&lt;/code&gt; or &lt;code&gt;command+enter&lt;/code&gt; on MacOS&lt;/li&gt;
+&lt;li&gt;Have the cursor on the line you want to run and press &lt;code&gt;control+enter&lt;/code&gt; or &lt;code&gt;command+enter&lt;/code&gt; on MacOS&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ol start=&#34;2&#34; style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;A “#” in a script signifies comments, and I will use them in the code to tell you what we’re doing&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# remember, we need to ensure we&amp;#39;ve installed the packages we need, but we need to do this very infrequently ( to run the &amp;#39;install&amp;#39; lines below, simply delete the &amp;#39;#&amp;#39; before the code:
+# install.packages(&amp;quot;devtools&amp;quot;)
+# install.packages(&amp;quot;xlsx&amp;quot;)
+# install.packages(&amp;quot;tidyverse&amp;quot;)
+# devtools::install_github(&amp;quot;JaseZiv/worldfootballR&amp;quot;, ref = &amp;quot;main&amp;quot;)
+
+
+# once it&amp;#39;s been installed, then we need to load the functions (code to let you get the data you want) in the library (this needs to be done every time you want to run your script)
+library(worldfootballR)
+library(tidyverse)
+library(xlsx)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;i-want-shooting-data&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;I want shooting data!&lt;/h3&gt;
+&lt;p&gt;Let’s say we want to get the shooting data from FBref for teams in the 2020-2021 EPL season, to be able to analyse how many goals a team scored, or how they performed against expectation (xG), or from what average distance they shot from:&lt;/p&gt;
+&lt;div class=&#34;figure&#34;&gt;
+&lt;img src=&#34;/img/fbref_shooting.jpg&#34; alt=&#34;&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;Source: FBref &lt;a href=&#34;https://fbref.com/en/comps/9/Premier-League-Stats&#34; class=&#34;uri&#34;&gt;https://fbref.com/en/comps/9/Premier-League-Stats&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;Then we run the specific code to extract shooting data from FBref.com:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# now let&amp;#39;s get our season team shooting data from FBref:
+prem_2021_shooting &amp;lt;- get_season_team_stats(country = &amp;quot;ENG&amp;quot;, gender = &amp;quot;M&amp;quot;, season_end_year = &amp;quot;2021&amp;quot;, tier = &amp;quot;1st&amp;quot;, stat_type = &amp;quot;shooting&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Scraping season shooting stats&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And this is what the data looks like in R now:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/shooting_output_r.jpg&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;i-just-want-the-data-and-nothing-else&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;I just want the data and nothing else&lt;/h3&gt;
+&lt;p&gt;If all you want is a csv or Excel output (to take to some other software/framework), then the below lines of code will address that need:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# to save the file as a csv:
+write.csv(x= prem_2021_shooting, file = &amp;quot;EPL_shooting_2021_season.csv&amp;quot;, row.names = FALSE)
+
+# or we can save an .xlsx file:
+write.xlsx(x= prem_2021_shooting, file = &amp;quot;EPL_shooting_2021_season.xlsx&amp;quot;, row.names = FALSE)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And this is how our output looks, and this output can be fed in to any visualisation software we choose to use:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/shooting_output_csv.jpg&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;but-r-has-more-to-offer-right&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;But R has more to offer right?&lt;/h3&gt;
+&lt;p&gt;R is a whole lot more than a tool for extracting and saving data.&lt;/p&gt;
+&lt;p&gt;We can create fully customisable visualisations with code to analyse our data. This flexibility means your creative juices would only be constrained by your desire to practise and learn and practise and learn R.&lt;/p&gt;
+&lt;p&gt;Below, we have plotted a team’s performance against expected goals for the season. Teams that finished above the line scored more goals that xG would have had them scored, while teams below the dashed line scored less.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# get our data ready for plotting
+prem_2021_shooting %&amp;gt;% 
+  # filter out only the team shooting data, not their opponents also
+  filter(Team_or_Opponent == &amp;quot;team&amp;quot;) %&amp;gt;% 
+  # create a new column that removes penalties from the team&amp;#39;s goal total
+  mutate(non_P_Gls = Gls_Standard - PK_Standard) %&amp;gt;% 
+  # start plotting:
+  ggplot(aes(x= npxG_Expected, y= non_P_Gls)) +
+  # add a line through the plot with slope =  1 and the yintercept = 0
+  geom_abline(slope = 1, intercept = 0, colour = &amp;quot;red&amp;quot;, linetype=2) +
+  # we want to make it a scatter plot
+  geom_point(size=6, colour=&amp;quot;midnightblue&amp;quot;, fill=&amp;quot;midnightblue&amp;quot;, alpha = 0.4, shape=21) +
+  # lets also add team name labels
+  ggrepel::geom_text_repel(aes(label = Squad), colour = &amp;quot;midnightblue&amp;quot;, size=5) + 
+  # limit the x and y-axis to start at 10 and finish at 100
+  scale_x_continuous(limits = c(10,100), name = &amp;quot;Non-Pen xG&amp;quot;) +
+  scale_y_continuous(limits = c(10,100), &amp;quot;Non-Pen Goals&amp;quot;) +
+  # create a title and subtitle - all plots should have this
+  ggtitle(&amp;quot;DID TEAMS SCORE AS EXPECTED?&amp;quot;,
+          subtitle = &amp;quot;Teams above the dashed line exceeded their xG for the\nseason, while teams below didn&amp;#39;t&amp;quot;) +
+  # apply a pre-programmed general theme:
+  theme_minimal() +
+  # but then we can customise our plot even more - first we make the background black:
+  # change the title and subtitle format
+  theme(plot.title = element_text(size=28, face=&amp;quot;bold&amp;quot;), plot.subtitle = element_text(size=22, colour=&amp;quot;grey30&amp;quot;),
+        # and change where the plot is aligned - in this case it&amp;#39;s left-aligned
+        plot.title.position = &amp;quot;plot&amp;quot;, plot.caption.position = &amp;quot;plot&amp;quot;,
+        # change the size of aixs titles and text
+        axis.title = element_text(size=16), axis.text = element_text(size = 14))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/starting_with_worldfootballR_files/figure-html/shooting_plot-1.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;We could also calculate how closely correlated xG is to expected goals using the &lt;code&gt;cor()&lt;/code&gt; function in R, which we see printed out to be 0.8805275 - highly correlated indicating teams score pretty close to expected:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# first we will create a new data set of only the team&amp;#39;s performance, and not how their opponents played against them
+prem_team &amp;lt;- prem_2021_shooting %&amp;gt;% 
+  filter(Team_or_Opponent == &amp;quot;team&amp;quot;)
+
+# now we calculate the Pearson correlation
+cor(prem_team$Gls_Standard, prem_team$xG_Expected)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 0.8805275&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;more-data-please&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;More data please&lt;/h3&gt;
+&lt;p&gt;FBref.com is a great site that has given analysts unprecedented access to their data, including the ability to extract to csv’s manually. This is great when there is only one extract you need, but when there are multiple extracts, then this becomes infinitely more time consuming! Functions have been created for these, and the official &lt;a href=&#34;https://jaseziv.github.io/worldfootballR/&#34;&gt;&lt;code&gt;worldfootballR&lt;/code&gt; site&lt;/a&gt; will get you going with them.&lt;/p&gt;
+&lt;p&gt;Others, like Transfermarkt.com and Understat.com don’t give you the ability to export to files. &lt;code&gt;worldfootballR&lt;/code&gt; is here to help there too!&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# let&amp;#39;s get the transfer balances for the 2020/21 Bundesliga season
+team_balances &amp;lt;- tm_team_transfer_balances(country_name = &amp;quot;Germany&amp;quot;, start_year = 2020)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;Scraping team transfer balances for the season. Please acknowledge transfermarkt.com as the data source.&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# to save the file as a csv:
+write.csv(x= team_balances, file = &amp;quot;bundesliga_transfer_balances2020_2021.csv&amp;quot;, row.names = FALSE)
+
+# or we can save an .xlsx file:
+write.xlsx(x= team_balances, file = &amp;quot;bundesliga_transfer_balances2020_2021.xlsx&amp;quot;, row.names = FALSE)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# let&amp;#39;s start creating our plot:
+team_balances %&amp;gt;% 
+  # the new two lines use &amp;#39;mutate()&amp;#39; from the dplyr package to create or change new columns
+  # here, we create a net_transfer_income column that subtracts the expenditure form income
+  mutate(net_transfer_income = income_euros - expenditure_euros) %&amp;gt;% 
+  # and we can also come up with a flag for if the income is above or below 0
+  mutate(green = net_transfer_income &amp;gt; 0) %&amp;gt;% 
+  # ggplot is how we visualise our data
+  ggplot(aes(x=net_transfer_income, y= squad, fill = green)) +
+  geom_col() +
+  # manually select colours to use:
+  scale_fill_manual(values = c(&amp;quot;darkred&amp;quot;, &amp;quot;darkgreen&amp;quot;), name = &amp;quot;Made\nMoney?&amp;quot;) +
+  # change the data labels on the x-axis to be formatted to currency:
+  scale_x_continuous(labels = scales::dollar, name = &amp;quot;Net Transfer Income&amp;quot;) +
+  # add a caption that sources the data:
+  labs(caption = &amp;quot;Source: transfermarkt.com&amp;quot;) +
+  # we also want a title and subtitle:
+  ggtitle(&amp;quot;BUNDESLIGA SPENDING IN THE 2020/21 SEASON&amp;quot;,
+          subtitle = &amp;quot;Bayern Munich and Borussia Dortmund are big net spenders this season,\nwhile Bayer 04 Leverkusen have made the most money on the transfer market&amp;quot;) +
+  # apply a pre-programmed general theme:
+  theme_minimal() +
+  # but then we can customise our plot even more - first we make the background black:
+  theme(plot.background = element_rect(fill = &amp;quot;black&amp;quot;),
+        # play around with the x and y gridlines:
+        panel.grid.major.x = element_line(colour = &amp;quot;grey20&amp;quot;, linetype = 2), panel.grid.minor.x = element_blank(), panel.grid.major.y = element_blank(),
+        # change the title and subtitle format
+        plot.title = element_text(size=28, colour = &amp;quot;white&amp;quot;, face=&amp;quot;bold&amp;quot;), plot.subtitle = element_text(size=22, colour = &amp;quot;white&amp;quot;),
+        # and change where the plot is aligned - in this case it&amp;#39;s left-aligned
+        plot.title.position = &amp;quot;plot&amp;quot;, plot.caption.position = &amp;quot;plot&amp;quot;,
+        # change the colour and size of aixs titles and text, remove the y-axis title
+        axis.title.x = element_text(colour = &amp;quot;white&amp;quot;, size=16), axis.title.y = element_blank(), axis.text = element_text(colour = &amp;quot;white&amp;quot;, size = 14),
+        # remove the legend
+        legend.position = &amp;quot;none&amp;quot;,
+        #format the plot caption:
+        plot.caption = element_text(size = 12, colour = &amp;quot;white&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/starting_with_worldfootballR_files/figure-html/plot_transfers-1.png&#34; width=&#34;1152&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;conclusion&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Conclusion&lt;/h1&gt;
+&lt;p&gt;Hopefully you’ve made it this far!&lt;/p&gt;
+&lt;p&gt;We’ve gone through an overview of the &lt;code&gt;worldfootballR&lt;/code&gt; package, designed to help you extract football data from popular soccer data websites, we’ve installed R and RStudio, we’ve started pulling data using the worldfootballR, we’ve saved it in either .xlsx or .csv, we’ve seen some brief statistical analysis, AND we’ve also created some visualisations using a mixture of &lt;code&gt;dplyr&lt;/code&gt; (to get our data ready) and &lt;code&gt;ggplot&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Hopefully this has stoked your interests enough into the possibilities available to you using R and &lt;code&gt;worldfootballR&lt;/code&gt;!&lt;/p&gt;
+&lt;p&gt;If you have any questions or feedback, feel free to comment, or get in touch on twitter &lt;a href=&#34;https://twitter.com/jaseziv&#34;&gt;jaseziv&lt;/a&gt;.&lt;/p&gt;
+&lt;div id=&#34;resources&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Resources&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://jaseziv.github.io/worldfootballR/&#34;&gt;&lt;code&gt;worldfootballR&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://fbref.com/en/&#34;&gt;FBref&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://understat.com/&#34;&gt;Understat&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.transfermarkt.com/&#34;&gt;Transfermarkt&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.tidyverse.org/&#34;&gt;tidyverse&lt;/a&gt; - a collection of very valuable R packages for manipulating, analysing and visualising data&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
     
     <item>
       <title>Applying Pythagorean Expectation to Pro Sports - An Intro</title>

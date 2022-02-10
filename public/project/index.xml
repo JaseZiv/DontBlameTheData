@@ -5,7 +5,7 @@
     <link>/project/</link>
       <atom:link href="/project/index.xml" rel="self" type="application/rss+xml" />
     <description>Projects</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>©2021</copyright><lastBuildDate>Sun, 10 Jan 2021 00:00:00 +1100</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>©2022</copyright><lastBuildDate>Sun, 10 Jan 2021 00:00:00 +1100</lastBuildDate>
     <image>
       <url>/img/logo.jpg</url>
       <title>Projects</title>
@@ -33,6 +33,17 @@
 &lt;a href=&#34;www.lichess.org&#34;&gt;Lichess&lt;/a&gt;. The websites offer a very convenient set of APIs to be able to access date through.&lt;/p&gt;
 &lt;p&gt;The vignette for the package offers a full description of the package and the functions available, and can be found 
 &lt;a href=&#34;https://jaseziv.github.io/chessR/articles/using_chessR_package.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>xG Performance App</title>
+      <link>/project/xgperformanceapp/</link>
+      <pubDate>Tue, 28 Apr 2020 00:00:00 +1000</pubDate>
+      <guid>/project/xgperformanceapp/</guid>
+      <description>&lt;p&gt;The xG Performance App is designed to allow users to analyse the actual versus expected results of teams in the big 5 European leagues, leveraging StatsBomb&#39;s xG model via FBref.&lt;/p&gt;
+&lt;p&gt;The app can be found 
+&lt;a href=&#34;https://xg-performance-app.herokuapp.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
 </description>
     </item>
     

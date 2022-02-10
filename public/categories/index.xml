@@ -5,7 +5,7 @@
     <link>/categories/</link>
       <atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
     <description>Categories</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>©2021</copyright><lastBuildDate>Mon, 19 Apr 2021 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>©2022</copyright><lastBuildDate>Sat, 05 Jun 2021 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/img/logo.jpg</url>
       <title>Categories</title>
@@ -15,7 +15,7 @@
     <item>
       <title>R</title>
       <link>/categories/r/</link>
-      <pubDate>Mon, 19 Apr 2021 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 05 Jun 2021 00:00:00 +0000</pubDate>
       <guid>/categories/r/</guid>
       <description></description>
     </item>
@@ -23,15 +23,23 @@
     <item>
       <title>soccer</title>
       <link>/categories/soccer/</link>
-      <pubDate>Mon, 19 Apr 2021 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 05 Jun 2021 00:00:00 +0000</pubDate>
       <guid>/categories/soccer/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>sports analytics</title>
+      <link>/categories/sports-analytics/</link>
+      <pubDate>Sat, 05 Jun 2021 00:00:00 +0000</pubDate>
+      <guid>/categories/sports-analytics/</guid>
       <description></description>
     </item>
     
     <item>
       <title>worldfootballR</title>
       <link>/categories/worldfootballr/</link>
-      <pubDate>Mon, 19 Apr 2021 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 05 Jun 2021 00:00:00 +0000</pubDate>
       <guid>/categories/worldfootballr/</guid>
       <description></description>
     </item>
@@ -41,14 +49,6 @@
       <link>/categories/pythagorean-expectation/</link>
       <pubDate>Sun, 08 Mar 2020 00:00:00 +0000</pubDate>
       <guid>/categories/pythagorean-expectation/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>sports analytics</title>
-      <link>/categories/sports-analytics/</link>
-      <pubDate>Sun, 08 Mar 2020 00:00:00 +0000</pubDate>
-      <guid>/categories/sports-analytics/</guid>
       <description></description>
     </item>
     

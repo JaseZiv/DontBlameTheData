@@ -5,12 +5,44 @@
     <link>/tags/</link>
       <atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     <description>Tags</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>©2021</copyright><lastBuildDate>Mon, 19 Apr 2021 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>©2022</copyright><lastBuildDate>Sat, 05 Jun 2021 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/img/logo.jpg</url>
       <title>Tags</title>
       <link>/tags/</link>
     </image>
+    
+    <item>
+      <title>R</title>
+      <link>/tags/r/</link>
+      <pubDate>Sat, 05 Jun 2021 00:00:00 +0000</pubDate>
+      <guid>/tags/r/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>soccer</title>
+      <link>/tags/soccer/</link>
+      <pubDate>Sat, 05 Jun 2021 00:00:00 +0000</pubDate>
+      <guid>/tags/soccer/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>sports analytics</title>
+      <link>/tags/sports-analytics/</link>
+      <pubDate>Sat, 05 Jun 2021 00:00:00 +0000</pubDate>
+      <guid>/tags/sports-analytics/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>worldfootballR</title>
+      <link>/tags/worldfootballr/</link>
+      <pubDate>Sat, 05 Jun 2021 00:00:00 +0000</pubDate>
+      <guid>/tags/worldfootballr/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>ggplot2</title>
@@ -29,34 +61,10 @@
     </item>
     
     <item>
-      <title>R</title>
-      <link>/tags/r/</link>
-      <pubDate>Mon, 19 Apr 2021 00:00:00 +0000</pubDate>
-      <guid>/tags/r/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>soccer</title>
-      <link>/tags/soccer/</link>
-      <pubDate>Mon, 19 Apr 2021 00:00:00 +0000</pubDate>
-      <guid>/tags/soccer/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>soccer analytics</title>
       <link>/tags/soccer-analytics/</link>
       <pubDate>Mon, 19 Apr 2021 00:00:00 +0000</pubDate>
       <guid>/tags/soccer-analytics/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>worldfootballR</title>
-      <link>/tags/worldfootballr/</link>
-      <pubDate>Mon, 19 Apr 2021 00:00:00 +0000</pubDate>
-      <guid>/tags/worldfootballr/</guid>
       <description></description>
     </item>
     
@@ -73,14 +81,6 @@
       <link>/tags/pythagorean-expectation/</link>
       <pubDate>Sun, 08 Mar 2020 00:00:00 +0000</pubDate>
       <guid>/tags/pythagorean-expectation/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>sports analytics</title>
-      <link>/tags/sports-analytics/</link>
-      <pubDate>Sun, 08 Mar 2020 00:00:00 +0000</pubDate>
-      <guid>/tags/sports-analytics/</guid>
       <description></description>
     </item>
     
