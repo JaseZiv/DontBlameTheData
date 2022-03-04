@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>fotmob | Don&#39;t Blame the Data</title>
+    <link>/tags/fotmob/</link>
+      <atom:link href="/tags/fotmob/index.xml" rel="self" type="application/rss+xml" />
+    <description>fotmob</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>©2022</copyright><lastBuildDate>Thu, 03 Mar 2022 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/img/logo.jpg</url>
+      <title>fotmob</title>
+      <link>/tags/fotmob/</link>
+    </image>
+    
+    <item>
+      <title>Efficiently get Fotmob match IDs with worldfootballR</title>
+      <link>/blog/extract-fotmob-data-with-worldfootballr/</link>
+      <pubDate>Thu, 03 Mar 2022 00:00:00 +0000</pubDate>
+      <guid>/blog/extract-fotmob-data-with-worldfootballr/</guid>
+      <description>
+&lt;script src=&#34;/rmarkdown-libs/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;p&gt;&lt;img src=&#34;/img/r_worldfootballR_post_hero.png&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;With &lt;code&gt;worldfootballR&lt;/code&gt; recently including a wrapper for extracting Fotmob data, I thought it might be a good time to write a small post on how to get historical match IDs fairly efficiently.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/tonyelhabr&#34;&gt;Tony ElHabr&lt;/a&gt; was able to write the code and contribute to &lt;code&gt;worldfootballR&lt;/code&gt;, and in doing so also wrote the very helpful and &lt;a href=&#34;https://jaseziv.github.io/worldfootballR/articles/extract-fotmob-data.html&#34;&gt;informative guide&lt;/a&gt; for using the fotmob functions.&lt;/p&gt;
+&lt;p&gt;Most of the fotmob functions need a match ID (or a series of IDs), so getting those is absolutely vital, but can include a few steps.&lt;/p&gt;
+&lt;p&gt;This guide will show a few of those methods.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(tidyverse)
+library(worldfootballR)&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;div id=&#34;first-the-current-season&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;First, the current season&lt;/h2&gt;
+&lt;p&gt;If it’s just the current season we want match IDs for, then the below code (adapted from Tony’s code in the package vignette) will make that easy.&lt;/p&gt;
+&lt;p&gt;First, using &lt;code&gt;fotmob_get_league_matches()&lt;/code&gt;, passing the &lt;code&gt;country&lt;/code&gt; and &lt;code&gt;league_name&lt;/code&gt; and unnesting the nested data frame,leavues us with a table of all EPL matches for the current season.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;league_matches &amp;lt;- fotmob_get_league_matches(
+  country =     c(&amp;quot;ENG&amp;quot;),
+  league_name = c(&amp;quot;Premier League&amp;quot;)
+) %&amp;gt;%
+  dplyr::select(match_id = id, home, away) %&amp;gt;%
+  tidyr::unnest_wider(c(home, away), names_sep = &amp;quot;_&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;From here, we could simply get all the match IDs for the current season contained in the &lt;code&gt;league_matches&lt;/code&gt; data frame, however this will include matches not yet played (postponed matches, matches not yet scheduled, etc). These unplayed match IDs could cause headaches when used in the match data functions, so we want to remove those:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;league_match_ids &amp;lt;- league_matches %&amp;gt;%
+  
+  # filter for records where the home_score isn&amp;#39;t missing
+  dplyr::filter(!is.na(home_score)) %&amp;gt;% 
+  
+  # then pull out the match IDs:
+  dplyr::pull(match_id)
+
+head(league_match_ids)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;3609929&amp;quot; &amp;quot;3609934&amp;quot; &amp;quot;3609930&amp;quot; &amp;quot;3609931&amp;quot; &amp;quot;3609932&amp;quot; &amp;quot;3609933&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;From here, the world is your oyster (for the current season only) and you can now use the match IDs vector &lt;code&gt;league_match_ids&lt;/code&gt; with the match-level functions outlined in the vignette &lt;a href=&#34;https://jaseziv.github.io/worldfootballR/articles/extract-fotmob-data.html&#34;&gt;here&lt;/a&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ok-but-im-here-for-historical-match-ids&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Ok, but I’m here for historical Match IDs&lt;/h2&gt;
+&lt;p&gt;So the above section was easy to get current season match IDs for a league, but what about if we wanted to retrieve the match IDs for a previous season? Well that’s a bit trickier…&lt;/p&gt;
+&lt;p&gt;One option would be to pass in all dates in a calendar year to &lt;code&gt;fotmob_get_matches_by_date()&lt;/code&gt;, then filter for the league you want and get all match IDs that way, &lt;strong&gt;but this will be inefficient as you will be getting matches for ALL leagues played on every date&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Instead, we can fairly quickly get match dates from FBref using &lt;code&gt;get_match_results()&lt;/code&gt; and then use these dates to get fotmob match data.&lt;/p&gt;
+&lt;p&gt;Below, we’re going to get match dates played in the Australian A-League Men’s competition for the 2020-21 season.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# get dates A-League games are played - this is easiest done using worldfootballR
+aleague &amp;lt;- get_match_results(country = &amp;quot;AUS&amp;quot;, gender = &amp;quot;M&amp;quot;, season_end_year = 2021)
+aleague_dates &amp;lt;- aleague %&amp;gt;% filter(!is.na(HomeGoals)) %&amp;gt;% pull(Date) %&amp;gt;% unique()
+
+head(aleague_dates)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;2020-12-28&amp;quot; &amp;quot;2020-12-29&amp;quot; &amp;quot;2020-12-30&amp;quot; &amp;quot;2020-12-31&amp;quot; &amp;quot;2021-01-02&amp;quot;
+## [6] &amp;quot;2021-01-03&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Ok now that we have some dates, we can go ahead and get the data we need.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Note: this will take a few minutes (and more depending on how many dates atches are played on) - effectively you’re reading in every date summary page from fotmob&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;The result of the below will be a data set with all leagues metadata with matches played on the dates used.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# get match IDs from fotmob
+match_id_df &amp;lt;- fotmob_get_matches_by_date(aleague_dates) &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;From there, we go and filter for the league we want and again, we filter out any matches that haven’t been played.&lt;/p&gt;
+&lt;p&gt;The league ID (&lt;code&gt;primary_id&lt;/code&gt;) can be found in the League URL on the fotmob site, so replace &lt;code&gt;113&lt;/code&gt; with the relevant league id you’re after.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;required_match_id &amp;lt;- match_id_df %&amp;gt;%
+  
+  # select the league you need
+  filter(primary_id == 113) %&amp;gt;%
+  
+  # select the columns/nested df we want
+  dplyr::select(primary_id, ccode, league_name = name, matches) %&amp;gt;%
+  
+  # Unnest the nested df of matches
+  tidyr::unnest_longer(matches) %&amp;gt;%
+  
+  # only keep the matches actually played
+  filter(matches$status$started)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Then we get a vector of unique match IDs and now the world really is your oyster. These can then be used for the match-level data functions outlined in the &lt;a href=&#34;https://jaseziv.github.io/worldfootballR/articles/extract-fotmob-data.html&#34;&gt;vignette&lt;/a&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# get a unique vector of all match IDs on fotmob
+match_ids &amp;lt;- required_match_id$matches$id %&amp;gt;% unique()
+
+head(match_ids)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 3488733 3488760 3488856 3488741 3488749 3488738&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

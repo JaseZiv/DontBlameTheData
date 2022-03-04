@@ -21,9 +21,12 @@ organizations:
 bio: A sports mad Data Scientist just having some fun.
 
 interests:
+- Supervised and Unsupervised Machine Learning
+- Web Scraping
+- Shiny App Development
+- Dev Ops
 - Data Visualisation
 - Sports Analytics
-- Supervised and Unsupervised Machine Learning
 
 
 # education:
@@ -68,8 +71,22 @@ email: ""
 # - Visitors
 ---
 
-My name is Jason Zivkovic and I’m a Data Scientist at the Reece Group.
+My name is Jason Zivkovic and I’m a Data Scientist from Melbourne, Australia, working at the Reece Group.
 
-Growing up as a sports-mad child and teen, statistics were always in my world. But with the love of sport blinding me, I didn’t even realise it was a love of statistics and data. Then, after meandering (much to my mother’s chagrin) through my early work life, and dabbling with different careers, I discovered edX and DataCamp and the programming-focused data analysis short courses they had available. I started taking them and my love of the data was rekindled! Life was made a lot easier in that I had two managers in a row who’s thirst for analytics was as prominent as mine and they gave me the freedom to learn, explore and discover endless possibilities. To them I will be forever greatful.
+Some of my passions include web scraping, package and app development, statistical modeling, sports analytics and data visualisation.
 
-Kaggle was where I first started dabbling in small analyses - the datasets are as diverse as any wide-eyed newbie could wish for. I still have a look from time to time and think I should write another kernel. I got some great help from the Kaggle community and the code bases there are really good for any new starter. You can find my profile [here](https://www.kaggle.com/jaseziv83).
+The bulk of my programming is done using the R programming language, with some Python thrown in.
+
+***
+
+## What you will find here
+
+This blog will be mainly about R programming, mainly through sports, but will touch on other parts of life also, using data visualisations to tell the story. What I can promise though is it will be filled with my own selfish pleasures. I hope they align with my readers’ interests. 
+
+Some of the sports that will be included include Australian Rules Football (AFL), Basketball, American Football, World Football (Soccer) and many more.
+
+The one constant is that the data will tell the story. 
+
+If you don’t agree with it, please, please don’t blame the data.
+
+Importantly, all views expressed here are my own.

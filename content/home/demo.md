@@ -50,12 +50,4 @@ subtitle = "If you don’t agree with it, please, please don’t blame the data.
  css_class = ""
 +++
 
-## What you will find here
 
-This blog will be mainly about sport, but will touch on other parts of life also, using data visualisations to tell the story. What I can promise though is it will be filled with my own selfish pleasures. I hope they align with my readers’ interests. 
-
-Some of the sports that will be included include Australian Rules Football (AFL), Basketball, American Football, World Football (Soccer) and many more.
-
-The one constant is that the data will tell the story. 
-
-If you don’t agree with it, please, please don’t blame the data.
