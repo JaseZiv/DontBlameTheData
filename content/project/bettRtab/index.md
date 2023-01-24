@@ -1,19 +1,21 @@
 +++
 # Project title.
-title = "Explaining Player Valuations"
+title = "bettRtab R Package"
+
+weight = 4
 
 # Date this page was created.
-date = 2022-02-08T00:00:00
+date = 2021-01-10T00:00:00
 
 # Project summary to display on homepage.
-summary = "A shiny app that measures the market value of individual stats by regressing them against player market valuations from Transfermarkt."
+summary = "An R package API wrapper to extract data from the betting company TAB"
 
 # Tags: can be used for filtering projects.
 # Example: `tags = ["machine-learning", "deep-learning"]`
-tags = ["R Package"]
+tags = ["R Package", "bettRtab"]
 
 # Optional external URL for project (replaces project detail page).
-external_link = "https://explaining-player-valuations.herokuapp.com/"
+external_link = ""
 
 # Slides (optional).
 #   Associate this project with Markdown slides.
@@ -34,11 +36,15 @@ url_code = ""
 # To use, add an image named `featured.jpg/png` to your project's folder. 
 [image]
   # Caption (optional)
-  caption = "explaining-player-valuations"
+  caption = "bettRtab"
   
   # Focal point (optional)
   # Options: Smart, Center, TopLeft, Top, TopRight, Left, Right, BottomLeft, Bottom, BottomRight
   focal_point = "Smart"
 +++
 
-A shiny app that measures the market value of individual stats by regressing them against player market valuations from Transfermarkt.
+
+
+This package is designed to allow users to obtain clean and tidy [TAB](https://www.tab.com.au/) betting markets for both racing and sports. It gives users the ability to access data more efficiently.
+
+The vignette for the package offers a full description of the package and the functions available, and can be found [here](https://jaseziv.github.io/bettRtab/).

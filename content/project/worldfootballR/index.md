@@ -2,6 +2,8 @@
 # Project title.
 title = "worldfootballR R Package"
 
+weight = 1
+
 # Date this page was created.
 date = 2021-01-10T00:00:00
 

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>nblR | Don&#39;t Blame the Data</title>
+    <link>/tags/nblr/</link>
+      <atom:link href="/tags/nblr/index.xml" rel="self" type="application/rss+xml" />
+    <description>nblR</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>©2023</copyright><lastBuildDate>Sun, 10 Jan 2021 00:00:00 +1100</lastBuildDate>
+    <image>
+      <url>/img/logo.jpg</url>
+      <title>nblR</title>
+      <link>/tags/nblr/</link>
+    </image>
+    
+    <item>
+      <title>nblR R Package</title>
+      <link>/project/nblr/</link>
+      <pubDate>Sun, 10 Jan 2021 00:00:00 +1100</pubDate>
+      <guid>/project/nblr/</guid>
+      <description>&lt;p&gt;The &lt;code&gt;nblR&lt;/code&gt; package allows users to obtain basketball statistics for the Australian basketball league (NBL). Stats include play-by-play, shooting locations, results and box scores for teams and players.&lt;/p&gt;
+&lt;p&gt;The vignette for the package offers a full description of the package and the functions available, and can be found 
+&lt;a href=&#34;https://jaseziv.github.io/nblR/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

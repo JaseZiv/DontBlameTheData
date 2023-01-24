@@ -707,7 +707,10 @@ head(league_match_ids)</code></pre>
 <p>Below, we’re going to get match dates played in the Australian A-League Men’s competition for the 2020-21 season.</p>
 <pre class="r"><code># get dates A-League games are played - this is easiest done using worldfootballR
 aleague &lt;- get_match_results(country = &quot;AUS&quot;, gender = &quot;M&quot;, season_end_year = 2021)
-aleague_dates &lt;- aleague %&gt;% filter(!is.na(HomeGoals)) %&gt;% pull(Date) %&gt;% unique()
+aleague_dates &lt;- aleague %&gt;% 
+  dplyr::filter(!is.na(HomeGoals)) %&gt;% 
+  dplyr::pull(Date) %&gt;% 
+  unique()
 
 head(aleague_dates)</code></pre>
 <pre><code>## [1] &quot;2020-12-28&quot; &quot;2020-12-29&quot; &quot;2020-12-30&quot; &quot;2020-12-31&quot; &quot;2021-01-02&quot;
@@ -722,7 +725,7 @@ match_id_df &lt;- fotmob_get_matches_by_date(aleague_dates) </code></pre>
 <pre class="r"><code>required_match_id &lt;- match_id_df %&gt;%
   
   # select the league you need
-  filter(primary_id == 113) %&gt;%
+  dplyr::filter(primary_id == 113) %&gt;%
   
   # select the columns/nested df we want
   dplyr::select(primary_id, ccode, league_name = name, matches) %&gt;%
@@ -731,7 +734,7 @@ match_id_df &lt;- fotmob_get_matches_by_date(aleague_dates) </code></pre>
   tidyr::unnest_longer(matches) %&gt;%
   
   # only keep the matches actually played
-  filter(matches$status$started)</code></pre>
+  dplyr::filter(matches$status$started)</code></pre>
 <p>Then we get a vector of unique match IDs and now the world really is your oyster. These can then be used for the match-level data functions outlined in the <a href="https://jaseziv.github.io/worldfootballR/articles/extract-fotmob-data.html">vignette</a></p>
 <pre class="r"><code># get a unique vector of all match IDs on fotmob
 match_ids &lt;- required_match_id$matches$id %&gt;% unique()
@@ -1090,7 +1093,7 @@ head(match_ids)</code></pre>
   
 
   <p class="powered-by">
-    ©2022 &middot; 
+    ©2023 &middot; 
 
     Powered by the
     <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for

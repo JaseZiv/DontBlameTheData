@@ -2,6 +2,8 @@
 # Project title.
 title = "xG Performance App"
 
+weight = 5
+
 # Date this page was created.
 date = 2022-02-08T00:00:00
 

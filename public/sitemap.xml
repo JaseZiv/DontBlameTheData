@@ -33,12 +33,12 @@
   </url>
   
   <url>
-    <loc>/categories/r/</loc>
+    <loc>/tags/r/</loc>
     <lastmod>2022-03-03T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/tags/r/</loc>
+    <loc>/categories/r/</loc>
     <lastmod>2022-03-03T00:00:00+00:00</lastmod>
   </url>
   
@@ -138,6 +138,26 @@
   </url>
   
   <url>
+    <loc>/tags/bettrtab/</loc>
+    <lastmod>2021-01-10T00:00:00+11:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/project/bettrtab/</loc>
+    <lastmod>2021-01-10T00:00:00+11:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/nblr/</loc>
+    <lastmod>2021-01-10T00:00:00+11:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/project/nblr/</loc>
+    <lastmod>2021-01-10T00:00:00+11:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/project/worldfootballr/</loc>
     <lastmod>2021-01-10T00:00:00+11:00</lastmod>
   </url>
@@ -173,12 +193,12 @@
   </url>
   
   <url>
-    <loc>/categories/analytics/</loc>
+    <loc>/tags/analytics/</loc>
     <lastmod>2019-12-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/tags/analytics/</loc>
+    <loc>/categories/analytics/</loc>
     <lastmod>2019-12-23T00:00:00+00:00</lastmod>
   </url>
   
@@ -208,12 +228,12 @@
   </url>
   
   <url>
-    <loc>/tags/open-source/</loc>
+    <loc>/categories/open-source/</loc>
     <lastmod>2019-12-16T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/categories/open-source/</loc>
+    <loc>/tags/open-source/</loc>
     <lastmod>2019-12-16T00:00:00+00:00</lastmod>
   </url>
   
@@ -253,12 +273,12 @@
   </url>
   
   <url>
-    <loc>/categories/gganimate/</loc>
+    <loc>/tags/gganimate/</loc>
     <lastmod>2019-08-30T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/tags/gganimate/</loc>
+    <loc>/categories/gganimate/</loc>
     <lastmod>2019-08-30T00:00:00+00:00</lastmod>
   </url>
   
@@ -313,12 +333,12 @@
   </url>
   
   <url>
-    <loc>/tags/twitter/</loc>
+    <loc>/categories/twitter/</loc>
     <lastmod>2019-08-25T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/categories/twitter/</loc>
+    <loc>/tags/twitter/</loc>
     <lastmod>2019-08-25T00:00:00+00:00</lastmod>
   </url>
   

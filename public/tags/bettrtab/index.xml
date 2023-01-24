@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>bettRtab | Don&#39;t Blame the Data</title>
+    <link>/tags/bettrtab/</link>
+      <atom:link href="/tags/bettrtab/index.xml" rel="self" type="application/rss+xml" />
+    <description>bettRtab</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>©2023</copyright><lastBuildDate>Sun, 10 Jan 2021 00:00:00 +1100</lastBuildDate>
+    <image>
+      <url>/img/logo.jpg</url>
+      <title>bettRtab</title>
+      <link>/tags/bettrtab/</link>
+    </image>
+    
+    <item>
+      <title>bettRtab R Package</title>
+      <link>/project/bettrtab/</link>
+      <pubDate>Sun, 10 Jan 2021 00:00:00 +1100</pubDate>
+      <guid>/project/bettrtab/</guid>
+      <description>&lt;p&gt;This package is designed to allow users to obtain clean and tidy 
+&lt;a href=&#34;https://www.tab.com.au/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;TAB&lt;/a&gt; betting markets for both racing and sports. It gives users the ability to access data more efficiently.&lt;/p&gt;
+&lt;p&gt;The vignette for the package offers a full description of the package and the functions available, and can be found 
+&lt;a href=&#34;https://jaseziv.github.io/bettRtab/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -5,7 +5,7 @@
     <link>/authors/</link>
       <atom:link href="/authors/index.xml" rel="self" type="application/rss+xml" />
     <description>Authors</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>©2022</copyright>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>©2023</copyright>
     <image>
       <url>/img/logo.jpg</url>
       <title>Authors</title>
@@ -26,6 +26,7 @@
 &lt;p&gt;Some of the sports that will be included include Australian Rules Football (AFL), Basketball, American Football, World Football (Soccer) and many more.&lt;/p&gt;
 &lt;p&gt;The one constant is that the data will tell the story.&lt;/p&gt;
 &lt;p&gt;If you don’t agree with it, please, please don’t blame the data.&lt;/p&gt;
+&lt;p&gt;Importantly, all views expressed here are my own.&lt;/p&gt;
 </description>
     </item>
     

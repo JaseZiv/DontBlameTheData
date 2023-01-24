@@ -2,6 +2,8 @@
 # Project title.
 title = "chessR R Package"
 
+weight = 2
+
 # Date this page was created.
 date = 2020-04-28T00:00:00
 

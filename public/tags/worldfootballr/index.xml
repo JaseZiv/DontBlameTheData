@@ -5,7 +5,7 @@
     <link>/tags/worldfootballr/</link>
       <atom:link href="/tags/worldfootballr/index.xml" rel="self" type="application/rss+xml" />
     <description>worldfootballR</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>©2022</copyright><lastBuildDate>Thu, 03 Mar 2022 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>©2023</copyright><lastBuildDate>Thu, 03 Mar 2022 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/img/logo.jpg</url>
       <title>worldfootballR</title>
@@ -61,7 +61,10 @@ head(league_match_ids)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Below, we’re going to get match dates played in the Australian A-League Men’s competition for the 2020-21 season.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# get dates A-League games are played - this is easiest done using worldfootballR
 aleague &amp;lt;- get_match_results(country = &amp;quot;AUS&amp;quot;, gender = &amp;quot;M&amp;quot;, season_end_year = 2021)
-aleague_dates &amp;lt;- aleague %&amp;gt;% filter(!is.na(HomeGoals)) %&amp;gt;% pull(Date) %&amp;gt;% unique()
+aleague_dates &amp;lt;- aleague %&amp;gt;% 
+  dplyr::filter(!is.na(HomeGoals)) %&amp;gt;% 
+  dplyr::pull(Date) %&amp;gt;% 
+  unique()
 
 head(aleague_dates)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## [1] &amp;quot;2020-12-28&amp;quot; &amp;quot;2020-12-29&amp;quot; &amp;quot;2020-12-30&amp;quot; &amp;quot;2020-12-31&amp;quot; &amp;quot;2021-01-02&amp;quot;
@@ -76,7 +79,7 @@ match_id_df &amp;lt;- fotmob_get_matches_by_date(aleague_dates) &lt;/code&gt;&lt
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;required_match_id &amp;lt;- match_id_df %&amp;gt;%
   
   # select the league you need
-  filter(primary_id == 113) %&amp;gt;%
+  dplyr::filter(primary_id == 113) %&amp;gt;%
   
   # select the columns/nested df we want
   dplyr::select(primary_id, ccode, league_name = name, matches) %&amp;gt;%
@@ -85,7 +88,7 @@ match_id_df &amp;lt;- fotmob_get_matches_by_date(aleague_dates) &lt;/code&gt;&lt
   tidyr::unnest_longer(matches) %&amp;gt;%
   
   # only keep the matches actually played
-  filter(matches$status$started)&lt;/code&gt;&lt;/pre&gt;
+  dplyr::filter(matches$status$started)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Then we get a vector of unique match IDs and now the world really is your oyster. These can then be used for the match-level data functions outlined in the &lt;a href=&#34;https://jaseziv.github.io/worldfootballR/articles/extract-fotmob-data.html&#34;&gt;vignette&lt;/a&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# get a unique vector of all match IDs on fotmob
 match_ids &amp;lt;- required_match_id$matches$id %&amp;gt;% unique()
