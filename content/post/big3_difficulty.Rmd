@@ -375,7 +375,6 @@ To compare each of the big three over their respective winning grand slams, we c
 This method shows that Djokovic has beaten the historically toughest opponents on average during his 22 grand slams. The average total z-score of his opponents has been 5.7, followed by Federer's 5.3. Nadal lags behind the three at 4.9, indicating that his 22 grand slams may have been slightly easier (relative of course) on average than the other big three.
 
 <br>
-<br>
 
 ```{r tourn_strength}
 big3_winners_grand_slams %>% 
@@ -407,7 +406,6 @@ To do this, we first need to calculate the win probability of each match given e
 Under this method, we can see that Djokovic's 2008 Australian Open win (his first grand slam) was the least expected win of all 64 slams these three have won with an expected win probability of 3.24%. Additionally, three of the five least expected slam wins have been by Djokovic. Federer's first grand slam (Wimbledon 2003) was really close to being the least expected (3.55%).
 
 <br>
-<br>
 
 ```{r least_probable}
 big3_winners_grand_slams %>% 
@@ -429,11 +427,9 @@ big3_winners_grand_slams %>%
 ```
 
 <br>
-<br>
 
 Without looking deeply at Djokovic's 2008 Australian Open run and only looking at his final opponent (France's Jo Wilfried Tsonga), it would be easy to believe that with an expected win probability in that final of 86.9% that this was an easy title win. Unpacking this a little deeper shows that he needed to get through Australia's own Lleyton Hewitt in the round of 16 with a win probability of 67.5% (better than a coin flip), David Ferrer in the quarters at 54.2% (basically a coin flip) and Federer at 14.2% (a heavy underdog) in the semi-final before he had a chance to play in the final.
 
-<br>
 <br>
 
 
@@ -466,11 +462,9 @@ winners_grand_slams_raw %>%
 ```
 
 <br>
-<br>
 
 Conversely, Djokovic's 2022 Wimbledon title was the most expected of all the big three's grand slams, with a tournament win probability of 85.7%. Djokovic's 2021 Wimbledon title was the fifth most expected title (72.1%).
 
-<br>
 <br>
 
 ```{r most_probable}
@@ -493,11 +487,9 @@ big3_winners_grand_slams %>%
 ```
 
 <br>
-<br>
 
 Not hard to believe when we look at his run in that tournament - his lowest individual match win probability came in the final (92.5%), where he defeated Australia's very erratic Nick Kyrgios. Other than that, it looked a very soft title.
 
-<br>
 <br>
 
 ```{r djoker_wimb}
@@ -520,7 +512,6 @@ winners_grand_slams_raw %>%
 ```
 
 <br>
-<br>
 
 While it was neat looking at individual slams in the above section, we can aggregate all the tournament win probabilities to better understand how well each have done in getting to the amount of slams they've won given how many they were expected to have won.
 
@@ -528,7 +519,6 @@ Of the three, Federer's average tournament win probability over his 20 slam wins
 
 Similarly, Rafa's average win probability was a touch lower than Federer's, but given he has won two more slams, his expected wins are even higher than Djokovic's.
 
-<br>
 <br>
 
 ```{r big3_difficult_summary}
@@ -575,7 +565,6 @@ big3_winners_grand_slams %>%
   gt_theme()
 ```
 
-<br>
 <br>
 
 It's also interesting to note how each of the big three's expected tournament win probabilities have changed over their career.
