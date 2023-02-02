@@ -1,0 +1,616 @@
+---
+title: "Rating the Difficulty of the Big 3's Grand Slam Wins"
+date: '2023-02-02'
+slug: big3-grand-slam-difficulty
+categories:
+  - R
+  - tennis
+  - elo
+tags: [R, elo, tennis analytics]
+description: 'Using Elo to understand the difficulty of the Big 3 grand slam wins'
+featured: ''
+featuredalt: ''
+featuredpath: ''
+linktitle: ''
+type: post
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, fig.width = 10)
+```
+
+```{r get_data_environment}
+#=======================================
+# libraries:
+library(tidyverse)
+library(gt)
+library(geomtextpath)
+library(ggridges)
+library(scales)
+library(sysfonts)
+library(showtext)
+
+
+sysfonts::font_add_google(name = "Overlock", family = "Overlock")
+showtext::showtext_auto()
+
+
+theme_set(
+  theme_minimal() +
+  theme(text = element_text(family = "Overlock", size=15),
+        axis.title.y = element_blank(),
+        plot.title = element_text(size=26, hjust = 0.5, face = "bold"),
+        plot.subtitle = element_text(size=20, hjust = 0.5),
+        legend.position = "top")
+)
+
+
+gt_theme <- function(data) {
+  data %>% 
+    tab_style(
+    locations = cells_column_labels(),
+    style     = list(
+       #Give a thick border below
+       cell_borders(sides = c("top", "bottom"), weight = px(2)),
+       #Make text bold
+       cell_text(weight = "bold")
+     )
+  ) %>% 
+  # opt_all_caps() %>% 
+   #Use the Chivo font
+   #Note the great 'google_font' function in 'gt' that removes the need to pre-load fonts
+   opt_table_font(
+     font = list(
+       google_font("Overlock"),
+       default_fonts()
+     )
+   )
+}
+
+#=======================================
+# read in data
+elo_df_grand_slams_surface <- read.csv("https://github.com/JaseZiv/Dont-Blame-the-Data-Data-Files/blob/master/big-3-tennis/elo_df_grand_slams_surface.csv?raw=true")
+
+grand_slams <- read.csv("https://github.com/JaseZiv/Dont-Blame-the-Data-Data-Files/blob/master/big-3-tennis/grand_slams.csv?raw=true")
+
+#=======================================
+# Data Cleaning:
+#=======================================
+
+# there is some inconsistent name spelling between the Elo and match-level data so need to clean those up:
+elo_df_grand_slams_surface <- elo_df_grand_slams_surface %>% 
+  mutate(name = case_when(
+    playerId == 4541 ~ "Jo-Wilfried Tsonga",
+    playerId == 6029 ~ "Diego Schwartzman",
+    playerId == 26006 ~ "Taylor Fritz",
+    playerId == 6412 ~ "Cristian Garin",
+    playerId == 52602 ~ "Carlos Alcaraz",
+    playerId == 44524 ~ "Lloyd Harris",
+    playerId == 23912 ~ "Pedro Martinez",
+    playerId == 23912 ~ "Pedro Martinez",
+    playerId == 5025 ~ "Sam Groth",
+    playerId == 23588 ~ "Daniel Elahi Galan",
+    playerId == 52642 ~ "Holger Rune",
+    playerId == 25959 ~ "Antoine Hoang",
+    playerId == 45492 ~ "J J Wolf",
+    TRUE ~ name
+  )) %>% 
+  mutate(name = toupper(name))
+
+
+# create a year variable and also convert player names to UPPERCASE
+grand_slams <- grand_slams %>% 
+  mutate(tourney_year = gsub("-.*", "", tourney_id) %>% as.numeric()) %>% 
+  mutate(winner_name = toupper(winner_name),
+         loser_name = toupper(loser_name))
+
+
+
+# join relelvant data together
+grand_slams <- grand_slams %>% 
+  left_join(
+    elo_df_grand_slams_surface %>% 
+      select(name, winner_elo_surface=points, year_end, tourney_name),
+    by = c("tourney_year"="year_end", "tourney_name", "winner_name"= "name")
+  ) %>% 
+  left_join(
+    elo_df_grand_slams_surface %>% 
+      select(name, loser_elo_surface=points, year_end, tourney_name),
+    by = c("tourney_year"="year_end", "tourney_name", "loser_name"= "name")
+  )
+
+# replace any missing elo ratings with the default 1500 that players start on
+grand_slams <- grand_slams %>% 
+  mutate(
+    # winner_elo = ifelse(is.na(winner_elo), 1500, winner_elo),
+    #      loser_elo = ifelse(is.na(loser_elo), 1500, loser_elo),
+         winner_elo_surface = ifelse(is.na(winner_elo_surface), 1500, winner_elo_surface),
+         loser_elo_surface = ifelse(is.na(loser_elo_surface), 1500, loser_elo_surface))
+
+
+
+# Now we want to convert the data set form a wide one in which one match is on one row, to a long data frame from the perspective of each player - botht the winner and the loser
+grand_slams_long <- grand_slams %>% 
+  select(tourney_year, tourney_name, match_num, tourney_date, player_id=winner_id, player_name=winner_name, entry=winner_entry, seed=winner_seed, rank=winner_rank, round, score, elo_surface=winner_elo_surface, 
+         opp_id=loser_id, opp_name=loser_name, opp_elo_surface=loser_elo_surface) %>% 
+  mutate(result = "W") %>% 
+  bind_rows(
+    grand_slams %>%
+      select(tourney_year, tourney_name, match_num, tourney_date, player_id=loser_id, player_name=loser_name, entry=loser_entry, seed=loser_seed, rank=loser_rank, round, score, 
+             opp_id=winner_id, opp_name=winner_name, elo_surface=loser_elo_surface, opp_elo_surface=winner_elo_surface) %>% 
+      mutate(result = "L")
+  ) %>% 
+  # mutate(tourney_champion = round == "F" & result == "W") %>% 
+  arrange(tourney_date, match_num)
+
+
+# want to create a variable to the tournament winner - we will create a df to then join on to the main data set
+tourn_winner <- grand_slams %>% 
+  filter(round == "F") %>% 
+  select(winner_name, tourney_name, tourney_year) %>% 
+  mutate(tourney_champion = TRUE)
+
+grand_slams_long <- grand_slams_long %>% 
+  left_join(tourn_winner, by = c("player_name"="winner_name", "tourney_name", "tourney_year")) %>% 
+  mutate(tourney_champion = ifelse(is.na(tourney_champion), FALSE, tourney_champion))
+
+
+# Nadal in the 2020 French has both a 1 and 2 listed as his seed - he was the nbumber 2 seed.
+# Additionaly, the US Open has one year when it's called 'Us Open'... Clean that up to be consistent
+grand_slams_long <- grand_slams_long %>% 
+  mutate(seed = ifelse(
+    (tourney_year == 2020 & tourney_name == "Roland Garros" & player_name == "RAFAEL NADAL"), 2, seed
+  )) %>% 
+  mutate(tourney_name = ifelse(tourney_name == "Us Open", "US Open", tourney_name))
+
+
+#=======================================
+# create Z-Scores
+#=======================================
+
+# want to create z-scores - we will do this from two perspectives:
+# 1. both the pre-tournament overall elo rating, and also the surface-specific elo rating from the perspective of the current tournament
+# 2. froma historical perspective - ie, what was the z-score for a player in relation to all other players in the time period analysed for that surface
+
+# 1:
+elo_z_df <- grand_slams_long %>% 
+  distinct(tourney_year, tourney_name, player_name, .keep_all = T) %>% 
+  group_by(tourney_year, tourney_name) %>% 
+  mutate(elo_z_surface = (elo_surface - mean(elo_surface)) / sd(elo_surface)
+         # opp_elo_z_surface = (opp_elo_surface - mean(opp_elo_surface)) / sd(opp_elo_surface)
+  ) %>% ungroup() %>% 
+  select(tourney_year, tourney_name, player_name, contains("_z"))
+
+# 2:
+elo_z_historical_df <- grand_slams_long %>% 
+  distinct(tourney_year, tourney_name, player_name, .keep_all = T) %>% 
+  group_by(tourney_name) %>% 
+  mutate(elo_z_surface_historical = (elo_surface - mean(elo_surface)) / sd(elo_surface)
+         # opp_elo_z_surface_historical = (opp_elo_surface - mean(opp_elo_surface)) / sd(opp_elo_surface)
+  ) %>% ungroup() %>% 
+  select(tourney_year, tourney_name, player_name, contains("_historical"))
+
+
+# join these elo perspectives to our main data frame
+grand_slams_long <- grand_slams_long %>% 
+  left_join(elo_z_df, by = c("tourney_year", "tourney_name", "player_name")) %>% 
+  left_join(elo_z_df, by = c("tourney_year", "tourney_name", "opp_name" = "player_name"), suffix = c("", "_opp")) %>% 
+  left_join(elo_z_historical_df, by = c("tourney_year", "tourney_name", "player_name")) %>% 
+  left_join(elo_z_historical_df, by = c("tourney_year", "tourney_name", "opp_name" = "player_name"), suffix = c("", "_opp"))
+
+
+
+
+winners_grand_slams_raw <- grand_slams_long %>% 
+  filter(tourney_champion) %>% 
+  mutate(elo_win_prob = elo::elo.prob(elo.A = elo_surface, elo.B = opp_elo_surface))
+
+
+big3_winners_grand_slams <- winners_grand_slams_raw %>% 
+  filter(player_name %in% c("RAFAEL NADAL", "NOVAK DJOKOVIC", "ROGER FEDERER")) %>%
+  group_by(tourney_year, tourney_name, tourney_date, player_name, seed, elo_surface, elo_z_surface_historical) %>% 
+  summarise(tournament_win_prob = prod(elo_win_prob),
+            max_opp_elo_surface = max(opp_elo_surface),
+            avg_opp_elo_surface = mean(opp_elo_surface),
+            med_opp_elo_surface = median(opp_elo_surface),
+            med_opponent_z_surface = median(elo_z_surface_opp),
+            opponent_z_surface = sum(elo_z_surface_opp),
+            max_z_surface_historical_opp = max(elo_z_surface_historical_opp),
+            avg_z_surface_historical_opp = mean(elo_z_surface_historical_opp),
+            med_z_surface_historical_opp = median(elo_z_surface_historical_opp),
+            z_surface_historical_total_opp = sum(elo_z_surface_historical_opp)
+  ) %>% ungroup() %>% 
+  mutate(tourney_date = lubridate::ymd(tourney_date))
+
+```
+
+
+## Introduction
+
+As the current (2023) Australian Open came to a close with Novak Djokovic winning a record equaling 22nd Grand Slam, the expected discourse on who is the best player of all time is back on the agenda. One discussion thread centers around the ease of Djokovic run to the 2023 Australian Open title, and that maybe this title isn't worth as many as others (listen to the the Wharton Moneyball podcast talk about it at around the 84 minute mark [here](https://play.acast.com/s/5b69f70c0a0eca0c20692176/63d14f7eabbd0e0010ab69ba?seek=84)). 
+
+This post won't be about which player is the best of all time - that's already been done ad nauseam - but what it will aim to do is better understand the difficulty of each of the big three's grand slams wins and whether we can infer anything from that.
+
+I've tried to answer this question using some numbers. The main metric being used in this analysis is [Elo ratings](https://en.wikipedia.org/wiki/Elo_rating_system). I'm not going to go into the guts of the Elo rating system, other than to say that it performs exceptionally well in explaining skill levels of players in competitive head to head matches and predicting the outcome of these games using the difference in each players' rating. Specifically for this analysis, when we refer to the Elo rating, we're referring to the player's relevant pre-tournament surface-specific Elo rating.
+
+There are a number of ways that this could be achieved. Presented in this post are only a few ways to do that. I'd be really keen for some engagement on this post on whether you agree/disagree with the methods employed and where the holes are in these methods used.
+
+To freshen our memories, below are the slam wins each of the big three have achieved over the different slams:
+
+```{r slam_summary}
+big3_winners_grand_slams %>% 
+  group_by(player_name, tourney_name) %>% 
+  summarise(n = n()) %>% 
+  ggplot(aes(x=n, y= player_name, fill = player_name)) +
+  geom_col() +
+  scale_x_continuous(breaks = seq(0,14,2)) +
+  scale_fill_manual(values = c("steelblue", "orange", "forestgreen")) +
+  labs(x= "Slams Won",
+       title = "NUMBER SLAM WINS EACH SURFACE") +
+  facet_wrap(~ tourney_name, ncol=1) +
+  theme(legend.position = "none")
+```
+
+
+### The Data
+
+All completed Grand Slams since the beginning of 2001 up until the end of the 2023 Australia Open have been analysed for this post. That's 88 grand slams, with the notable exception of the COVID-19 forced cancellation of the 2020 Wimbledon event.
+
+### Acknowledgements
+
+Before we dive in to the analysis, I need to offer thanks to a few people. First, Elo data was obtained from the brilliant site [Ultimate Tennis Statistics](https://www.ultimatetennisstatistics.com/). Elo ratings specific to the surface being played on has been used. Their calculations on coming up with an elo rating is explained [here](https://www.ultimatetennisstatistics.com/eloRatings#).
+
+Next, I'd love to thank Jeff Sackmann for his brilliant Tennis Data repository, especially for the ATP results data found [here](https://github.com/JeffSackmann/tennis_atp).
+
+Big thanks to Andrew Whelan (who has a brilliant site [Wheelo Ratings](https://www.wheeloratings.com/) providing statistics, records and Elo ratings for a number of sports) for being a sounding board, as have some great colleagues at work.
+
+Finally, there have been many inspirations for this post,  including the thought-provoking discussions had on the Wharton Moneyball podcast anytime tennis is brought up.
+
+***
+
+## Analysis
+
+
+To get started and to understand the Elo ratings of players, we can take a look at the distribution of surface-specific Elo ratings for players playing in grand slams.
+
+The peaks for all tournaments at 1,500 needs explaining - when a player enters a tournament, they may not necessarily have played enough on the surface, so as a default these players are given a rating of 1,500 for this analysis (Ultimate Tennis Statistics starts a player off on a rating of 1,500 also).
+
+The distribution of Elo ratings appear to be distributed fairly similarly across the four grand slams. There are more players who have had an Elo of 1,500 for Wimbledon, but other than that, the differences are fairly negligible.
+
+Important to note with the distribution of each tournaments, having a pre-tournament Elo rating greater than 2,250 (two standard deviations from the mean) is pretty rare, and even rarer still for a player to have an Elo rating higher than 2,250 **that isn't one of the big 3**.
+
+
+```{r tourn_dist, fig.height=8}
+median_tourn <- grand_slams_long %>% 
+  distinct(tourney_year, tourney_name, player_name, .keep_all = T) %>% 
+  group_by(tourney_name) %>% 
+  summarise(avg_elo = mean(elo_surface),
+            med_elo = median(elo_surface))
+
+grand_slams_long %>% 
+  distinct(tourney_year, tourney_name, player_name, .keep_all = T) %>% 
+  ggplot(aes(x=elo_surface)) +
+  geom_histogram() +
+  geom_vline(xintercept = 2250, linetype=2, colour = "grey40") +
+  geomtextpath::geom_textvline(data = median_tourn, aes(xintercept=avg_elo, label = "average"), linetype=2, colour = "orange", hjust=1, size=4, family = "Overlock") +
+  labs(x= "Elo",
+       title = "PRE-TOURNEY ELO RATINGS",
+       subtitle = "To the right of the grey dashed line indicates very rare pre-tourney Elo ratings") +
+  facet_wrap(~ tourney_name, ncol=1)
+```
+
+```{r big_3_dist}
+grand_slams_long %>% 
+  distinct(tourney_year, tourney_name, player_name, .keep_all = T) %>% 
+  mutate(is_big3 = player_name %in% c("RAFAEL NADAL", "NOVAK DJOKOVIC", "ROGER FEDERER")) %>% 
+  ggplot(aes(x=elo_surface, y= tourney_name, colour = is_big3, alpha = is_big3)) +
+  geom_jitter() +
+  scale_colour_manual(values = c("steelblue", "orange"), name = "Big 3?") +
+  scale_alpha_manual(values = c(0.1, 0.6), guide=NULL) +
+  labs(x= "Elo",
+       title = "BIG 3 NORMALLY DOMINATE HIGHER RATINGS")
+
+```
+
+
+### Elo Criticism
+
+One (probably valid) criticism of Elo ratings is that the average Elo rating can change over time and across eras so may not be comparable over time (e.g. an Elo rating of 2,000 in 2005 may not be equivalent to 2,000 in 2023). This needs to be considered when assessing the results in the below sections.
+
+To get an idea of how these ratings have changed over time, the average Elo rating of competitors at each grand slam is plotted below. Important to note that the y-axis scale (Elo ratings) doesn't start at zero, so the fluctuations are accentuated.
+
+```{r elo_time}
+grand_slams_long %>% 
+  distinct(tourney_year, tourney_name, player_name, .keep_all = T) %>% 
+  group_by(tourney_year, tourney_name) %>% 
+  summarise(avg_elo = mean(elo_surface),
+            med_elo = median(elo_surface)) %>% 
+  ggplot(aes(x=tourney_year, y= avg_elo, colour = tourney_name)) +
+  geomtextpath::geom_textsmooth(aes(label = tourney_name), hjust=1, family = "Overlock", size=5) +
+  scale_colour_manual(values = c("steelblue", "orange", "forestgreen", "grey40")) +
+  labs(x = "Year",
+       title="SMOTHED AVERAGE ELO RATINGS PER TOURNAMENT",
+          subtitle = "Note that the scale accentuates the changes in year to year") +
+  theme(legend.position = "none")
+  
+```
+
+
+
+
+
+
+Looking at individual grand slams and the distribution of Elo ratings of the opponents of the big three in their grand slam wins, we can see that they typically have faced very similar rated players. Federer's median opponent Elo rating in his tournament wins has been sightly the highest of the three (2,014, Djokovic 2,012 and Nadal 2,002), however his average (arithmetic mean) is slightly lower at 1,992 than that of Djokovic (2,004). Nadal has both the lowest median and average opponent Elo in his grand slam wins. This is because Federer hasn't played as many high rated outliers as Djokovic has (and to a lesser extent Nadal).
+
+
+```{r elo_opp_big3}
+winners_grand_slams_raw %>%
+  filter(player_name %in% c("RAFAEL NADAL", "NOVAK DJOKOVIC", "ROGER FEDERER")) %>% 
+  ggplot(aes(x= opp_elo_surface, y= player_name, fill = player_name)) +
+  ggridges::geom_density_ridges(quantile_lines = TRUE, quantiles = c(0.025, 0.5, 0.975), rel_min_height = 0.005) +
+  labs(x="Opponent Elo",
+       title = "ELO RATING OF THE BIG 3'S OPPONENTS",
+       subtitle = "Middle line represents the median, while the two outside lines\nare the 2.5 and 97.5 percentiles") +
+  scale_fill_manual(values = c("steelblue", "orange", "forestgreen")) +
+  theme(legend.position = "none")
+
+```
+
+
+***
+
+
+### Standardising Elo
+
+A potential flaw in using the Elo ratings of each tournament is that it doesn't normalise for the distribution of talent (Elo ratings) over time. Some year's tournaments may see more higher rated players competing, while other tournaments may contain weaker fields. When comparing across different time periods, it might be better to attempt to standardise each opponents' strength rating.
+
+One way to do this is to calculate the [standard score (z-score)](https://en.wikipedia.org/wiki/Standard_score) for each player's rating, which essentially ranks the players rating within the confines of the distribution of the space selected - in this case each tournament over the entire 22 and a bit years. I won't go into the full details of the z-score, however a simple way to think about it is a z-score of zero indicates the opponent's Elo rating is average. The higher it goes above zero, the better the Elo rating is historically (conversely the further below zero it goes the worse the Elo rating).
+
+For example, Stafanos Tsitsipas's pre 2023 Aus Open Elo rating was 2,176, which gives a z-score of 1.62 for the 2023 Aus Open, however the z-score for all Aus Opens over the period analysed is 1.57. Given that his historical z-score is slightly lower suggests that the 2023 Aus Open may have been generally weaker overall than other years.
+
+We can then sum these historical z-scores up for each tournament and give a comparable strength score for each grand slam win. Put simply, the higher this number is, the tougher the opponents faced for their respective winning tournaments.
+
+To compare each of the big three over their respective winning grand slams, we can take an average tournament z-score of opponents ratings to see which of the three had tougher tournament opponents.
+
+This method shows that Djokovic has beaten the historically toughest opponents on average during his 22 grand slams. The average total z-score of his opponents has been 5.7, followed by Federer's 5.3. Nadal lags behind the three at 4.9, indicating that his 22 grand slams may have been slightly easier (relative of course) on average than the other big three.
+
+<br>
+<br>
+
+```{r tourn_strength}
+big3_winners_grand_slams %>% 
+  group_by(player_name) %>% 
+  summarise(avg_win_strength = mean(z_surface_historical_total_opp)
+            ) %>% 
+  gt() %>% 
+  cols_label(
+    player_name = "Name",
+    avg_win_strength = "Average Tournament Strength"
+  ) %>% 
+  fmt_number(
+    columns = avg_win_strength,
+    decimals = 3
+  ) %>% 
+  gt_theme()
+
+```
+
+***
+
+### Expected Win Probability
+
+Instead of using the raw Elo ratings and standardising them, we can also infer each of the big three's win probability using their's and their opponent's Elo ratings.
+
+To do this, we first need to calculate the win probability of each match given each player's Elo rating. For example, the win probability for Djokovic (Elo=2,452) in his fourth round match against Alex De Minaur (Elo=2,076) was 89.7%. From here, we take the [product](https://en.wikipedia.org/wiki/Product_(mathematics)) of each win probability and come up with an overall win probability. For example, Djokovic's 2023 Aus Open win probabilities for each of his matches were 97.5%, 99.6%, 93.1%, 89.7%, 86.7%, 91.4%, 83.0% from his first round match to the final, respectively. Multiplying each of these win probabilities give us a total win probability of 53.3%. The closer we get to 100%, the more we expect that player to have won the tournament. This can also be a simple place holder for the strength of each tournament win - closer to 100%, the easier their run was.
+
+
+Under this method, we can see that Djokovic's 2008 Australian Open win (his first grand slam) was the least expected win of all 64 slams these three have won with an expected win probability of 3.24%. Additionally, three of the five least expected slam wins have been by Djokovic. Federer's first grand slam (Wimbledon 2003) was really close to being the least expected (3.55%).
+
+<br>
+<br>
+
+```{r least_probable}
+big3_winners_grand_slams %>% 
+  arrange(tournament_win_prob) %>% 
+  select(tourney_year, tourney_name, player_name, tournament_win_prob) %>% 
+  head(5) %>% 
+  gt() %>% 
+  fmt_percent(
+    columns = tournament_win_prob, decimals = 2
+  ) %>% 
+  cols_label(
+    tourney_year = "Year",
+    tourney_name = "Slam",
+    player_name = "Name",
+    tournament_win_prob = "Tournament Win Probability"
+  ) %>% 
+  tab_header(title = md("**LEAST PROBABLE TOURNAMENT WINS**")) %>% 
+  gt_theme()
+```
+
+<br>
+<br>
+
+Without looking deeply at Djokovic's 2008 Australian Open run and only looking at his final opponent (France's Jo Wilfried Tsonga), it would be easy to believe that with an expected win probability in that final of 86.9% that this was an easy title win. Unpacking this a little deeper shows that he needed to get through Australia's own Lleyton Hewitt in the round of 16 with a win probability of 67.5% (better than a coin flip), David Ferrer in the quarters at 54.2% (basically a coin flip) and Federer at 14.2% (a heavy underdog) in the semi-final before he had a chance to play in the final.
+
+<br>
+<br>
+
+
+```{r djoker_ao}
+winners_grand_slams_raw %>% 
+  filter(tourney_year == "2008", tourney_name == "Australian Open") %>% 
+  select(tourney_year, tourney_name, round, opp_name, elo_win_prob) %>% 
+  gt() %>% 
+  fmt_percent(
+    columns = elo_win_prob, decimals = 2
+  ) %>% 
+  cols_label(
+    tourney_year = "Year",
+    tourney_name = "Slam",
+    round="Round",
+    opp_name = "Opponent",
+    elo_win_prob = "Match Win Probability"
+  ) %>% 
+  data_color(
+    columns = elo_win_prob,
+    colors = scales::col_numeric(
+      palette = c(alpha("orange", 0.6), alpha("steelblue", 0.6)),
+      alpha = 0.5,
+      domain = NULL
+    )
+  ) %>% 
+  tab_header(title = md("**DJOKOVIC'S 2008 AUSTRALIAN OPEN OPPONENTS**")) %>%
+  gt_theme()
+
+```
+
+<br>
+<br>
+
+Conversely, Djokovic's 2022 Wimbledon title was the most expected of all the big three's grand slams, with a tournament win probability of 85.7%. Djokovic's 2021 Wimbledon title was the fifth most expected title (72.1%).
+
+<br>
+<br>
+
+```{r most_probable}
+big3_winners_grand_slams %>% 
+  arrange(desc(tournament_win_prob)) %>% 
+  select(tourney_year, tourney_name, player_name, tournament_win_prob) %>% 
+  head(5) %>% 
+  gt() %>% 
+  fmt_percent(
+    columns = tournament_win_prob, decimals = 2
+  ) %>% 
+  cols_label(
+    tourney_year = "Year",
+    tourney_name = "Slam",
+    player_name = "Name",
+    tournament_win_prob = "Tournament Win Probability"
+  ) %>% 
+  tab_header(title = md("**MOST PROBABLE TOURNAMENT WINS**")) %>% 
+  gt_theme()
+```
+
+<br>
+<br>
+
+Not hard to believe when we look at his run in that tournament - his lowest individual match win probability came in the final (92.5%), where he defeated Australia's very erratic Nick Kyrgios. Other than that, it looked a very soft title.
+
+<br>
+<br>
+
+```{r djoker_wimb}
+winners_grand_slams_raw %>% 
+  filter(tourney_year == "2022", tourney_name == "Wimbledon") %>% 
+  select(tourney_year, tourney_name, round, opp_name, elo_win_prob) %>% 
+  gt() %>% 
+  fmt_percent(
+    columns = elo_win_prob, decimals = 2
+  ) %>% 
+  cols_label(
+    tourney_year = "Year",
+    tourney_name = "Slam",
+    round="Round",
+    opp_name = "Opponent",
+    elo_win_prob = "Match Win Probability"
+  ) %>% 
+  tab_header(title = md("**DJOKOVIC'S 2022 WIMBLEDON OPPONENTS**")) %>%
+  gt_theme()
+```
+
+<br>
+<br>
+
+While it was neat looking at individual slams in the above section, we can aggregate all the tournament win probabilities to better understand how well each have done in getting to the amount of slams they've won given how many they were expected to have won.
+
+Of the three, Federer's average tournament win probability over his 20 slam wins was the highest, averaging 44.3% win probability. If we were to sum up all of the individual tournament win probabilities and arrive at an expected number of wins, we can see that Federer was in fact expected to have won more slams than Djokovic if the slams they won were repeated over and over again.
+
+Similarly, Rafa's average win probability was a touch lower than Federer's, but given he has won two more slams, his expected wins are even higher than Djokovic's.
+
+<br>
+<br>
+
+```{r big3_difficult_summary}
+big3_winners_grand_slams %>% 
+  group_by(player_name) %>% 
+  summarise(n = n(),
+            avg_win_prob = mean(tournament_win_prob),
+            expected_wins = sum(tournament_win_prob)) %>% 
+  mutate(wins_above_expected = n - expected_wins) %>% 
+  gt() %>% 
+  fmt_percent(
+    columns = avg_win_prob, decimals = 2
+  ) %>% 
+  fmt_number(
+    columns = c(expected_wins, wins_above_expected)
+  ) %>% 
+  cols_label(
+    player_name = "Name",
+    n = "Number Slams",
+    avg_win_prob = "Average Tourney Win Probability",
+    expected_wins = "Expected Wins",
+    wins_above_expected = "Wins above Expected"
+  ) %>%
+  tab_footnote(
+    footnote = "The average of all winning slam's win probabilities", 
+    locations = cells_column_labels(
+      columns = 3 # note
+      )
+    ) %>% 
+  tab_footnote(
+    footnote = md("Calculated as the sum of all tournament win probabilities (**only for the tournaments they won**)"), 
+    locations = cells_column_labels(
+      columns = 4 # note
+      )
+    ) %>%
+  tab_footnote(
+    footnote = "The difference between the slams win total minus the Expected Wins", 
+    locations = cells_column_labels(
+      columns = 5 # note
+      )
+    ) %>%
+  tab_header(title = md("**PERFORMANCE AGAINST EXPECTATION**"),
+             subtitle = "Comparing the big 3s expected wins and their actual wins") %>% 
+  gt_theme()
+```
+
+<br>
+<br>
+
+It's also interesting to note how each of the big three's expected tournament win probabilities have changed over their career.
+
+Pre-2020, Nadal has consistently been expected to win at a higher rate than the other two - most likely a result of his Roland Garros dominance. That win probability has been dropping on average in recent years as he's started winning on his "least" preferred surfaces. Conversely, Djokovic's win probability has been increasing over time.
+
+```{r win_prob_time}
+big3_winners_grand_slams %>% 
+  ggplot(aes(x= tourney_date, y= tournament_win_prob, group=player_name, colour = player_name)) +
+  geom_point(alpha=0.1) +
+  # geom_smooth(se=F) +
+  geomtextpath::geom_textsmooth(aes(label = player_name), linewidth=1, family = "Overlock") +
+  scale_y_continuous(labels = scales::percent, expand = c(0,0), limits = c(0,1)) +
+  scale_colour_manual(values = c("steelblue", "orange", "forestgreen")) +
+  labs(x= "Tournament Date",
+       title = "TOURNAMENT WIN PROBABILITIES THROUGH TIME",
+       subtitle = "Loess smoothing used to show trends over time") +
+  theme(legend.position = "none")
+```
+
+
+***
+
+## Finishing Up
+
+So what does this tell us?
+
+In this post I've tried to use Elo to quantify the difficulty rating of each superstar's phenomenal achievements in getting to the number of slams they have individually. Again, as stated at the very beginning of this post, this is in no way an attempt to rank the big three - far from it.
+
+We did however see that the metrics used in this post would suggest that it's not true that Djokovic's has had an easy ride during his 22 grand slams wins. They have been quite the opposite on both fronts; the opponents he's faced over his 22 wins seemingly rated more highly than that of Nadal and Federer, while also having outperformed his expected win probability by a greater margin than that of the other big three.
+
+
+While it's a shame the majestic Roger Federer ever needed to retire, I'm really excited to continue to enjoy the once in a lifetime experience of seeing multiple transcendent stars continue to dominate their sport concurrently.
+
+
+Would love feedback on the post and have holes poked in it wherever they need poking!
+
+Thanks!

@@ -13,6 +13,17 @@
     </image>
     
     <item>
+      <title>worldfootballR R Package</title>
+      <link>/project/worldfootballr/</link>
+      <pubDate>Sun, 10 Jan 2021 00:00:00 +1100</pubDate>
+      <guid>/project/worldfootballr/</guid>
+      <description>&lt;p&gt;The &lt;code&gt;worldfootballR&lt;/code&gt; package is designed to allow users to extract world football (soccer) data from very popular and thorough websites fbref.com, transfermarkt.com and understat.com.&lt;/p&gt;
+&lt;p&gt;The vignette for the package offers a full description of the package and the functions available, and can be found 
+&lt;a href=&#34;https://jaseziv.github.io/worldfootballR/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Efficiently get Fotmob match IDs with worldfootballR</title>
       <link>/blog/extract-fotmob-data-with-worldfootballr/</link>
       <pubDate>Thu, 03 Mar 2022 00:00:00 +0000</pubDate>
@@ -2769,17 +2780,6 @@ html {
 &lt;p&gt;As always, any questions/comments about the piece or the R package, feel free to reach out through the regular channels.&lt;/p&gt;
 &lt;p&gt;GO REDS!!&lt;/p&gt;
 &lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>worldfootballR R Package</title>
-      <link>/project/worldfootballr/</link>
-      <pubDate>Sun, 10 Jan 2021 00:00:00 +1100</pubDate>
-      <guid>/project/worldfootballr/</guid>
-      <description>&lt;p&gt;The &lt;code&gt;worldfootballR&lt;/code&gt; package is designed to allow users to extract world football (soccer) data from very popular and thorough websites fbref.com, transfermarkt.com and understat.com.&lt;/p&gt;
-&lt;p&gt;The vignette for the package offers a full description of the package and the functions available, and can be found 
-&lt;a href=&#34;https://jaseziv.github.io/worldfootballR/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
 </description>
     </item>
     

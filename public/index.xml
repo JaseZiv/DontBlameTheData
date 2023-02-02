@@ -13,6 +13,64 @@
     </image>
     
     <item>
+      <title>worldfootballR R Package</title>
+      <link>/project/worldfootballr/</link>
+      <pubDate>Sun, 10 Jan 2021 00:00:00 +1100</pubDate>
+      <guid>/project/worldfootballr/</guid>
+      <description>&lt;p&gt;The &lt;code&gt;worldfootballR&lt;/code&gt; package is designed to allow users to extract world football (soccer) data from very popular and thorough websites fbref.com, transfermarkt.com and understat.com.&lt;/p&gt;
+&lt;p&gt;The vignette for the package offers a full description of the package and the functions available, and can be found 
+&lt;a href=&#34;https://jaseziv.github.io/worldfootballR/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>chessR R Package</title>
+      <link>/project/chessr/</link>
+      <pubDate>Tue, 28 Apr 2020 00:00:00 +1000</pubDate>
+      <guid>/project/chessr/</guid>
+      <description>&lt;p&gt;The &lt;code&gt;chessR&lt;/code&gt; package is designed to allow users to extract their game data and other data from popular online chess platforms, including 
+&lt;a href=&#34;www.chess.com&#34;&gt;chess.com&lt;/a&gt; and 
+&lt;a href=&#34;www.lichess.org&#34;&gt;Lichess&lt;/a&gt;. The websites offer a very convenient set of APIs to be able to access date through.&lt;/p&gt;
+&lt;p&gt;The vignette for the package offers a full description of the package and the functions available, and can be found 
+&lt;a href=&#34;https://jaseziv.github.io/chessR/articles/using_chessR_package.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>nblR R Package</title>
+      <link>/project/nblr/</link>
+      <pubDate>Sun, 10 Jan 2021 00:00:00 +1100</pubDate>
+      <guid>/project/nblr/</guid>
+      <description>&lt;p&gt;The &lt;code&gt;nblR&lt;/code&gt; package allows users to obtain basketball statistics for the Australian basketball league (NBL). Stats include play-by-play, shooting locations, results and box scores for teams and players.&lt;/p&gt;
+&lt;p&gt;The vignette for the package offers a full description of the package and the functions available, and can be found 
+&lt;a href=&#34;https://jaseziv.github.io/nblR/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>bettRtab R Package</title>
+      <link>/project/bettrtab/</link>
+      <pubDate>Sun, 10 Jan 2021 00:00:00 +1100</pubDate>
+      <guid>/project/bettrtab/</guid>
+      <description>&lt;p&gt;This package is designed to allow users to obtain clean and tidy 
+&lt;a href=&#34;https://www.tab.com.au/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;TAB&lt;/a&gt; betting markets for both racing and sports. It gives users the ability to access data more efficiently.&lt;/p&gt;
+&lt;p&gt;The vignette for the package offers a full description of the package and the functions available, and can be found 
+&lt;a href=&#34;https://jaseziv.github.io/bettRtab/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>xG Performance App</title>
+      <link>/project/xgperformanceapp/</link>
+      <pubDate>Tue, 08 Feb 2022 00:00:00 +1100</pubDate>
+      <guid>/project/xgperformanceapp/</guid>
+      <description>&lt;p&gt;The xG Performance App is designed to allow users to analyse the actual versus expected results of teams in the big 5 European leagues, leveraging StatsBomb&#39;s xG model via FBref.&lt;/p&gt;
+&lt;p&gt;The app can be found 
+&lt;a href=&#34;https://xg-performance-app.herokuapp.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Efficiently get Fotmob match IDs with worldfootballR</title>
       <link>/blog/extract-fotmob-data-with-worldfootballr/</link>
       <pubDate>Thu, 03 Mar 2022 00:00:00 +0000</pubDate>
@@ -96,26 +154,6 @@ match_ids &amp;lt;- required_match_id$matches$id %&amp;gt;% unique()
 head(match_ids)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## [1] 3488733 3488760 3488856 3488741 3488749 3488738&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Explaining Player Valuations</title>
-      <link>/project/explainingplayervaluations/</link>
-      <pubDate>Tue, 08 Feb 2022 00:00:00 +1100</pubDate>
-      <guid>/project/explainingplayervaluations/</guid>
-      <description>&lt;p&gt;A shiny app that measures the market value of individual stats by regressing them against player market valuations from Transfermarkt.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>xG Performance App</title>
-      <link>/project/xgperformanceapp/</link>
-      <pubDate>Tue, 08 Feb 2022 00:00:00 +1100</pubDate>
-      <guid>/project/xgperformanceapp/</guid>
-      <description>&lt;p&gt;The xG Performance App is designed to allow users to analyse the actual versus expected results of teams in the big 5 European leagues, leveraging StatsBomb&#39;s xG model via FBref.&lt;/p&gt;
-&lt;p&gt;The app can be found 
-&lt;a href=&#34;https://xg-performance-app.herokuapp.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
 </description>
     </item>
     
@@ -2789,53 +2827,6 @@ html {
 &lt;p&gt;As always, any questions/comments about the piece or the R package, feel free to reach out through the regular channels.&lt;/p&gt;
 &lt;p&gt;GO REDS!!&lt;/p&gt;
 &lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>bettRtab R Package</title>
-      <link>/project/bettrtab/</link>
-      <pubDate>Sun, 10 Jan 2021 00:00:00 +1100</pubDate>
-      <guid>/project/bettrtab/</guid>
-      <description>&lt;p&gt;This package is designed to allow users to obtain clean and tidy 
-&lt;a href=&#34;https://www.tab.com.au/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;TAB&lt;/a&gt; betting markets for both racing and sports. It gives users the ability to access data more efficiently.&lt;/p&gt;
-&lt;p&gt;The vignette for the package offers a full description of the package and the functions available, and can be found 
-&lt;a href=&#34;https://jaseziv.github.io/bettRtab/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>nblR R Package</title>
-      <link>/project/nblr/</link>
-      <pubDate>Sun, 10 Jan 2021 00:00:00 +1100</pubDate>
-      <guid>/project/nblr/</guid>
-      <description>&lt;p&gt;The &lt;code&gt;nblR&lt;/code&gt; package allows users to obtain basketball statistics for the Australian basketball league (NBL). Stats include play-by-play, shooting locations, results and box scores for teams and players.&lt;/p&gt;
-&lt;p&gt;The vignette for the package offers a full description of the package and the functions available, and can be found 
-&lt;a href=&#34;https://jaseziv.github.io/nblR/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>worldfootballR R Package</title>
-      <link>/project/worldfootballr/</link>
-      <pubDate>Sun, 10 Jan 2021 00:00:00 +1100</pubDate>
-      <guid>/project/worldfootballr/</guid>
-      <description>&lt;p&gt;The &lt;code&gt;worldfootballR&lt;/code&gt; package is designed to allow users to extract world football (soccer) data from very popular and thorough websites fbref.com, transfermarkt.com and understat.com.&lt;/p&gt;
-&lt;p&gt;The vignette for the package offers a full description of the package and the functions available, and can be found 
-&lt;a href=&#34;https://jaseziv.github.io/worldfootballR/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>chessR R Package</title>
-      <link>/project/chessr/</link>
-      <pubDate>Tue, 28 Apr 2020 00:00:00 +1000</pubDate>
-      <guid>/project/chessr/</guid>
-      <description>&lt;p&gt;The &lt;code&gt;chessR&lt;/code&gt; package is designed to allow users to extract their game data and other data from popular online chess platforms, including 
-&lt;a href=&#34;www.chess.com&#34;&gt;chess.com&lt;/a&gt; and 
-&lt;a href=&#34;www.lichess.org&#34;&gt;Lichess&lt;/a&gt;. The websites offer a very convenient set of APIs to be able to access date through.&lt;/p&gt;
-&lt;p&gt;The vignette for the package offers a full description of the package and the functions available, and can be found 
-&lt;a href=&#34;https://jaseziv.github.io/chessR/articles/using_chessR_package.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
 </description>
     </item>
     

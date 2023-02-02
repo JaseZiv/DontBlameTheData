@@ -1,0 +1,2858 @@
+---
+title: "Rating the Difficulty of the Big 3's Grand Slam Wins"
+date: '2023-02-02'
+slug: big3-grand-slam-difficulty
+categories:
+  - R
+  - tennis
+  - elo
+tags: [R, elo, tennis analytics]
+description: 'Using Elo to understand the difficulty of the Big 3 grand slam wins'
+featured: ''
+featuredalt: ''
+featuredpath: ''
+linktitle: ''
+type: post
+---
+
+
+
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>As the current (2023) Australian Open came to a close with Novak Djokovic winning a record equaling 22nd Grand Slam, the expected discourse on who is the best player of all time is back on the agenda. One discussion thread centers around the ease of Djokovic run to the 2023 Australian Open title, and that maybe this title isn’t worth as many as others (listen to the the Wharton Moneyball podcast talk about it at around the 84 minute mark <a href="https://play.acast.com/s/5b69f70c0a0eca0c20692176/63d14f7eabbd0e0010ab69ba?seek=84">here</a>).</p>
+<p>This post won’t be about which player is the best of all time - that’s already been done ad nauseam - but what it will aim to do is better understand the difficulty of each of the big three’s grand slams wins and whether we can infer anything from that.</p>
+<p>I’ve tried to answer this question using some numbers. The main metric being used in this analysis is <a href="https://en.wikipedia.org/wiki/Elo_rating_system">Elo ratings</a>. I’m not going to go into the guts of the Elo rating system, other than to say that it performs exceptionally well in explaining skill levels of players in competitive head to head matches and predicting the outcome of these games using the difference in each players’ rating. Specifically for this analysis, when we refer to the Elo rating, we’re referring to the player’s relevant pre-tournament surface-specific Elo rating.</p>
+<p>There are a number of ways that this could be achieved. Presented in this post are only a few ways to do that. I’d be really keen for some engagement on this post on whether you agree/disagree with the methods employed and where the holes are in these methods used.</p>
+<p>To freshen our memories, below are the slam wins each of the big three have achieved over the different slams:</p>
+<p><img src="/post/big3_difficulty_files/figure-html/slam_summary-1.png" width="960" /></p>
+<div id="the-data" class="section level3">
+<h3>The Data</h3>
+<p>All completed Grand Slams since the beginning of 2001 up until the end of the 2023 Australia Open have been analysed for this post. That’s 88 grand slams, with the notable exception of the COVID-19 forced cancellation of the 2020 Wimbledon event.</p>
+</div>
+<div id="acknowledgements" class="section level3">
+<h3>Acknowledgements</h3>
+<p>Before we dive in to the analysis, I need to offer thanks to a few people. First, Elo data was obtained from the brilliant site <a href="https://www.ultimatetennisstatistics.com/">Ultimate Tennis Statistics</a>. Elo ratings specific to the surface being played on has been used. Their calculations on coming up with an elo rating is explained <a href="https://www.ultimatetennisstatistics.com/eloRatings#">here</a>.</p>
+<p>Next, I’d love to thank Jeff Sackmann for his brilliant Tennis Data repository, especially for the ATP results data found <a href="https://github.com/JeffSackmann/tennis_atp">here</a>.</p>
+<p>Big thanks to Andrew Whelan (who has a brilliant site <a href="https://www.wheeloratings.com/">Wheelo Ratings</a> providing statistics, records and Elo ratings for a number of sports) for being a sounding board, as have some great colleagues at work.</p>
+<p>Finally, there have been many inspirations for this post, including the thought-provoking discussions had on the Wharton Moneyball podcast anytime tennis is brought up.</p>
+<hr />
+</div>
+</div>
+<div id="analysis" class="section level2">
+<h2>Analysis</h2>
+<p>To get started and to understand the Elo ratings of players, we can take a look at the distribution of surface-specific Elo ratings for players playing in grand slams.</p>
+<p>The peaks for all tournaments at 1,500 needs explaining - when a player enters a tournament, they may not necessarily have played enough on the surface, so as a default these players are given a rating of 1,500 for this analysis (Ultimate Tennis Statistics starts a player off on a rating of 1,500 also).</p>
+<p>The distribution of Elo ratings appear to be distributed fairly similarly across the four grand slams. There are more players who have had an Elo of 1,500 for Wimbledon, but other than that, the differences are fairly negligible.</p>
+<p>Important to note with the distribution of each tournaments, having a pre-tournament Elo rating greater than 2,250 (two standard deviations from the mean) is pretty rare, and even rarer still for a player to have an Elo rating higher than 2,250 <strong>that isn’t one of the big 3</strong>.</p>
+<p><img src="/post/big3_difficulty_files/figure-html/tourn_dist-1.png" width="960" /></p>
+<p><img src="/post/big3_difficulty_files/figure-html/big_3_dist-1.png" width="960" /></p>
+<div id="elo-criticism" class="section level3">
+<h3>Elo Criticism</h3>
+<p>One (probably valid) criticism of Elo ratings is that the average Elo rating can change over time and across eras so may not be comparable over time (e.g. an Elo rating of 2,000 in 2005 may not be equivalent to 2,000 in 2023). This needs to be considered when assessing the results in the below sections.</p>
+<p>To get an idea of how these ratings have changed over time, the average Elo rating of competitors at each grand slam is plotted below. Important to note that the y-axis scale (Elo ratings) doesn’t start at zero, so the fluctuations are accentuated.</p>
+<p><img src="/post/big3_difficulty_files/figure-html/elo_time-1.png" width="960" /></p>
+<p>Looking at individual grand slams and the distribution of Elo ratings of the opponents of the big three in their grand slam wins, we can see that they typically have faced very similar rated players. Federer’s median opponent Elo rating in his tournament wins has been sightly the highest of the three (2,014, Djokovic 2,012 and Nadal 2,002), however his average (arithmetic mean) is slightly lower at 1,992 than that of Djokovic (2,004). Nadal has both the lowest median and average opponent Elo in his grand slam wins. This is because Federer hasn’t played as many high rated outliers as Djokovic has (and to a lesser extent Nadal).</p>
+<p><img src="/post/big3_difficulty_files/figure-html/elo_opp_big3-1.png" width="960" /></p>
+<hr />
+</div>
+<div id="standardising-elo" class="section level3">
+<h3>Standardising Elo</h3>
+<p>A potential flaw in using the Elo ratings of each tournament is that it doesn’t normalise for the distribution of talent (Elo ratings) over time. Some year’s tournaments may see more higher rated players competing, while other tournaments may contain weaker fields. When comparing across different time periods, it might be better to attempt to standardise each opponents’ strength rating.</p>
+<p>One way to do this is to calculate the <a href="https://en.wikipedia.org/wiki/Standard_score">standard score (z-score)</a> for each player’s rating, which essentially ranks the players rating within the confines of the distribution of the space selected - in this case each tournament over the entire 22 and a bit years. I won’t go into the full details of the z-score, however a simple way to think about it is a z-score of zero indicates the opponent’s Elo rating is average. The higher it goes above zero, the better the Elo rating is historically (conversely the further below zero it goes the worse the Elo rating).</p>
+<p>For example, Stafanos Tsitsipas’s pre 2023 Aus Open Elo rating was 2,176, which gives a z-score of 1.62 for the 2023 Aus Open, however the z-score for all Aus Opens over the period analysed is 1.57. Given that his historical z-score is slightly lower suggests that the 2023 Aus Open may have been generally weaker overall than other years.</p>
+<p>We can then sum these historical z-scores up for each tournament and give a comparable strength score for each grand slam win. Put simply, the higher this number is, the tougher the opponents faced for their respective winning tournaments.</p>
+<p>To compare each of the big three over their respective winning grand slams, we can take an average tournament z-score of opponents ratings to see which of the three had tougher tournament opponents.</p>
+<p>This method shows that Djokovic has beaten the historically toughest opponents on average during his 22 grand slams. The average total z-score of his opponents has been 5.7, followed by Federer’s 5.3. Nadal lags behind the three at 4.9, indicating that his 22 grand slams may have been slightly easier (relative of course) on average than the other big three.</p>
+<p><br>
+<br></p>
+<div id="byyqzflitm" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>@import url("https://fonts.googleapis.com/css2?family=Overlock:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+html {
+  font-family: Overlock, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#byyqzflitm .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#byyqzflitm .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#byyqzflitm .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#byyqzflitm .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#byyqzflitm .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#byyqzflitm .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#byyqzflitm .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#byyqzflitm .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#byyqzflitm .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#byyqzflitm .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#byyqzflitm .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#byyqzflitm .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#byyqzflitm .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#byyqzflitm .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#byyqzflitm .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#byyqzflitm .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#byyqzflitm .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#byyqzflitm .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#byyqzflitm .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#byyqzflitm .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#byyqzflitm .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#byyqzflitm .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#byyqzflitm .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#byyqzflitm .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#byyqzflitm .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#byyqzflitm .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#byyqzflitm .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#byyqzflitm .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#byyqzflitm .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#byyqzflitm .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#byyqzflitm .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#byyqzflitm .gt_left {
+  text-align: left;
+}
+
+#byyqzflitm .gt_center {
+  text-align: center;
+}
+
+#byyqzflitm .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#byyqzflitm .gt_font_normal {
+  font-weight: normal;
+}
+
+#byyqzflitm .gt_font_bold {
+  font-weight: bold;
+}
+
+#byyqzflitm .gt_font_italic {
+  font-style: italic;
+}
+
+#byyqzflitm .gt_super {
+  font-size: 65%;
+}
+
+#byyqzflitm .gt_two_val_uncert {
+  display: inline-block;
+  line-height: 1em;
+  text-align: right;
+  font-size: 60%;
+  vertical-align: -0.25em;
+  margin-left: 0.1em;
+}
+
+#byyqzflitm .gt_footnote_marks {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 75%;
+  vertical-align: 0.4em;
+}
+
+#byyqzflitm .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#byyqzflitm .gt_slash_mark {
+  font-size: 0.7em;
+  line-height: 0.7em;
+  vertical-align: 0.15em;
+}
+
+#byyqzflitm .gt_fraction_numerator {
+  font-size: 0.6em;
+  line-height: 0.6em;
+  vertical-align: 0.45em;
+}
+
+#byyqzflitm .gt_fraction_denominator {
+  font-size: 0.6em;
+  line-height: 0.6em;
+  vertical-align: -0.05em;
+}
+</style>
+<table class="gt_table">
+  
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="border-top-width: 2px; border-top-style: solid; border-top-color: #000000; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: #000000; font-weight: bold;">Name</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="border-top-width: 2px; border-top-style: solid; border-top-color: #000000; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: #000000; font-weight: bold;">Average Tournament Strength</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td class="gt_row gt_left">NOVAK DJOKOVIC</td>
+<td class="gt_row gt_right">5.722</td></tr>
+    <tr><td class="gt_row gt_left">RAFAEL NADAL</td>
+<td class="gt_row gt_right">4.905</td></tr>
+    <tr><td class="gt_row gt_left">ROGER FEDERER</td>
+<td class="gt_row gt_right">5.342</td></tr>
+  </tbody>
+  
+  
+</table>
+</div>
+<hr />
+</div>
+<div id="expected-win-probability" class="section level3">
+<h3>Expected Win Probability</h3>
+<p>Instead of using the raw Elo ratings and standardising them, we can also infer each of the big three’s win probability using their’s and their opponent’s Elo ratings.</p>
+<p>To do this, we first need to calculate the win probability of each match given each player’s Elo rating. For example, the win probability for Djokovic (Elo=2,452) in his fourth round match against Alex De Minaur (Elo=2,076) was 89.7%. From here, we take the <a href="https://en.wikipedia.org/wiki/Product_(mathematics)">product</a> of each win probability and come up with an overall win probability. For example, Djokovic’s 2023 Aus Open win probabilities for each of his matches were 97.5%, 99.6%, 93.1%, 89.7%, 86.7%, 91.4%, 83.0% from his first round match to the final, respectively. Multiplying each of these win probabilities give us a total win probability of 53.3%. The closer we get to 100%, the more we expect that player to have won the tournament. This can also be a simple place holder for the strength of each tournament win - closer to 100%, the easier their run was.</p>
+<p>Under this method, we can see that Djokovic’s 2008 Australian Open win (his first grand slam) was the least expected win of all 64 slams these three have won with an expected win probability of 3.24%. Additionally, three of the five least expected slam wins have been by Djokovic. Federer’s first grand slam (Wimbledon 2003) was really close to being the least expected (3.55%).</p>
+<p><br>
+<br></p>
+<div id="qfppshlawp" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>@import url("https://fonts.googleapis.com/css2?family=Overlock:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+html {
+  font-family: Overlock, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#qfppshlawp .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#qfppshlawp .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#qfppshlawp .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#qfppshlawp .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#qfppshlawp .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#qfppshlawp .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#qfppshlawp .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#qfppshlawp .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#qfppshlawp .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#qfppshlawp .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#qfppshlawp .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#qfppshlawp .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#qfppshlawp .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#qfppshlawp .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#qfppshlawp .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#qfppshlawp .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#qfppshlawp .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#qfppshlawp .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#qfppshlawp .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#qfppshlawp .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#qfppshlawp .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#qfppshlawp .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#qfppshlawp .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#qfppshlawp .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#qfppshlawp .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#qfppshlawp .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#qfppshlawp .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#qfppshlawp .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#qfppshlawp .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#qfppshlawp .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#qfppshlawp .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#qfppshlawp .gt_left {
+  text-align: left;
+}
+
+#qfppshlawp .gt_center {
+  text-align: center;
+}
+
+#qfppshlawp .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#qfppshlawp .gt_font_normal {
+  font-weight: normal;
+}
+
+#qfppshlawp .gt_font_bold {
+  font-weight: bold;
+}
+
+#qfppshlawp .gt_font_italic {
+  font-style: italic;
+}
+
+#qfppshlawp .gt_super {
+  font-size: 65%;
+}
+
+#qfppshlawp .gt_two_val_uncert {
+  display: inline-block;
+  line-height: 1em;
+  text-align: right;
+  font-size: 60%;
+  vertical-align: -0.25em;
+  margin-left: 0.1em;
+}
+
+#qfppshlawp .gt_footnote_marks {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 75%;
+  vertical-align: 0.4em;
+}
+
+#qfppshlawp .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#qfppshlawp .gt_slash_mark {
+  font-size: 0.7em;
+  line-height: 0.7em;
+  vertical-align: 0.15em;
+}
+
+#qfppshlawp .gt_fraction_numerator {
+  font-size: 0.6em;
+  line-height: 0.6em;
+  vertical-align: 0.45em;
+}
+
+#qfppshlawp .gt_fraction_denominator {
+  font-size: 0.6em;
+  line-height: 0.6em;
+  vertical-align: -0.05em;
+}
+</style>
+<table class="gt_table">
+  <thead class="gt_header">
+    <tr>
+      <th colspan="4" class="gt_heading gt_title gt_font_normal gt_bottom_border" style><strong>LEAST PROBABLE TOURNAMENT WINS</strong></th>
+    </tr>
+    
+  </thead>
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="border-top-width: 2px; border-top-style: solid; border-top-color: #000000; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: #000000; font-weight: bold;">Year</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="border-top-width: 2px; border-top-style: solid; border-top-color: #000000; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: #000000; font-weight: bold;">Slam</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="border-top-width: 2px; border-top-style: solid; border-top-color: #000000; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: #000000; font-weight: bold;">Name</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="border-top-width: 2px; border-top-style: solid; border-top-color: #000000; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: #000000; font-weight: bold;">Tournament Win Probability</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td class="gt_row gt_right">2008</td>
+<td class="gt_row gt_left">Australian Open</td>
+<td class="gt_row gt_left">NOVAK DJOKOVIC</td>
+<td class="gt_row gt_right">3.24%</td></tr>
+    <tr><td class="gt_row gt_right">2003</td>
+<td class="gt_row gt_left">Wimbledon</td>
+<td class="gt_row gt_left">ROGER FEDERER</td>
+<td class="gt_row gt_right">3.55%</td></tr>
+    <tr><td class="gt_row gt_right">2011</td>
+<td class="gt_row gt_left">Wimbledon</td>
+<td class="gt_row gt_left">NOVAK DJOKOVIC</td>
+<td class="gt_row gt_right">5.51%</td></tr>
+    <tr><td class="gt_row gt_right">2008</td>
+<td class="gt_row gt_left">Wimbledon</td>
+<td class="gt_row gt_left">RAFAEL NADAL</td>
+<td class="gt_row gt_right">6.92%</td></tr>
+    <tr><td class="gt_row gt_right">2011</td>
+<td class="gt_row gt_left">Australian Open</td>
+<td class="gt_row gt_left">NOVAK DJOKOVIC</td>
+<td class="gt_row gt_right">10.25%</td></tr>
+  </tbody>
+  
+  
+</table>
+</div>
+<p><br>
+<br></p>
+<p>Without looking deeply at Djokovic’s 2008 Australian Open run and only looking at his final opponent (France’s Jo Wilfried Tsonga), it would be easy to believe that with an expected win probability in that final of 86.9% that this was an easy title win. Unpacking this a little deeper shows that he needed to get through Australia’s own Lleyton Hewitt in the round of 16 with a win probability of 67.5% (better than a coin flip), David Ferrer in the quarters at 54.2% (basically a coin flip) and Federer at 14.2% (a heavy underdog) in the semi-final before he had a chance to play in the final.</p>
+<p><br>
+<br></p>
+<div id="mrwiwdztwi" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>@import url("https://fonts.googleapis.com/css2?family=Overlock:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+html {
+  font-family: Overlock, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#mrwiwdztwi .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#mrwiwdztwi .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#mrwiwdztwi .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#mrwiwdztwi .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#mrwiwdztwi .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#mrwiwdztwi .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#mrwiwdztwi .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#mrwiwdztwi .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#mrwiwdztwi .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#mrwiwdztwi .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#mrwiwdztwi .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#mrwiwdztwi .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#mrwiwdztwi .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#mrwiwdztwi .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#mrwiwdztwi .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#mrwiwdztwi .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#mrwiwdztwi .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#mrwiwdztwi .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#mrwiwdztwi .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#mrwiwdztwi .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#mrwiwdztwi .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#mrwiwdztwi .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#mrwiwdztwi .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#mrwiwdztwi .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#mrwiwdztwi .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#mrwiwdztwi .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#mrwiwdztwi .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#mrwiwdztwi .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#mrwiwdztwi .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#mrwiwdztwi .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#mrwiwdztwi .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#mrwiwdztwi .gt_left {
+  text-align: left;
+}
+
+#mrwiwdztwi .gt_center {
+  text-align: center;
+}
+
+#mrwiwdztwi .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#mrwiwdztwi .gt_font_normal {
+  font-weight: normal;
+}
+
+#mrwiwdztwi .gt_font_bold {
+  font-weight: bold;
+}
+
+#mrwiwdztwi .gt_font_italic {
+  font-style: italic;
+}
+
+#mrwiwdztwi .gt_super {
+  font-size: 65%;
+}
+
+#mrwiwdztwi .gt_two_val_uncert {
+  display: inline-block;
+  line-height: 1em;
+  text-align: right;
+  font-size: 60%;
+  vertical-align: -0.25em;
+  margin-left: 0.1em;
+}
+
+#mrwiwdztwi .gt_footnote_marks {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 75%;
+  vertical-align: 0.4em;
+}
+
+#mrwiwdztwi .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#mrwiwdztwi .gt_slash_mark {
+  font-size: 0.7em;
+  line-height: 0.7em;
+  vertical-align: 0.15em;
+}
+
+#mrwiwdztwi .gt_fraction_numerator {
+  font-size: 0.6em;
+  line-height: 0.6em;
+  vertical-align: 0.45em;
+}
+
+#mrwiwdztwi .gt_fraction_denominator {
+  font-size: 0.6em;
+  line-height: 0.6em;
+  vertical-align: -0.05em;
+}
+</style>
+<table class="gt_table">
+  <thead class="gt_header">
+    <tr>
+      <th colspan="5" class="gt_heading gt_title gt_font_normal gt_bottom_border" style><strong>DJOKOVIC'S 2008 AUSTRALIAN OPEN OPPONENTS</strong></th>
+    </tr>
+    
+  </thead>
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="border-top-width: 2px; border-top-style: solid; border-top-color: #000000; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: #000000; font-weight: bold;">Year</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="border-top-width: 2px; border-top-style: solid; border-top-color: #000000; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: #000000; font-weight: bold;">Slam</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="border-top-width: 2px; border-top-style: solid; border-top-color: #000000; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: #000000; font-weight: bold;">Round</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="border-top-width: 2px; border-top-style: solid; border-top-color: #000000; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: #000000; font-weight: bold;">Opponent</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="border-top-width: 2px; border-top-style: solid; border-top-color: #000000; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: #000000; font-weight: bold;">Match Win Probability</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td class="gt_row gt_right">2008</td>
+<td class="gt_row gt_left">Australian Open</td>
+<td class="gt_row gt_left">R128</td>
+<td class="gt_row gt_left">BENJAMIN BECKER</td>
+<td class="gt_row gt_right" style="background-color: rgba(85,131,175,0.6); color: #FFFFFF;">89.05%</td></tr>
+    <tr><td class="gt_row gt_right">2008</td>
+<td class="gt_row gt_left">Australian Open</td>
+<td class="gt_row gt_left">R64</td>
+<td class="gt_row gt_left">SIMONE BOLELLI</td>
+<td class="gt_row gt_right" style="background-color: rgba(70,130,180,0.6); color: #FFFFFF;">91.86%</td></tr>
+    <tr><td class="gt_row gt_right">2008</td>
+<td class="gt_row gt_left">Australian Open</td>
+<td class="gt_row gt_left">R32</td>
+<td class="gt_row gt_left">SAM QUERREY</td>
+<td class="gt_row gt_right" style="background-color: rgba(92,132,173,0.6); color: #000000;">87.43%</td></tr>
+    <tr><td class="gt_row gt_right">2008</td>
+<td class="gt_row gt_left">Australian Open</td>
+<td class="gt_row gt_left">R16</td>
+<td class="gt_row gt_left">LLEYTON HEWITT</td>
+<td class="gt_row gt_right" style="background-color: rgba(154,140,139,0.6); color: #000000;">67.50%</td></tr>
+    <tr><td class="gt_row gt_right">2008</td>
+<td class="gt_row gt_left">Australian Open</td>
+<td class="gt_row gt_left">QF</td>
+<td class="gt_row gt_left">DAVID FERRER</td>
+<td class="gt_row gt_right" style="background-color: rgba(183,146,115,0.6); color: #000000;">54.16%</td></tr>
+    <tr><td class="gt_row gt_right">2008</td>
+<td class="gt_row gt_left">Australian Open</td>
+<td class="gt_row gt_left">SF</td>
+<td class="gt_row gt_left">ROGER FEDERER</td>
+<td class="gt_row gt_right" style="background-color: rgba(255,165,0,0.6); color: #000000;">14.23%</td></tr>
+    <tr><td class="gt_row gt_right">2008</td>
+<td class="gt_row gt_left">Australian Open</td>
+<td class="gt_row gt_left">F</td>
+<td class="gt_row gt_left">JO-WILFRIED TSONGA</td>
+<td class="gt_row gt_right" style="background-color: rgba(94,132,172,0.6); color: #000000;">86.92%</td></tr>
+  </tbody>
+  
+  
+</table>
+</div>
+<p><br>
+<br></p>
+<p>Conversely, Djokovic’s 2022 Wimbledon title was the most expected of all the big three’s grand slams, with a tournament win probability of 85.7%. Djokovic’s 2021 Wimbledon title was the fifth most expected title (72.1%).</p>
+<p><br>
+<br></p>
+<div id="dywvkpckvg" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>@import url("https://fonts.googleapis.com/css2?family=Overlock:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+html {
+  font-family: Overlock, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#dywvkpckvg .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#dywvkpckvg .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#dywvkpckvg .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#dywvkpckvg .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#dywvkpckvg .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#dywvkpckvg .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#dywvkpckvg .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#dywvkpckvg .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#dywvkpckvg .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#dywvkpckvg .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#dywvkpckvg .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#dywvkpckvg .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#dywvkpckvg .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#dywvkpckvg .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#dywvkpckvg .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#dywvkpckvg .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#dywvkpckvg .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dywvkpckvg .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#dywvkpckvg .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#dywvkpckvg .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dywvkpckvg .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#dywvkpckvg .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#dywvkpckvg .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#dywvkpckvg .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dywvkpckvg .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#dywvkpckvg .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#dywvkpckvg .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#dywvkpckvg .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#dywvkpckvg .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dywvkpckvg .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#dywvkpckvg .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dywvkpckvg .gt_left {
+  text-align: left;
+}
+
+#dywvkpckvg .gt_center {
+  text-align: center;
+}
+
+#dywvkpckvg .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#dywvkpckvg .gt_font_normal {
+  font-weight: normal;
+}
+
+#dywvkpckvg .gt_font_bold {
+  font-weight: bold;
+}
+
+#dywvkpckvg .gt_font_italic {
+  font-style: italic;
+}
+
+#dywvkpckvg .gt_super {
+  font-size: 65%;
+}
+
+#dywvkpckvg .gt_two_val_uncert {
+  display: inline-block;
+  line-height: 1em;
+  text-align: right;
+  font-size: 60%;
+  vertical-align: -0.25em;
+  margin-left: 0.1em;
+}
+
+#dywvkpckvg .gt_footnote_marks {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 75%;
+  vertical-align: 0.4em;
+}
+
+#dywvkpckvg .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#dywvkpckvg .gt_slash_mark {
+  font-size: 0.7em;
+  line-height: 0.7em;
+  vertical-align: 0.15em;
+}
+
+#dywvkpckvg .gt_fraction_numerator {
+  font-size: 0.6em;
+  line-height: 0.6em;
+  vertical-align: 0.45em;
+}
+
+#dywvkpckvg .gt_fraction_denominator {
+  font-size: 0.6em;
+  line-height: 0.6em;
+  vertical-align: -0.05em;
+}
+</style>
+<table class="gt_table">
+  <thead class="gt_header">
+    <tr>
+      <th colspan="4" class="gt_heading gt_title gt_font_normal gt_bottom_border" style><strong>MOST PROBABLE TOURNAMENT WINS</strong></th>
+    </tr>
+    
+  </thead>
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="border-top-width: 2px; border-top-style: solid; border-top-color: #000000; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: #000000; font-weight: bold;">Year</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="border-top-width: 2px; border-top-style: solid; border-top-color: #000000; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: #000000; font-weight: bold;">Slam</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="border-top-width: 2px; border-top-style: solid; border-top-color: #000000; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: #000000; font-weight: bold;">Name</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="border-top-width: 2px; border-top-style: solid; border-top-color: #000000; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: #000000; font-weight: bold;">Tournament Win Probability</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td class="gt_row gt_right">2022</td>
+<td class="gt_row gt_left">Wimbledon</td>
+<td class="gt_row gt_left">NOVAK DJOKOVIC</td>
+<td class="gt_row gt_right">85.66%</td></tr>
+    <tr><td class="gt_row gt_right">2006</td>
+<td class="gt_row gt_left">Australian Open</td>
+<td class="gt_row gt_left">ROGER FEDERER</td>
+<td class="gt_row gt_right">81.58%</td></tr>
+    <tr><td class="gt_row gt_right">2010</td>
+<td class="gt_row gt_left">Roland Garros</td>
+<td class="gt_row gt_left">RAFAEL NADAL</td>
+<td class="gt_row gt_right">80.30%</td></tr>
+    <tr><td class="gt_row gt_right">2007</td>
+<td class="gt_row gt_left">Australian Open</td>
+<td class="gt_row gt_left">ROGER FEDERER</td>
+<td class="gt_row gt_right">73.33%</td></tr>
+    <tr><td class="gt_row gt_right">2021</td>
+<td class="gt_row gt_left">Wimbledon</td>
+<td class="gt_row gt_left">NOVAK DJOKOVIC</td>
+<td class="gt_row gt_right">72.08%</td></tr>
+  </tbody>
+  
+  
+</table>
+</div>
+<p><br>
+<br></p>
+<p>Not hard to believe when we look at his run in that tournament - his lowest individual match win probability came in the final (92.5%), where he defeated Australia’s very erratic Nick Kyrgios. Other than that, it looked a very soft title.</p>
+<p><br>
+<br></p>
+<div id="wxoyvoleab" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>@import url("https://fonts.googleapis.com/css2?family=Overlock:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+html {
+  font-family: Overlock, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#wxoyvoleab .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#wxoyvoleab .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#wxoyvoleab .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#wxoyvoleab .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#wxoyvoleab .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#wxoyvoleab .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#wxoyvoleab .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#wxoyvoleab .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#wxoyvoleab .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#wxoyvoleab .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#wxoyvoleab .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#wxoyvoleab .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#wxoyvoleab .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#wxoyvoleab .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#wxoyvoleab .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#wxoyvoleab .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#wxoyvoleab .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#wxoyvoleab .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#wxoyvoleab .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#wxoyvoleab .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#wxoyvoleab .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#wxoyvoleab .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#wxoyvoleab .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#wxoyvoleab .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#wxoyvoleab .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#wxoyvoleab .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#wxoyvoleab .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#wxoyvoleab .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#wxoyvoleab .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#wxoyvoleab .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#wxoyvoleab .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#wxoyvoleab .gt_left {
+  text-align: left;
+}
+
+#wxoyvoleab .gt_center {
+  text-align: center;
+}
+
+#wxoyvoleab .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#wxoyvoleab .gt_font_normal {
+  font-weight: normal;
+}
+
+#wxoyvoleab .gt_font_bold {
+  font-weight: bold;
+}
+
+#wxoyvoleab .gt_font_italic {
+  font-style: italic;
+}
+
+#wxoyvoleab .gt_super {
+  font-size: 65%;
+}
+
+#wxoyvoleab .gt_two_val_uncert {
+  display: inline-block;
+  line-height: 1em;
+  text-align: right;
+  font-size: 60%;
+  vertical-align: -0.25em;
+  margin-left: 0.1em;
+}
+
+#wxoyvoleab .gt_footnote_marks {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 75%;
+  vertical-align: 0.4em;
+}
+
+#wxoyvoleab .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#wxoyvoleab .gt_slash_mark {
+  font-size: 0.7em;
+  line-height: 0.7em;
+  vertical-align: 0.15em;
+}
+
+#wxoyvoleab .gt_fraction_numerator {
+  font-size: 0.6em;
+  line-height: 0.6em;
+  vertical-align: 0.45em;
+}
+
+#wxoyvoleab .gt_fraction_denominator {
+  font-size: 0.6em;
+  line-height: 0.6em;
+  vertical-align: -0.05em;
+}
+</style>
+<table class="gt_table">
+  <thead class="gt_header">
+    <tr>
+      <th colspan="5" class="gt_heading gt_title gt_font_normal gt_bottom_border" style><strong>DJOKOVIC'S 2022 WIMBLEDON OPPONENTS</strong></th>
+    </tr>
+    
+  </thead>
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="border-top-width: 2px; border-top-style: solid; border-top-color: #000000; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: #000000; font-weight: bold;">Year</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="border-top-width: 2px; border-top-style: solid; border-top-color: #000000; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: #000000; font-weight: bold;">Slam</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="border-top-width: 2px; border-top-style: solid; border-top-color: #000000; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: #000000; font-weight: bold;">Round</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="border-top-width: 2px; border-top-style: solid; border-top-color: #000000; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: #000000; font-weight: bold;">Opponent</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="border-top-width: 2px; border-top-style: solid; border-top-color: #000000; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: #000000; font-weight: bold;">Match Win Probability</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td class="gt_row gt_right">2022</td>
+<td class="gt_row gt_left">Wimbledon</td>
+<td class="gt_row gt_left">R128</td>
+<td class="gt_row gt_left">SOON WOO KWON</td>
+<td class="gt_row gt_right">98.74%</td></tr>
+    <tr><td class="gt_row gt_right">2022</td>
+<td class="gt_row gt_left">Wimbledon</td>
+<td class="gt_row gt_left">R64</td>
+<td class="gt_row gt_left">THANASI KOKKINAKIS</td>
+<td class="gt_row gt_right">99.72%</td></tr>
+    <tr><td class="gt_row gt_right">2022</td>
+<td class="gt_row gt_left">Wimbledon</td>
+<td class="gt_row gt_left">R32</td>
+<td class="gt_row gt_left">MIOMIR KECMANOVIC</td>
+<td class="gt_row gt_right">97.82%</td></tr>
+    <tr><td class="gt_row gt_right">2022</td>
+<td class="gt_row gt_left">Wimbledon</td>
+<td class="gt_row gt_left">R16</td>
+<td class="gt_row gt_left">TIM VAN RIJTHOVEN</td>
+<td class="gt_row gt_right">99.72%</td></tr>
+    <tr><td class="gt_row gt_right">2022</td>
+<td class="gt_row gt_left">Wimbledon</td>
+<td class="gt_row gt_left">QF</td>
+<td class="gt_row gt_left">JANNIK SINNER</td>
+<td class="gt_row gt_right">99.72%</td></tr>
+    <tr><td class="gt_row gt_right">2022</td>
+<td class="gt_row gt_left">Wimbledon</td>
+<td class="gt_row gt_left">SF</td>
+<td class="gt_row gt_left">CAMERON NORRIE</td>
+<td class="gt_row gt_right">96.70%</td></tr>
+    <tr><td class="gt_row gt_right">2022</td>
+<td class="gt_row gt_left">Wimbledon</td>
+<td class="gt_row gt_left">F</td>
+<td class="gt_row gt_left">NICK KYRGIOS</td>
+<td class="gt_row gt_right">92.48%</td></tr>
+  </tbody>
+  
+  
+</table>
+</div>
+<p><br>
+<br></p>
+<p>While it was neat looking at individual slams in the above section, we can aggregate all the tournament win probabilities to better understand how well each have done in getting to the amount of slams they’ve won given how many they were expected to have won.</p>
+<p>Of the three, Federer’s average tournament win probability over his 20 slam wins was the highest, averaging 44.3% win probability. If we were to sum up all of the individual tournament win probabilities and arrive at an expected number of wins, we can see that Federer was in fact expected to have won more slams than Djokovic if the slams they won were repeated over and over again.</p>
+<p>Similarly, Rafa’s average win probability was a touch lower than Federer’s, but given he has won two more slams, his expected wins are even higher than Djokovic’s.</p>
+<p><br>
+<br></p>
+<div id="dowuoufmea" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>@import url("https://fonts.googleapis.com/css2?family=Overlock:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+html {
+  font-family: Overlock, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#dowuoufmea .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#dowuoufmea .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#dowuoufmea .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#dowuoufmea .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#dowuoufmea .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#dowuoufmea .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#dowuoufmea .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#dowuoufmea .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#dowuoufmea .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#dowuoufmea .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#dowuoufmea .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#dowuoufmea .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#dowuoufmea .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#dowuoufmea .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#dowuoufmea .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#dowuoufmea .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#dowuoufmea .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dowuoufmea .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#dowuoufmea .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#dowuoufmea .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dowuoufmea .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#dowuoufmea .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#dowuoufmea .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#dowuoufmea .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dowuoufmea .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#dowuoufmea .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#dowuoufmea .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#dowuoufmea .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#dowuoufmea .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dowuoufmea .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#dowuoufmea .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dowuoufmea .gt_left {
+  text-align: left;
+}
+
+#dowuoufmea .gt_center {
+  text-align: center;
+}
+
+#dowuoufmea .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#dowuoufmea .gt_font_normal {
+  font-weight: normal;
+}
+
+#dowuoufmea .gt_font_bold {
+  font-weight: bold;
+}
+
+#dowuoufmea .gt_font_italic {
+  font-style: italic;
+}
+
+#dowuoufmea .gt_super {
+  font-size: 65%;
+}
+
+#dowuoufmea .gt_two_val_uncert {
+  display: inline-block;
+  line-height: 1em;
+  text-align: right;
+  font-size: 60%;
+  vertical-align: -0.25em;
+  margin-left: 0.1em;
+}
+
+#dowuoufmea .gt_footnote_marks {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 75%;
+  vertical-align: 0.4em;
+}
+
+#dowuoufmea .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#dowuoufmea .gt_slash_mark {
+  font-size: 0.7em;
+  line-height: 0.7em;
+  vertical-align: 0.15em;
+}
+
+#dowuoufmea .gt_fraction_numerator {
+  font-size: 0.6em;
+  line-height: 0.6em;
+  vertical-align: 0.45em;
+}
+
+#dowuoufmea .gt_fraction_denominator {
+  font-size: 0.6em;
+  line-height: 0.6em;
+  vertical-align: -0.05em;
+}
+</style>
+<table class="gt_table">
+  <thead class="gt_header">
+    <tr>
+      <th colspan="5" class="gt_heading gt_title gt_font_normal" style><strong>PERFORMANCE AGAINST EXPECTATION</strong></th>
+    </tr>
+    <tr>
+      <th colspan="5" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border" style>Comparing the big 3s expected wins and their actual wins</th>
+    </tr>
+  </thead>
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="border-top-width: 2px; border-top-style: solid; border-top-color: #000000; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: #000000; font-weight: bold;">Name</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="border-top-width: 2px; border-top-style: solid; border-top-color: #000000; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: #000000; font-weight: bold;">Number Slams</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="border-top-width: 2px; border-top-style: solid; border-top-color: #000000; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: #000000; font-weight: bold;">Average Tourney Win Probability<sup class="gt_footnote_marks">1</sup></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="border-top-width: 2px; border-top-style: solid; border-top-color: #000000; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: #000000; font-weight: bold;">Expected Wins<sup class="gt_footnote_marks">2</sup></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="border-top-width: 2px; border-top-style: solid; border-top-color: #000000; border-bottom-width: 2px; border-bottom-style: solid; border-bottom-color: #000000; font-weight: bold;">Wins above Expected<sup class="gt_footnote_marks">3</sup></th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td class="gt_row gt_left">NOVAK DJOKOVIC</td>
+<td class="gt_row gt_right">22</td>
+<td class="gt_row gt_right">36.50%</td>
+<td class="gt_row gt_right">8.03</td>
+<td class="gt_row gt_right">13.97</td></tr>
+    <tr><td class="gt_row gt_left">RAFAEL NADAL</td>
+<td class="gt_row gt_right">22</td>
+<td class="gt_row gt_right">42.61%</td>
+<td class="gt_row gt_right">9.38</td>
+<td class="gt_row gt_right">12.62</td></tr>
+    <tr><td class="gt_row gt_left">ROGER FEDERER</td>
+<td class="gt_row gt_right">20</td>
+<td class="gt_row gt_right">44.28%</td>
+<td class="gt_row gt_right">8.86</td>
+<td class="gt_row gt_right">11.14</td></tr>
+  </tbody>
+  
+  <tfoot class="gt_footnotes">
+    <tr>
+      <td class="gt_footnote" colspan="5"><sup class="gt_footnote_marks">1</sup> The average of all winning slam's win probabilities</td>
+    </tr>
+    <tr>
+      <td class="gt_footnote" colspan="5"><sup class="gt_footnote_marks">2</sup> Calculated as the sum of all tournament win probabilities (<strong>only for the tournaments they won</strong>)</td>
+    </tr>
+    <tr>
+      <td class="gt_footnote" colspan="5"><sup class="gt_footnote_marks">3</sup> The difference between the slams win total minus the Expected Wins</td>
+    </tr>
+  </tfoot>
+</table>
+</div>
+<p><br>
+<br></p>
+<p>It’s also interesting to note how each of the big three’s expected tournament win probabilities have changed over their career.</p>
+<p>Pre-2020, Nadal has consistently been expected to win at a higher rate than the other two - most likely a result of his Roland Garros dominance. That win probability has been dropping on average in recent years as he’s started winning on his “least” preferred surfaces. Conversely, Djokovic’s win probability has been increasing over time.</p>
+<p><img src="/post/big3_difficulty_files/figure-html/win_prob_time-1.png" width="960" /></p>
+<hr />
+</div>
+</div>
+<div id="finishing-up" class="section level2">
+<h2>Finishing Up</h2>
+<p>So what does this tell us?</p>
+<p>In this post I’ve tried to use Elo to quantify the difficulty rating of each superstar’s phenomenal achievements in getting to the number of slams they have individually. Again, as stated at the very beginning of this post, this is in no way an attempt to rank the big three - far from it.</p>
+<p>We did however see that the metrics used in this post would suggest that it’s not true that Djokovic’s has had an easy ride during his 22 grand slams wins. They have been quite the opposite on both fronts; the opponents he’s faced over his 22 wins seemingly rated more highly than that of Nadal and Federer, while also having outperformed his expected win probability by a greater margin than that of the other big three.</p>
+<p>While it’s a shame the majestic Roger Federer ever needed to retire, I’m really excited to continue to enjoy the once in a lifetime experience of seeing multiple transcendent stars continue to dominate their sport concurrently.</p>
+<p>Would love feedback on the post and have holes poked in it wherever they need poking!</p>
+<p>Thanks!</p>
+</div>

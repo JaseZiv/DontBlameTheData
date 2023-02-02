@@ -13,49 +13,6 @@
     </image>
     
     <item>
-      <title>Explaining Player Valuations</title>
-      <link>/project/explainingplayervaluations/</link>
-      <pubDate>Tue, 08 Feb 2022 00:00:00 +1100</pubDate>
-      <guid>/project/explainingplayervaluations/</guid>
-      <description>&lt;p&gt;A shiny app that measures the market value of individual stats by regressing them against player market valuations from Transfermarkt.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>xG Performance App</title>
-      <link>/project/xgperformanceapp/</link>
-      <pubDate>Tue, 08 Feb 2022 00:00:00 +1100</pubDate>
-      <guid>/project/xgperformanceapp/</guid>
-      <description>&lt;p&gt;The xG Performance App is designed to allow users to analyse the actual versus expected results of teams in the big 5 European leagues, leveraging StatsBomb&#39;s xG model via FBref.&lt;/p&gt;
-&lt;p&gt;The app can be found 
-&lt;a href=&#34;https://xg-performance-app.herokuapp.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>bettRtab R Package</title>
-      <link>/project/bettrtab/</link>
-      <pubDate>Sun, 10 Jan 2021 00:00:00 +1100</pubDate>
-      <guid>/project/bettrtab/</guid>
-      <description>&lt;p&gt;This package is designed to allow users to obtain clean and tidy 
-&lt;a href=&#34;https://www.tab.com.au/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;TAB&lt;/a&gt; betting markets for both racing and sports. It gives users the ability to access data more efficiently.&lt;/p&gt;
-&lt;p&gt;The vignette for the package offers a full description of the package and the functions available, and can be found 
-&lt;a href=&#34;https://jaseziv.github.io/bettRtab/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>nblR R Package</title>
-      <link>/project/nblr/</link>
-      <pubDate>Sun, 10 Jan 2021 00:00:00 +1100</pubDate>
-      <guid>/project/nblr/</guid>
-      <description>&lt;p&gt;The &lt;code&gt;nblR&lt;/code&gt; package allows users to obtain basketball statistics for the Australian basketball league (NBL). Stats include play-by-play, shooting locations, results and box scores for teams and players.&lt;/p&gt;
-&lt;p&gt;The vignette for the package offers a full description of the package and the functions available, and can be found 
-&lt;a href=&#34;https://jaseziv.github.io/nblR/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
       <title>worldfootballR R Package</title>
       <link>/project/worldfootballr/</link>
       <pubDate>Sun, 10 Jan 2021 00:00:00 +1100</pubDate>
@@ -76,6 +33,40 @@
 &lt;a href=&#34;www.lichess.org&#34;&gt;Lichess&lt;/a&gt;. The websites offer a very convenient set of APIs to be able to access date through.&lt;/p&gt;
 &lt;p&gt;The vignette for the package offers a full description of the package and the functions available, and can be found 
 &lt;a href=&#34;https://jaseziv.github.io/chessR/articles/using_chessR_package.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>nblR R Package</title>
+      <link>/project/nblr/</link>
+      <pubDate>Sun, 10 Jan 2021 00:00:00 +1100</pubDate>
+      <guid>/project/nblr/</guid>
+      <description>&lt;p&gt;The &lt;code&gt;nblR&lt;/code&gt; package allows users to obtain basketball statistics for the Australian basketball league (NBL). Stats include play-by-play, shooting locations, results and box scores for teams and players.&lt;/p&gt;
+&lt;p&gt;The vignette for the package offers a full description of the package and the functions available, and can be found 
+&lt;a href=&#34;https://jaseziv.github.io/nblR/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>bettRtab R Package</title>
+      <link>/project/bettrtab/</link>
+      <pubDate>Sun, 10 Jan 2021 00:00:00 +1100</pubDate>
+      <guid>/project/bettrtab/</guid>
+      <description>&lt;p&gt;This package is designed to allow users to obtain clean and tidy 
+&lt;a href=&#34;https://www.tab.com.au/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;TAB&lt;/a&gt; betting markets for both racing and sports. It gives users the ability to access data more efficiently.&lt;/p&gt;
+&lt;p&gt;The vignette for the package offers a full description of the package and the functions available, and can be found 
+&lt;a href=&#34;https://jaseziv.github.io/bettRtab/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>xG Performance App</title>
+      <link>/project/xgperformanceapp/</link>
+      <pubDate>Tue, 08 Feb 2022 00:00:00 +1100</pubDate>
+      <guid>/project/xgperformanceapp/</guid>
+      <description>&lt;p&gt;The xG Performance App is designed to allow users to analyse the actual versus expected results of teams in the big 5 European leagues, leveraging StatsBomb&#39;s xG model via FBref.&lt;/p&gt;
+&lt;p&gt;The app can be found 
+&lt;a href=&#34;https://xg-performance-app.herokuapp.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
 </description>
     </item>
     
