@@ -5,7 +5,7 @@
     <link>/categories/</link>
       <atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
     <description>Categories</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>©2023</copyright><lastBuildDate>Thu, 03 Mar 2022 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>©2023</copyright><lastBuildDate>Thu, 02 Feb 2023 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/img/logo.jpg</url>
       <title>Categories</title>
@@ -13,18 +13,34 @@
     </image>
     
     <item>
-      <title>fotmob</title>
-      <link>/categories/fotmob/</link>
-      <pubDate>Thu, 03 Mar 2022 00:00:00 +0000</pubDate>
-      <guid>/categories/fotmob/</guid>
+      <title>elo</title>
+      <link>/categories/elo/</link>
+      <pubDate>Thu, 02 Feb 2023 00:00:00 +0000</pubDate>
+      <guid>/categories/elo/</guid>
       <description></description>
     </item>
     
     <item>
       <title>R</title>
       <link>/categories/r/</link>
-      <pubDate>Thu, 03 Mar 2022 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 02 Feb 2023 00:00:00 +0000</pubDate>
       <guid>/categories/r/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tennis</title>
+      <link>/categories/tennis/</link>
+      <pubDate>Thu, 02 Feb 2023 00:00:00 +0000</pubDate>
+      <guid>/categories/tennis/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>fotmob</title>
+      <link>/categories/fotmob/</link>
+      <pubDate>Thu, 03 Mar 2022 00:00:00 +0000</pubDate>
+      <guid>/categories/fotmob/</guid>
       <description></description>
     </item>
     
