@@ -5,7 +5,7 @@
     <link>/tags/</link>
       <atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     <description>Tags</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>©2023</copyright><lastBuildDate>Thu, 02 Feb 2023 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>©2023</copyright><lastBuildDate>Fri, 24 Feb 2023 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/img/logo.jpg</url>
       <title>Tags</title>
@@ -13,18 +13,58 @@
     </image>
     
     <item>
-      <title>elo</title>
-      <link>/tags/elo/</link>
-      <pubDate>Thu, 02 Feb 2023 00:00:00 +0000</pubDate>
-      <guid>/tags/elo/</guid>
+      <title>Docker</title>
+      <link>/tags/docker/</link>
+      <pubDate>Fri, 24 Feb 2023 00:00:00 +0000</pubDate>
+      <guid>/tags/docker/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>GitHub</title>
+      <link>/tags/github/</link>
+      <pubDate>Fri, 24 Feb 2023 00:00:00 +0000</pubDate>
+      <guid>/tags/github/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>GitHub Actions</title>
+      <link>/tags/github-actions/</link>
+      <pubDate>Fri, 24 Feb 2023 00:00:00 +0000</pubDate>
+      <guid>/tags/github-actions/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Heroku</title>
+      <link>/tags/heroku/</link>
+      <pubDate>Fri, 24 Feb 2023 00:00:00 +0000</pubDate>
+      <guid>/tags/heroku/</guid>
       <description></description>
     </item>
     
     <item>
       <title>R</title>
       <link>/tags/r/</link>
-      <pubDate>Thu, 02 Feb 2023 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 24 Feb 2023 00:00:00 +0000</pubDate>
       <guid>/tags/r/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Shiny</title>
+      <link>/tags/shiny/</link>
+      <pubDate>Fri, 24 Feb 2023 00:00:00 +0000</pubDate>
+      <guid>/tags/shiny/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>elo</title>
+      <link>/tags/elo/</link>
+      <pubDate>Thu, 02 Feb 2023 00:00:00 +0000</pubDate>
+      <guid>/tags/elo/</guid>
       <description></description>
     </item>
     
@@ -61,10 +101,10 @@
     </item>
     
     <item>
-      <title>R Package</title>
-      <link>/tags/r-package/</link>
-      <pubDate>Tue, 08 Feb 2022 00:00:00 +1100</pubDate>
-      <guid>/tags/r-package/</guid>
+      <title>R Shiny App</title>
+      <link>/tags/r-shiny-app/</link>
+      <pubDate>Thu, 24 Feb 2022 00:00:00 +1100</pubDate>
+      <guid>/tags/r-shiny-app/</guid>
       <description></description>
     </item>
     
@@ -113,6 +153,14 @@
       <link>/tags/nblr/</link>
       <pubDate>Sun, 10 Jan 2021 00:00:00 +1100</pubDate>
       <guid>/tags/nblr/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>R Package</title>
+      <link>/tags/r-package/</link>
+      <pubDate>Sun, 10 Jan 2021 00:00:00 +1100</pubDate>
+      <guid>/tags/r-package/</guid>
       <description></description>
     </item>
     

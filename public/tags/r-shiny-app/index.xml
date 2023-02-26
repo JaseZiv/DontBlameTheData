@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>R Shiny App | Don&#39;t Blame the Data</title>
+    <link>/tags/r-shiny-app/</link>
+      <atom:link href="/tags/r-shiny-app/index.xml" rel="self" type="application/rss+xml" />
+    <description>R Shiny App</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>©2023</copyright><lastBuildDate>Thu, 24 Feb 2022 00:00:00 +1100</lastBuildDate>
+    <image>
+      <url>/img/logo.jpg</url>
+      <title>R Shiny App</title>
+      <link>/tags/r-shiny-app/</link>
+    </image>
+    
+    <item>
+      <title>NBL Win Probability App</title>
+      <link>/project/nbl-win-probability/</link>
+      <pubDate>Thu, 24 Feb 2022 00:00:00 +1100</pubDate>
+      <guid>/project/nbl-win-probability/</guid>
+      <description>&lt;p&gt;The Win Probability R Shiny App is designed to allow users to visualise in-game win probability for matches played in the NBL and also scrape currently played matches and understand the win probability of teams during the match.&lt;/p&gt;
+&lt;p&gt;The app can be found 
+&lt;a href=&#34;https://nbl-r-shiny.herokuapp.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>xG Performance App</title>
+      <link>/project/xgperformanceapp/</link>
+      <pubDate>Tue, 08 Feb 2022 00:00:00 +1100</pubDate>
+      <guid>/project/xgperformanceapp/</guid>
+      <description>&lt;p&gt;The xG Performance App is designed to allow users to analyse the actual versus expected results of teams in the big 5 European leagues, leveraging StatsBomb&#39;s xG model via FBref.&lt;/p&gt;
+&lt;p&gt;The app can be found 
+&lt;a href=&#34;https://xg-performance-app.herokuapp.com/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

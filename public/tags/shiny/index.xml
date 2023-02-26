@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Shiny | Don&#39;t Blame the Data</title>
+    <link>/tags/shiny/</link>
+      <atom:link href="/tags/shiny/index.xml" rel="self" type="application/rss+xml" />
+    <description>Shiny</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>©2023</copyright><lastBuildDate>Fri, 24 Feb 2023 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>/img/logo.jpg</url>
+      <title>Shiny</title>
+      <link>/tags/shiny/</link>
+    </image>
+    
+    <item>
+      <title>Deploying an R Shiny App on Heroku via GitHub Actions and Dockerfile to Access Private GitHub Repositories</title>
+      <link>/blog/deploy-r-shiny-heroku-docker-github-actions/</link>
+      <pubDate>Fri, 24 Feb 2023 00:00:00 +0000</pubDate>
+      <guid>/blog/deploy-r-shiny-heroku-docker-github-actions/</guid>
+      <description>
+
+
+&lt;div id=&#34;introduction&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;I’ve deployed a few R Shiny apps now on Heroku that have been containerised using Docker and run from a Github Action and found the process fairly seamless (well as seamless as Dev Ops for a hack goes). The approach worked wonderfully for installing public packages from CRAN and reading in data from public GitHub repositories.&lt;/p&gt;
+&lt;p&gt;This time though in my Heroku deployed R Shiny app, I needed a way to load in data from a &lt;strong&gt;private&lt;/strong&gt; GitHub Releases repository AND install an R library that I’d written - which is also in a &lt;strong&gt;private&lt;/strong&gt; GitHub repository.&lt;/p&gt;
+&lt;p&gt;This post is going to build on a super helpful post I’ve come across that has helped me on a few R Shiny app deployments on Heroku. The post &lt;em&gt;Deploying Shiny Apps to Heroku with Docker and GitHub Actions&lt;/em&gt; by &lt;a href=&#34;https://hosting.analythium.io/author/peter/&#34;&gt;Peter Solymos&lt;/a&gt; can be found &lt;a href=&#34;https://medium.com/analythium/deploying-shiny-apps-to-heroku-with-docker-and-github-actions-11d445b6697&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The below instructions will also assume you have Docker installed on your machine, have set up a &lt;a href=&#34;https://github.com/&#34;&gt;GitHub&lt;/a&gt; account, &lt;a href=&#34;https://heroku.com/&#34;&gt;Heroku&lt;/a&gt; account, and on the heroku account have set up the &lt;a href=&#34;https://devcenter.heroku.com/categories/dynos&#34;&gt;dynos&lt;/a&gt; (app containers) you need.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;deploying-a-r-shiny-app-on-heroku-using-docker-and-github-actions&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Deploying a R Shiny app on Heroku using Docker and GitHub Actions&lt;/h2&gt;
+&lt;p&gt;Peter’s super helpful post has served me well and almost did everything I needed in this specific situation. To recap everything in those instructions (and a few other steps to absolutely complete the end-to-end):&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;Build your app, create a sub-directory called &lt;code&gt;app/&lt;/code&gt; and save the app in &lt;code&gt;project/app/&lt;/code&gt;. Any other files you also need for your app (data, functions, environments, etc, it is easier if they are also saved in &lt;code&gt;app/&lt;/code&gt;, unless you don’t need those files for the app to run, as explained in &lt;a href=&#34;https://blog.sellorm.com/2018/06/14/data-prep-and-shiny-apps/&#34;&gt;this post&lt;/a&gt;)&lt;/li&gt;
+&lt;li&gt;For reproducibility, use &lt;code&gt;renv&lt;/code&gt; or some other package manager to ensure a consistent environment. Call &lt;code&gt;renv::init()&lt;/code&gt; to capture dependencies in the &lt;code&gt;renv.lock&lt;/code&gt; file&lt;/li&gt;
+&lt;li&gt;In your project root, create a &lt;code&gt;Dockerfile&lt;/code&gt; and paste the below contents in there, replacing the value in &lt;code&gt;LABEL maintainer&lt;/code&gt; to your own details:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class=&#34;dockerfile&#34;&gt;&lt;code&gt;# change `r-base:latest` to another valid version if you want to pin a specific R version
+FROM rocker/r-base:latest
+
+# change maintainer here
+LABEL maintainer=&amp;quot;Your Name &amp;lt;your.email.address.com&amp;gt;&amp;quot;
+
+# add system dependencies for packages as needed
+RUN apt-get update &amp;amp;&amp;amp; apt-get install -y --no-install-recommends \
+    sudo \
+    libcurl4-gnutls-dev \
+    libcairo2-dev \
+    libxt-dev \
+    libssl-dev \
+    libssh2-1-dev \
+    &amp;amp;&amp;amp; rm -rf /var/lib/apt/lists/*
+
+# we need remotes and renv
+RUN install2.r -e remotes renv
+
+# create non root user
+RUN addgroup --system app \
+    &amp;amp;&amp;amp; adduser --system --ingroup app app
+
+# switch over to the app user home
+WORKDIR /home/app
+
+COPY ./renv.lock .
+RUN Rscript -e &amp;quot;options(renv.consent = TRUE);renv::restore(lockfile = &amp;#39;/home/app/renv.lock&amp;#39;, repos = c(CRAN = &amp;#39;https://cloud.r-project.org&amp;#39;), library = &amp;#39;/usr/local/lib/R/site-library&amp;#39;, prompt = FALSE)&amp;quot;
+RUN rm -f renv.lock
+
+# copy everything inside the app folder
+COPY app .
+
+# permissions
+RUN chown app:app -R /home/app
+
+# change user
+USER app
+
+# EXPOSE can be used for local testing, not supported in Heroku&amp;#39;s container runtime
+EXPOSE 3838
+
+# web process/code should get the $PORT environment variable
+ENV PORT=3838
+
+# command we want to run
+CMD [&amp;quot;R&amp;quot;, &amp;quot;-e&amp;quot;, &amp;quot;shiny::runApp(&amp;#39;/home/app&amp;#39;, host = &amp;#39;0.0.0.0&amp;#39;, port=as.numeric(Sys.getenv(&amp;#39;PORT&amp;#39;)))&amp;quot;]&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;OPTIONAL: To test in a local docker container:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Build the container using &lt;code&gt;sudo docker build -t image_name .&lt;/code&gt; replacing &lt;code&gt;image_name&lt;/code&gt; with anything you want to call the image. Don’t forget to add the &lt;code&gt;.&lt;/code&gt; at the end of the &lt;code&gt;docker build&lt;/code&gt; command&lt;/li&gt;
+&lt;li&gt;Then test the container using &lt;code&gt;docker run -p 6543:3838 image_name&lt;/code&gt; and then visit &lt;code&gt;127.0.0.1:4000&lt;/code&gt; to see your app in all its glory&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;4&#34; style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;Log in to Heroku. In the dashboard, click on ‘New’ then select ‘Create new App’.&lt;/li&gt;
+&lt;li&gt;Give a name (e.g. &lt;code&gt;shiny-example&lt;/code&gt;, if available, this will create the app at &lt;a href=&#34;https://shiny-example.herokuapp.com/&#34; class=&#34;uri&#34;&gt;https://shiny-example.herokuapp.com/&lt;/a&gt;) to the app and create the app&lt;/li&gt;
+&lt;li&gt;In your Heroku dashboard, go to your personal settings&lt;/li&gt;
+&lt;li&gt;Find your API key, click on reveal and copy it, you’ll need it later&lt;/li&gt;
+&lt;li&gt;Go to the Settings tab of the GitHub repository, scroll down to Secrets and add your &lt;code&gt;HEROKU_EMAIL&lt;/code&gt; and &lt;code&gt;HEROKU_API_KEY&lt;/code&gt; as repository secrets&lt;/li&gt;
+&lt;li&gt;In the project directory locally, create the directory &lt;code&gt;.github/workflows/&lt;/code&gt; and then create a yml file called &lt;code&gt;deploy.yml&lt;/code&gt; (or you can call this anything really)&lt;/li&gt;
+&lt;li&gt;Put the below in the &lt;code&gt;deploy.yml&lt;/code&gt; file you created at step 6, remembering to change the &lt;code&gt;heroku_app_name&lt;/code&gt; variable to the name of your app. Note, the building and pushing of the Docker image to the Heroku container registry is based on the &lt;a href=&#34;https://github.com/marketplace/actions/deploy-to-heroku&#34;&gt;&lt;code&gt;akhileshns/heroku-deploy&lt;/code&gt;&lt;/a&gt; GitHub action:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class=&#34;yml&#34;&gt;&lt;code&gt;name: Build Shiny Docker Image and Deploy to Heroku
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  app1:
+    name: Build and deploy Shiny app
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build and push Docker to Heroku
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_app_name: shiny-example
+          appdir: &amp;quot;.&amp;quot;
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_email: ${{ secrets.HEROKU_EMAIL }}
+          usedocker: true&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Your project should now look something like this:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;+-- .Rproj.user
++-- .github/workflows
+|   +-- deploy.yml
++-- project.Rproj
++-- .gitignore
++-- Dockerfile
++-- app
+|   +-- app.R
+|   +-- data-df.rds
+|   +-- globals.R
++-- renv
++-- renv.lock&lt;/code&gt;&lt;/pre&gt;
+&lt;ol start=&#34;11&#34; style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;To trigger a build, commit to your remote repository on GitHub, go to the Actions tab and you should see it starting to build. Hope for a green tick and your app should then be displayed at &lt;code&gt;https://shiny-example.herokuapp.com/&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;solving-this-problem-accessing-private-github-repositories-in-a-dockerfile-run-from-a-github-action&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Solving this problem: Accessing private GitHub repositories in a Dockerfile run from a GitHub Action&lt;/h2&gt;
+&lt;p&gt;So as mentioned, the above section has served me well many times, but once I needed to access content from private repositories in a shiny app deployed on Heroku with a Dockerfile run on GitHub Actions, I came unstuck.&lt;/p&gt;
+&lt;p&gt;Here I will label the steps I took to get around this.&lt;/p&gt;
+&lt;p&gt;If you haven’t created a GitHub Personal Access Token (PAT) and given it permissions to access private repositories, do so now. Do this in the Settings menu of your GitHub account. Call it something other than &lt;code&gt;GITHUB_PAT&lt;/code&gt; - for this example, we’ll name it &lt;code&gt;PRIVATE_REPO_PAT&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Store the name of the PAT and the value somewhere &lt;strong&gt;secure&lt;/strong&gt; as you’ll need this next.&lt;/p&gt;
+&lt;p&gt;Go and add that secret(s) in the app settings on Heroku in the section called ‘Config Vars’ &lt;a href=&#34;https://devcenter.heroku.com/articles/config-vars#using-the-heroku-dashboard&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Then we need to update our &lt;code&gt;deploy.yml&lt;/code&gt; file by adding the below to the end of &lt;code&gt;deploy.yml&lt;/code&gt;:&lt;/p&gt;
+&lt;pre class=&#34;yml&#34;&gt;&lt;code&gt;
+          docker_build_args: |
+            GITHUB_PAT
+        env:
+          GITHUB_PAT: ${{ secrets.PRIVATE_REPO_PAT }}&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The full &lt;code&gt;deploy.yml&lt;/code&gt; should now look like the below:&lt;/p&gt;
+&lt;pre class=&#34;yml&#34;&gt;&lt;code&gt;name: Build Shiny Docker Image and Deploy to Heroku
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  deploy:
+    name: Build and deploy Shiny app
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build and push Docker to Heroku
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          # this is the Heroku app name you already set up in dashboard
+          heroku_app_name: nbl-r-shiny
+          # app directory needs to be set relative to root of repo
+          appdir: &amp;quot;.&amp;quot;
+          # secrets need to be added to the GitHub repo settings
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_email: ${{ secrets.HEROKU_EMAIL }}
+          # don&amp;#39;t change this
+          usedocker: true
+          docker_build_args: |
+            GITHUB_PAT
+        env:
+          GITHUB_PAT: ${{ secrets.PRIVATE_REPO_PAT }}&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now we also need to update the &lt;code&gt;Dockerfile&lt;/code&gt; by adding the below after the first &lt;code&gt;FROM&lt;/code&gt; statement:&lt;/p&gt;
+&lt;pre class=&#34;dockerfile&#34;&gt;&lt;code&gt;ARG GITHUB_PAT=default
+ENV GITHUB_PAT=$GITHUB_PAT&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The full &lt;code&gt;Dockerfile&lt;/code&gt; should look like the below (again, remembering to change to your own maintainer details):&lt;/p&gt;
+&lt;pre class=&#34;dockerfile&#34;&gt;&lt;code&gt;FROM rocker/shiny:4.1.0
+
+# set env var
+ARG GITHUB_PAT=default
+ENV GITHUB_PAT=$GITHUB_PAT
+
+
+# change maintainer here
+LABEL maintainer=&amp;quot;Your Name &amp;lt;your.email.address.com&amp;gt;&amp;quot;
+
+# add system dependencies for packages as needed
+RUN apt-get update &amp;amp;&amp;amp; apt-get install -y --no-install-recommends \
+    sudo \
+    libcurl4-gnutls-dev \
+    libcairo2-dev \
+    libxt-dev \
+    libssl-dev \
+    libssh2-1-dev \
+    &amp;amp;&amp;amp; rm -rf /var/lib/apt/lists/*
+
+# we need remotes and renv
+RUN install2.r -e remotes renv
+
+# create non root user
+RUN addgroup --system app \
+    &amp;amp;&amp;amp; adduser --system --ingroup app app
+
+# switch over to the app user home
+WORKDIR /home/app
+
+COPY ./renv.lock .
+RUN Rscript -e &amp;quot;options(renv.consent = TRUE);renv::restore(lockfile = &amp;#39;/home/app/renv.lock&amp;#39;, repos = c(CRAN = &amp;#39;https://cloud.r-project.org&amp;#39;), library = &amp;#39;/usr/local/lib/R/site-library&amp;#39;, prompt = FALSE)&amp;quot;
+RUN rm -f renv.lock
+
+# copy everything inside the app folder
+COPY app .
+
+# permissions
+RUN chown app:app -R /home/app
+
+# change user
+USER app
+
+# EXPOSE can be used for local testing, not supported in Heroku&amp;#39;s container runtime
+EXPOSE 3838
+
+# web process/code should get the $PORT environment variable
+ENV PORT=3838
+
+# command we want to run
+CMD [&amp;quot;R&amp;quot;, &amp;quot;-e&amp;quot;, &amp;quot;shiny::runApp(&amp;#39;/home/app&amp;#39;, host = &amp;#39;0.0.0.0&amp;#39;, port=as.numeric(Sys.getenv(&amp;#39;PORT&amp;#39;)))&amp;quot;]&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To test that this has worked in a local Docker container, simply run &lt;code&gt;docker run --env GITHUB_PAT=ghp_1234 -p 6543:3838 image_name&lt;/code&gt;, replacing &lt;code&gt;ghp_1234&lt;/code&gt; with your actual value for &lt;code&gt;PRIVATE_REPO_PAT&lt;/code&gt; and &lt;code&gt;image_name&lt;/code&gt; with the actual Docker image name.&lt;/p&gt;
+&lt;p&gt;Finally, commit changes to your remote repository on GitHub, wait for your green build, go to the app URL and you should be up and running.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;
+Hope you have found this helpful!&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;acknowledgements&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Acknowledgements&lt;/h2&gt;
+&lt;p&gt;Special thanks to &lt;a href=&#34;https://hosting.analythium.io/author/peter/&#34;&gt;Peter Solymos&lt;/a&gt; again for the post listed in the intro.&lt;/p&gt;
+&lt;p&gt;Additionally, massive thanks to &lt;a href=&#34;https://github.com/stevecondylios&#34;&gt;Steve Condylios&lt;/a&gt; and &lt;a href=&#34;https://github.com/tanho63&#34;&gt;Tan Ho&lt;/a&gt; for their massive help getting to this solution.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
