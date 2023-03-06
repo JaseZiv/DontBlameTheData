@@ -85,15 +85,29 @@ ggsave("static/img/background_distribution.jpg", height = 1.8, width = 5)
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Code to draw logo to include on shared links ----------------------------
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+library(ggplot2)
+
+sysfonts::font_add_google(name = "Caveat", family = "Caveat")
+showtext::showtext_auto()
+
+
+set.seed(1234)
+dat <- data.frame(cond = factor(rep(c("A","B"), each=200)),
+                  rating = c(rnorm(200),rnorm(200, mean=.8)))
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Code to draw background image on homepage -------------------------------
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Histogram overlaid with kernel density curve
-ggplot(dat, aes(x=rating)) +
+logo <- ggplot(dat, aes(x=rating)) +
   geom_histogram(aes(y=..density..),
                  binwidth=.5,
-                 , fill="wheat4", alpha=0.2, colour="ivory") +
-  geom_density(fill="wheat3", alpha=0.2, colour="ivory") +
-  scale_x_continuous(breaks = seq(-4, 4, by=0.4), labels = toupper(c("", "", "d", "o", "n'", "t", "", "b", "l", "a", "m", "e", "", "t", "h", "e", "", "d", "a", "t", "a"))) +
+                 , fill="wheat4", alpha=0.2, colour="ivory", linewidth=1) +
+  geom_density(fill="wheat3", alpha=0.2, colour="grey60", linewidth=1) +
+  annotate("text", x=0.4, y=0.15, label = "Don't Blame the Data", family = "Caveat", size=80, fontface="bold") +
   theme_minimal() +
-  theme(axis.title = element_blank(), axis.text.y = element_blank(), axis.text.x = element_text(size = 18, face = "bold", colour="#4D4D4D"), panel.grid = element_blank(),
-        panel.background = element_rect(fill = "white", colour = "white"), panel.border = element_blank(), plot.background = element_rect(fill = "white", colour = "white"))
+  theme(axis.title = element_blank(), axis.text = element_blank(), panel.grid = element_blank(),
+        panel.background = element_rect(fill = "white", colour = "white"), panel.border = element_blank(),
+        plot.background = element_rect(fill = "white", colour = "white"))
 
-ggsave("static/img/logo.jpg", height = 1.8, width = 4)
+
+ggsave("static/img/logo.jpg", plot = logo)

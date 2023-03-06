@@ -43,12 +43,12 @@
   </url>
   
   <url>
-    <loc>/tags/docker/</loc>
+    <loc>/categories/docker/</loc>
     <lastmod>2023-02-24T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/categories/docker/</loc>
+    <loc>/tags/docker/</loc>
     <lastmod>2023-02-24T00:00:00+00:00</lastmod>
   </url>
   
@@ -63,12 +63,12 @@
   </url>
   
   <url>
-    <loc>/tags/github-actions/</loc>
+    <loc>/categories/github-actions/</loc>
     <lastmod>2023-02-24T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/categories/github-actions/</loc>
+    <loc>/tags/github-actions/</loc>
     <lastmod>2023-02-24T00:00:00+00:00</lastmod>
   </url>
   
@@ -98,12 +98,12 @@
   </url>
   
   <url>
-    <loc>/categories/shiny/</loc>
+    <loc>/tags/shiny/</loc>
     <lastmod>2023-02-24T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/tags/shiny/</loc>
+    <loc>/categories/shiny/</loc>
     <lastmod>2023-02-24T00:00:00+00:00</lastmod>
   </url>
   
@@ -143,12 +143,12 @@
   </url>
   
   <url>
-    <loc>/categories/fotmob/</loc>
+    <loc>/tags/fotmob/</loc>
     <lastmod>2022-03-03T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/tags/fotmob/</loc>
+    <loc>/categories/fotmob/</loc>
     <lastmod>2022-03-03T00:00:00+00:00</lastmod>
   </url>
   
@@ -163,12 +163,12 @@
   </url>
   
   <url>
-    <loc>/categories/worldfootballr/</loc>
+    <loc>/tags/worldfootballr/</loc>
     <lastmod>2022-03-03T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/tags/worldfootballr/</loc>
+    <loc>/categories/worldfootballr/</loc>
     <lastmod>2022-03-03T00:00:00+00:00</lastmod>
   </url>
   
@@ -263,12 +263,12 @@
   </url>
   
   <url>
-    <loc>/tags/afl/</loc>
+    <loc>/categories/afl/</loc>
     <lastmod>2019-12-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/categories/afl/</loc>
+    <loc>/tags/afl/</loc>
     <lastmod>2019-12-23T00:00:00+00:00</lastmod>
   </url>
   
@@ -298,12 +298,12 @@
   </url>
   
   <url>
-    <loc>/categories/fitzroy/</loc>
+    <loc>/tags/fitzroy/</loc>
     <lastmod>2019-12-16T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/tags/fitzroy/</loc>
+    <loc>/categories/fitzroy/</loc>
     <lastmod>2019-12-16T00:00:00+00:00</lastmod>
   </url>
   
@@ -353,12 +353,12 @@
   </url>
   
   <url>
-    <loc>/tags/gganimate/</loc>
+    <loc>/categories/gganimate/</loc>
     <lastmod>2019-08-30T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/categories/gganimate/</loc>
+    <loc>/tags/gganimate/</loc>
     <lastmod>2019-08-30T00:00:00+00:00</lastmod>
   </url>
   
@@ -458,12 +458,12 @@
   </url>
   
   <url>
-    <loc>/categories/tidyverse/</loc>
+    <loc>/tags/tidyverse/</loc>
     <lastmod>2019-08-17T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/tags/tidyverse/</loc>
+    <loc>/categories/tidyverse/</loc>
     <lastmod>2019-08-17T00:00:00+00:00</lastmod>
   </url>
   
@@ -498,7 +498,16 @@
   </url>
   
   <url>
+    <loc>/afltips/afl_tips/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/authors/admin/</loc>
+  </url>
+  
+  <url>
+    <loc>/afltips/</loc>
   </url>
   
   <url>
